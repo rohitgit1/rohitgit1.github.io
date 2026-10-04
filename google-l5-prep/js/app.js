@@ -1,4 +1,4 @@
-// Google L5 Data Engineer Prep Portal - Application Logic
+// Google L5 Career & Prep Portal - Application Logic
 
 class PrepPortalApp {
   constructor() {
@@ -13,7 +13,18 @@ class PrepPortalApp {
       isStealthMode: false,
       activeDsaCategory: "all",
       activePhase: "all",
-      currentFlashcardIndex: 0
+      currentFlashcardIndex: 0,
+      activeReadingId: "read-1",
+      activeQuestionRole: "all",
+      questionSearchTerm: "",
+      userSkills: {
+        dsa: 4,
+        sql: 8,
+        systemDesign: 6,
+        cloud: 7,
+        businessMetrics: 7,
+        clientFacing: 6
+      }
     };
 
     this.init();
@@ -58,9 +69,7 @@ class PrepPortalApp {
     // Office Stealth Mode Toggle
     const stealthBtn = document.getElementById("btnStealthMode");
     if (stealthBtn) {
-      stealthBtn.addEventListener("click", () => {
-        this.toggleStealthMode();
-      });
+      stealthBtn.addEventListener("click", () => this.toggleStealthMode());
     }
 
     // Sync Modal
@@ -139,15 +148,18 @@ class PrepPortalApp {
     this.saveState();
   }
 
-  // Render Everything
+  // Render All
   renderAll() {
     this.renderHeader();
+    this.renderCareerRadar();
     this.renderDashboard();
     this.renderSchedule();
     this.renderDsaDojo();
     this.renderSqlStudio();
     this.renderSystemDesign();
     this.renderLeadership();
+    this.renderReadingVault();
+    this.renderQuestions();
     this.renderFlashcard();
     this.updateStats();
   }
@@ -177,17 +189,223 @@ class PrepPortalApp {
 
     // Overall readiness
     const overallWeight = (
-      (dsaCount / 75) * 35 +
-      (sqlCount / 20) * 20 +
+      (dsaCount / 75) * 30 +
+      (sqlCount / 20) * 25 +
       (sysCount / 10) * 30 +
       (glCount / 8) * 15
     );
     const rounded = Math.round(overallWeight);
     document.getElementById("readinessPercent").textContent = `${rounded}%`;
-    document.getElementById("masterProgressBar").style.width = `${Math.max(2, rounded)}%`;
+    document.getElementById("masterProgressBar").style.width = `${Math.max(4, rounded)}%`;
     document.getElementById("dsaCountBadge").textContent = `${dsaCount}/75`;
   }
 
+  // 0. SMART CAREER RADAR & ODDS CALCULATOR
+  renderCareerRadar() {
+    // Populate slider positions
+    const s = this.state.userSkills;
+    if (document.getElementById("slideDsa")) document.getElementById("slideDsa").value = s.dsa;
+    if (document.getElementById("slideSql")) document.getElementById("slideSql").value = s.sql;
+    if (document.getElementById("slideSys")) document.getElementById("slideSys").value = s.systemDesign;
+    if (document.getElementById("slideCloud")) document.getElementById("slideCloud").value = s.cloud;
+    if (document.getElementById("slideBiz")) document.getElementById("slideBiz").value = s.businessMetrics;
+    if (document.getElementById("slideClient")) document.getElementById("slideClient").value = s.clientFacing;
+
+    this.recalcRoleOdds();
+  }
+
+  recalcRoleOdds() {
+    const dsa = parseInt(document.getElementById("slideDsa").value);
+    const sql = parseInt(document.getElementById("slideSql").value);
+    const sys = parseInt(document.getElementById("slideSys").value);
+    const cloud = parseInt(document.getElementById("slideCloud").value);
+    const biz = parseInt(document.getElementById("slideBiz").value);
+    const client = parseInt(document.getElementById("slideClient").value);
+
+    // Update labels
+    document.getElementById("valDsa").textContent = `${dsa} / 10`;
+    document.getElementById("valSql").textContent = `${sql} / 10`;
+    document.getElementById("valSys").textContent = `${sys} / 10`;
+    document.getElementById("valCloud").textContent = `${cloud} / 10`;
+    document.getElementById("valBiz").textContent = `${biz} / 10`;
+    document.getElementById("valClient").textContent = `${client} / 10`;
+
+    this.state.userSkills = { dsa, sql, systemDesign: sys, cloud, businessMetrics: biz, clientFacing: client };
+    this.saveState();
+
+    // Calculate match probability for each role
+    const scoredRoles = PREP_DATA.targetRoles.map(role => {
+      const req = role.strengthsNeeded;
+      // Fitness calculation: penalty for being under required bar
+      let penalty = 0;
+      let totalReq = 0;
+      for (const key in req) {
+        totalReq += req[key];
+        const diff = req[key] - this.state.userSkills[key];
+        if (diff > 0) {
+          // Penalty if user is below required strength
+          penalty += diff * 1.5;
+        }
+      }
+      const rawFit = Math.max(20, Math.min(95, Math.round(100 - (penalty / totalReq) * 80)));
+      return { ...role, matchScore: rawFit };
+    });
+
+    // Sort by match score descending
+    scoredRoles.sort((a, b) => b.matchScore - a.matchScore);
+    const topRole = scoredRoles[0];
+    document.getElementById("topRecRoleName").textContent = `${topRole.title} (${topRole.matchScore}% Match)`;
+
+    // Render Roles Grid
+    const container = document.getElementById("rolesGrid");
+    container.innerHTML = scoredRoles.map((role, idx) => {
+      const isTop = idx === 0;
+      const isTrojan = role.id === "role-bie" || role.id === "role-cse";
+      const badgeClass = role.matchScore >= 80 ? "odds-high" : (role.matchScore >= 60 ? "odds-moderate" : "odds-tough");
+
+      return `
+        <div class="role-card ${isTop ? 'highlighted-trojan' : ''}">
+          <div>
+            <div class="role-top">
+              <div>
+                <h3 class="role-title">${role.title}</h3>
+                <div class="role-org">${role.organization}</div>
+              </div>
+              <span class="role-odds-badge ${badgeClass}">${role.matchScore}% Match Odds</span>
+            </div>
+
+            <div class="role-comp" style="margin-top:10px;">
+              <strong>Google L5 Compensation:</strong> ${role.compensationRange}
+            </div>
+
+            <div class="cheat-code-box" style="margin-top:12px;">
+              <strong>⚡ Google Insider Strategy / Cheat Code:</strong>
+              ${role.cheatCode}
+            </div>
+
+            <div style="margin-top:14px;">
+              <span style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--text-subtle);">Interview Rounds Structure:</span>
+              <div class="rounds-list" style="margin-top:6px;">
+                ${role.interviewRounds.map(r => `
+                  <div class="round-item">
+                    <strong>${r.name}:</strong> <span>${r.desc}</span>
+                  </div>
+                `).join("")}
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <a href="${role.googleCareersQuery}" target="_blank" rel="noopener noreferrer" class="google-jobs-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              Search Open ${role.title.split('(')[0]} Jobs at Google
+            </a>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  // 2. READING VAULT
+  renderReadingVault() {
+    const navContainer = document.getElementById("vaultNav");
+    navContainer.innerHTML = PREP_DATA.readingVault.map(paper => `
+      <div class="vault-nav-item ${this.state.activeReadingId === paper.id ? 'active' : ''}" onclick="app.selectReadingPaper('${paper.id}')">
+        <div class="vault-nav-title">${paper.title}</div>
+        <div class="vault-nav-meta">${paper.category} &bull; ${paper.readTime}</div>
+      </div>
+    `).join("");
+
+    this.selectReadingPaper(this.state.activeReadingId);
+  }
+
+  selectReadingPaper(id) {
+    this.state.activeReadingId = id;
+    document.querySelectorAll(".vault-nav-item").forEach(item => item.classList.remove("active"));
+    const activeNav = Array.from(document.querySelectorAll(".vault-nav-item")).find(item => item.innerHTML.includes(id));
+    if (activeNav) activeNav.classList.add("active");
+
+    const paper = PREP_DATA.readingVault.find(p => p.id === id) || PREP_DATA.readingVault[0];
+    const contentContainer = document.getElementById("vaultContent");
+
+    contentContainer.innerHTML = `
+      <div>
+        <h2 class="paper-title">${paper.title}</h2>
+        <div class="paper-meta">
+          <span>${paper.category}</span> &bull; <span>${paper.readTime}</span>
+        </div>
+      </div>
+
+      <div style="font-size:0.95rem; line-height:1.6; color:#e2e8f0; background:rgba(0,0,0,0.25); padding:14px; border-radius:6px; border:1px solid var(--border-subtle);">
+        <strong>Executive Summary:</strong> ${paper.summary}
+      </div>
+
+      <div>
+        <h3 style="font-family:var(--font-display); font-size:1.15rem; margin-bottom:10px;">Core Architectural Takeaways:</h3>
+        <ul class="takeaways-list">
+          ${paper.keyTakeaways.map(t => `<li>${t}</li>`).join("")}
+        </ul>
+      </div>
+
+      <div class="l5-context-box">
+        <strong>🎯 How to Reference This in a Google L5 System Design Round:</strong>
+        ${paper.l5InterviewContext}
+      </div>
+    `;
+  }
+
+  // 3. QUESTIONS BANK
+  renderQuestions() {
+    const roles = ["all", "Senior Data Engineer (L5)", "Business Intelligence Engineer (L5)", "Customer Solutions Engineer (L5)"];
+    const filtersContainer = document.getElementById("questionRoleFilters");
+
+    filtersContainer.innerHTML = roles.map(r => `
+      <button class="filter-chip ${this.state.activeQuestionRole === r ? 'active' : ''}" onclick="app.setQuestionRoleFilter('${r}')">
+        ${r === 'all' ? 'All Roles' : r.replace(' (L5)', '')}
+      </button>
+    `).join("");
+
+    this.filterQuestions();
+  }
+
+  setQuestionRoleFilter(role) {
+    this.state.activeQuestionRole = role;
+    this.renderQuestions();
+  }
+
+  filterQuestions() {
+    const term = (document.getElementById("questionSearchInput")?.value || "").toLowerCase();
+    const roleFilter = this.state.activeQuestionRole;
+    const grid = document.getElementById("questionsGrid");
+
+    const filtered = PREP_DATA.recentGoogleQuestions.filter(q => {
+      const matchesRole = roleFilter === "all" || q.role === roleFilter;
+      const matchesTerm = !term || q.question.toLowerCase().includes(term) || q.hints.toLowerCase().includes(term) || q.round.toLowerCase().includes(term);
+      return matchesRole && matchesTerm;
+    });
+
+    if (filtered.length === 0) {
+      grid.innerHTML = `<div class="empty-state">No questions found matching your search.</div>`;
+      return;
+    }
+
+    grid.innerHTML = filtered.map(q => `
+      <div class="question-card">
+        <div class="question-meta-row">
+          <span class="badge badge-accent">${q.role}</span>
+          <span>${q.round}</span>
+        </div>
+        <div style="font-size:0.75rem; color:var(--text-subtle);">📍 ${q.source}</div>
+        <div class="question-body">"${q.question}"</div>
+        <div class="question-hints-box">
+          <strong>Key Architectural Solution Hint:</strong>
+          ${q.hints}
+        </div>
+      </div>
+    `).join("");
+  }
+
+  // Dashboard
   renderDashboard() {
     const currentScheduleItem = PREP_DATA.schedule.find(s => s.day === this.state.currentDay) || PREP_DATA.schedule[0];
     document.getElementById("todayMissionTitle").textContent = `Day ${currentScheduleItem.day}: ${currentScheduleItem.title}`;
@@ -221,6 +439,7 @@ class PrepPortalApp {
     `;
   }
 
+  // Schedule Timeline
   renderSchedule() {
     const container = document.getElementById("scheduleTimeline");
     const phase = this.state.activePhase;
@@ -260,12 +479,11 @@ class PrepPortalApp {
     this.renderSchedule();
   }
 
-  // DSA Pattern Dojo
+  // DSA Dojo
   renderDsaDojo() {
     const listContainer = document.getElementById("dsaProblemList");
     const categories = ["all", ...new Set(PREP_DATA.dsaProblems.map(p => p.category))];
     
-    // Render Category Filter Chips
     const filtersContainer = document.getElementById("dsaCategoryFilters");
     filtersContainer.innerHTML = categories.map(cat => `
       <button class="filter-chip ${this.state.activeDsaCategory === cat ? 'active' : ''}" onclick="app.setDsaCategory('${cat}')">
@@ -333,7 +551,7 @@ class PrepPortalApp {
       </div>
 
       <div class="de-relevance-banner">
-        <strong>🎯 Why Google Tests This for DE:</strong> ${prob.deRelevance}
+        <strong>🎯 Why Google Tests This for DE/Data Roles:</strong> ${prob.deRelevance}
       </div>
 
       <div style="font-size:0.9rem; line-height:1.6; color:#cbd5e1;">
@@ -466,7 +684,7 @@ class PrepPortalApp {
     this.selectSqlProblem(id);
   }
 
-  // System Design Vault
+  // System Design
   renderSystemDesign() {
     const grid = document.getElementById("systemDesignGrid");
     grid.innerHTML = PREP_DATA.systemDesigns.map(sys => {
@@ -518,7 +736,7 @@ class PrepPortalApp {
     this.renderSystemDesign();
   }
 
-  // Leadership (G&L) Builder
+  // Leadership
   renderLeadership() {
     const grid = document.getElementById("leadershipGrid");
     grid.innerHTML = PREP_DATA.leadershipPrompts.map(prompt => {
@@ -564,7 +782,7 @@ class PrepPortalApp {
     this.saveState();
   }
 
-  // Flashcards (Office Micro-Drills)
+  // Flashcards
   renderFlashcard() {
     const fc = PREP_DATA.flashcards[this.state.currentFlashcardIndex];
     if (!fc) return;
@@ -593,7 +811,7 @@ class PrepPortalApp {
     const downloadAnchor = document.createElement("a");
     const date = new Date().toISOString().slice(0, 10);
     downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", `google_l5_prep_backup_${date}.json`);
+    downloadAnchor.setAttribute("download", `google_career_prep_backup_${date}.json`);
     document.body.appendChild(downloadAnchor);
     downloadAnchor.click();
     downloadAnchor.remove();

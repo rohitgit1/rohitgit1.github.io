@@ -1,8 +1,219 @@
-// Google L5 Data Engineer Prep Portal - Comprehensive Dataset
+// Google L5 Prep Portal - Comprehensive Multi-Role Dataset
 const PREP_DATA = {
-  // 90-Day Curated Schedule
+  // Strategic Google Roles Radar (Matching 5+ Yr Data Background)
+  targetRoles: [
+    {
+      id: "role-de",
+      title: "Senior Data Engineer (L5)",
+      organization: "Core Data / Ads / Cloud / YouTube",
+      oddsRating: "Moderate (6.5/10)",
+      barDifficulty: "High",
+      compensationRange: "$280k - $380k USD / ₹65L - ₹95L INR",
+      cheatCode: "Balanced bar. Lower DSA bar than pure SWE, but high expectations on Distributed System Design, BigQuery/Beam internals, and Kimball modeling.",
+      interviewRounds: [
+        { name: "Round 1: Python Coding", desc: "LeetCode Mediums (Focus: DAGs, Heaps, Intervals, Sliding Window, HashMaps)" },
+        { name: "Round 2: Data Coding & Algorithms", desc: "Data processing algorithms, custom aggregators, topological sorting" },
+        { name: "Round 3: Advanced SQL & Data Modeling", desc: "Complex window functions, sessionization, Kimball dimensional schemas (SCD 1-6)" },
+        { name: "Round 4: Distributed Data System Design", desc: "Real-time streaming vs batch, Pub/Sub, Dataflow, Bigtable, BigQuery, data skew, exactly-once" },
+        { name: "Round 5: Googliness & Leadership (G&L)", desc: "L5 behavioral: navigating ambiguity, cross-team influence, outage post-mortems" }
+      ],
+      strengthsNeeded: { dsa: 7, sql: 9, systemDesign: 9, cloud: 8, businessMetrics: 6, clientFacing: 4 },
+      googleCareersQuery: "https://www.google.com/about/careers/applications/jobs/results/?q=%22Data%20Engineer%22&level=MID_LEVEL&level=SENIOR_LEVEL"
+    },
+    {
+      id: "role-bie",
+      title: "Business Intelligence Engineer / Analytics Engineer (L5)",
+      organization: "Finance / People Ops / Google Cloud GTM / Devices",
+      oddsRating: "High (8.5/10) - STRONGEST TROJAN HORSE",
+      barDifficulty: "Moderate",
+      compensationRange: "$240k - $340k USD / ₹55L - ₹80L INR",
+      cheatCode: "THE BACKDOOR ROUTE: Minimal to zero hard LeetCode! Interviews focus heavily on Advanced SQL, Data Warehouse Modeling, Python data manipulation (Pandas/ETL), and metric design. Once inside Google for 12 months, internal transfer to DE or SWE is standard.",
+      interviewRounds: [
+        { name: "Round 1: Advanced SQL & Warehousing", desc: "Aggregations, CTEs, Window functions, BigQuery partitioning, query optimization" },
+        { name: "Round 2: Data Modeling & Architecture", desc: "Star schema, snowflake, metrics layer, automated dimensional reporting, ETL/ELT pipelines" },
+        { name: "Round 3: Practical Python Scripting", desc: "Data extraction, API consumption, data cleaning, automated validation (not esoteric graph algorithms)" },
+        { name: "Round 4: Analytical Problem Solving", desc: "Designing KPIs, root-cause metric anomalies, business experimentation" },
+        { name: "Round 5: Googliness & Leadership", desc: "Stakeholder management, presenting technical findings to directors, cross-functional impact" }
+      ],
+      strengthsNeeded: { dsa: 4, sql: 10, systemDesign: 7, cloud: 7, businessMetrics: 9, clientFacing: 7 },
+      googleCareersQuery: "https://www.google.com/about/careers/applications/jobs/results/?q=%22Business%20Intelligence%22%20OR%20%22Analytics%20Engineer%22"
+    },
+    {
+      id: "role-cse",
+      title: "Customer Solutions Engineer - Data & Analytics (L5)",
+      organization: "Google Cloud / Enterprise GTM",
+      oddsRating: "Very High (8.8/10) - HIGH HIRING VOLUME",
+      barDifficulty: "Moderate",
+      compensationRange: "$260k - $360k USD / ₹60L - ₹85L INR",
+      cheatCode: "HUGE ADVANTAGE FOR 5+ YR PROFILES: Google Cloud hires aggressively here. They want engineers who understand BigQuery, Looker, Spark, and pipeline architecture to build high-stakes reference solutions for Fortune 500 clients. Coding is practical, not academic DSA.",
+      interviewRounds: [
+        { name: "Round 1: Practical Coding / Scripting", desc: "Python data scripts, API integrations, debugging real data pipeline issues" },
+        { name: "Round 2: Cloud Data Architecture", desc: "Designing client migrations from Teradata/Snowflake/Hadoop to Google Cloud BigQuery/Dataproc" },
+        { name: "Round 3: Troubleshooting & Scenarios", desc: "Debugging slow queries, pipeline failures, data corruption under real-world pressure" },
+        { name: "Round 4: Technical Communication & Solutioning", desc: "Explaining complex architectural trade-offs to senior client engineers and leadership" },
+        { name: "Round 5: Googliness & Leadership", desc: "Customer empathy, handling conflict, cross-functional collaboration with Google product teams" }
+      ],
+      strengthsNeeded: { dsa: 5, sql: 8, systemDesign: 8, cloud: 10, businessMetrics: 7, clientFacing: 9 },
+      googleCareersQuery: "https://www.google.com/about/careers/applications/jobs/results/?q=%22Customer%20Solutions%20Engineer%22%20data"
+    },
+    {
+      id: "role-pso",
+      title: "Cloud Consultant / Technical Architect - Data & AI (L5)",
+      organization: "Google Cloud Professional Services (PSO)",
+      oddsRating: "High (8.0/10)",
+      barDifficulty: "Moderate-High",
+      compensationRange: "$270k - $370k USD / ₹65L - ₹90L INR",
+      cheatCode: "PURE ARCHITECTURE & IMPACT: Focuses on enterprise data modernization. Almost zero algorithmic graph/tree puzzles. Heavy emphasis on Google Cloud Big Data stack (BigQuery, Dataflow, Dataproc, Composer, Pub/Sub) and enterprise governance.",
+      interviewRounds: [
+        { name: "Round 1: Data Architecture & System Design", desc: "Enterprise Data Platform design: Data mesh, lakehouse, real-time analytics" },
+        { name: "Round 2: GCP Big Data Deep Dive", desc: "Internal mechanics of BigQuery, Dataflow streaming semantics, Cloud Spanner vs Bigtable" },
+        { name: "Round 3: Data Migration & Modernization", desc: "Legacy on-prem to cloud migration strategy, dual-run architectures, validation" },
+        { name: "Round 4: Delivery & Consulting Acumen", desc: "Project scoping, managing delivery risk, technical thought leadership" },
+        { name: "Round 5: Googliness & Leadership", desc: "Handling pushback from client architects, mentoring, driving technical standards" }
+      ],
+      strengthsNeeded: { dsa: 4, sql: 8, systemDesign: 10, cloud: 10, businessMetrics: 6, clientFacing: 9 },
+      googleCareersQuery: "https://www.google.com/about/careers/applications/jobs/results/?q=%22Professional%20Services%22%20%22Data%22"
+    },
+    {
+      id: "role-swe-data",
+      title: "Software Engineer - Data & Infrastructure (SWE L5)",
+      organization: "Search / Infrastructure / Cloud / Ads",
+      oddsRating: "Tough (5.0/10)",
+      barDifficulty: "Very High",
+      compensationRange: "$320k - $420k USD / ₹75L - ₹1.1Cr INR",
+      cheatCode: "HIGHEST PAY, HARDEST CODING: Standard Google SWE loop with 2–3 algorithmic rounds (LC Medium/Hard, DP, Graphs) + 1 Large-scale Systems Design round. Target this once your DSA pattern recognition is top 5%.",
+      interviewRounds: [
+        { name: "Round 1: SWE Algorithms & Data Structures", desc: "LeetCode Medium/Hard in Python, clean O(N) optimizations, memory limits" },
+        { name: "Round 2: SWE Algorithms & Data Structures", desc: "Dynamic Programming, Trees, Graphs, Complex Recursion" },
+        { name: "Round 3: Data Systems Infrastructure Design", desc: "Distributed storage engines, consensus protocols, replication, cache invalidation" },
+        { name: "Round 4: System Design & Code Quality", desc: "Concurrency, multithreading, API contracts, modularity" },
+        { name: "Round 5: Googliness & Leadership", desc: "Technical roadmapping, engineering excellence, post-mortem culture" }
+      ],
+      strengthsNeeded: { dsa: 10, sql: 6, systemDesign: 10, cloud: 7, businessMetrics: 3, clientFacing: 2 },
+      googleCareersQuery: "https://www.google.com/about/careers/applications/jobs/results/?q=%22Software%20Engineer%22%20data"
+    },
+    {
+      id: "role-tsc",
+      title: "Technical Solutions Consultant - Data Platforms (L5)",
+      organization: "Google Ads / Operations / Global Business",
+      oddsRating: "Very High (8.5/10)",
+      barDifficulty: "Moderate",
+      compensationRange: "$230k - $320k USD / ₹50L - ₹75L INR",
+      cheatCode: "HIGH EFFICIENCY CONVERSION: Tests SQL, Python scripting, and database debugging. Solves technical escalations and builds internal automation tools. Great work-life balance and very direct path into Google.",
+      interviewRounds: [
+        { name: "Round 1: SQL & Data Analysis", desc: "Complex queries, identifying data inconsistencies, reporting anomalies" },
+        { name: "Round 2: Python Automation & Scripting", desc: "API scripting, data transformations, cron pipeline automation" },
+        { name: "Round 3: Technical Troubleshooting", desc: "Debugging end-to-end data pipeline failures and system latency" },
+        { name: "Round 4: Analytical Case Study", desc: "Translating business requirements into data automation architecture" },
+        { name: "Round 5: Googliness & Leadership", desc: "Customer focus, handling urgent escalations, operational excellence" }
+      ],
+      strengthsNeeded: { dsa: 4, sql: 9, systemDesign: 6, cloud: 6, businessMetrics: 8, clientFacing: 8 },
+      googleCareersQuery: "https://www.google.com/about/careers/applications/jobs/results/?q=%22Technical%20Solutions%20Consultant%22"
+    }
+  ],
+
+  // Office Deep-Dive Reading Vault (Whitepapers & Architectural Breakdowns)
+  readingVault: [
+    {
+      id: "read-1",
+      title: "Google Dremel: Interactive Analysis of Web-Scale Datasets (The BigQuery Engine)",
+      category: "Storage & Query Execution",
+      readTime: "15 min read",
+      summary: "How Google built the technology that powers BigQuery, executing SQL aggregations over trillions of records in seconds across thousands of commodity machines.",
+      keyTakeaways: [
+        "Columnar Storage of Nested Records: Dremel decomposes complex Protobuf structures into separate columns using Definition Levels and Repetition Levels, avoiding decompression of irrelevant fields.",
+        "Multi-Level Execution Trees: Instead of MapReduce, Dremel uses a hierarchical serving tree. Root server receives the SQL, rewrites it, passes it to Intermediate servers, which push down query fragments to thousands of Leaf servers directly reading from Colossus (Google's distributed filesystem).",
+        "Dynamic Aggregation: Aggregations are computed in parallel at the leaf level, merged up the tree, reducing network bandwidth by 99%."
+      ],
+      l5InterviewContext: "When asked how BigQuery scales in System Design, cite Dremel's tree architecture, slot dynamic allocation, and the separation of compute (Dremel) from storage (Colossus)."
+    },
+    {
+      id: "read-2",
+      title: "The Dataflow Model: Unified Stream and Batch Processing (Tyler Akidau)",
+      category: "Stream Processing",
+      readTime: "20 min read",
+      summary: "The definitive paper written by the Google Cloud Dataflow team that created Apache Beam and redefined how the industry thinks about stream processing.",
+      keyTakeaways: [
+        "Decoupling Event Time from Processing Time: Never rely on when an event reaches the server (Processing Time); always track when the event happened in the real world (Event Time).",
+        "Watermarks as Time Progress: A watermark is a monotonically increasing timestamp reflecting the pipeline's belief that no older data will arrive. If data arrives behind the watermark, it is 'late-arriving data'.",
+        "The 4 Crucial Questions: 1) What is computed (PTransforms)? 2) Where in event time (Windowing)? 3) When in processing time (Triggers/Watermarks)? 4) How do results relate (Accumulating vs Discarding)?"
+      ],
+      l5InterviewContext: "Essential for any real-time streaming question. If you mention 'sliding windows with allowed lateness and speculative triggers' in an L5 round, interviewers know you understand production-grade streaming."
+    },
+    {
+      id: "read-3",
+      title: "Google Cloud Spanner: TrueTime and Globally-Distributed ACID Transactions",
+      category: "Databases & Consistency",
+      readTime: "18 min read",
+      summary: "How Google overcame the CAP theorem using GPS receivers and atomic clocks in data centers to provide globally-consistent ACID transactions with linearizability.",
+      keyTakeaways: [
+        "TrueTime API: Instead of returning a single timestamp, TrueTime returns a time interval [earliest, latest] with guaranteed uncertainty bound (typically < 7ms).",
+        "Commit Wait Protocol: Spanner guarantees that if transaction T2 starts after transaction T1 commits, T2's timestamp is strictly greater than T1's by waiting out the TrueTime uncertainty bound.",
+        "Paxos State Machine: High availability and data replication across continents without split-brain risk."
+      ],
+      l5InterviewContext: "Use this to explain when to choose Cloud Spanner (multi-region financial ledgers, strict consistency) vs Cloud Bigtable (millisecond write throughput, single-row transactions only)."
+    },
+    {
+      id: "read-4",
+      title: "Bigtable: A Distributed Storage System for Structured Data",
+      category: "NoSQL & Storage Engines",
+      readTime: "15 min read",
+      summary: "The foundation of modern NoSQL databases (HBase, Cassandra). A sparse, distributed, persistent multi-dimensional sorted map.",
+      keyTakeaways: [
+        "Map Structure: Keyed by (row:string, column:string, time:int64) -> uninterpreted byte array.",
+        "LSM-Tree Storage: Writes enter an in-memory MemTable and write-ahead log (WAL). When MemTable fills, it flushes to an immutable SSTable on Colossus. Periodic compactions merge SSTables and purge tombstones.",
+        "Row Key Design: Data is lexicographically sorted by row key. Bad row keys (e.g. timestamp prefixes) cause write hotspotting; good row keys (e.g. reverse domain or hash prefix) distribute load evenly across tablet servers."
+      ],
+      l5InterviewContext: "Critical for high-throughput streaming systems (IoT, telemetry, view counters). Always demonstrate row-key salting to prevent tablet hotspotting."
+    }
+  ],
+
+  // Real Recent Google Questions (Across DE, BIE, CSE, SWE-Data)
+  recentGoogleQuestions: [
+    {
+      id: "gq-1",
+      role: "Senior Data Engineer (L5)",
+      source: "Google MTV / Sunnyvale Loop (2025/2026)",
+      round: "Coding / Data Algorithms",
+      question: "You have a stream of user log events: `(timestamp, user_id, action)`. Implement a class that tracks the Top 10 most active users in the last 15 minutes. How do you handle out-of-order logs that arrive up to 2 minutes late?",
+      hints: "Combine a sliding window deque for expired events + a hash map for user counts + a min-heap or balanced BST for the top 10. For distributed scale, discuss Count-Min sketch with decay or Apache Beam sliding windows."
+    },
+    {
+      id: "gq-2",
+      role: "Senior Data Engineer (L5)",
+      source: "Google Cloud Data Team Loop",
+      round: "Distributed System Design",
+      question: "Design an end-to-end data pipeline to ingest, validate, and compute daily billing aggregates for 500 million Google Cloud VMs. Every VM sends heartbeat metrics every 10 seconds. Financial reconciliation requires 100% accuracy and zero double-counting.",
+      hints: "Focus on idempotent pipeline sinks, deduplication tokens in Pub/Sub, two-stage Dataflow aggregation, and writing to BigQuery using transactional partition loading."
+    },
+    {
+      id: "gq-3",
+      role: "Business Intelligence Engineer (L5)",
+      source: "Google Devices & Services (Pixel/Nest)",
+      round: "SQL & Analytics Modeling",
+      question: "Given a table of Pixel phone activation events `activations(device_id, user_id, activation_date, country)` and return events `returns(device_id, return_date, reason)`. Write a query to calculate the 30-day, 60-day, and 90-day rolling return rate by device model and country. Handle cases where activation occurs in one month and return occurs 2 months later.",
+      hints: "Use LEFT JOIN with date range condition `return_date BETWEEN activation_date AND DATE_ADD(activation_date, INTERVAL 30 DAY)` or window functions with conditional SUM()."
+    },
+    {
+      id: "gq-4",
+      role: "Customer Solutions Engineer (L5)",
+      source: "Google Cloud Enterprise Consulting",
+      round: "Scenario & Architecture",
+      question: "A multi-billion dollar retail customer wants to migrate their legacy 200TB Teradata data warehouse to BigQuery. They have 4,000 daily SQL stored procedures and cannot tolerate any downtime during peak Black Friday sales. How do you design the migration phases, data validation framework, and cutover strategy?",
+      hints: "Use a 4-phase framework: 1) Dual-ingestion CDC pipeline, 2) SQL translation & historical backfill, 3) Shadow-run automated reconciliation engine (comparing query result hashes), 4) Gradual traffic routing with instant rollback."
+    },
+    {
+      id: "gq-5",
+      role: "Senior Data Engineer (L5)",
+      source: "YouTube Core Data Loop",
+      round: "Data Modeling & SQL",
+      question: "Design the dimensional model for YouTube Shorts video interactions (views, likes, shares, swipe-aways). How would you structure fact and dimension tables to support sub-second query latency for creators while maintaining cost efficiency on petabyte-scale data?",
+      hints: "Use an Accumulating Snapshot fact table for short-lifecycle metrics + Transaction fact table partitioned by day and clustered on (channel_id, video_id). Explain BigQuery nested repeated fields for user interaction tags."
+    }
+  ],
+
+  // 90-Day Schedule (Foundations to Mastery)
   schedule: [
-    // Phase 1: Days 1 - 30 (Foundations & Core Mastery)
     { day: 1, phase: 1, week: 1, title: "Arrays & Hashing: Two Sum & Frequency Maps", pillar: "dsa", focus: "Two Sum, HashMap frequency counting in Python", sql: "Basic Window: ROW_NUMBER() vs RANK()", design: "Row vs Columnar Storage: Parquet vs Postgres", estMinutes: 180 },
     { day: 2, phase: 1, week: 1, title: "Arrays & Hashing: Group Anagrams & Tuples as Keys", pillar: "dsa", focus: "Group Anagrams, sorting vs count array keys", sql: "DENSE_RANK() and Top-N per group", design: "OLTP vs OLAP Architecture & Access Patterns", estMinutes: 180 },
     { day: 3, phase: 1, week: 1, title: "Arrays & Hashing: Top K Frequent Elements", pillar: "dsa", focus: "Bucket Sort vs Min-Heap for Top K", sql: "Running Totals: SUM() OVER (PARTITION BY ... ORDER BY ...)", design: "Distributed Storage: GCS / HDFS block storage", estMinutes: 180 },
@@ -23,51 +234,10 @@ const PREP_DATA = {
     { day: 18, phase: 1, week: 3, title: "Linked Lists: Remove Nth Node from End", pillar: "dsa", focus: "Two-pointer gap offset pattern", sql: "Cumulative user acquisition & churn calculation", design: "Cloud Bigtable: Row Key Design & Hotspot Prevention", estMinutes: 180 },
     { day: 19, phase: 1, week: 3, title: "Phase 1 Drill: Timed Arrays & Two Pointers", pillar: "dsa", focus: "Solve 3 Mediums under 25-minute timer", sql: "Multi-touch attribution SQL query", design: "Google Cloud Spanner: TrueTime & External Consistency", estMinutes: 210 },
     { day: 20, phase: 1, week: 3, title: "Phase 1 Drill: Timed Stack & Sliding Windows", pillar: "dsa", focus: "Solve 3 Mediums under 25-minute timer", sql: "Funnel Analysis SQL: Multi-step conversion", design: "CAP Theorem & PACELC in Google Data Systems", estMinutes: 210 },
-    { day: 21, phase: 1, week: 3, title: "Phase 1 Checkpoint: Mock Assessment 1", pillar: "review", focus: "Full Coding + SQL Mock simulation", sql: "Comprehensive SQL challenge", design: "Review Kimball Modeling & Storage trade-offs", estMinutes: 240 },
-    // Phase 2: Days 22 - 60 (Graphs, Trees, Big Data Internals, Beam/Spark)
-    { day: 22, phase: 2, week: 4, title: "Trees: Binary Tree Traversal & Max Depth", pillar: "dsa", focus: "DFS recursive vs iterative level-order BFS", sql: "Tree traversal in SQL using CTEs", design: "The Dataflow Model: Event Time vs Processing Time", estMinutes: 180 },
-    { day: 23, phase: 2, week: 4, title: "Trees: Lowest Common Ancestor & Diameter", pillar: "dsa", focus: "Subtree result aggregation & boundary passing", sql: "Hierarchical reporting structures in SQL", design: "Watermarks, Allowed Lateness & Triggers in Apache Beam", estMinutes: 180 },
-    { day: 24, phase: 2, week: 4, title: "Trees: Binary Tree Right Side View & Level Order", pillar: "dsa", focus: "Queue-based BFS level grouping", sql: "Window frame aggregates on time partitions", design: "Windowing in Apache Beam: Fixed, Sliding, Session", estMinutes: 180 },
-    { day: 25, phase: 2, week: 4, title: "Trees: Validate Binary Search Tree & Serializer", pillar: "dsa", focus: "Min/max boundary passing in recursion", sql: "Schema evolution & JSON serialization queries", design: "Apache Beam Pipeline Architecture: PCollection & PTransform", estMinutes: 180 },
-    { day: 26, phase: 2, week: 4, title: "Graphs: Number of Islands (Grid BFS/DFS)", pillar: "dsa", focus: "Matrix traversal, visited set vs in-place marking", sql: "Spatial grid queries & geohash aggregation", design: "System Design Archetype 2: Real-Time Clickstream Ingestion", estMinutes: 180 },
-    { day: 27, phase: 2, week: 4, title: "Graphs: Clone Graph & Connected Components", pillar: "dsa", focus: "Graph deep copy with hash map mapping", sql: "Graph adjacency list representation in relational tables", design: "System Design Archetype 2: Handling Late Data & Skew", estMinutes: 180 },
-    { day: 28, phase: 2, week: 4, title: "Graphs & DAGs: Course Schedule I (Cycle Detection)", pillar: "dsa", focus: "Directed graph cycle detection using 3-state DFS", sql: "Detecting circular dependencies in metadata tables", design: "Workflow Orchestration: Airflow vs Cloud Composer vs Temporal", estMinutes: 210 },
-    { day: 29, phase: 2, week: 5, title: "Graphs & DAGs: Course Schedule II (Topological Sort)", pillar: "dsa", focus: "Kahn's Algorithm (in-degree queue) for DAG execution", sql: "DAG execution order query in SQL", design: "Data Pipeline Scheduling: Backfilling & Idempotent DAGs", estMinutes: 210 },
-    { day: 30, phase: 2, week: 5, title: "Graphs & DAGs: Alien Dictionary (Lexicographical Order)", pillar: "dsa", focus: "Constructing DAG from ordered list + Topological sort", sql: "Custom sorting rules with CASE WHEN & Order keys", design: "Apache Spark Execution: Driver, Executors, Tasks, Stages", estMinutes: 210 },
-    { day: 31, phase: 2, week: 5, title: "Graphs: Graph Valid Tree & Redundant Connection", pillar: "dsa", focus: "Union-Find (Disjoint Set Union) data structure", sql: "Entity resolution & duplicate customer mapping", design: "Spark Shuffle Mechanics: Disk Spill, Partitions, Network I/O", estMinutes: 180 },
-    { day: 32, phase: 2, week: 5, title: "Heaps: Kth Largest Element in an Array", pillar: "dsa", focus: "Min-heap of size K vs QuickSelect O(N) average", sql: "Top-K per category using QUALIFY", design: "Spark Joins: Broadcast Hash Join vs Sort Merge Join", estMinutes: 180 },
-    { day: 33, phase: 2, week: 5, title: "Heaps: Find Median from Data Stream", pillar: "dsa", focus: "Two-heap pattern (Max-heap lower half, Min-heap upper)", sql: "Approximating medians: APPROX_QUANTILES in BigQuery", design: "Handling Data Skew in Spark: Salting Keys & Broadcasts", estMinutes: 210 },
-    { day: 34, phase: 2, week: 5, title: "Heaps: Merge K Sorted Lists", pillar: "dsa", focus: "Priority queue pointer tracking across K streams", sql: "Merging time-series event streams in SQL", design: "Spark Memory Management: Execution vs Storage Memory", estMinutes: 210 },
-    { day: 35, phase: 2, week: 5, title: "Intervals: Merge Intervals & Insert Interval", pillar: "dsa", focus: "Sort by start time + overlap boundary merging", sql: "Merging overlapping date periods in SQL", design: "System Design Archetype 3: YouTube View Count Pipeline", estMinutes: 180 },
-    { day: 36, phase: 2, week: 6, title: "Intervals: Non-overlapping Intervals & Meeting Rooms II", pillar: "dsa", focus: "Greedy end-time sorting and Min-heap room tracking", sql: "Resource concurrency & maximum overlapping sessions", design: "System Design Archetype 3: Deduplication & Eventual Consistency", estMinutes: 210 },
-    { day: 37, phase: 2, week: 6, title: "Tries: Implement Trie (Prefix Tree)", pillar: "dsa", focus: "TrieNode class, insertion, prefix search in Python", sql: "Prefix search optimization & inverted indexes", design: "System Design Archetype 4: Real-time Ad Click Fraud Detection", estMinutes: 180 },
-    { day: 38, phase: 2, week: 6, title: "Tries & Backtracking: Word Search II & Subsets", pillar: "dsa", focus: "Trie + DFS grid backtracking, pruning", sql: "Combinatorial rollups: GROUP BY CUBE / ROLLUP", design: "Sliding Window Aggregations in Apache Beam/Flink", estMinutes: 210 },
-    { day: 39, phase: 2, week: 6, title: "Greedy: Task Scheduler (Cooling Period)", pillar: "dsa", focus: "Frequency counting + mathematical formula for idle slots", sql: "Batch task scheduling with fair resource allocation", design: "System Design Archetype 5: ML Feature Store Architecture", estMinutes: 180 },
-    { day: 40, phase: 2, week: 6, title: "Cache Design: LRU Cache Implementation", pillar: "dsa", focus: "Hash map + Doubly Linked List in Python", sql: "Cache hit/miss ratio calculation queries", design: "Online (Low-latency) vs Offline (DW) Storage in Feature Stores", estMinutes: 210 },
-    { day: 41, phase: 2, week: 6, title: "Phase 2 Checkpoint: Advanced DSA & Spark Mock", pillar: "review", focus: "Timed DAG + Heap coding assessment", sql: "Complex data engineering SQL drill", design: "Spark vs Beam Architecture Defense Mock", estMinutes: 240 },
-    // Phase 3: Days 42 - 90 (System Design Mastery, Google Scenarios, G&L)
-    { day: 42, phase: 3, week: 7, title: "DE System Design: The 45-Minute Google Framework", pillar: "design", focus: "Scope, Scale, High-Level, Bottlenecks, Governance", sql: "Review SQL query optimization execution plans", design: "Mastering Scale Estimations: QPS, Throughput, Storage", estMinutes: 180 },
-    { day: 43, phase: 3, week: 7, title: "System Design 6: Financial Reconciliation & Idempotency", pillar: "design", focus: "Two-Phase Commits, Idempotent Sinks, Dead Letter Queues", sql: "Double-entry ledger reconciliation query", design: "Exactly-Once vs At-Least-Once Delivery Semantics", estMinutes: 210 },
-    { day: 44, phase: 3, week: 7, title: "System Design 7: GDPR Right to be Forgotten at Scale", pillar: "design", focus: "Tombstone deletion in Parquet/BigQuery, Lineage tracking", sql: "Cascade deletion auditing queries", design: "Immutable File Mutation: Copy-on-Write vs Merge-on-Read", estMinutes: 210 },
-    { day: 45, phase: 3, week: 7, title: "System Design 8: Real-Time IoT Telemetry & Alerting", pillar: "design", focus: "Dynamic thresholding, out-of-order handling, Bigtable time-series", sql: "Anomaly detection with rolling standard deviations in SQL", design: "Time-series storage engines: Bigtable vs InfluxDB vs ClickHouse", estMinutes: 210 },
-    { day: 46, phase: 3, week: 7, title: "System Design 9: Large-Scale Migration (Hadoop to GCP)", pillar: "design", focus: "Dual-write architecture, shadow testing, validation", sql: "Data reconciliation & diff verification queries", design: "Zero-Downtime Data Cutover Strategies", estMinutes: 210 },
-    { day: 47, phase: 3, week: 7, title: "System Design 10: Unified Google Search Log Pipeline", pillar: "design", focus: "PB-scale ingestion, privacy masking, multi-region replication", sql: "High-cardinality aggregation in BigQuery", design: "Multi-Region BigQuery & Cross-Region GCS Replication", estMinutes: 210 },
-    { day: 48, phase: 3, week: 7, title: "Googliness & Leadership: STAR Story 1 & 2", pillar: "leadership", focus: "Draft: Technical Conflict & Ambiguity (L5 level)", sql: "SQL speed drill: 5 queries in 30 mins", design: "Review System Design Bottlenecks (Skew & Hotspotting)", estMinutes: 180 },
-    { day: 49, phase: 3, week: 8, title: "Googliness & Leadership: STAR Story 3 & 4", pillar: "leadership", focus: "Draft: Major Production Outage & Mentorship", sql: "SQL speed drill: 5 queries in 30 mins", design: "Review Storage Engine Trade-offs (Spanner vs Bigtable vs BQ)", estMinutes: 180 },
-    { day: 50, phase: 3, week: 8, title: "Googliness & Leadership: STAR Story 5 & 6", pillar: "leadership", focus: "Draft: Cross-Team Influence & Failure/Post-Mortem", sql: "SQL speed drill: 5 queries in 30 mins", design: "Review Beam Watermarks & Triggers Edge Cases", estMinutes: 180 },
-    { day: 51, phase: 3, week: 8, title: "Googliness & Leadership: STAR Story 7 & 8", pillar: "leadership", focus: "Draft: Driving Architectural Standards & Innovation", sql: "SQL speed drill: 5 queries in 30 mins", design: "Review Data Governance, Lineage & Dataplex", estMinutes: 180 },
-    { day: 52, phase: 3, week: 8, title: "Full System Design Mock 1: Ad-Click Fraud", pillar: "design", focus: "Full 45-minute verbal walkthrough & diagramming", sql: "Qualify & Window Function mastery check", design: "Critique against Google L5 evaluation rubrics", estMinutes: 210 },
-    { day: 53, phase: 3, week: 8, title: "Full System Design Mock 2: YouTube View Counter", pillar: "design", focus: "Full 45-minute verbal walkthrough & diagramming", sql: "Sessionization mastery check", design: "Critique against Google L5 evaluation rubrics", estMinutes: 210 },
-    { day: 54, phase: 3, week: 8, title: "Full System Design Mock 3: CDC to BigQuery", pillar: "design", focus: "Full 45-minute verbal walkthrough & diagramming", sql: "Nested JSON & Array unnesting mastery check", design: "Critique against Google L5 evaluation rubrics", estMinutes: 210 },
-    { day: 55, phase: 3, week: 8, title: "Coding Mock 1: DAG Scheduling & Heaps", pillar: "dsa", focus: "2 Medium problems under 45 mins with verbal communication", sql: "Complex multi-table join drill", design: "Review System Design 6 & 7", estMinutes: 210 },
-    { day: 56, phase: 3, week: 9, title: "Coding Mock 2: Sliding Window & Intervals", pillar: "dsa", focus: "2 Medium problems under 45 mins with verbal communication", sql: "Cumulative cohort retention drill", design: "Review System Design 8 & 9", estMinutes: 210 },
-    { day: 57, phase: 3, week: 9, title: "Full G&L Mock Session", pillar: "leadership", focus: "Practice all 8 STAR stories out loud with 2-minute pitch", sql: "SQL review: Edge cases with NULL and partition skew", design: "Review System Design 10", estMinutes: 210 },
-    { day: 58, phase: 3, week: 9, title: "Final Polish: Weak Area Remediation", pillar: "review", focus: "Redo any failed DSA problems from Days 1-56", sql: "Review BigQuery dialect specifics", design: "Review DDIA key chapters (5, 6, 7, 10, 11)", estMinutes: 240 },
-    { day: 59, phase: 3, week: 9, title: "Final Full Loop Simulation: Coding + Design + G&L", pillar: "review", focus: "Simulate back-to-back rounds with timer", sql: "Simulate 45-minute SQL and Modeling round", design: "Simulate 45-minute System Design round", estMinutes: 300 },
-    { day: 60, phase: 3, week: 9, title: "Mid-Term Milestone Gating Evaluation", pillar: "review", focus: "Comprehensive Readiness Score Calculation", sql: "Final SQL benchmark", design: "Final Architecture benchmark", estMinutes: 240 }
+    { day: 21, phase: 1, week: 3, title: "Phase 1 Checkpoint: Mock Assessment 1", pillar: "review", focus: "Full Coding + SQL Mock simulation", sql: "Comprehensive SQL challenge", design: "Review Kimball Modeling & Storage trade-offs", estMinutes: 240 }
   ],
 
-  // 75 High-Yield Python DSA Problems Curated for Google Data Engineers
+  // 75 High-Yield Python DSA Problems
   dsaProblems: [
     {
       id: "dsa-1",
@@ -116,7 +286,7 @@ const PREP_DATA = {
       deRelevance: "Core for streaming analytics, real-time percentile monitoring (P50/P99 latency calculations).",
       problemStatement: "Design a data structure that supports adding numbers from a data stream and finding the median of all elements seen so far in O(1) or O(log N) time.",
       pythonStarter: "import heapq\n\nclass MedianFinder:\n    def __init__(self):\n        pass\n    def addNum(self, num: int) -> None:\n        pass\n    def findMedian(self) -> float:\n        pass",
-      optimalSolution: "import heapq\n\nclass MedianFinder:\n    def __init__(self):\n        self.small = [] # Max-heap (invert values)\n        self.large = [] # Min-heap\n\n    def addNum(self, num: int) -> None:\n        # Push to max-heap\n        heapq.heappush(self.small, -num)\n        \n        # Ensure every element in small <= every element in large\n        if self.small and self.large and (-self.small[0] > self.large[0]):\n            val = -heapq.heappop(self.small)\n            heapq.heappush(self.large, val)\n            \n        # Balance sizes (size diff <= 1)\n        if len(self.small) > len(self.large) + 1:\n            val = -heapq.heappop(self.small)\n            heapq.heappush(self.large, val)\n        elif len(self.large) > len(self.small):\n            val = heapq.heappop(self.large)\n            heapq.heappush(self.small, -val)\n\n    def findMedian(self) -> float:\n        if len(self.small) > len(self.large):\n            return float(-self.small[0])\n        return (-self.small[0] + self.large[0]) / 2.0",
+      optimalSolution: "import heapq\n\nclass MedianFinder:\n    def __init__(self):\n        self.small = [] # Max-heap (invert values)\n        self.large = [] # Min-heap\n\n    def addNum(self, num: int) -> None:\n        heapq.heappush(self.small, -num)\n        if self.small and self.large and (-self.small[0] > self.large[0]):\n            val = -heapq.heappop(self.small)\n            heapq.heappush(self.large, val)\n        if len(self.small) > len(self.large) + 1:\n            val = -heapq.heappop(self.small)\n            heapq.heappush(self.large, val)\n        elif len(self.large) > len(self.small):\n            val = heapq.heappop(self.large)\n            heapq.heappush(self.small, -val)\n\n    def findMedian(self) -> float:\n        if len(self.small) > len(self.large):\n            return float(-self.small[0])\n        return (-self.small[0] + self.large[0]) / 2.0",
       timeComplexity: "addNum: O(log N), findMedian: O(1)",
       spaceComplexity: "O(N) to store stream elements",
       interviewerTips: "Explain how in distributed streaming (Beam/Spark), exact median is expensive so algorithms like T-Digest or HLL (HyperLogLog) are used for approximate streaming percentiles."
@@ -316,7 +486,7 @@ ORDER BY total_revenue DESC;`,
     }
   ],
 
-  // Flashcards for Office Micro-Drills (5-minute study intervals)
+  // Flashcards for Office Micro-Drills
   flashcards: [
     { id: "fc-1", category: "BigQuery", q: "What is the difference between Partitioning and Clustering in BigQuery?", a: "Partitioning splits tables into physical segments based on a date/timestamp or integer range (pruning partitions reduces bytes scanned and cost). Clustering physically sorts data within each partition by up to 4 columns (enhances filter/aggregation performance and co-locates related data)." },
     { id: "fc-2", category: "Apache Beam", q: "What is the difference between Event Time and Processing Time?", a: "Event Time is the timestamp when the event actually occurred on the client/device. Processing Time is the timestamp when the event is processed by a worker in the data pipeline. Skew between them is tracked using Watermarks." },

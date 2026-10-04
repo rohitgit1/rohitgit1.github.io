@@ -1,4 +1,4 @@
-/* Google L5 Data Engineer Prep Portal Design System */
+/* Google L5 Career & Preparation Portal Design System */
 
 :root {
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -46,7 +46,7 @@ body.stealth-mode {
   --g-green-glow: transparent;
 }
 body.stealth-mode .brand-title::after {
-  content: " Enterprise Telemetry Console";
+  content: " [Enterprise Data Console]";
   color: var(--text-subtle);
   font-size: 0.75rem;
 }
@@ -196,6 +196,7 @@ body {
   cursor: pointer;
   border: none;
   transition: all 0.2s ease;
+  text-decoration: none;
 }
 
 .btn-primary {
@@ -249,22 +250,31 @@ body {
   padding: 1.25rem 0.75rem;
 }
 
+.nav-section-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  letter-spacing: 0.05em;
+  padding: 6px 12px 2px 12px;
+}
+
 .nav-menu {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .nav-item {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 14px;
+  padding: 9px 14px;
   border-radius: var(--radius-sm);
   background: transparent;
   color: var(--text-muted);
   border: none;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 500;
   cursor: pointer;
   text-align: left;
@@ -285,10 +295,15 @@ body {
 
 .nav-item .badge {
   margin-left: auto;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   background-color: rgba(255, 255, 255, 0.08);
   padding: 2px 6px;
   border-radius: 10px;
+}
+.badge-pulse {
+  background-color: rgba(234, 67, 53, 0.2) !important;
+  color: #fca5a5 !important;
+  font-weight: 700;
 }
 
 .sidebar-footer {
@@ -373,6 +388,375 @@ body {
   background-color: rgba(52, 168, 83, 0.15);
   color: #86efac;
   border: 1px solid rgba(52, 168, 83, 0.3);
+}
+
+/* 0. SMART CAREER CALCULATOR & ROLES RADAR */
+.calculator-card {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.6));
+  border: 1px solid var(--border-active);
+  box-shadow: var(--shadow-card);
+  margin-bottom: 2rem;
+}
+
+.calculator-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.top-recommended-badge {
+  background-color: rgba(52, 168, 83, 0.15);
+  border: 1px solid rgba(52, 168, 83, 0.35);
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  text-align: right;
+}
+.top-recommended-badge .badge-label {
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  color: #86efac;
+  margin-bottom: 2px;
+}
+.top-recommended-badge strong {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: #ffffff;
+}
+
+.sliders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem 2rem;
+}
+
+.slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.slider-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.slider-val {
+  color: var(--g-blue);
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.slider-input {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  outline: none;
+  accent-color: var(--g-blue);
+  cursor: pointer;
+}
+
+/* Roles Grid */
+.roles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 1.5rem;
+}
+
+.role-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.25rem;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.role-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.role-card.highlighted-trojan {
+  border: 1px solid var(--g-green);
+  box-shadow: 0 0 25px rgba(52, 168, 83, 0.2);
+}
+
+.role-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.role-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.role-org {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+.role-odds-badge {
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.odds-high {
+  background-color: rgba(52, 168, 83, 0.2);
+  color: #86efac;
+  border: 1px solid rgba(52, 168, 83, 0.4);
+}
+.odds-moderate {
+  background-color: rgba(251, 188, 5, 0.2);
+  color: #fde047;
+  border: 1px solid rgba(251, 188, 5, 0.4);
+}
+.odds-tough {
+  background-color: rgba(234, 67, 53, 0.2);
+  color: #fca5a5;
+  border: 1px solid rgba(234, 67, 53, 0.4);
+}
+
+.role-comp {
+  font-size: 0.8rem;
+  color: #cbd5e1;
+  background-color: rgba(255, 255, 255, 0.04);
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+}
+
+.cheat-code-box {
+  background-color: rgba(66, 133, 244, 0.08);
+  border-left: 3px solid var(--g-blue);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.84rem;
+  color: #bfdbfe;
+  line-height: 1.45;
+}
+.cheat-code-box strong {
+  color: #ffffff;
+  display: block;
+  margin-bottom: 2px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.rounds-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.round-item {
+  display: flex;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.round-item strong {
+  color: var(--text-main);
+  white-space: nowrap;
+}
+
+.google-jobs-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 9px;
+  border-radius: var(--radius-sm);
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+.google-jobs-btn:hover {
+  background-color: var(--g-blue);
+  border-color: var(--g-blue);
+  color: #ffffff;
+}
+
+/* READING VAULT LAYOUT */
+.reading-vault-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 1.5rem;
+  min-height: 600px;
+}
+
+.vault-nav-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vault-nav-item {
+  padding: 14px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.vault-nav-item:hover {
+  background-color: var(--bg-surface-elevated);
+}
+.vault-nav-item.active {
+  border-left: 3px solid var(--g-blue);
+  background-color: rgba(66, 133, 244, 0.1);
+}
+.vault-nav-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.vault-nav-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.vault-content-panel {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.paper-title {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.paper-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 0.82rem;
+  color: var(--g-blue);
+  margin-top: 4px;
+}
+
+.takeaways-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+}
+.takeaways-list li {
+  padding-left: 14px;
+  border-left: 2px solid var(--g-green);
+  font-size: 0.88rem;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+.l5-context-box {
+  background-color: rgba(251, 188, 5, 0.08);
+  border-left: 3px solid var(--g-yellow);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  color: #fde68a;
+  line-height: 1.5;
+}
+.l5-context-box strong {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #fbbf24;
+  margin-bottom: 2px;
+}
+
+/* REAL GOOGLE QUESTIONS BANK */
+.questions-filters-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+.search-box input {
+  width: 100%;
+  padding: 12px 16px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  font-size: 0.9rem;
+  outline: none;
+}
+.search-box input:focus {
+  border-color: var(--g-blue);
+}
+.role-question-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.questions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 1.25rem;
+}
+
+.question-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.question-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.question-body {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #f1f5f9;
+  font-weight: 500;
+}
+
+.question-hints-box {
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  color: #94a3b8;
+  line-height: 1.45;
+}
+.question-hints-box strong {
+  color: var(--g-green);
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  margin-bottom: 2px;
 }
 
 /* Stats Grid */
@@ -1050,7 +1434,7 @@ body {
   .sidebar {
     display: none;
   }
-  .dashboard-split, .dsa-workspace, .sql-workspace {
+  .dashboard-split, .dsa-workspace, .sql-workspace, .reading-vault-layout {
     grid-template-columns: 1fr;
   }
   .flashcard-card {
