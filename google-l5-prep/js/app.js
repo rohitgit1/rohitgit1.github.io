@@ -38,6 +38,10 @@ class PrepPortalApp {
     this.mockRunning = false;
     this.mockInterval = null;
 
+    // In-browser WebAssembly Pyodide engine
+    this.pyodide = null;
+    this.pyodideLoading = false;
+
     this.init();
   }
 
@@ -46,6 +50,7 @@ class PrepPortalApp {
     this.applyTheme(this.state.theme);
     this.setupEventListeners();
     this.renderAll();
+    this.initPyodide();
   }
 
   // Theme Management (☀️ Light / 🌙 Dark / 🕶️ Office Stealth)
@@ -270,10 +275,27 @@ class PrepPortalApp {
     });
   }
 
+  speakMockPrompt() {
+    if (!('speechSynthesis' in window)) {
+      alert("Text-to-speech is not supported in this browser.");
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const promptText = document.getElementById("mockPromptDisplay")?.textContent || "";
+    const titleText = document.getElementById("mockTitleDisplay")?.textContent || "";
+    const utterance = new SpeechSynthesisUtterance(`Google Mock Interview: ${titleText}. Here is your prompt: ${promptText}. Your 45 minutes start now.`);
+    utterance.rate = 1.0;
+    utterance.pitch = 1.0;
+    window.speechSynthesis.speak(utterance);
+    this.startMockTimer();
+  }
+
   // Render All Views
   renderAll() {
     this.renderHeader();
     this.renderCareerRadar();
+    this.renderOutreach();
+    this.renderGrillingSimulator();
     this.renderResumeOptimizer();
     this.renderMockSimulator();
     this.renderDashboard();
@@ -301,16 +323,16 @@ class PrepPortalApp {
     const glCount = Object.keys(this.state.leadershipNotes).filter(k => this.state.leadershipNotes[k].action).length;
 
     // Stat values
-    document.getElementById("statDsaSolved").textContent = dsaCount;
-    document.getElementById("statSqlSolved").textContent = sqlCount;
-    document.getElementById("statSysSolved").textContent = sysCount;
-    document.getElementById("statGlSolved").textContent = glCount;
+    if (document.getElementById("statDsaSolved")) document.getElementById("statDsaSolved").textContent = dsaCount;
+    if (document.getElementById("statSqlSolved")) document.getElementById("statSqlSolved").textContent = sqlCount;
+    if (document.getElementById("statSysSolved")) document.getElementById("statSysSolved").textContent = sysCount;
+    if (document.getElementById("statGlSolved")) document.getElementById("statGlSolved").textContent = glCount;
 
     // Stat bars
-    document.getElementById("statDsaBar").style.width = `${Math.min(100, (dsaCount / 75) * 100)}%`;
-    document.getElementById("statSqlBar").style.width = `${Math.min(100, (sqlCount / 20) * 100)}%`;
-    document.getElementById("statSysBar").style.width = `${Math.min(100, (sysCount / 10) * 100)}%`;
-    document.getElementById("statGlBar").style.width = `${Math.min(100, (glCount / 8) * 100)}%`;
+    if (document.getElementById("statDsaBar")) document.getElementById("statDsaBar").style.width = `${Math.min(100, (dsaCount / 75) * 100)}%`;
+    if (document.getElementById("statSqlBar")) document.getElementById("statSqlBar").style.width = `${Math.min(100, (sqlCount / 20) * 100)}%`;
+    if (document.getElementById("statSysBar")) document.getElementById("statSysBar").style.width = `${Math.min(100, (sysCount / 10) * 100)}%`;
+    if (document.getElementById("statGlBar")) document.getElementById("statGlBar").style.width = `${Math.min(100, (glCount / 8) * 100)}%`;
 
     // Overall readiness
     const overallWeight = (
@@ -320,9 +342,10 @@ class PrepPortalApp {
       (glCount / 8) * 15
     );
     const rounded = Math.round(overallWeight);
-    document.getElementById("readinessPercent").textContent = `${rounded}%`;
-    document.getElementById("masterProgressBar").style.width = `${Math.max(4, rounded)}%`;
-    document.getElementById("dsaCountBadge").textContent = `${dsaCount}/75`;
+    if (document.getElementById("readinessPercent")) document.getElementById("readinessPercent").textContent = `${rounded}%`;
+    if (document.getElementById("masterProgressBar")) document.getElementById("masterProgressBar").style.width = `${Math.max(4, rounded)}%`;
+    const dsaCountBadge = document.getElementById("dsaCountBadge");
+    if (dsaCountBadge) dsaCountBadge.textContent = `${dsaCount}/75`;
   }
 
   // 0. SMART CAREER RADAR
@@ -424,7 +447,78 @@ class PrepPortalApp {
     }).join("");
   }
 
-  // 1. GOOGLE RESUME BULLETS OPTIMIZER
+  // 1. RECRUITER & REFERRAL OUTREACH ENGINE
+  renderOutreach() {
+    const container = document.getElementById("outreachGrid");
+    if (!container || !PREP_DATA.outreachTemplates) return;
+
+    container.innerHTML = PREP_DATA.outreachTemplates.map(tpl => `
+      <div class="outreach-card">
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <span class="badge badge-accent">${tpl.target}</span>
+            <span style="font-size:0.75rem; color:var(--g-green); font-weight:600;">High Conversion</span>
+          </div>
+          <h3 style="font-family:var(--font-display); font-size:1.05rem; margin-top:8px; color:var(--text-main);">${tpl.subject}</h3>
+        </div>
+
+        <div class="outreach-body" id="body-${tpl.id}">${tpl.body}</div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+          <span style="font-size:0.75rem; color:var(--text-subtle);">Tip: Personalize [brackets] with your exact stats</span>
+          <button class="btn btn-sm btn-primary" onclick="app.copyOutreach('${tpl.id}')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Copy Message
+          </button>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  copyOutreach(id) {
+    const tpl = PREP_DATA.outreachTemplates.find(t => t.id === id);
+    if (tpl) {
+      navigator.clipboard.writeText(tpl.body);
+      alert("Outreach template copied to clipboard! Customize the bracketed details before sending on LinkedIn.");
+    }
+  }
+
+  // 2. L5 GRILLING SIMULATOR
+  renderGrillingSimulator() {
+    const container = document.getElementById("grillGrid");
+    if (!container || !PREP_DATA.grillingScenarios) return;
+
+    container.innerHTML = PREP_DATA.grillingScenarios.map((s, idx) => `
+      <div class="grill-card" id="grill-card-${s.id}">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span class="badge" style="background:var(--g-red); color:#ffffff; font-weight:700;">Scenario #${idx + 1}: Architectural Edge Case</span>
+          <span style="font-size:0.8rem; color:var(--text-subtle); font-family:var(--font-mono);">L5 System Design Bar</span>
+        </div>
+
+        <div class="grill-question-banner">
+          <strong>Interviewer Question:</strong> ${s.interviewerQuestion}
+        </div>
+
+        <div class="grill-comparison-grid">
+          <div class="trap-box">
+            <strong>❌ Junior / Mid-Level Trap Response:</strong>
+            <p style="margin-top:6px; font-style:italic; color:var(--text-main);">"${s.juniorTrapResponse}"</p>
+            <div style="margin-top:10px; padding-top:8px; border-top:1px solid rgba(234,67,53,0.2); color:var(--g-red); font-size:0.8rem;">
+              <strong>Why This Fails at Google:</strong>
+              ${s.whyJuniorFails}
+            </div>
+          </div>
+
+          <div class="staff-box">
+            <strong>✓ Google Senior (L5) / Staff Architect Response:</strong>
+            <p style="margin-top:6px; line-height:1.55; color:var(--text-main); font-size:0.88rem;">${s.seniorL5Response}</p>
+          </div>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  // 3. GOOGLE RESUME BULLETS OPTIMIZER
   renderResumeOptimizer() {
     const list = document.getElementById("resumeTemplatesList");
     if (!list) return;
@@ -764,12 +858,19 @@ class PrepPortalApp {
       <div class="code-container">
         <div class="code-header">
           <span>Python 3 Interactive Scratchpad</span>
-          <button class="btn btn-sm btn-outline" onclick="app.resetDsaCode('${prob.id}')">Reset Starter</button>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-sm btn-outline" onclick="app.resetDsaCode('${prob.id}')">Reset Starter</button>
+            <button class="btn btn-sm" id="runBtn-${prob.id}" onclick="app.runDsaCode('${prob.id}')" style="background:#1e8e3e; border:1px solid #1e8e3e; color:#fff; font-weight:600;">
+              ▶ Run Tests (Pyodide Wasm)
+            </button>
+          </div>
         </div>
         <textarea class="code-editor" id="dsaEditor" oninput="app.saveDsaCode('${prob.id}', this.value)">${userCode}</textarea>
       </div>
 
-      <div style="display:flex; gap:10px;">
+      <div class="test-terminal" id="terminal-${prob.id}" style="display:none; margin-top:12px;"></div>
+
+      <div style="display:flex; gap:10px; margin-top:12px;">
         <button class="btn btn-outline" onclick="document.getElementById('solBox-${prob.id}').style.display = document.getElementById('solBox-${prob.id}').style.display === 'none' ? 'block' : 'none'">
           Toggle Optimal Solution & Interviewer Tips
         </button>
@@ -811,6 +912,130 @@ class PrepPortalApp {
     this.saveState();
     this.renderDsaDojo();
     this.selectDsaProblem(id);
+  }
+
+  // In-Browser CPython 3.12 WebAssembly Engine
+  async initPyodide() {
+    const badge = document.getElementById("pyodideStatusBadge");
+    if (this.pyodide || this.pyodideLoading) return;
+    this.pyodideLoading = true;
+
+    try {
+      if (badge) {
+        badge.textContent = "Python Engine: Loading CPython 3.12...";
+        badge.style.background = "#d97706";
+        badge.style.color = "#ffffff";
+      }
+
+      if (typeof loadPyodide === "undefined") {
+        console.warn("loadPyodide script not yet loaded, waiting 1s...");
+        await new Promise(r => setTimeout(r, 1000));
+      }
+
+      if (typeof loadPyodide === "function") {
+        this.pyodide = await loadPyodide({
+          indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/"
+        });
+        if (badge) {
+          badge.textContent = "Python Engine: Ready (CPython 3.12 Wasm)";
+          badge.style.background = "#1e8e3e";
+          badge.style.color = "#ffffff";
+        }
+      } else {
+        throw new Error("loadPyodide unavailable");
+      }
+    } catch (err) {
+      console.warn("Pyodide CDN initialization fallback:", err);
+      if (badge) {
+        badge.textContent = "Python Engine: Client Mode";
+        badge.style.background = "#475569";
+        badge.style.color = "#ffffff";
+      }
+    } finally {
+      this.pyodideLoading = false;
+    }
+  }
+
+  async runDsaCode(problemId) {
+    const prob = PREP_DATA.dsaProblems.find(p => p.id === problemId);
+    if (!prob) return;
+
+    const term = document.getElementById(`terminal-${problemId}`);
+    const runBtn = document.getElementById(`runBtn-${problemId}`);
+    if (!term) return;
+
+    term.style.display = "block";
+    term.textContent = "⏳ Executing test suite in CPython 3.12 WebAssembly sandbox...\n";
+    if (runBtn) {
+      runBtn.disabled = true;
+      runBtn.textContent = "⏳ Running...";
+    }
+
+    if (!this.pyodide) {
+      term.textContent += "⚙️ Initializing Pyodide runtime (first run downloads ~6MB WebAssembly binary)...\n";
+      await this.initPyodide();
+    }
+
+    if (!this.pyodide) {
+      term.textContent += "⚠️ WebAssembly Python engine could not be initialized (network offline or CDN blocked). Please run code in local Python or verify connectivity.";
+      if (runBtn) {
+        runBtn.disabled = false;
+        runBtn.textContent = "▶ Run Tests (Pyodide Wasm)";
+      }
+      return;
+    }
+
+    const userCode = document.getElementById("dsaEditor")?.value || prob.pythonStarter;
+    const testHarness = prob.testHarness;
+
+    const fullScript = `
+import sys
+import io
+
+_stdout_buffer = io.StringIO()
+_orig_stdout = sys.stdout
+sys.stdout = _stdout_buffer
+
+try:
+${userCode.split('\n').map(l => '    ' + l).join('\n')}
+
+${testHarness.split('\n').map(l => '    ' + l).join('\n')}
+finally:
+    sys.stdout = _orig_stdout
+
+_final_output = _stdout_buffer.getvalue()
+`;
+
+    try {
+      const t0 = performance.now();
+      await this.pyodide.runPythonAsync(fullScript);
+      const output = this.pyodide.globals.get("_final_output");
+      const elapsed = (performance.now() - t0).toFixed(1);
+
+      term.textContent = `▶ Execution finished in ${elapsed} ms (CPython 3.12 Wasm)\n=======================================================\n${output}`;
+
+      if (output && output.includes("PASSED") && !output.includes("FAILED")) {
+        term.textContent += "\n🎉 100% OF TESTS PASSED! Solution verified for Google L5.";
+        if (!this.state.solvedDsa.includes(problemId)) {
+          this.state.solvedDsa.push(problemId);
+          this.saveState();
+          this.updateStats();
+          this.renderDsaDojo();
+        }
+        if (typeof confetti === "function") {
+          confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
+        }
+      } else if (output && output.includes("FAILED")) {
+        term.textContent += "\n⚠️ Some test assertions failed. Inspect the output above and refine your logic.";
+      }
+    } catch (err) {
+      term.textContent += `\n❌ Python Runtime / Syntax Error:\n${err.message}`;
+    } finally {
+      if (runBtn) {
+        runBtn.disabled = false;
+        runBtn.textContent = "▶ Run Tests (Pyodide Wasm)";
+      }
+    }
   }
 
   // SQL Studio

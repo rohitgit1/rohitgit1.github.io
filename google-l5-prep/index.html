@@ -4,11 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Google Career & L5 Data Mastery Portal | Maximize Offer Odds</title>
-  <meta name="description" content="Strategic Google Career & Interview Preparation Portal: Multi-Role Matcher, DSA in Python, Advanced SQL, Distributed System Design, Mock Simulator, and Office Study Vault.">
+  <meta name="description" content="Strategic Google Career & Interview Preparation Portal: Pyodide WebAssembly Python Runner, Multi-Role Matcher, L5 Grilling Simulator, and Outreach Engine.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <!-- In-Browser CPython 3.12 WebAssembly Engine -->
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js" defer></script>
+  <!-- Confetti Celebration -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
 </head>
 <body class="theme-dark">
   <!-- Top Application Bar -->
@@ -76,6 +80,10 @@
           <span>Google Roles Radar</span>
           <span class="badge badge-pulse">Hot</span>
         </button>
+        <button class="nav-item" data-tab="outreach">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <span>Recruiter Cold DMs</span>
+        </button>
         <button class="nav-item" data-tab="resume">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
           <span>Google Resume (XYZ)</span>
@@ -90,15 +98,20 @@
         </button>
 
         <div class="nav-section-label" style="margin-top:10px;">PRACTICE & DOJO</div>
+        <button class="nav-item" data-tab="dsa">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          <span>Live Python Dojo</span>
+          <span class="badge" style="background:#1e8e3e; color:#fff;">Pyodide</span>
+        </button>
+        <button class="nav-item" data-tab="grill">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          <span>L5 Grilling Simulator</span>
+          <span class="badge" style="background:var(--g-red); color:#fff;">Senior</span>
+        </button>
         <button class="nav-item" data-tab="mock">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
           <span>Mock Interview Mode</span>
           <span class="badge" style="background:var(--g-blue); color:#fff;">Live</span>
-        </button>
-        <button class="nav-item" data-tab="dsa">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-          <span>Python DSA Dojo</span>
-          <span class="badge" id="dsaCountBadge">0/75</span>
         </button>
         <button class="nav-item" data-tab="sql">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
@@ -191,11 +204,34 @@
           </div>
         </div>
 
-        <!-- Strategic Roles Comparison Cards -->
         <div class="roles-grid" id="rolesGrid"></div>
       </section>
 
-      <!-- 1. GOOGLE RESUME BULLETS OPTIMIZER VIEW -->
+      <!-- 1. RECRUITER & REFERRAL OUTREACH ENGINE VIEW -->
+      <section id="view-outreach" class="content-view">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">Google Recruiter & Referral Cold Outreach Engine</h1>
+            <p class="view-subtitle">High-conversion LinkedIn InMail and cold DM templates designed for 5+ year data candidates</p>
+          </div>
+        </div>
+
+        <div class="outreach-grid" id="outreachGrid"></div>
+      </section>
+
+      <!-- 2. L5 GRILLING SIMULATOR VIEW -->
+      <section id="view-grill" class="content-view">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">Google L5 Grilling Simulator (Architectural Edge-Case Traps)</h1>
+            <p class="view-subtitle">Learn the exact difference between what Junior Engineers say and how Staff/L5 Google Engineers respond</p>
+          </div>
+        </div>
+
+        <div class="grill-grid" id="grillGrid"></div>
+      </section>
+
+      <!-- 3. GOOGLE RESUME BULLETS OPTIMIZER VIEW -->
       <section id="view-resume" class="content-view">
         <div class="view-header">
           <div>
@@ -241,7 +277,7 @@
         </div>
       </section>
 
-      <!-- 2. MOCK INTERVIEW SIMULATOR VIEW -->
+      <!-- 4. MOCK INTERVIEW SIMULATOR VIEW -->
       <section id="view-mock" class="content-view">
         <div class="view-header">
           <div>
@@ -260,10 +296,11 @@
             </div>
             <div style="text-align:right;">
               <div class="mock-countdown" id="mockCountdownDisplay">45:00</div>
-              <div style="display:flex; gap:6px; margin-top:4px;">
+              <div style="display:flex; gap:6px; margin-top:4px; flex-wrap:wrap; justify-content:flex-end;">
                 <button class="btn btn-sm btn-primary" id="btnStartMock">Start 45m Timer</button>
                 <button class="btn btn-sm btn-outline" id="btnPauseMock">Pause</button>
                 <button class="btn btn-sm btn-outline" id="btnResetMock">Reset</button>
+                <button class="btn btn-sm btn-outline" id="btnVoiceMock" onclick="app.speakMockPrompt()" title="Listen to interviewer prompt aloud">🔊 Voice Prompt</button>
               </div>
             </div>
           </div>
@@ -285,7 +322,7 @@
         </div>
       </section>
 
-      <!-- 3. DASHBOARD VIEW -->
+      <!-- 5. DASHBOARD VIEW -->
       <section id="view-dashboard" class="content-view">
         <div class="view-header">
           <div>
@@ -294,7 +331,6 @@
           </div>
         </div>
 
-        <!-- Metric Stat Cards -->
         <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-icon icon-blue">
@@ -341,7 +377,6 @@
           </div>
         </div>
 
-        <!-- Today's Execution Mission -->
         <div class="dashboard-split">
           <div class="card mission-card">
             <div class="card-header">
@@ -354,32 +389,53 @@
             <div class="mission-tasks" id="todayMissionTasks"></div>
           </div>
 
-          <!-- Quick Launch / Office Productivity -->
           <div class="card office-mode-card">
             <h3 class="card-title">Corporate Office Downtime Playbook</h3>
             <p class="text-muted">Turn 100% of your office downtime into high-leverage Google prep without drawing attention:</p>
             <ul class="strategy-list">
               <li>
-                <strong>Office Deep Study (30–45m):</strong> Open <em>Architecture Vault</em> to read Google Dremel or Spanner whitepapers (looks like technical documentation).
+                <strong>Office Deep Study (30–45m):</strong> Open <em>Architecture Vault</em> or <em>L5 Grilling Simulator</em> to master edge-case traps.
               </li>
               <li>
-                <strong>Resume Polish (15m):</strong> Use the <em>Google Resume (XYZ)</em> tab to rewrite your projects in official Google format.
+                <strong>Recruiter Outreach (15m):</strong> Copy battle-tested DMs in <em>Recruiter Cold DMs</em> to reach Google sourcers directly.
               </li>
               <li>
-                <strong>Quick Coffee Break (10m):</strong> Flip 5 flashcards in <em>Office Micro-Drills</em>.
+                <strong>Live Coding Drill (20m):</strong> Run Python algorithms in <em>Live Python Dojo</em> with live WebAssembly test execution!
               </li>
               <li>
-                <strong>Evening at Home:</strong> Active Python coding in <em>DSA Pattern Dojo</em> or run a <em>Mock Interview</em>.
+                <strong>Evening at Home:</strong> Deep-dive into <em>Mock Interview Mode</em>.
               </li>
             </ul>
             <div class="card-actions">
-              <button class="btn btn-primary" onclick="app.switchTab('reading-vault')">Open Architecture Vault</button>
+              <button class="btn btn-primary" onclick="app.switchTab('dsa')">Open Live Python Dojo</button>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- 4. ARCHITECTURE READING VAULT VIEW -->
+      <!-- 6. LIVE PYTHON DSA DOJO (WITH IN-BROWSER CPYTHON EXECUTION) -->
+      <section id="view-dsa" class="content-view">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">Live Python DSA Pattern Dojo</h1>
+            <p class="view-subtitle">Run CPython 3.12 directly in your browser with automated test validation via WebAssembly</p>
+          </div>
+          <div id="pyodideStatusBadge" class="status-pill status-ready" style="font-family:var(--font-mono); font-size:0.75rem;">
+            Python Engine: Loading Pyodide...
+          </div>
+        </div>
+
+        <div class="category-filters" id="dsaCategoryFilters" style="margin-bottom:1.5rem;"></div>
+
+        <div class="dsa-workspace">
+          <div class="dsa-list-panel" id="dsaProblemList"></div>
+          <div class="dsa-detail-panel" id="dsaWorkspace">
+            <div class="empty-state">Select a problem on the left to start practicing.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. ARCHITECTURE READING VAULT VIEW -->
       <section id="view-reading-vault" class="content-view">
         <div class="view-header">
           <div>
@@ -394,7 +450,7 @@
         </div>
       </section>
 
-      <!-- 5. REAL GOOGLE INTERVIEW QUESTIONS BANK VIEW -->
+      <!-- 8. REAL GOOGLE INTERVIEW QUESTIONS BANK VIEW -->
       <section id="view-questions" class="content-view">
         <div class="view-header">
           <div>
@@ -413,7 +469,7 @@
         <div class="questions-grid" id="questionsGrid"></div>
       </section>
 
-      <!-- 6. 90-DAY SCHEDULE VIEW -->
+      <!-- 9. 90-DAY SCHEDULE VIEW -->
       <section id="view-schedule" class="content-view">
         <div class="view-header">
           <div>
@@ -431,25 +487,7 @@
         <div class="schedule-timeline" id="scheduleTimeline"></div>
       </section>
 
-      <!-- 7. DSA PATTERN DOJO VIEW -->
-      <section id="view-dsa" class="content-view">
-        <div class="view-header">
-          <div>
-            <h1 class="view-title">Python DSA Pattern Dojo</h1>
-            <p class="view-subtitle">75 High-Yield DE Patterns: DAGs, Heaps, Intervals, Sliding Windows & HashMaps</p>
-          </div>
-          <div class="category-filters" id="dsaCategoryFilters"></div>
-        </div>
-
-        <div class="dsa-workspace">
-          <div class="dsa-list-panel" id="dsaProblemList"></div>
-          <div class="dsa-detail-panel" id="dsaWorkspace">
-            <div class="empty-state">Select a problem on the left to start practicing.</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 8. SQL & MODELING STUDIO VIEW -->
+      <!-- 10. SQL & MODELING STUDIO VIEW -->
       <section id="view-sql" class="content-view">
         <div class="view-header">
           <div>
@@ -466,7 +504,7 @@
         </div>
       </section>
 
-      <!-- 9. SYSTEM DESIGN VAULT VIEW -->
+      <!-- 11. SYSTEM DESIGN VAULT VIEW -->
       <section id="view-system-design" class="content-view">
         <div class="view-header">
           <div>
@@ -478,7 +516,7 @@
         <div class="system-design-grid" id="systemDesignGrid"></div>
       </section>
 
-      <!-- 10. LEADERSHIP (G&L) VIEW -->
+      <!-- 12. LEADERSHIP (G&L) VIEW -->
       <section id="view-leadership" class="content-view">
         <div class="view-header">
           <div>
@@ -490,7 +528,7 @@
         <div class="leadership-grid" id="leadershipGrid"></div>
       </section>
 
-      <!-- 11. FLASHCARDS VIEW -->
+      <!-- 13. FLASHCARDS VIEW -->
       <section id="view-flashcards" class="content-view">
         <div class="view-header">
           <div>

@@ -112,7 +112,435 @@ const PREP_DATA = {
     }
   ],
 
-  // Google Resume XYZ Bullet Templates (Google Inc. Official Formula: Accomplished [X] as measured by [Y], by doing [Z])
+  // 75 High-Yield Python DSA Problems with Automated In-Browser Test Suites
+  dsaProblems: [
+    {
+      id: "dsa-1",
+      title: "Two Sum",
+      category: "Arrays & Hashing",
+      difficulty: "Easy",
+      deRelevance: "Fundamental lookup pattern. Key for fast in-memory joins and entity matching.",
+      problemStatement: "Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`. You may assume each input has exactly one solution.",
+      pythonStarter: "def twoSum(nums: list[int], target: int) -> list[int]:\n    # Implement here\n    pass",
+      optimalSolution: "def twoSum(nums: list[int], target: int) -> list[int]:\n    seen = {}\n    for i, num in enumerate(nums):\n        diff = target - num\n        if diff in seen:\n            return [seen[diff], i]\n        seen[num] = i\n    return []",
+      testHarness: `
+def run_tests():
+    test_cases = [
+        ([2, 7, 11, 15], 9, [0, 1]),
+        ([3, 2, 4], 6, [1, 2]),
+        ([3, 3], 6, [0, 1]),
+        ([-1, -2, -3, -4, -5], -8, [2, 4])
+    ]
+    results = []
+    for i, (nums, target, expected) in enumerate(test_cases):
+        actual = twoSum(nums, target)
+        passed = sorted(actual) == sorted(expected)
+        results.append(f"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})")
+    return "\\n".join(results)
+print(run_tests())
+`,
+      timeComplexity: "O(N) single pass",
+      spaceComplexity: "O(N) hash map",
+      interviewerTips: "Mention single-pass vs two-pass. Discuss memory overhead when N is billions of records (why streaming requires distributed hashing or partition by key)."
+    },
+    {
+      id: "dsa-2",
+      title: "Subarray Sum Equals K",
+      category: "Arrays & Hashing",
+      difficulty: "Medium",
+      deRelevance: "Essential for financial reconciliation, rolling window balance calculations, and log metric analysis.",
+      problemStatement: "Given an array of integers `nums` and an integer `k`, return the total number of subarrays whose sum equals to `k`.",
+      pythonStarter: "def subarraySum(nums: list[int], k: int) -> int:\n    # Implement prefix sum with hash map\n    pass",
+      optimalSolution: "def subarraySum(nums: list[int], k: int) -> int:\n    count = 0\n    current_sum = 0\n    prefix_sums = {0: 1}\n    for num in nums:\n        current_sum += num\n        if current_sum - k in prefix_sums:\n            count += prefix_sums[current_sum - k]\n        prefix_sums[current_sum] = prefix_sums.get(current_sum, 0) + 1\n    return count",
+      testHarness: `
+def run_tests():
+    test_cases = [
+        ([1, 1, 1], 2, 2),
+        ([1, 2, 3], 3, 2),
+        ([1, -1, 0], 0, 3),
+        ([3, 4, 7, 2, -3, 1, 4, 2], 7, 4)
+    ]
+    results = []
+    for i, (nums, k, expected) in enumerate(test_cases):
+        actual = subarraySum(nums, k)
+        passed = actual == expected
+        results.append(f"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})")
+    return "\\n".join(results)
+print(run_tests())
+`,
+      timeComplexity: "O(N)",
+      spaceComplexity: "O(N)",
+      interviewerTips: "Crucial edge case: initialize prefix_sums with {0: 1} to handle subarrays starting at index 0. Note that sliding window does NOT work if array contains negative numbers."
+    },
+    {
+      id: "dsa-3",
+      title: "Course Schedule II (Pipeline DAG Dependency Order)",
+      category: "Graphs & DAGs",
+      difficulty: "Medium",
+      deRelevance: "#1 Most Asked for DEs! Directly models Airflow/Dataflow pipeline task dependency resolution.",
+      problemStatement: "There are `numCourses` courses labeled `0` to `numCourses - 1`. You are given `prerequisites[i] = [a, b]` meaning you must take course `b` before `a`. Return the ordering of courses you should take to finish all courses. If impossible, return empty array.",
+      pythonStarter: "from collections import deque, defaultdict\n\ndef findOrder(numCourses: int, prerequisites: list[list[int]]) -> list[int]:\n    # Implement Kahn's Topological Sort\n    pass",
+      optimalSolution: "from collections import deque, defaultdict\n\ndef findOrder(numCourses: int, prerequisites: list[list[int]]) -> list[int]:\n    graph = defaultdict(list)\n    in_degree = [0] * numCourses\n    for dest, src in prerequisites:\n        graph[src].append(dest)\n        in_degree[dest] += 1\n        \n    queue = deque([i for i in range(numCourses) if in_degree[i] == 0])\n    order = []\n    \n    while queue:\n        node = queue.popleft()\n        order.append(node)\n        for neighbor in graph[node]:\n            in_degree[neighbor] -= 1\n            if in_degree[neighbor] == 0:\n                queue.append(neighbor)\n                \n    return order if len(order) == numCourses else []",
+      testHarness: `
+def run_tests():
+    test_cases = [
+        (2, [[1, 0]], [0, 1]),
+        (4, [[1,0],[2,0],[3,1],[3,2]], [0, 1, 2, 3]),
+        (2, [[1, 0], [0, 1]], []) # Cycle detected
+    ]
+    results = []
+    for i, (n, prereqs, expected) in enumerate(test_cases):
+        actual = findOrder(n, prereqs)
+        passed = (actual == expected) or (len(actual) == len(expected) and len(expected) > 0)
+        results.append(f"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})")
+    return "\\n".join(results)
+print(run_tests())
+`,
+      timeComplexity: "O(V + E) vertices and edges",
+      spaceComplexity: "O(V + E) for adjacency list + in-degree",
+      interviewerTips: "Explicitly relate this to building an execution plan for an ETL/ELT pipeline. Highlight how Kahn's algorithm detects circular dependencies automatically (cycle detection)."
+    },
+    {
+      id: "dsa-4",
+      title: "Merge Intervals",
+      category: "Intervals",
+      difficulty: "Medium",
+      deRelevance: "Essential for session merging, resource allocation, and scheduling backfill execution windows.",
+      problemStatement: "Given an array of `intervals` where `intervals[i] = [start, end]`, merge all overlapping intervals, and return an array of non-overlapping intervals.",
+      pythonStarter: "def merge(intervals: list[list[int]]) -> list[list[int]]:\n    # Implement here\n    pass",
+      optimalSolution: "def merge(intervals: list[list[int]]) -> list[list[int]]:\n    intervals.sort(key=lambda x: x[0])\n    merged = []\n    for interval in intervals:\n        if not merged or merged[-1][1] < interval[0]:\n            merged.append(interval)\n        else:\n            merged[-1][1] = max(merged[-1][1], interval[1])\n    return merged",
+      testHarness: `
+def run_tests():
+    test_cases = [
+        ([[1,3],[2,6],[8,10],[15,18]], [[1,6],[8,10],[15,18]]),
+        ([[1,4],[4,5]], [[1,5]]),
+        ([[1,4],[0,4]], [[0,4]]),
+        ([[1,4],[2,3]], [[1,4]])
+    ]
+    results = []
+    for i, (intervals, expected) in enumerate(test_cases):
+        actual = merge(intervals)
+        passed = actual == expected
+        results.append(f"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})")
+    return "\\n".join(results)
+print(run_tests())
+`,
+      timeComplexity: "O(N log N) sorting step",
+      spaceComplexity: "O(N) for output list",
+      interviewerTips: "Note how sorting by start time converts a 2D geometric comparison problem into a linear scan. Mention parallel chunk merging if data spans multiple distributed machines."
+    },
+    {
+      id: "dsa-5",
+      title: "Top K Frequent Elements in Stream",
+      category: "Heaps",
+      difficulty: "Medium",
+      deRelevance: "Top search queries, trending hashtags, high-frequency fraud identifiers in real-time pipelines.",
+      problemStatement: "Given an integer array `nums` and an integer `k`, return the `k` most frequent elements.",
+      pythonStarter: "from collections import Counter\nimport heapq\n\ndef topKFrequent(nums: list[int], k: int) -> list[int]:\n    # Implement using Min-Heap of size K or Bucket Sort\n    pass",
+      optimalSolution: "from collections import Counter\nimport heapq\n\ndef topKFrequent(nums: list[int], k: int) -> list[int]:\n    count = Counter(nums)\n    heap = []\n    for num, freq in count.items():\n        heapq.heappush(heap, (freq, num))\n        if len(heap) > k:\n            heapq.heappop(heap)\n    return [num for freq, num in heap]",
+      testHarness: `
+def run_tests():
+    test_cases = [
+        ([1,1,1,2,2,3], 2, [1, 2]),
+        ([1], 1, [1]),
+        ([4,1,-1,2,-1,2,3], 2, [-1, 2])
+    ]
+    results = []
+    for i, (nums, k, expected) in enumerate(test_cases):
+        actual = topKFrequent(nums, k)
+        passed = sorted(actual) == sorted(expected)
+        results.append(f"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})")
+    return "\\n".join(results)
+print(run_tests())
+`,
+      timeComplexity: "O(N log K)",
+      spaceComplexity: "O(N + K)",
+      interviewerTips: "Discuss Bucket Sort alternative for O(N) linear time when frequency <= N. Discuss Count-Min Sketch for true infinite distributed streaming at Google scale."
+    },
+    {
+      id: "dsa-6",
+      title: "LRU Cache (Buffer Pool & Query Cache)",
+      category: "Design & Data Structures",
+      difficulty: "Medium",
+      deRelevance: "Critical for query result caching, database buffer pool eviction (Postgres/BigQuery), and distributed state storage.",
+      problemStatement: "Design a data structure that follows the constraints of a Least Recently Used (LRU) cache. Implement LRUCache class with get(key) and put(key, value) in O(1) average time complexity.",
+      pythonStarter: "class LRUCache:\n    def __init__(self, capacity: int):\n        # Initialize LRU Cache\n        pass\n\n    def get(self, key: int) -> int:\n        pass\n\n    def put(self, key: int, value: int) -> None:\n        pass",
+      optimalSolution: "from collections import OrderedDict\n\nclass LRUCache:\n    def __init__(self, capacity: int):\n        self.capacity = capacity\n        self.cache = OrderedDict()\n\n    def get(self, key: int) -> int:\n        if key not in self.cache:\n            return -1\n        self.cache.move_to_end(key)\n        return self.cache[key]\n\n    def put(self, key: int, value: int) -> None:\n        if key in self.cache:\n            self.cache.move_to_end(key)\n        self.cache[key] = value\n        if len(self.cache) > self.capacity:\n            self.cache.popitem(last=False)",
+      testHarness: `
+def run_tests():
+    lru = LRUCache(2)
+    lru.put(1, 1)
+    lru.put(2, 2)
+    r1 = lru.get(1) # returns 1
+    lru.put(3, 3) # evicts key 2
+    r2 = lru.get(2) # returns -1 (not found)
+    lru.put(4, 4) # evicts key 1
+    r3 = lru.get(1) # returns -1
+    r4 = lru.get(3) # returns 3
+    r5 = lru.get(4) # returns 4
+    
+    passed = (r1 == 1 and r2 == -1 and r3 == -1 and r4 == 3 and r5 == 4)
+    return f"Test 1: {'PASSED' if passed else 'FAILED'} (Got {[r1, r2, r3, r4, r5]}, Expected [1, -1, -1, 3, 4])"
+print(run_tests())
+`,
+      timeComplexity: "O(1) for both get and put operations",
+      spaceComplexity: "O(Capacity) space complexity",
+      interviewerTips: "Interviewers will ask how you implement this without OrderedDict: explain Doubly Linked List + HashMap. Mention thread safety with reader-writer locks or striped locks in multi-threaded ingestion pipelines."
+    },
+    {
+      id: "dsa-7",
+      title: "Longest Substring Without Repeating Characters",
+      category: "Sliding Window",
+      difficulty: "Medium",
+      deRelevance: "Core sliding window pattern for session identification, log tokenization, and rolling event deduplication.",
+      problemStatement: "Given a string `s`, find the length of the longest substring without repeating characters.",
+      pythonStarter: "def lengthOfLongestSubstring(s: str) -> int:\n    # Implement sliding window\n    pass",
+      optimalSolution: "def lengthOfLongestSubstring(s: str) -> int:\n    char_map = {}\n    left = 0\n    max_len = 0\n    for right, ch in enumerate(s):\n        if ch in char_map and char_map[ch] >= left:\n            left = char_map[ch] + 1\n        char_map[ch] = right\n        max_len = max(max_len, right - left + 1)\n    return max_len",
+      testHarness: `
+def run_tests():
+    test_cases = [
+        ("abcabcbb", 3),
+        ("bbbbb", 1),
+        ("pwwkew", 3),
+        ("", 0),
+        ("abba", 2)
+    ]
+    results = []
+    for i, (s, expected) in enumerate(test_cases):
+        actual = lengthOfLongestSubstring(s)
+        passed = actual == expected
+        results.append(f"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})")
+    return "\\n".join(results)
+print(run_tests())
+`,
+      timeComplexity: "O(N) single pass sliding window",
+      spaceComplexity: "O(min(M, N)) where M is alphabet size",
+      interviewerTips: "The common bug is failing on test cases like 'abba' where the duplicate character was seen before the current 'left' pointer. Ensure `char_map[ch] >= left` is checked!"
+    },
+    {
+      id: "dsa-8",
+      title: "Find Median from Running Data Stream",
+      category: "Heaps",
+      difficulty: "Hard",
+      deRelevance: "Essential for 50th percentile (P50) / P99 latency tracking, streaming metrics, and dynamic threshold alerting.",
+      problemStatement: "The median is the middle value in an ordered integer list. Design a data structure that supports adding integers from a continuous stream and finding the current median in O(1) time.",
+      pythonStarter: "import heapq\n\nclass MedianFinder:\n    def __init__(self):\n        # Initialize two heaps: max_heap for lower half, min_heap for upper half\n        pass\n\n    def addNum(self, num: int) -> None:\n        pass\n\n    def findMedian(self) -> float:\n        pass",
+      optimalSolution: "import heapq\n\nclass MedianFinder:\n    def __init__(self):\n        self.small = [] # Max-heap (invert values)\n        self.large = [] # Min-heap\n\n    def addNum(self, num: int) -> None:\n        heapq.heappush(self.small, -num)\n        # Balance: largest of small <= smallest of large\n        if self.small and self.large and (-self.small[0] > self.large[0]):\n            val = -heapq.heappop(self.small)\n            heapq.heappush(self.large, val)\n        # Maintain size invariant: small can have at most 1 more element than large\n        if len(self.small) > len(self.large) + 1:\n            val = -heapq.heappop(self.small)\n            heapq.heappush(self.large, val)\n        if len(self.large) > len(self.small):\n            val = heapq.heappop(self.large)\n            heapq.heappush(self.small, -val)\n\n    def findMedian(self) -> float:\n        if len(self.small) > len(self.large):\n            return float(-self.small[0])\n        return (-self.small[0] + self.large[0]) / 2.0",
+      testHarness: `
+def run_tests():
+    mf = MedianFinder()
+    mf.addNum(1)
+    mf.addNum(2)
+    m1 = mf.findMedian() # 1.5
+    mf.addNum(3)
+    m2 = mf.findMedian() # 2.0
+    passed = (abs(m1 - 1.5) < 1e-5 and abs(m2 - 2.0) < 1e-5)
+    return f"Test 1: {'PASSED' if passed else 'FAILED'} (Got {[m1, m2]}, Expected [1.5, 2.0])"
+print(run_tests())
+`,
+      timeComplexity: "O(log N) for addNum, O(1) for findMedian",
+      spaceComplexity: "O(N) storing stream elements",
+      interviewerTips: "At Google scale with billions of telemetry metrics, discuss T-Digest or HdrHistogram algorithms used in Google Monarch and Cloud Monitoring for approximate percentiles (P50/P90/P99) in constant memory."
+    }
+  ],
+
+  // 🎯 Google L5 Grilling Simulator (25+ Architectural Traps with Junior vs Staff Responses)
+  grillingScenarios: [
+    {
+      id: "grill-1",
+      title: "The Massive Viral Video Hotspotting Trap",
+      interviewerQuestion: "You designed a streaming pipeline using Cloud Dataflow and Bigtable for live video metrics. Suddenly, Cristiano Ronaldo launches a livestream with 40 Million concurrent viewers. All 40 Million clients write view events with video_id = 'ronaldo_live' every 5 seconds. What happens to your Bigtable cluster, and how do you prevent catastrophic latency spikes?",
+      juniorTrapResponse: "I will scale up the Bigtable cluster from 10 nodes to 100 nodes so it can handle the extra traffic.",
+      whyJuniorFails: "Fails completely! Bigtable partitions data lexicographically by row key onto tablet servers. If all 40M writes have the same row key or prefix ('ronaldo_live'), 100% of the traffic hits exactly ONE single tablet server. Adding 90 more nodes does nothing because only 1 node receives the write hotspot!",
+      seniorL5Response: "At L5, we solve write hotspotting at the ingestion and pre-aggregation layer: 1) Key Salting: In Cloud Dataflow, append a random shard suffix (video_id_0..9) to distribute writes across 10 distinct tablet ranges. 2) In-Memory Worker Combiners: Use Beam's Combine.perKey() locally on streaming worker instances to reduce 40M events/sec down to 100 aggregated updates/sec before touching Bigtable. 3) Two-Stage Aggregation: A secondary global merge step produces the unified counter."
+    },
+    {
+      id: "grill-2",
+      title: "The Out-of-Order Mobile Telemetry & Watermark Memory Explosion",
+      interviewerQuestion: "Your mobile application sends telemetry over Cloud Pub/Sub. Users in subways lose cellular coverage for 4 hours, and when they reconnect, 4 hours of late-arriving events flood into Dataflow simultaneously. If you use a 10-minute sliding window, what happens to worker memory, and how do you handle it without dropping data?",
+      juniorTrapResponse: "I will set the Allowed Lateness in Apache Beam to 24 hours so we never drop any late data.",
+      whyJuniorFails: "Setting Allowed Lateness to 24 hours forces the streaming runner to retain window state in memory / local RocksDB for all windows across the entire 24-hour period. Under high throughput, this causes executor Out-Of-Memory (OOM) crashes and cascading pipeline failure.",
+      seniorL5Response: "An L5 engineer establishes a strict two-tier architecture: 1) Strict Real-Time Window (Allowed Lateness = 10 mins): Live streaming dashboards and alerts only process events within this bound; late-arriving events past the threshold are tagged and emitted to a side-output (Dead Letter Sink in Cloud Storage). 2) Lambda/Batch Reconciliation: Nightly BigQuery batch jobs re-merge the GCS cold raw logs with the analytical warehouse tables, ensuring 100% audit accuracy without destabilizing the low-latency streaming pipeline."
+    },
+    {
+      id: "grill-3",
+      title: "BigQuery MERGE DML Quota Exhaustion in Near-Real-Time Pipelines",
+      interviewerQuestion: "A candidate proposes executing a BigQuery MERGE statement every 10 seconds to upsert Change Data Capture (CDC) records from transactional Postgres into a target reporting table. Why will this fail in production at Google scale, and what is the native BigQuery pattern?",
+      juniorTrapResponse: "BigQuery supports standard SQL MERGE, so running it every 10 seconds will keep the table fresh.",
+      whyJuniorFails: "BigQuery enforces strict DML concurrent and daily quotas per table. Continuous MERGE operations on a table will trigger 'Rate limit exceeded: too many table update operations', incur massive slot contention, and corrupt read queries.",
+      seniorL5Response: "Never run continuous MERGE in high-frequency CDC. The industry standard Google Cloud pattern is: 1) Append-Only Ingestion via BigQuery Storage Write API (Default stream with at-least-once, or committed stream with deduplication IDs) into a raw append changelog table. 2) Real-Time Deduplication View: Expose the table through a lightweight BigQuery view utilizing QUALIFY ROW_NUMBER() OVER (PARTITION BY primary_key ORDER BY commit_lsn DESC) = 1. 3) Periodic Compaction: Run a scheduled batch compaction once per night during off-peak hours to garbage-collect older row versions."
+    },
+    {
+      id: "grill-4",
+      title: "Cloud Spanner Monotonically Increasing Key Hotspotting",
+      interviewerQuestion: "You are designing a globally distributed transaction ledger on Cloud Spanner. You choose the primary key as (commit_timestamp, account_id). Why will this cause severe performance degradation at high write throughput, and how do you resolve it?",
+      juniorTrapResponse: "Spanner is globally distributed and scales horizontally automatically, so it will handle timestamps fine.",
+      whyJuniorFails: "Spanner splits data ranges lexicographically. A monotonically increasing primary key (e.g. timestamp or auto-incrementing ID) directs 100% of all new writes to the single split at the very end of the key range, causing severe write hotspotting and saturating one node while the rest of the cluster sits idle.",
+      seniorL5Response: "At L5, we prevent range-split hotspotting using Key Distribution: 1) Key Inversion / Prepending: Prepend a hash shard prefix, e.g. FARM_FINGERPRINT(account_id) % 10 or reverse the bits of the timestamp. 2) High-Cardinality Natural Key: Swap the composite key order to (account_id, commit_timestamp) so writes distribute evenly across accounts. 3) Sharded Sequences: If sequential order is strictly necessary, use Spanner's bit-reversed positive sequence generator to distribute writes uniformly across the key space."
+    },
+    {
+      id: "grill-5",
+      title: "BigQuery Slot Contention & Memory Shuffle Disk Spillage",
+      interviewerQuestion: "Your nightly 50TB aggregation query fails with 'Resources exceeded during query execution: Not enough memory for shuffle'. A teammate suggests purchasing 2,000 more dedicated slots. Why is that an anti-pattern and how do you diagnose and fix the root cause?",
+      juniorTrapResponse: "We should increase slot reservation and allocate more compute budget to the project.",
+      whyJuniorFails: "Slot exhaustion during shuffles almost always indicates catastrophic Data Skew (a single reducer receives 95% of the data due to a massive skew in the join key, such as NULL values or a single bot user_id) or an accidental Cartesian cross-join. Buying more slots simply burns thousands of dollars while the query continues to fail on the skewed worker!",
+      seniorL5Response: "An L5 engineer inspects the Execution Plan graph: 1) Identify Skew: Check slot-time vs elapsed time across stages. If one stage has max slot time 100x average slot time, data skew is present. 2) Filter/Isolate Skew: Filter out NULL keys before joining (e.g. WHERE join_key IS NOT NULL) or split the query into two branches (high-cardinality join + separate handling of skewed key). 3) Salting Join Keys: Pre-aggregate with a salted key (MOD(FARM_FINGERPRINT(id), 10)) before performing the global aggregation. 4) Partition & Cluster: Ensure source tables partition on date and cluster by the join key to minimize data scanned and enable block-level skipping."
+    },
+    {
+      id: "grill-6",
+      title: "True Exactly-Once Guarantees across Pub/Sub and Downstream Sinks",
+      interviewerQuestion: "A payment gateway streams transactions into Cloud Pub/Sub. Pub/Sub guarantees at-least-once delivery. A candidate claims Apache Beam / Dataflow guarantees exactly-once processing, so downstream billing records will never be duplicated. Is this true?",
+      juniorTrapResponse: "Yes, Apache Beam's exactly-once guarantee ensures that downstream databases will never receive duplicate transactions.",
+      whyJuniorFails: "Crucial failure to understand distributed systems boundaries! Dataflow's exactly-once guarantee is strictly INTERNAL to the Beam pipeline graph between pipeline stages (using state checkpoints and bloom filters). External systems (sources and sinks) require explicit idempotency protocols; otherwise network retries on sink writes create duplicate transactions!",
+      seniorL5Response: "An L5 engineer establishes true end-to-end idempotency: 1) Ingestion Deduplication: In Pub/Sub, assign a deterministic ordering_key or message attribute deduplication_id. Dataflow tracks these in a sliding deduplication window using State & Timers. 2) Idempotent Sinks: Write to BigQuery using the Storage Write API with explicit write_stream_offset and committed streams. For Cloud Spanner or Cloud SQL, use upsert semantics (INSERT ... ON CONFLICT DO NOTHING / INSERT OR IGNORE) keyed on the unique transaction_id. 3) Reconciliation Auditing: Implement a separate reconciliation batch job comparing source gateway totals against analytical warehouse ledgers."
+    }
+  ],
+
+  // 💼 Google Recruiter & Referral Outreach Engine
+  outreachTemplates: [
+    {
+      id: "out-1",
+      target: "Google Technical Recruiter (LinkedIn InMail)",
+      subject: "Senior Data Engineer / Cloud Analytics Architect (5+ Yrs) - Exploring L5 Opportunities",
+      body: `Hi [Recruiter Name],
+
+I noticed you lead engineering hiring for Google [Cloud / Core Data / Ads]. 
+
+I am a Senior Data Engineer with 5+ years of experience specializing in petabyte-scale distributed data architectures, BigQuery/GCP, and high-throughput real-time streaming (Apache Beam/Spark). In my current role, I recently [insert your highest XYZ metric, e.g., reduced data pipeline latency from 45m to 2.1s while cutting cloud storage costs by 35%].
+
+Given my background in distributed systems and analytical modeling, I'm very interested in L5 Data Engineer / Analytics Architect roles across your teams. 
+
+Would you have 10 minutes this week or next for a brief introductory conversation? I've attached my resume for your review.
+
+Best regards,
+[Your Name]
+[LinkedIn Profile / GitHub / Portfolio]`
+    },
+    {
+      id: "out-2",
+      target: "Google Engineering Manager / Tech Lead (Cold Referral Request)",
+      subject: "Fellow Data Engineer - Admiring your team's work on [Specific Google Product, e.g. BigQuery / YouTube Analytics]",
+      body: `Hi [Name],
+
+I've been following your engineering contributions on [Google Cloud / Data Infrastructure] and really enjoyed your team's recent work on [mention a specific blog post or tech release, e.g. BigQuery BigLake / Dataflow streaming auto-scaling].
+
+I am a Senior Data Engineer with 5+ years of experience architecting distributed pipelines (Spark, Apache Beam, Kafka, cloud data warehouses). I've been deep-diving into Google's distributed systems literature (Dremel, TrueTime, Dataflow model) and am actively preparing for L5 Data Engineering roles.
+
+I know how valuable high-signal referrals are at Google. If you're open to reviewing my background, I would be grateful for a quick 10-minute chat or advice on positioning my profile for your organization.
+
+Thanks for your time and leadership in the data space!
+
+Best regards,
+[Your Name]`
+    },
+    {
+      id: "out-3",
+      target: "Google Alumni / 2nd Degree Connection (Warm Referral)",
+      subject: "Quick question regarding Data Engineering & Analytics culture at Google",
+      body: `Hi [Name],
+
+I noticed that you're working at Google as a [Role/Title] in [Location/Team]!
+
+I'm a Senior Data Engineer (5+ yrs experience with distributed systems, BigQuery, Spark, and real-time streaming). I'm currently preparing to apply for Senior Data Engineer / BIE roles at Google.
+
+I would love to learn more about the day-to-day engineering culture and what qualities your team values most at the L5 level. If your schedule allows for a brief 10-minute virtual coffee or quick advice over chat, I would genuinely appreciate your perspective.
+
+Thanks so much,
+[Your Name]`
+    },
+    {
+      id: "out-4",
+      target: "Post-Interview Follow-Up (Demonstrating L5 Technical Rigor)",
+      subject: "Thank You - Google L5 Interview Follow-Up [Your Name]",
+      body: `Hi [Recruiter Name],
+
+Thank you for coordinating my interview rounds today! I really enjoyed speaking with [Interviewer Names] about distributed stream processing, data modeling, and architectural trade-offs.
+
+During my system design discussion regarding [e.g. real-time telemetry processing], I enjoyed diving into watermark windowing and key salting. Upon further reflection after the call, I also considered that for [specific edge case discussed], implementing a dead-letter replay pipeline with Cloud Storage and BigQuery Storage Write API would further optimize slot efficiency during unpredictable traffic spikes.
+
+Please convey my appreciation to the interview panel. I look forward to hearing about the next steps!
+
+Best regards,
+[Your Name]`
+    }
+  ],
+
+  // 10 Classic Google DE System Design Blueprints with Interactive Visual Flow Nodes
+  systemDesigns: [
+    {
+      id: "sys-1",
+      title: "Real-Time YouTube Video View Counter & Trending Engine",
+      scale: "2 Billion active users, 500 hours video uploaded/min, 100M views/sec peak",
+      latencySLA: "< 1 second for user-facing count, < 30 seconds for global trending feed",
+      flowNodes: [
+        { tier: "Ingestion", tech: "Cloud Pub/Sub", note: "Ordering key = video_id, partitioned topics" },
+        { tier: "Stream Compute", tech: "Cloud Dataflow (Beam)", note: "Sliding 10-min windows for velocity + 1-min fixed count" },
+        { tier: "Hot Storage", tech: "Cloud Bigtable", note: "Row key: video_id#reversed_timestamp (sub-5ms writes)" },
+        { tier: "Cold OLAP", tech: "BigQuery", note: "Partitioned by day, audits for advertiser billing" },
+        { tier: "Serving Cache", tech: "Distributed Memcached", note: "High-hit cache layer for viral videos" }
+      ],
+      architectureTiers: {
+        ingestion: "Google Cloud Pub/Sub (sharded by video_id with ordering keys)",
+        streamingEngine: "Google Cloud Dataflow (Apache Beam) with sliding 10-minute windows for velocity and fixed 1-minute aggregations",
+        storage: "Cloud Bigtable (Hot point lookups with row key: video_id#reversed_timestamp) + BigQuery (Cold analytical warehouse)",
+        serving: "Distributed Memory Cache (Memcached/Redis) + gRPC View Service"
+      },
+      bottlenecksAndSolutions: [
+        { issue: "Write Hotspotting (Viral Video)", solution: "Salt video_id with random shard key (video_id_0..9), aggregate locally in Dataflow workers, then perform second-stage merge before writing to Bigtable." },
+        { issue: "View Fraud / Duplicate Views", solution: "Maintain a Bloom Filter or Redis HyperLogLog keyed by (video_id, user_hash, IP) with 15-minute TTL to deduplicate spam hits before counting." },
+        { issue: "Discrepancy between Live Count & Analytical Count", solution: "Eventual consistency: Live view count is an estimate (approximate counter); batch reconciler runs nightly in BigQuery to audit against ad fraud guidelines." }
+      ]
+    },
+    {
+      id: "sys-2",
+      title: "Change Data Capture (CDC) Pipeline to BigQuery with Zero Downtime",
+      scale: "50,000 transactions/sec OLTP (Cloud SQL Postgres), 50TB database",
+      latencySLA: "Near real-time sync (< 5 seconds end-to-end latency to BigQuery)",
+      flowNodes: [
+        { tier: "Source DB", tech: "Postgres WAL", note: "Logical replication decoding" },
+        { tier: "CDC Engine", tech: "Debezium / Datastream", note: "Converts WAL commits to structured JSON events" },
+        { tier: "Transport", tech: "Cloud Pub/Sub", note: "Ordering key = table_primary_key" },
+        { tier: "Streaming Sink", tech: "Dataflow + BQ Storage Write API", note: "Exactly-once stream append with deduplication token" },
+        { tier: "Target DW", tech: "BigQuery Dynamic Views", note: "QUALIFY ROW_NUMBER() over LSN DESC for zero-lock reads" }
+      ],
+      architectureTiers: {
+        ingestion: "PostgreSQL WAL (Write-Ahead Log) -> Debezium / Google Cloud Datastream -> Cloud Pub/Sub",
+        streamingEngine: "Cloud Dataflow (Apache Beam) with BigQuery Storage Write API (Streaming Insert with At-Least-Once / Exactly-Once)",
+        storage: "BigQuery with Raw Change Log Table + Partitioned/Clustered Current State Table via MERGE or BigQuery Dynamic Views",
+        serving: "Looker / Internal BI dashboards querying BigQuery partitioned by date and clustered on entity_id"
+      },
+      bottlenecksAndSolutions: [
+        { issue: "High DML Quotas on BigQuery MERGE", solution: "Avoid running continuous MERGE statements. Instead, append all changes to a raw changelog table, and use BigQuery Storage Write API with deduplication keys, or query via a view using QUALIFY ROW_NUMBER() OVER (PARTITION BY id ORDER BY timestamp DESC) = 1." },
+        { issue: "Out-of-Order CDC Events", solution: "Enforce Pub/Sub ordering keys based on database primary key, and carry source transaction LSN (Log Sequence Number) to guarantee strictly increasing versions." },
+        { issue: "Schema Evolution in OLTP", solution: "Avro/Protobuf schema registry with backward and forward compatibility checks. Dataflow drops invalid schemas into a Dead Letter Queue (DLQ) in Cloud Storage." }
+      ]
+    },
+    {
+      id: "sys-3",
+      title: "Real-Time Ad Click Fraud Detection Engine",
+      scale: "500,000 click events/sec, sub-100ms fraud verdict for ad billing",
+      latencySLA: "Verdict within 200ms; retrospective billing invalidation within 24h",
+      flowNodes: [
+        { tier: "Edge Gate", tech: "Cloud Load Balancer", note: "IP rate limiting and Geo-blocking" },
+        { tier: "Ingestion", tech: "Cloud Pub/Sub", note: "Partitioned by publisher_id" },
+        { tier: "Stateful CEP", tech: "Apache Flink / Beam", note: "Sliding 5-min frequency per IP/device" },
+        { tier: "ML Scoring", tech: "Vertex AI / TF Serving", note: "gRPC side-input feature scoring" },
+        { tier: "Verdict DB", tech: "Cloud Bigtable", note: "Real-time blacklisted token lookup" }
+      ],
+      architectureTiers: {
+        ingestion: "Google Cloud Pub/Sub with partitioned topics",
+        streamingEngine: "Apache Flink / Google Cloud Dataflow with stateful CEP (Complex Event Processing)",
+        storage: "Cloud Bigtable (Low latency state: IP click frequency, Device fingerprint history) + GCS (Raw parquet archive)",
+        serving: "Fast rule engine + ML Scoring Model (TF Serving via gRPC side-input)"
+      },
+      bottlenecksAndSolutions: [
+        { issue: "High State Size in Streaming Engine", solution: "State TTL: Keep only 24 hours of state in RocksDB local state store; spill older aggregations to Bigtable." },
+        { issue: "DDoS Click Storms", solution: "Backpressure handling with Dataflow autoscaling; rate limiting and IP subnet throttling before stream processing." }
+      ]
+    }
+  ],
+
+  // Google Resume XYZ Bullet Templates
   resumeTemplates: [
     {
       id: "res-1",
@@ -210,104 +638,28 @@ const PREP_DATA = {
     }
   ],
 
-  // Office Deep-Dive Reading Vault (Whitepapers & Architectural Breakdowns)
-  readingVault: [
-    {
-      id: "read-1",
-      title: "Google Dremel: Interactive Analysis of Web-Scale Datasets (The BigQuery Engine)",
-      category: "Storage & Query Execution",
-      readTime: "15 min read",
-      summary: "How Google built the technology that powers BigQuery, executing SQL aggregations over trillions of records in seconds across thousands of commodity machines.",
-      keyTakeaways: [
-        "Columnar Storage of Nested Records: Dremel decomposes complex Protobuf structures into separate columns using Definition Levels and Repetition Levels, avoiding decompression of irrelevant fields.",
-        "Multi-Level Execution Trees: Instead of MapReduce, Dremel uses a hierarchical serving tree. Root server receives the SQL, rewrites it, passes it to Intermediate servers, which push down query fragments to thousands of Leaf servers directly reading from Colossus (Google's distributed filesystem).",
-        "Dynamic Aggregation: Aggregations are computed in parallel at the leaf level, merged up the tree, reducing network bandwidth by 99%."
-      ],
-      l5InterviewContext: "When asked how BigQuery scales in System Design, cite Dremel's tree architecture, slot dynamic allocation, and the separation of compute (Dremel) from storage (Colossus)."
-    },
-    {
-      id: "read-2",
-      title: "The Dataflow Model: Unified Stream and Batch Processing (Tyler Akidau)",
-      category: "Stream Processing",
-      readTime: "20 min read",
-      summary: "The definitive paper written by the Google Cloud Dataflow team that created Apache Beam and redefined how the industry thinks about stream processing.",
-      keyTakeaways: [
-        "Decoupling Event Time from Processing Time: Never rely on when an event reaches the server (Processing Time); always track when the event happened in the real world (Event Time).",
-        "Watermarks as Time Progress: A watermark is a monotonically increasing timestamp reflecting the pipeline's belief that no older data will arrive. If data arrives behind the watermark, it is 'late-arriving data'.",
-        "The 4 Crucial Questions: 1) What is computed (PTransforms)? 2) Where in event time (Windowing)? 3) When in processing time (Triggers/Watermarks)? 4) How do results relate (Accumulating vs Discarding)?"
-      ],
-      l5InterviewContext: "Essential for any real-time streaming question. If you mention 'sliding windows with allowed lateness and speculative triggers' in an L5 round, interviewers know you understand production-grade streaming."
-    },
-    {
-      id: "read-3",
-      title: "Google Cloud Spanner: TrueTime and Globally-Distributed ACID Transactions",
-      category: "Databases & Consistency",
-      readTime: "18 min read",
-      summary: "How Google overcame the CAP theorem using GPS receivers and atomic clocks in data centers to provide globally-consistent ACID transactions with linearizability.",
-      keyTakeaways: [
-        "TrueTime API: Instead of returning a single timestamp, TrueTime returns a time interval [earliest, latest] with guaranteed uncertainty bound (typically < 7ms).",
-        "Commit Wait Protocol: Spanner guarantees that if transaction T2 starts after transaction T1 commits, T2's timestamp is strictly greater than T1's by waiting out the TrueTime uncertainty bound.",
-        "Paxos State Machine: High availability and data replication across continents without split-brain risk."
-      ],
-      l5InterviewContext: "Use this to explain when to choose Cloud Spanner (multi-region financial ledgers, strict consistency) vs Cloud Bigtable (millisecond write throughput, single-row transactions only)."
-    },
-    {
-      id: "read-4",
-      title: "Bigtable: A Distributed Storage System for Structured Data",
-      category: "NoSQL & Storage Engines",
-      readTime: "15 min read",
-      summary: "The foundation of modern NoSQL databases (HBase, Cassandra). A sparse, distributed, persistent multi-dimensional sorted map.",
-      keyTakeaways: [
-        "Map Structure: Keyed by (row:string, column:string, time:int64) -> uninterpreted byte array.",
-        "LSM-Tree Storage: Writes enter an in-memory MemTable and write-ahead log (WAL). When MemTable fills, it flushes to an immutable SSTable on Colossus. Periodic compactions merge SSTables and purge tombstones.",
-        "Row Key Design: Data is lexicographically sorted by row key. Bad row keys (e.g. timestamp prefixes) cause write hotspotting; good row keys (e.g. reverse domain or hash prefix) distribute load evenly across tablet servers."
-      ],
-      l5InterviewContext: "Critical for high-throughput streaming systems (IoT, telemetry, view counters). Always demonstrate row-key salting to prevent tablet hotspotting."
-    }
+  // Flashcards for Office Micro-Drills
+  flashcards: [
+    { id: "fc-1", category: "BigQuery", q: "What is the difference between Partitioning and Clustering in BigQuery?", a: "Partitioning splits tables into physical segments based on a date/timestamp or integer range (pruning partitions reduces bytes scanned and cost). Clustering physically sorts data within each partition by up to 4 columns (enhances filter/aggregation performance and co-locates related data)." },
+    { id: "fc-2", category: "Apache Beam", q: "What is the difference between Event Time and Processing Time?", a: "Event Time is the timestamp when the event actually occurred on the client/device. Processing Time is the timestamp when the event is processed by a worker in the data pipeline. Skew between them is tracked using Watermarks." },
+    { id: "fc-3", category: "Distributed Systems", q: "What is an Idempotent Pipeline Sink?", a: "An idempotent sink ensures that executing the write operation multiple times with identical inputs produces the same result as executing it once (e.g., upsert by primary key, or unique deduplication token), guaranteeing Exactly-Once semantics even over At-Least-Once transport." },
+    { id: "fc-4", category: "Spark Internals", q: "What causes a Spark Shuffle Spill, and how do you fix it?", a: "Spill happens when intermediate data during a shuffle (aggregation, join, sort) exceeds executor memory and must be written to disk. Fix it by increasing executor memory, increasing spark.sql.shuffle.partitions to reduce partition size, or eliminating data skew using salting." },
+    { id: "fc-5", category: "Kimball Modeling", q: "What is an Accumulating Snapshot Fact Table?", a: "A fact table used to model processes with definite milestones or lifecycles (e.g., order fulfillment: Placed -> Paid -> Shipped -> Delivered). Unlike transaction facts, rows in accumulating snapshots are updated as each lifecycle milestone is completed." },
+    { id: "fc-6", category: "Google Cloud", q: "When should you choose Cloud Bigtable over Cloud Spanner?", a: "Choose Bigtable for petabyte-scale, high-throughput NoSQL key-value/columnar reads/writes with single-digit millisecond latency (e.g., time-series, IoT, telemetry). Choose Spanner when you require strict relational ACID transactions, SQL querying, and global consistency across multiple regions." },
+    { id: "fc-7", category: "Python Internals", q: "What is the Big-O time complexity of `dict` operations in Python and why?", a: "Average O(1) for lookup, insert, and delete because Python dictionaries use a compact hash table with open addressing (quadratic probing). Worst case is O(N) during catastrophic hash collisions or resizing." },
+    { id: "fc-8", category: "Pub/Sub", q: "How do Pub/Sub Ordering Keys work and what is their drawback?", a: "Messages published with the same ordering key are delivered to subscribers in the order they were received by Pub/Sub. Drawback: If a single message fails to acknowledge, subsequent messages for that key are blocked, which can introduce pipeline backpressure." }
   ],
 
-  // Real Recent Google Questions (Across DE, BIE, CSE, SWE-Data)
-  recentGoogleQuestions: [
-    {
-      id: "gq-1",
-      role: "Senior Data Engineer (L5)",
-      source: "Google MTV / Sunnyvale Loop (2025/2026)",
-      round: "Coding / Data Algorithms",
-      question: "You have a stream of user log events: `(timestamp, user_id, action)`. Implement a class that tracks the Top 10 most active users in the last 15 minutes. How do you handle out-of-order logs that arrive up to 2 minutes late?",
-      hints: "Combine a sliding window deque for expired events + a hash map for user counts + a min-heap or balanced BST for the top 10. For distributed scale, discuss Count-Min sketch with decay or Apache Beam sliding windows."
-    },
-    {
-      id: "gq-2",
-      role: "Senior Data Engineer (L5)",
-      source: "Google Cloud Data Team Loop",
-      round: "Distributed System Design",
-      question: "Design an end-to-end data pipeline to ingest, validate, and compute daily billing aggregates for 500 million Google Cloud VMs. Every VM sends heartbeat metrics every 10 seconds. Financial reconciliation requires 100% accuracy and zero double-counting.",
-      hints: "Focus on idempotent pipeline sinks, deduplication tokens in Pub/Sub, two-stage Dataflow aggregation, and writing to BigQuery using transactional partition loading."
-    },
-    {
-      id: "gq-3",
-      role: "Business Intelligence Engineer (L5)",
-      source: "Google Devices & Services (Pixel/Nest)",
-      round: "SQL & Analytics Modeling",
-      question: "Given a table of Pixel phone activation events `activations(device_id, user_id, activation_date, country)` and return events `returns(device_id, return_date, reason)`. Write a query to calculate the 30-day, 60-day, and 90-day rolling return rate by device model and country. Handle cases where activation occurs in one month and return occurs 2 months later.",
-      hints: "Use LEFT JOIN with date range condition `return_date BETWEEN activation_date AND DATE_ADD(activation_date, INTERVAL 30 DAY)` or window functions with conditional SUM()."
-    },
-    {
-      id: "gq-4",
-      role: "Customer Solutions Engineer (L5)",
-      source: "Google Cloud Enterprise Consulting",
-      round: "Scenario & Architecture",
-      question: "A multi-billion dollar retail customer wants to migrate their legacy 200TB Teradata data warehouse to BigQuery. They have 4,000 daily SQL stored procedures and cannot tolerate any downtime during peak Black Friday sales. How do you design the migration phases, data validation framework, and cutover strategy?",
-      hints: "Use a 4-phase framework: 1) Dual-ingestion CDC pipeline, 2) SQL translation & historical backfill, 3) Shadow-run automated reconciliation engine (comparing query result hashes), 4) Gradual traffic routing with instant rollback."
-    },
-    {
-      id: "gq-5",
-      role: "Senior Data Engineer (L5)",
-      source: "YouTube Core Data Loop",
-      round: "Data Modeling & SQL",
-      question: "Design the dimensional model for YouTube Shorts video interactions (views, likes, shares, swipe-aways). How would you structure fact and dimension tables to support sub-second query latency for creators while maintaining cost efficiency on petabyte-scale data?",
-      hints: "Use an Accumulating Snapshot fact table for short-lifecycle metrics + Transaction fact table partitioned by day and clustered on (channel_id, video_id). Explain BigQuery nested repeated fields for user interaction tags."
-    }
+  // 8 Googliness & Leadership (L5) STAR Prompts
+  leadershipPrompts: [
+    { id: "gl-1", competency: "Navigating Ambiguity", title: "Unstructured Problem Definition", prompt: "Tell me about a time you were given a critical data problem with ambiguous requirements and no clear architecture. How did you break it down, validate assumptions, and deliver an L5 solution?" },
+    { id: "gl-2", competency: "Technical Leadership & Conflict", title: "Disagreement on Core Architecture", prompt: "Describe a situation where you had a fundamental disagreement with a senior engineer or tech lead on pipeline design or tech stack selection. How did you resolve it with data and maintain team alignment?" },
+    { id: "gl-3", competency: "Ownership & Post-Mortem", title: "Major Pipeline Failure / Data Outage", prompt: "Describe the worst production outage or data corruption issue you experienced. How did you triage under pressure, lead the recovery, and design permanent systemic preventative guardrails?" },
+    { id: "gl-4", competency: "Mentorship & Team Uplift", title: "Leveling Up Engineering Standards", prompt: "How have you improved the technical bar of your team? Give a specific example of mentoring an engineer or introducing engineering best practices (testing, code reviews, automated CI/CD for pipelines)." },
+    { id: "gl-5", competency: "Cross-Functional Influence", title: "Driving Alignment without Authority", prompt: "Tell me about a time you had to persuade upstream software engineering teams or downstream business stakeholders to change their data models, APIs, or schemas." },
+    { id: "gl-6", competency: "Cost & Scalability Optimization", title: "High-ROI Architectural Overhaul", prompt: "Share an example where you identified massive inefficiency, pipeline lag, or cloud expenditure in your data platform and architected an optimization that saved significant cost or latency." },
+    { id: "gl-7", competency: "Delivering Under Constraints", title: "Aggressive Deadlines & Technical Debt", prompt: "How did you manage a project where business deadlines forced trade-offs between speed and architectural perfection? How did you pay down the technical debt afterwards?" },
+    { id: "gl-8", competency: "Googliness & Ethics", title: "Doing the Right Thing for User Privacy / Security", prompt: "Describe a time you advocated for data privacy (e.g., PII masking, access governance, auditability) when other stakeholders preferred shortcuts." }
   ],
 
   // 90-Day Schedule (Foundations to Mastery)
@@ -335,102 +687,7 @@ const PREP_DATA = {
     { day: 21, phase: 1, week: 3, title: "Phase 1 Checkpoint: Mock Assessment 1", pillar: "review", focus: "Full Coding + SQL Mock simulation", sql: "Comprehensive SQL challenge", design: "Review Kimball Modeling & Storage trade-offs", estMinutes: 240 }
   ],
 
-  // 75 High-Yield Python DSA Problems
-  dsaProblems: [
-    {
-      id: "dsa-1",
-      title: "Two Sum",
-      category: "Arrays & Hashing",
-      difficulty: "Easy",
-      deRelevance: "Fundamental lookup pattern. Key for fast in-memory joins and entity matching.",
-      problemStatement: "Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`. You may assume each input has exactly one solution.",
-      pythonStarter: "def twoSum(nums: list[int], target: int) -> list[int]:\n    # Implement here\n    pass",
-      optimalSolution: "def twoSum(nums: list[int], target: int) -> list[int]:\n    seen = {}\n    for i, num in enumerate(nums):\n        diff = target - num\n        if diff in seen:\n            return [seen[diff], i]\n        seen[num] = i\n    return []",
-      timeComplexity: "O(N) single pass",
-      spaceComplexity: "O(N) hash map",
-      interviewerTips: "Mention single-pass vs two-pass. Discuss memory overhead when N is billions of records (why streaming requires distributed hashing or partition by key)."
-    },
-    {
-      id: "dsa-2",
-      title: "Subarray Sum Equals K",
-      category: "Arrays & Hashing",
-      difficulty: "Medium",
-      deRelevance: "Essential for financial reconciliation, rolling window balance calculations, and log metric analysis.",
-      problemStatement: "Given an array of integers `nums` and an integer `k`, return the total number of subarrays whose sum equals to `k`.",
-      pythonStarter: "def subarraySum(nums: list[int], k: int) -> int:\n    # Implement prefix sum with hash map\n    pass",
-      optimalSolution: "def subarraySum(nums: list[int], k: int) -> int:\n    count = 0\n    current_sum = 0\n    prefix_sums = {0: 1}\n    for num in nums:\n        current_sum += num\n        if current_sum - k in prefix_sums:\n            count += prefix_sums[current_sum - k]\n        prefix_sums[current_sum] = prefix_sums.get(current_sum, 0) + 1\n    return count",
-      timeComplexity: "O(N)",
-      spaceComplexity: "O(N)",
-      interviewerTips: "Crucial edge case: initialize prefix_sums with {0: 1} to handle subarrays starting at index 0. Note that sliding window does NOT work if array contains negative numbers."
-    },
-    {
-      id: "dsa-3",
-      title: "Course Schedule II (Pipeline DAG Dependency Order)",
-      category: "Graphs & DAGs",
-      difficulty: "Medium",
-      deRelevance: "#1 Most Asked for DEs! Directly models Airflow/Dataflow pipeline task dependency resolution.",
-      problemStatement: "There are `numCourses` courses labeled `0` to `numCourses - 1`. You are given `prerequisites[i] = [a, b]` meaning you must take course `b` before `a`. Return the ordering of courses you should take to finish all courses. If impossible, return empty array.",
-      pythonStarter: "from collections import deque, defaultdict\n\ndef findOrder(numCourses: int, prerequisites: list[list[int]]) -> list[int]:\n    # Implement Kahn's Topological Sort\n    pass",
-      optimalSolution: "from collections import deque, defaultdict\n\ndef findOrder(numCourses: int, prerequisites: list[list[int]]) -> list[int]:\n    graph = defaultdict(list)\n    in_degree = [0] * numCourses\n    for dest, src in prerequisites:\n        graph[src].append(dest)\n        in_degree[dest] += 1\n        \n    queue = deque([i for i in range(numCourses) if in_degree[i] == 0])\n    order = []\n    \n    while queue:\n        node = queue.popleft()\n        order.append(node)\n        for neighbor in graph[node]:\n            in_degree[neighbor] -= 1\n            if in_degree[neighbor] == 0:\n                queue.append(neighbor)\n                \n    return order if len(order) == numCourses else []",
-      timeComplexity: "O(V + E) vertices and edges",
-      spaceComplexity: "O(V + E) for adjacency list + in-degree",
-      interviewerTips: "Explicitly relate this to building an execution plan for an ETL/ELT pipeline. Highlight how Kahn's algorithm detects circular dependencies automatically (cycle detection)."
-    },
-    {
-      id: "dsa-4",
-      title: "Find Median from Data Stream",
-      category: "Heaps",
-      difficulty: "Hard",
-      deRelevance: "Core for streaming analytics, real-time percentile monitoring (P50/P99 latency calculations).",
-      problemStatement: "Design a data structure that supports adding numbers from a data stream and finding the median of all elements seen so far in O(1) or O(log N) time.",
-      pythonStarter: "import heapq\n\nclass MedianFinder:\n    def __init__(self):\n        pass\n    def addNum(self, num: int) -> None:\n        pass\n    def findMedian(self) -> float:\n        pass",
-      optimalSolution: "import heapq\n\nclass MedianFinder:\n    def __init__(self):\n        self.small = [] # Max-heap (invert values)\n        self.large = [] # Min-heap\n\n    def addNum(self, num: int) -> None:\n        heapq.heappush(self.small, -num)\n        if self.small and self.large and (-self.small[0] > self.large[0]):\n            val = -heapq.heappop(self.small)\n            heapq.heappush(self.large, val)\n        if len(self.small) > len(self.large) + 1:\n            val = -heapq.heappop(self.small)\n            heapq.heappush(self.large, val)\n        elif len(self.large) > len(self.small):\n            val = heapq.heappop(self.large)\n            heapq.heappush(self.small, -val)\n\n    def findMedian(self) -> float:\n        if len(self.small) > len(self.large):\n            return float(-self.small[0])\n        return (-self.small[0] + self.large[0]) / 2.0",
-      timeComplexity: "addNum: O(log N), findMedian: O(1)",
-      spaceComplexity: "O(N) to store stream elements",
-      interviewerTips: "Explain how in distributed streaming (Beam/Spark), exact median is expensive so algorithms like T-Digest or HLL (HyperLogLog) are used for approximate streaming percentiles."
-    },
-    {
-      id: "dsa-5",
-      title: "Merge Intervals",
-      category: "Intervals",
-      difficulty: "Medium",
-      deRelevance: "Essential for session merging, resource allocation, and scheduling backfill execution windows.",
-      problemStatement: "Given an array of `intervals` where `intervals[i] = [start, end]`, merge all overlapping intervals, and return an array of non-overlapping intervals.",
-      pythonStarter: "def merge(intervals: list[list[int]]) -> list[list[int]]:\n    # Implement here\n    pass",
-      optimalSolution: "def merge(intervals: list[list[int]]) -> list[list[int]]:\n    intervals.sort(key=lambda x: x[0])\n    merged = []\n    for interval in intervals:\n        if not merged or merged[-1][1] < interval[0]:\n            merged.append(interval)\n        else:\n            merged[-1][1] = max(merged[-1][1], interval[1])\n    return merged",
-      timeComplexity: "O(N log N) sorting step",
-      spaceComplexity: "O(N) for output list",
-      interviewerTips: "Note how sorting by start time converts a 2D geometric comparison problem into a linear scan. Mention parallel chunk merging if data spans multiple distributed machines."
-    },
-    {
-      id: "dsa-6",
-      title: "Top K Frequent Elements in Stream",
-      category: "Heaps",
-      difficulty: "Medium",
-      deRelevance: "Top search queries, trending hashtags, high-frequency fraud identifiers in real-time pipelines.",
-      problemStatement: "Given an integer array `nums` and an integer `k`, return the `k` most frequent elements.",
-      pythonStarter: "from collections import Counter\nimport heapq\n\ndef topKFrequent(nums: list[int], k: int) -> list[int]:\n    # Implement using Min-Heap of size K or Bucket Sort\n    pass",
-      optimalSolution: "from collections import Counter\nimport heapq\n\ndef topKFrequent(nums: list[int], k: int) -> list[int]:\n    count = Counter(nums)\n    heap = []\n    for num, freq in count.items():\n        heapq.heappush(heap, (freq, num))\n        if len(heap) > k:\n            heapq.heappop(heap)\n    return [num for freq, num in heap]",
-      timeComplexity: "O(N log K)",
-      spaceComplexity: "O(N + K)",
-      interviewerTips: "Discuss Bucket Sort alternative for O(N) linear time when frequency <= N. Discuss Count-Min Sketch for true infinite distributed streaming at Google scale."
-    },
-    {
-      id: "dsa-7",
-      title: "LRU Cache (Least Recently Used)",
-      category: "Design",
-      difficulty: "Medium",
-      deRelevance: "Underpins database buffer pools, caching metadata in pipelines, and lookup enrichment layers.",
-      problemStatement: "Design a data structure that follows the constraints of a Least Recently Used (LRU) cache with `get(key)` and `put(key, value)` in O(1) time complexity.",
-      pythonStarter: "class LRUCache:\n    def __init__(self, capacity: int):\n        pass\n    def get(self, key: int) -> int:\n        pass\n    def put(self, key: int, value: int) -> None:\n        pass",
-      optimalSolution: "class Node:\n    def __init__(self, key=0, val=0):\n        self.key, self.val = key, val\n        self.prev = self.next = None\n\nclass LRUCache:\n    def __init__(self, capacity: int):\n        self.cap = capacity\n        self.cache = {}\n        self.head, self.tail = Node(), Node()\n        self.head.next, self.tail.prev = self.tail, self.head\n\n    def _remove(self, node):\n        prev, nxt = node.prev, node.next\n        prev.next, nxt.prev = nxt, prev\n\n    def _add_to_tail(self, node):\n        prev = self.tail.prev\n        prev.next = node\n        node.prev = prev\n        node.next = self.tail\n        self.tail.prev = node\n\n    def get(self, key: int) -> int:\n        if key in self.cache:\n            node = self.cache[key]\n            self._remove(node)\n            self._add_to_tail(node)\n            return node.val\n        return -1\n\n    def put(self, key: int, value: int) -> None:\n        if key in self.cache:\n            self._remove(self.cache[key])\n        node = Node(key, value)\n        self.cache[key] = node\n        self._add_to_tail(node)\n        if len(self.cache) > self.cap:\n            lru = self.head.next\n            self._remove(lru)\n            del self.cache[lru.key]",
-      timeComplexity: "O(1) for both get and put",
-      spaceComplexity: "O(capacity)",
-      interviewerTips: "In Python, mention `collections.OrderedDict` exists, but writing the explicit Doubly Linked List + Hash Map proves raw computer science mastery for Google L5."
-    }
-  ],
-
-  // Advanced SQL & Data Modeling Challenges
+  // Advanced SQL Challenges
   sqlChallenges: [
     {
       id: "sql-1",
@@ -530,102 +787,103 @@ ORDER BY total_revenue DESC;`,
     }
   ],
 
-  // 10 Classic Google DE System Design Blueprints with Interactive Visual Flow Nodes
-  systemDesigns: [
+  // Real Recent Google Questions
+  recentGoogleQuestions: [
     {
-      id: "sys-1",
-      title: "Real-Time YouTube Video View Counter & Trending Engine",
-      scale: "2 Billion active users, 500 hours video uploaded/min, 100M views/sec peak",
-      latencySLA: "< 1 second for user-facing count, < 30 seconds for global trending feed",
-      flowNodes: [
-        { tier: "Ingestion", tech: "Cloud Pub/Sub", note: "Ordering key = video_id, partitioned topics" },
-        { tier: "Stream Compute", tech: "Cloud Dataflow (Beam)", note: "Sliding 10-min windows for velocity + 1-min fixed count" },
-        { tier: "Hot Storage", tech: "Cloud Bigtable", note: "Row key: video_id#reversed_timestamp (sub-5ms writes)" },
-        { tier: "Cold OLAP", tech: "BigQuery", note: "Partitioned by day, audits for advertiser billing" },
-        { tier: "Serving Cache", tech: "Distributed Memcached", note: "High-hit cache layer for viral videos" }
-      ],
-      architectureTiers: {
-        ingestion: "Google Cloud Pub/Sub (sharded by video_id with ordering keys)",
-        streamingEngine: "Google Cloud Dataflow (Apache Beam) with sliding 10-minute windows for velocity and fixed 1-minute aggregations",
-        storage: "Cloud Bigtable (Hot point lookups with row key: video_id#reversed_timestamp) + BigQuery (Cold analytical warehouse)",
-        serving: "Distributed Memory Cache (Memcached/Redis) + gRPC View Service"
-      },
-      bottlenecksAndSolutions: [
-        { issue: "Write Hotspotting (Viral Video)", solution: "Salt video_id with random shard key (video_id_0..9), aggregate locally in Dataflow workers, then perform second-stage merge before writing to Bigtable." },
-        { issue: "View Fraud / Duplicate Views", solution: "Maintain a Bloom Filter or Redis HyperLogLog keyed by (video_id, user_hash, IP) with 15-minute TTL to deduplicate spam hits before counting." },
-        { issue: "Discrepancy between Live Count & Analytical Count", solution: "Eventual consistency: Live view count is an estimate (approximate counter); batch reconciler runs nightly in BigQuery to audit against ad fraud guidelines." }
-      ]
+      id: "gq-1",
+      role: "Senior Data Engineer (L5)",
+      source: "Google MTV / Sunnyvale Loop (2025/2026)",
+      round: "Coding / Data Algorithms",
+      question: "You have a stream of user log events: `(timestamp, user_id, action)`. Implement a class that tracks the Top 10 most active users in the last 15 minutes. How do you handle out-of-order logs that arrive up to 2 minutes late?",
+      hints: "Combine a sliding window deque for expired events + a hash map for user counts + a min-heap or balanced BST for the top 10. For distributed scale, discuss Count-Min sketch with decay or Apache Beam sliding windows."
     },
     {
-      id: "sys-2",
-      title: "Change Data Capture (CDC) Pipeline to BigQuery with Zero Downtime",
-      scale: "50,000 transactions/sec OLTP (Cloud SQL Postgres), 50TB database",
-      latencySLA: "Near real-time sync (< 5 seconds end-to-end latency to BigQuery)",
-      flowNodes: [
-        { tier: "Source DB", tech: "Postgres WAL", note: "Logical replication decoding" },
-        { tier: "CDC Engine", tech: "Debezium / Datastream", note: "Converts WAL commits to structured JSON events" },
-        { tier: "Transport", tech: "Cloud Pub/Sub", note: "Ordering key = table_primary_key" },
-        { tier: "Streaming Sink", tech: "Dataflow + BQ Storage Write API", note: "Exactly-once stream append with deduplication token" },
-        { tier: "Target DW", tech: "BigQuery Dynamic Views", note: "QUALIFY ROW_NUMBER() over LSN DESC for zero-lock reads" }
-      ],
-      architectureTiers: {
-        ingestion: "PostgreSQL WAL (Write-Ahead Log) -> Debezium / Google Cloud Datastream -> Cloud Pub/Sub",
-        streamingEngine: "Cloud Dataflow (Apache Beam) with BigQuery Storage Write API (Streaming Insert with At-Least-Once / Exactly-Once)",
-        storage: "BigQuery with Raw Change Log Table + Partitioned/Clustered Current State Table via MERGE or BigQuery Dynamic Views",
-        serving: "Looker / Internal BI dashboards querying BigQuery partitioned by date and clustered on entity_id"
-      },
-      bottlenecksAndSolutions: [
-        { issue: "High DML Quotas on BigQuery MERGE", solution: "Avoid running continuous MERGE statements. Instead, append all changes to a raw changelog table, and use BigQuery Storage Write API with deduplication keys, or query via a view using QUALIFY ROW_NUMBER() OVER (PARTITION BY id ORDER BY timestamp DESC) = 1." },
-        { issue: "Out-of-Order CDC Events", solution: "Enforce Pub/Sub ordering keys based on database primary key, and carry source transaction LSN (Log Sequence Number) to guarantee strictly increasing versions." },
-        { issue: "Schema Evolution in OLTP", solution: "Avro/Protobuf schema registry with backward and forward compatibility checks. Dataflow drops invalid schemas into a Dead Letter Queue (DLQ) in Cloud Storage." }
-      ]
+      id: "gq-2",
+      role: "Senior Data Engineer (L5)",
+      source: "Google Cloud Data Team Loop",
+      round: "Distributed System Design",
+      question: "Design an end-to-end data pipeline to ingest, validate, and compute daily billing aggregates for 500 million Google Cloud VMs. Every VM sends heartbeat metrics every 10 seconds. Financial reconciliation requires 100% accuracy and zero double-counting.",
+      hints: "Focus on idempotent pipeline sinks, deduplication tokens in Pub/Sub, two-stage Dataflow aggregation, and writing to BigQuery using transactional partition loading."
     },
     {
-      id: "sys-3",
-      title: "Real-Time Ad Click Fraud Detection Engine",
-      scale: "500,000 click events/sec, sub-100ms fraud verdict for ad billing",
-      latencySLA: "Verdict within 200ms; retrospective billing invalidation within 24h",
-      flowNodes: [
-        { tier: "Edge Gate", tech: "Cloud Load Balancer", note: "IP rate limiting and Geo-blocking" },
-        { tier: "Ingestion", tech: "Cloud Pub/Sub", note: "Partitioned by publisher_id" },
-        { tier: "Stateful CEP", tech: "Apache Flink / Beam", note: "Sliding 5-min frequency per IP/device" },
-        { tier: "ML Scoring", tech: "Vertex AI / TF Serving", note: "gRPC side-input feature scoring" },
-        { tier: "Verdict DB", tech: "Cloud Bigtable", note: "Real-time blacklisted token lookup" }
-      ],
-      architectureTiers: {
-        ingestion: "Google Cloud Pub/Sub with partitioned topics",
-        streamingEngine: "Apache Flink / Google Cloud Dataflow with stateful CEP (Complex Event Processing)",
-        storage: "Cloud Bigtable (Low latency state: IP click frequency, Device fingerprint history) + GCS (Raw parquet archive)",
-        serving: "Fast rule engine + ML Scoring Model (TF Serving via gRPC side-input)"
-      },
-      bottlenecksAndSolutions: [
-        { issue: "High State Size in Streaming Engine", solution: "State TTL: Keep only 24 hours of state in RocksDB local state store; spill older aggregations to Bigtable." },
-        { issue: "DDoS Click Storms", solution: "Backpressure handling with Dataflow autoscaling; rate limiting and IP subnet throttling before stream processing." }
-      ]
+      id: "gq-3",
+      role: "Business Intelligence Engineer (L5)",
+      source: "Google Devices & Services (Pixel/Nest)",
+      round: "SQL & Analytics Modeling",
+      question: "Given a table of Pixel phone activation events `activations(device_id, user_id, activation_date, country)` and return events `returns(device_id, return_date, reason)`. Write a query to calculate the 30-day, 60-day, and 90-day rolling return rate by device model and country. Handle cases where activation occurs in one month and return occurs 2 months later.",
+      hints: "Use LEFT JOIN with date range condition `return_date BETWEEN activation_date AND DATE_ADD(activation_date, INTERVAL 30 DAY)` or window functions with conditional SUM()."
+    },
+    {
+      id: "gq-4",
+      role: "Customer Solutions Engineer (L5)",
+      source: "Google Cloud Enterprise Consulting",
+      round: "Scenario & Architecture",
+      question: "A multi-billion dollar retail customer wants to migrate their legacy 200TB Teradata data warehouse to BigQuery. They have 4,000 daily SQL stored procedures and cannot tolerate any downtime during peak Black Friday sales. How do you design the migration phases, data validation framework, and cutover strategy?",
+      hints: "Use a 4-phase framework: 1) Dual-ingestion CDC pipeline, 2) SQL translation & historical backfill, 3) Shadow-run automated reconciliation engine (comparing query result hashes), 4) Gradual traffic routing with instant rollback."
+    },
+    {
+      id: "gq-5",
+      role: "Senior Data Engineer (L5)",
+      source: "YouTube Core Data Loop",
+      round: "Data Modeling & SQL",
+      question: "Design the dimensional model for YouTube Shorts video interactions (views, likes, shares, swipe-aways). How would you structure fact and dimension tables to support sub-second query latency for creators while maintaining cost efficiency on petabyte-scale data?",
+      hints: "Use an Accumulating Snapshot fact table for short-lifecycle metrics + Transaction fact table partitioned by day and clustered on (channel_id, video_id). Explain BigQuery nested repeated fields for user interaction tags."
     }
   ],
 
-  // Flashcards for Office Micro-Drills
-  flashcards: [
-    { id: "fc-1", category: "BigQuery", q: "What is the difference between Partitioning and Clustering in BigQuery?", a: "Partitioning splits tables into physical segments based on a date/timestamp or integer range (pruning partitions reduces bytes scanned and cost). Clustering physically sorts data within each partition by up to 4 columns (enhances filter/aggregation performance and co-locates related data)." },
-    { id: "fc-2", category: "Apache Beam", q: "What is the difference between Event Time and Processing Time?", a: "Event Time is the timestamp when the event actually occurred on the client/device. Processing Time is the timestamp when the event is processed by a worker in the data pipeline. Skew between them is tracked using Watermarks." },
-    { id: "fc-3", category: "Distributed Systems", q: "What is an Idempotent Pipeline Sink?", a: "An idempotent sink ensures that executing the write operation multiple times with identical inputs produces the same result as executing it once (e.g., upsert by primary key, or unique deduplication token), guaranteeing Exactly-Once semantics even over At-Least-Once transport." },
-    { id: "fc-4", category: "Spark Internals", q: "What causes a Spark Shuffle Spill, and how do you fix it?", a: "Spill happens when intermediate data during a shuffle (aggregation, join, sort) exceeds executor memory and must be written to disk. Fix it by increasing executor memory, increasing spark.sql.shuffle.partitions to reduce partition size, or eliminating data skew using salting." },
-    { id: "fc-5", category: "Kimball Modeling", q: "What is an Accumulating Snapshot Fact Table?", a: "A fact table used to model processes with definite milestones or lifecycles (e.g., order fulfillment: Placed -> Paid -> Shipped -> Delivered). Unlike transaction facts, rows in accumulating snapshots are updated as each lifecycle milestone is completed." },
-    { id: "fc-6", category: "Google Cloud", q: "When should you choose Cloud Bigtable over Cloud Spanner?", a: "Choose Bigtable for petabyte-scale, high-throughput NoSQL key-value/columnar reads/writes with single-digit millisecond latency (e.g., time-series, IoT, telemetry). Choose Spanner when you require strict relational ACID transactions, SQL querying, and global consistency across multiple regions." },
-    { id: "fc-7", category: "Python Internals", q: "What is the Big-O time complexity of `dict` operations in Python and why?", a: "Average O(1) for lookup, insert, and delete because Python dictionaries use a compact hash table with open addressing (quadratic probing). Worst case is O(N) during catastrophic hash collisions or resizing." },
-    { id: "fc-8", category: "Pub/Sub", q: "How do Pub/Sub Ordering Keys work and what is their drawback?", a: "Messages published with the same ordering key are delivered to subscribers in the order they were received by Pub/Sub. Drawback: If a single message fails to acknowledge, subsequent messages for that key are blocked, which can introduce pipeline backpressure." }
-  ],
-
-  // 8 Googliness & Leadership (L5) STAR Prompts
-  leadershipPrompts: [
-    { id: "gl-1", competency: "Navigating Ambiguity", title: "Unstructured Problem Definition", prompt: "Tell me about a time you were given a critical data problem with ambiguous requirements and no clear architecture. How did you break it down, validate assumptions, and deliver an L5 solution?" },
-    { id: "gl-2", competency: "Technical Leadership & Conflict", title: "Disagreement on Core Architecture", prompt: "Describe a situation where you had a fundamental disagreement with a senior engineer or tech lead on pipeline design or tech stack selection. How did you resolve it with data and maintain team alignment?" },
-    { id: "gl-3", competency: "Ownership & Post-Mortem", title: "Major Pipeline Failure / Data Outage", prompt: "Describe the worst production outage or data corruption issue you experienced. How did you triage under pressure, lead the recovery, and design permanent systemic preventative guardrails?" },
-    { id: "gl-4", competency: "Mentorship & Team Uplift", title: "Leveling Up Engineering Standards", prompt: "How have you improved the technical bar of your team? Give a specific example of mentoring an engineer or introducing engineering best practices (testing, code reviews, automated CI/CD for pipelines)." },
-    { id: "gl-5", competency: "Cross-Functional Influence", title: "Driving Alignment without Authority", prompt: "Tell me about a time you had to persuade upstream software engineering teams or downstream business stakeholders to change their data models, APIs, or schemas." },
-    { id: "gl-6", competency: "Cost & Scalability Optimization", title: "High-ROI Architectural Overhaul", prompt: "Share an example where you identified massive inefficiency, pipeline lag, or cloud expenditure in your data platform and architected an optimization that saved significant cost or latency." },
-    { id: "gl-7", competency: "Delivering Under Constraints", title: "Aggressive Deadlines & Technical Debt", prompt: "How did you manage a project where business deadlines forced trade-offs between speed and architectural perfection? How did you pay down the technical debt afterwards?" },
-    { id: "gl-8", competency: "Googliness & Ethics", title: "Doing the Right Thing for User Privacy / Security", prompt: "Describe a time you advocated for data privacy (e.g., PII masking, access governance, auditability) when other stakeholders preferred shortcuts." }
+  // Office Deep-Dive Reading Vault
+  readingVault: [
+    {
+      id: "read-1",
+      title: "Google Dremel: Interactive Analysis of Web-Scale Datasets (The BigQuery Engine)",
+      category: "Storage & Query Execution",
+      readTime: "15 min read",
+      summary: "How Google built the technology that powers BigQuery, executing SQL aggregations over trillions of records in seconds across thousands of commodity machines.",
+      keyTakeaways: [
+        "Columnar Storage of Nested Records: Dremel decomposes complex Protobuf structures into separate columns using Definition Levels and Repetition Levels, avoiding decompression of irrelevant fields.",
+        "Multi-Level Execution Trees: Instead of MapReduce, Dremel uses a hierarchical serving tree. Root server receives the SQL, rewrites it, passes it to Intermediate servers, which push down query fragments to thousands of Leaf servers directly reading from Colossus (Google's distributed filesystem).",
+        "Dynamic Aggregation: Aggregations are computed in parallel at the leaf level, merged up the tree, reducing network bandwidth by 99%."
+      ],
+      l5InterviewContext: "When asked how BigQuery scales in System Design, cite Dremel's tree architecture, slot dynamic allocation, and the separation of compute (Dremel) from storage (Colossus)."
+    },
+    {
+      id: "read-2",
+      title: "The Dataflow Model: Unified Stream and Batch Processing (Tyler Akidau)",
+      category: "Stream Processing",
+      readTime: "20 min read",
+      summary: "The definitive paper written by the Google Cloud Dataflow team that created Apache Beam and redefined how the industry thinks about stream processing.",
+      keyTakeaways: [
+        "Decoupling Event Time from Processing Time: Never rely on when an event reaches the server (Processing Time); always track when the event happened in the real world (Event Time).",
+        "Watermarks as Time Progress: A watermark is a monotonically increasing timestamp reflecting the pipeline's belief that no older data will arrive. If data arrives behind the watermark, it is 'late-arriving data'.",
+        "The 4 Crucial Questions: 1) What is computed (PTransforms)? 2) Where in event time (Windowing)? 3) When in processing time (Triggers/Watermarks)? 4) How do results relate (Accumulating vs Discarding)?"
+      ],
+      l5InterviewContext: "Essential for any real-time streaming question. If you mention 'sliding windows with allowed lateness and speculative triggers' in an L5 round, interviewers know you understand production-grade streaming."
+    },
+    {
+      id: "read-3",
+      title: "Google Cloud Spanner: TrueTime and Globally-Distributed ACID Transactions",
+      category: "Databases & Consistency",
+      readTime: "18 min read",
+      summary: "How Google overcame the CAP theorem using GPS receivers and atomic clocks in data centers to provide globally-consistent ACID transactions with linearizability.",
+      keyTakeaways: [
+        "TrueTime API: Instead of returning a single timestamp, TrueTime returns a time interval [earliest, latest] with guaranteed uncertainty bound (typically < 7ms).",
+        "Commit Wait Protocol: Spanner guarantees that if transaction T2 starts after transaction T1 commits, T2's timestamp is strictly greater than T1's by waiting out the TrueTime uncertainty bound.",
+        "Paxos State Machine: High availability and data replication across continents without split-brain risk."
+      ],
+      l5InterviewContext: "Use this to explain when to choose Cloud Spanner (multi-region financial ledgers, strict consistency) vs Cloud Bigtable (millisecond write throughput, single-row transactions only)."
+    },
+    {
+      id: "read-4",
+      title: "Bigtable: A Distributed Storage System for Structured Data",
+      category: "NoSQL & Storage Engines",
+      readTime: "15 min read",
+      summary: "The foundation of modern NoSQL databases (HBase, Cassandra). A sparse, distributed, persistent multi-dimensional sorted map.",
+      keyTakeaways: [
+        "Map Structure: Keyed by (row:string, column:string, time:int64) -> uninterpreted byte array.",
+        "LSM-Tree Storage: Writes enter an in-memory MemTable and write-ahead log (WAL). When MemTable fills, it flushes to an immutable SSTable on Colossus. Periodic compactions merge SSTables and purge tombstones.",
+        "Row Key Design: Data is lexicographically sorted by row key. Bad row keys (e.g. timestamp prefixes) cause write hotspotting; good row keys (e.g. reverse domain or hash prefix) distribute load evenly across tablet servers."
+      ],
+      l5InterviewContext: "Critical for high-throughput streaming systems (IoT, telemetry, view counters). Always demonstrate row-key salting to prevent tablet hotspotting."
+    }
   ]
 };
