@@ -112,6 +112,104 @@ const PREP_DATA = {
     }
   ],
 
+  // Google Resume XYZ Bullet Templates (Google Inc. Official Formula: Accomplished [X] as measured by [Y], by doing [Z])
+  resumeTemplates: [
+    {
+      id: "res-1",
+      category: "Pipeline Scaling & Cost Optimization",
+      role: "Data Engineer / Cloud Architect",
+      googleFormula: "Accomplished [X] as measured by [Y], by doing [Z]",
+      exampleBullet: "Reduced daily BigQuery computing costs by $240,000/yr (35% reduction) and cut peak query latency from 45s to 2.1s by redesigning table partitioning on ingestion date, clustering by customer_id, and migrating 120 unnested subqueries to materialized aggregate tables.",
+      placeholders: {
+        x: "Reduced cloud data processing expenditure and accelerated analytics query performance",
+        y: "$240,000 annual cost reduction (35%) and 95% latency reduction (45s to 2.1s)",
+        z: "re-architecting BigQuery table partitioning, clustering, and implementing incremental materialized views"
+      }
+    },
+    {
+      id: "res-2",
+      category: "Real-Time Streaming & Fraud Detection",
+      role: "Data Engineer / SWE Data",
+      googleFormula: "Accomplished [X] as measured by [Y], by doing [Z]",
+      exampleBullet: "Architected a real-time event streaming pipeline processing 150,000 events/sec with sub-second SLA (<600ms latency) by deploying Apache Beam (Dataflow) with sliding 10-minute session windows and Cloud Bigtable low-latency point lookups, preventing $1.2M in fraudulent transactions.",
+      placeholders: {
+        x: "Built low-latency fraud detection ingestion architecture",
+        y: "Processed 150k events/sec with <600ms SLA, preventing $1.2M in annual fraud losses",
+        z: "deploying Apache Beam on Google Cloud Dataflow with stateful session windowing and Cloud Bigtable"
+      }
+    },
+    {
+      id: "res-3",
+      category: "Data Modernization & Zero-Downtime Migration",
+      role: "Cloud Consultant / Customer Solutions",
+      googleFormula: "Accomplished [X] as measured by [Y], by doing [Z]",
+      exampleBullet: "Led zero-downtime migration of a 180TB legacy on-premises Hadoop/Hive data warehouse to Google Cloud BigQuery for 450 downstream users by establishing a Debezium/PubSub CDC dual-write synchronization architecture and automated SHA-256 data reconciliation pipelines.",
+      placeholders: {
+        x: "Delivered enterprise data warehouse modernization with zero business disruption",
+        y: "Migrated 180TB data and 4,000 pipelines with 99.99% data parity across 450 global stakeholders",
+        z: "engineering a dual-ingestion CDC pipeline with automated checksum reconciliation and staged traffic cutover"
+      }
+    },
+    {
+      id: "res-4",
+      category: "Dimensional Modeling & Analytics Engineering",
+      role: "Business Intelligence Engineer",
+      googleFormula: "Accomplished [X] as measured by [Y], by doing [Z]",
+      exampleBullet: "Transformed company-wide executive revenue reporting across 14 product lines by architecting a Kimball SCD Type 2 dimensional model and dbt semantic layer, eliminating 18 hours of manual weekly reconciliation and standardizing Gross Margin definitions across 3 VP organizations.",
+      placeholders: {
+        x: "Standardized enterprise analytics data models and automated revenue reporting",
+        y: "Saved 900+ engineering hours/year and eliminated metric discrepancies across 3 VP organizations",
+        z: "implementing Kimball star schemas with Slowly Changing Dimensions (Type 2) and an automated CI/CD dbt test suite"
+      }
+    }
+  ],
+
+  // Mock Interview Simulations
+  mockSimulations: [
+    {
+      id: "mock-1",
+      title: "Google L5 DE: Real-Time Clickstream Aggregation (System Design)",
+      roundType: "Distributed System Design",
+      durationMinutes: 45,
+      prompt: "Design an end-to-end ingestion and analytics platform for YouTube live-stream comments and reactions (50M concurrent viewers, 500,000 messages/sec peak). Needs real-time moderation within 500ms and batch daily engagement dashboards.",
+      milestones: [
+        { minute: 5, goal: "Requirements Clarification: QPS, peak throughput, message retention, P99 latency SLA (<500ms), and availability target." },
+        { minute: 15, goal: "High-Level Architecture: Pub/Sub ingestion -> Dataflow (Beam) streaming -> Bigtable (hot metrics) + BigQuery (cold warehouse) + Serving API." },
+        { minute: 30, goal: "Deep Dive on Bottlenecks: Handling high write volume to single celebrity livestreams (key salting), watermark progression with late comments, and deduplication." },
+        { minute: 40, goal: "Governance & Operations: Dead-letter queues for unparseable JSON, pipeline autoscaling, and backfill strategy for model re-training." },
+        { minute: 45, goal: "Summary & Trade-off Recap: Defend Bigtable vs Spanner vs Redis cache." }
+      ]
+    },
+    {
+      id: "mock-2",
+      title: "Google L5 Coding: Task Dependency Scheduler with Cycle Detection",
+      roundType: "Python Data Algorithms",
+      durationMinutes: 45,
+      prompt: "Given a list of data pipeline tasks and their prerequisite dependencies, write a Python class `PipelineScheduler` that returns an optimal parallel execution order (batches of tasks that can run concurrently) and detects circular deadlocks.",
+      milestones: [
+        { minute: 5, goal: "Understand inputs/outputs, ask about disconnected subgraphs, empty graph, and scale (thousands of tasks)." },
+        { minute: 15, goal: "Propose Topological Sort using Kahn's algorithm (in-degree array + queue) with level-by-level BFS batching." },
+        { minute: 30, goal: "Implement clean, production-grade Python code with error handling for cycles (raise CircularDependencyError)." },
+        { minute: 40, goal: "Dry run with edge cases: 1) cycle exists, 2) disconnected pipelines, 3) linear chain. State Time O(V+E) and Space O(V+E)." },
+        { minute: 45, goal: "Discuss how this maps to Apache Airflow DAG parsing engine." }
+      ]
+    },
+    {
+      id: "mock-3",
+      title: "Google L5 SQL & Modeling: Session Inactivity & Multi-Touch Attribution",
+      roundType: "SQL & Data Modeling",
+      durationMinutes: 45,
+      prompt: "Given an advertising clickstream table with impressions and purchase events, write a BigQuery SQL query to implement 30-minute inactivity sessionization and calculate First-Touch and Last-Touch attribution revenue for each ad campaign.",
+      milestones: [
+        { minute: 5, goal: "Clarify definition of session timeout (30 mins of inactivity) and attribution windows." },
+        { minute: 15, goal: "Design the Kimball star schema: fact_ad_clicks, fact_purchases, dim_campaign." },
+        { minute: 30, goal: "Write standard SQL query using TIMESTAMP_DIFF, LAG(), and cumulative SUM() window functions." },
+        { minute: 40, goal: "Optimize query for BigQuery: partition pruning on event_date and clustering on (campaign_id, user_id)." },
+        { minute: 45, goal: "Explain why QUALIFY and UNNEST reduce intermediate shuffle." }
+      ]
+    }
+  ],
+
   // Office Deep-Dive Reading Vault (Whitepapers & Architectural Breakdowns)
   readingVault: [
     {
@@ -432,13 +530,20 @@ ORDER BY total_revenue DESC;`,
     }
   ],
 
-  // 10 Classic Google DE System Design Blueprints
+  // 10 Classic Google DE System Design Blueprints with Interactive Visual Flow Nodes
   systemDesigns: [
     {
       id: "sys-1",
       title: "Real-Time YouTube Video View Counter & Trending Engine",
       scale: "2 Billion active users, 500 hours video uploaded/min, 100M views/sec peak",
       latencySLA: "< 1 second for user-facing count, < 30 seconds for global trending feed",
+      flowNodes: [
+        { tier: "Ingestion", tech: "Cloud Pub/Sub", note: "Ordering key = video_id, partitioned topics" },
+        { tier: "Stream Compute", tech: "Cloud Dataflow (Beam)", note: "Sliding 10-min windows for velocity + 1-min fixed count" },
+        { tier: "Hot Storage", tech: "Cloud Bigtable", note: "Row key: video_id#reversed_timestamp (sub-5ms writes)" },
+        { tier: "Cold OLAP", tech: "BigQuery", note: "Partitioned by day, audits for advertiser billing" },
+        { tier: "Serving Cache", tech: "Distributed Memcached", note: "High-hit cache layer for viral videos" }
+      ],
       architectureTiers: {
         ingestion: "Google Cloud Pub/Sub (sharded by video_id with ordering keys)",
         streamingEngine: "Google Cloud Dataflow (Apache Beam) with sliding 10-minute windows for velocity and fixed 1-minute aggregations",
@@ -456,6 +561,13 @@ ORDER BY total_revenue DESC;`,
       title: "Change Data Capture (CDC) Pipeline to BigQuery with Zero Downtime",
       scale: "50,000 transactions/sec OLTP (Cloud SQL Postgres), 50TB database",
       latencySLA: "Near real-time sync (< 5 seconds end-to-end latency to BigQuery)",
+      flowNodes: [
+        { tier: "Source DB", tech: "Postgres WAL", note: "Logical replication decoding" },
+        { tier: "CDC Engine", tech: "Debezium / Datastream", note: "Converts WAL commits to structured JSON events" },
+        { tier: "Transport", tech: "Cloud Pub/Sub", note: "Ordering key = table_primary_key" },
+        { tier: "Streaming Sink", tech: "Dataflow + BQ Storage Write API", note: "Exactly-once stream append with deduplication token" },
+        { tier: "Target DW", tech: "BigQuery Dynamic Views", note: "QUALIFY ROW_NUMBER() over LSN DESC for zero-lock reads" }
+      ],
       architectureTiers: {
         ingestion: "PostgreSQL WAL (Write-Ahead Log) -> Debezium / Google Cloud Datastream -> Cloud Pub/Sub",
         streamingEngine: "Cloud Dataflow (Apache Beam) with BigQuery Storage Write API (Streaming Insert with At-Least-Once / Exactly-Once)",
@@ -473,6 +585,13 @@ ORDER BY total_revenue DESC;`,
       title: "Real-Time Ad Click Fraud Detection Engine",
       scale: "500,000 click events/sec, sub-100ms fraud verdict for ad billing",
       latencySLA: "Verdict within 200ms; retrospective billing invalidation within 24h",
+      flowNodes: [
+        { tier: "Edge Gate", tech: "Cloud Load Balancer", note: "IP rate limiting and Geo-blocking" },
+        { tier: "Ingestion", tech: "Cloud Pub/Sub", note: "Partitioned by publisher_id" },
+        { tier: "Stateful CEP", tech: "Apache Flink / Beam", note: "Sliding 5-min frequency per IP/device" },
+        { tier: "ML Scoring", tech: "Vertex AI / TF Serving", note: "gRPC side-input feature scoring" },
+        { tier: "Verdict DB", tech: "Cloud Bigtable", note: "Real-time blacklisted token lookup" }
+      ],
       architectureTiers: {
         ingestion: "Google Cloud Pub/Sub with partitioned topics",
         streamingEngine: "Apache Flink / Google Cloud Dataflow with stateful CEP (Complex Event Processing)",

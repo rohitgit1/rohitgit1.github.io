@@ -1,8 +1,9 @@
-// Google L5 Career & Prep Portal - Application Logic
+// Google L5 Career & Prep Portal - Complete Application Logic
 
 class PrepPortalApp {
   constructor() {
     this.state = {
+      theme: "dark",
       currentDay: 1,
       completedDays: [],
       solvedDsa: [],
@@ -10,13 +11,13 @@ class PrepPortalApp {
       solvedSys: [],
       leadershipNotes: {},
       codeNotes: {},
-      isStealthMode: false,
       activeDsaCategory: "all",
       activePhase: "all",
       currentFlashcardIndex: 0,
       activeReadingId: "read-1",
       activeQuestionRole: "all",
       questionSearchTerm: "",
+      activeMockId: "mock-1",
       userSkills: {
         dsa: 4,
         sql: 8,
@@ -27,13 +28,45 @@ class PrepPortalApp {
       }
     };
 
+    // Pomodoro Timer State
+    this.timerSeconds = 25 * 60;
+    this.timerRunning = false;
+    this.timerInterval = null;
+
+    // Mock Interview Timer State
+    this.mockSeconds = 45 * 60;
+    this.mockRunning = false;
+    this.mockInterval = null;
+
     this.init();
   }
 
   init() {
     this.loadState();
+    this.applyTheme(this.state.theme);
     this.setupEventListeners();
     this.renderAll();
+  }
+
+  // Theme Management (☀️ Light / 🌙 Dark / 🕶️ Office Stealth)
+  setTheme(themeName) {
+    this.state.theme = themeName;
+    this.applyTheme(themeName);
+    this.saveState();
+  }
+
+  applyTheme(themeName) {
+    document.body.classList.remove("theme-dark", "theme-light", "theme-stealth");
+    document.body.classList.add(`theme-${themeName}`);
+
+    // Update buttons
+    const btnDark = document.getElementById("btnThemeDark");
+    const btnLight = document.getElementById("btnThemeLight");
+    const btnStealth = document.getElementById("btnThemeStealth");
+
+    if (btnDark) btnDark.classList.toggle("active", themeName === "dark");
+    if (btnLight) btnLight.classList.toggle("active", themeName === "light");
+    if (btnStealth) btnStealth.classList.toggle("active", themeName === "stealth");
   }
 
   // State Persistence
@@ -46,9 +79,6 @@ class PrepPortalApp {
       } catch (e) {
         console.error("Failed to parse saved state", e);
       }
-    }
-    if (this.state.isStealthMode) {
-      document.body.classList.add("stealth-mode");
     }
   }
 
@@ -66,11 +96,23 @@ class PrepPortalApp {
       });
     });
 
-    // Office Stealth Mode Toggle
-    const stealthBtn = document.getElementById("btnStealthMode");
-    if (stealthBtn) {
-      stealthBtn.addEventListener("click", () => this.toggleStealthMode());
+    // Pomodoro Timer Controls
+    const btnToggleTimer = document.getElementById("btnToggleTimer");
+    const btnResetTimer = document.getElementById("btnResetTimer");
+    if (btnToggleTimer) {
+      btnToggleTimer.addEventListener("click", () => this.togglePomodoro());
     }
+    if (btnResetTimer) {
+      btnResetTimer.addEventListener("click", () => this.resetPomodoro());
+    }
+
+    // Mock Timer Controls
+    const btnStartMock = document.getElementById("btnStartMock");
+    const btnPauseMock = document.getElementById("btnPauseMock");
+    const btnResetMock = document.getElementById("btnResetMock");
+    if (btnStartMock) btnStartMock.addEventListener("click", () => this.startMockTimer());
+    if (btnPauseMock) btnPauseMock.addEventListener("click", () => this.pauseMockTimer());
+    if (btnResetMock) btnResetMock.addEventListener("click", () => this.resetMockTimer());
 
     // Sync Modal
     const syncModal = document.getElementById("syncModal");
@@ -142,16 +184,98 @@ class PrepPortalApp {
     });
   }
 
-  toggleStealthMode() {
-    this.state.isStealthMode = !this.state.isStealthMode;
-    document.body.classList.toggle("stealth-mode", this.state.isStealthMode);
-    this.saveState();
+  // Pomodoro Focus Timer
+  togglePomodoro() {
+    if (this.timerRunning) {
+      clearInterval(this.timerInterval);
+      this.timerRunning = false;
+      document.getElementById("btnToggleTimer").textContent = "▶";
+    } else {
+      this.timerRunning = true;
+      document.getElementById("btnToggleTimer").textContent = "⏸";
+      this.timerInterval = setInterval(() => {
+        if (this.timerSeconds > 0) {
+          this.timerSeconds--;
+          this.updatePomodoroDisplay();
+        } else {
+          clearInterval(this.timerInterval);
+          this.timerRunning = false;
+          document.getElementById("btnToggleTimer").textContent = "▶";
+          alert("Focus study session complete! Take a 5-minute break.");
+        }
+      }, 1000);
+    }
   }
 
-  // Render All
+  resetPomodoro() {
+    clearInterval(this.timerInterval);
+    this.timerRunning = false;
+    this.timerSeconds = 25 * 60;
+    document.getElementById("btnToggleTimer").textContent = "▶";
+    this.updatePomodoroDisplay();
+  }
+
+  updatePomodoroDisplay() {
+    const mins = Math.floor(this.timerSeconds / 60);
+    const secs = this.timerSeconds % 60;
+    const str = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    const el = document.getElementById("pomodoroDisplay");
+    if (el) el.textContent = str;
+  }
+
+  // Mock Interview Timer
+  startMockTimer() {
+    if (this.mockRunning) return;
+    this.mockRunning = true;
+    this.mockInterval = setInterval(() => {
+      if (this.mockSeconds > 0) {
+        this.mockSeconds--;
+        this.updateMockTimerDisplay();
+      } else {
+        clearInterval(this.mockInterval);
+        this.mockRunning = false;
+        alert("45-Minute Mock Round Time Expired! Great job simulating under pressure.");
+      }
+    }, 1000);
+  }
+
+  pauseMockTimer() {
+    clearInterval(this.mockInterval);
+    this.mockRunning = false;
+  }
+
+  resetMockTimer() {
+    clearInterval(this.mockInterval);
+    this.mockRunning = false;
+    this.mockSeconds = 45 * 60;
+    this.updateMockTimerDisplay();
+  }
+
+  updateMockTimerDisplay() {
+    const mins = Math.floor(this.mockSeconds / 60);
+    const secs = this.mockSeconds % 60;
+    const str = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    const el = document.getElementById("mockCountdownDisplay");
+    if (el) el.textContent = str;
+
+    // Check milestones
+    const elapsedMinutes = 45 - mins;
+    document.querySelectorAll(".milestone-row").forEach(row => {
+      const targetMin = parseInt(row.dataset.minute);
+      if (elapsedMinutes >= targetMin) {
+        row.classList.add("reached");
+      } else {
+        row.classList.remove("reached");
+      }
+    });
+  }
+
+  // Render All Views
   renderAll() {
     this.renderHeader();
     this.renderCareerRadar();
+    this.renderResumeOptimizer();
+    this.renderMockSimulator();
     this.renderDashboard();
     this.renderSchedule();
     this.renderDsaDojo();
@@ -167,6 +291,7 @@ class PrepPortalApp {
   renderHeader() {
     const dayDisplay = document.getElementById("dayNumberDisplay");
     if (dayDisplay) dayDisplay.textContent = this.state.currentDay;
+    this.updatePomodoroDisplay();
   }
 
   updateStats() {
@@ -200,9 +325,8 @@ class PrepPortalApp {
     document.getElementById("dsaCountBadge").textContent = `${dsaCount}/75`;
   }
 
-  // 0. SMART CAREER RADAR & ODDS CALCULATOR
+  // 0. SMART CAREER RADAR
   renderCareerRadar() {
-    // Populate slider positions
     const s = this.state.userSkills;
     if (document.getElementById("slideDsa")) document.getElementById("slideDsa").value = s.dsa;
     if (document.getElementById("slideSql")) document.getElementById("slideSql").value = s.sql;
@@ -233,17 +357,14 @@ class PrepPortalApp {
     this.state.userSkills = { dsa, sql, systemDesign: sys, cloud, businessMetrics: biz, clientFacing: client };
     this.saveState();
 
-    // Calculate match probability for each role
     const scoredRoles = PREP_DATA.targetRoles.map(role => {
       const req = role.strengthsNeeded;
-      // Fitness calculation: penalty for being under required bar
       let penalty = 0;
       let totalReq = 0;
       for (const key in req) {
         totalReq += req[key];
         const diff = req[key] - this.state.userSkills[key];
         if (diff > 0) {
-          // Penalty if user is below required strength
           penalty += diff * 1.5;
         }
       }
@@ -251,16 +372,13 @@ class PrepPortalApp {
       return { ...role, matchScore: rawFit };
     });
 
-    // Sort by match score descending
     scoredRoles.sort((a, b) => b.matchScore - a.matchScore);
     const topRole = scoredRoles[0];
     document.getElementById("topRecRoleName").textContent = `${topRole.title} (${topRole.matchScore}% Match)`;
 
-    // Render Roles Grid
     const container = document.getElementById("rolesGrid");
     container.innerHTML = scoredRoles.map((role, idx) => {
       const isTop = idx === 0;
-      const isTrojan = role.id === "role-bie" || role.id === "role-cse";
       const badgeClass = role.matchScore >= 80 ? "odds-high" : (role.matchScore >= 60 ? "odds-moderate" : "odds-tough");
 
       return `
@@ -306,7 +424,92 @@ class PrepPortalApp {
     }).join("");
   }
 
-  // 2. READING VAULT
+  // 1. GOOGLE RESUME BULLETS OPTIMIZER
+  renderResumeOptimizer() {
+    const list = document.getElementById("resumeTemplatesList");
+    if (!list) return;
+
+    list.innerHTML = PREP_DATA.resumeTemplates.map(tpl => `
+      <div style="background:var(--bg-surface-elevated); padding:12px; border-radius:6px; border:1px solid var(--border-subtle);">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span class="badge badge-accent">${tpl.category}</span>
+          <span style="font-size:0.75rem; color:var(--text-subtle);">${tpl.role}</span>
+        </div>
+        <p style="font-size:0.85rem; line-height:1.5; color:var(--text-main); margin-top:8px;">"${tpl.exampleBullet}"</p>
+        <button class="btn btn-sm btn-outline" style="margin-top:8px;" onclick="app.copyTemplateBullet('${tpl.id}')">
+          Copy Template
+        </button>
+      </div>
+    `).join("");
+  }
+
+  generateCustomBullet() {
+    const x = document.getElementById("resumeInputX")?.value.trim() || "[Accomplished X]";
+    const y = document.getElementById("resumeInputY")?.value.trim() || "[as measured by Y]";
+    const z = document.getElementById("resumeInputZ")?.value.trim() || "[by doing Z]";
+
+    const formatted = `${x}, as measured by ${y}, by ${z}.`;
+    const resBox = document.getElementById("generatedBulletResult");
+    if (resBox) resBox.textContent = formatted;
+  }
+
+  copyCustomBullet() {
+    const resBox = document.getElementById("generatedBulletResult");
+    if (resBox && resBox.textContent) {
+      navigator.clipboard.writeText(resBox.textContent);
+      alert("Google-formatted bullet copied to clipboard!");
+    }
+  }
+
+  copyTemplateBullet(id) {
+    const tpl = PREP_DATA.resumeTemplates.find(t => t.id === id);
+    if (tpl) {
+      navigator.clipboard.writeText(tpl.exampleBullet);
+      alert("Template copied to clipboard! Paste it into your resume.");
+    }
+  }
+
+  // 2. MOCK INTERVIEW SIMULATOR
+  renderMockSimulator() {
+    const grid = document.getElementById("mockSelectorGrid");
+    if (!grid) return;
+
+    grid.innerHTML = PREP_DATA.mockSimulations.map(sim => `
+      <div class="mock-card ${this.state.activeMockId === sim.id ? 'active' : ''}" onclick="app.selectMockScenario('${sim.id}')">
+        <span class="badge badge-accent">${sim.roundType}</span>
+        <h3 style="font-family:var(--font-display); font-size:1.05rem; margin-top:6px;">${sim.title}</h3>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">Duration: ${sim.durationMinutes} Minutes &bull; 5 Live Milestones</p>
+      </div>
+    `).join("");
+
+    this.selectMockScenario(this.state.activeMockId);
+  }
+
+  selectMockScenario(id) {
+    this.state.activeMockId = id;
+    const sim = PREP_DATA.mockSimulations.find(s => s.id === id) || PREP_DATA.mockSimulations[0];
+
+    document.querySelectorAll(".mock-card").forEach(c => c.classList.remove("active"));
+    const cards = Array.from(document.querySelectorAll(".mock-card"));
+    const active = cards.find(c => c.innerHTML.includes(sim.title));
+    if (active) active.classList.add("active");
+
+    document.getElementById("mockRoundBadge").textContent = sim.roundType;
+    document.getElementById("mockTitleDisplay").textContent = sim.title;
+    document.getElementById("mockPromptDisplay").textContent = sim.prompt;
+
+    const milestonesContainer = document.getElementById("mockMilestonesList");
+    milestonesContainer.innerHTML = sim.milestones.map(m => `
+      <div class="milestone-row" data-minute="${m.minute}">
+        <span style="font-family:var(--font-mono); font-weight:700; color:var(--g-blue); white-space:nowrap;">Min ${m.minute}:</span>
+        <span>${m.goal}</span>
+      </div>
+    `).join("");
+
+    this.resetMockTimer();
+  }
+
+  // 3. READING VAULT
   renderReadingVault() {
     const navContainer = document.getElementById("vaultNav");
     navContainer.innerHTML = PREP_DATA.readingVault.map(paper => `
@@ -336,7 +539,7 @@ class PrepPortalApp {
         </div>
       </div>
 
-      <div style="font-size:0.95rem; line-height:1.6; color:#e2e8f0; background:rgba(0,0,0,0.25); padding:14px; border-radius:6px; border:1px solid var(--border-subtle);">
+      <div style="font-size:0.95rem; line-height:1.6; color:var(--text-main); background:var(--bg-surface-elevated); padding:14px; border-radius:6px; border:1px solid var(--border-subtle);">
         <strong>Executive Summary:</strong> ${paper.summary}
       </div>
 
@@ -354,7 +557,7 @@ class PrepPortalApp {
     `;
   }
 
-  // 3. QUESTIONS BANK
+  // 4. QUESTIONS BANK
   renderQuestions() {
     const roles = ["all", "Senior Data Engineer (L5)", "Business Intelligence Engineer (L5)", "Customer Solutions Engineer (L5)"];
     const filtersContainer = document.getElementById("questionRoleFilters");
@@ -554,7 +757,7 @@ class PrepPortalApp {
         <strong>🎯 Why Google Tests This for DE/Data Roles:</strong> ${prob.deRelevance}
       </div>
 
-      <div style="font-size:0.9rem; line-height:1.6; color:#cbd5e1;">
+      <div style="font-size:0.9rem; line-height:1.6; color:var(--text-main);">
         ${prob.problemStatement}
       </div>
 
@@ -577,7 +780,7 @@ class PrepPortalApp {
           <span class="complexity-pill">Time: ${prob.timeComplexity}</span>
           <span class="complexity-pill">Space: ${prob.spaceComplexity}</span>
         </div>
-        <pre style="background:#050811; padding:12px; border-radius:4px; font-family:var(--font-mono); font-size:0.85rem; color:#86efac; overflow-x:auto;">${prob.optimalSolution}</pre>
+        <pre style="padding:12px; border-radius:4px; font-family:var(--font-mono); font-size:0.85rem; color:#86efac; overflow-x:auto;">${prob.optimalSolution}</pre>
         <div style="margin-top:12px; font-size:0.85rem; color:#fbbf24; border-top:1px solid rgba(255,255,255,0.1); padding-top:8px;">
           <strong>💡 Google Interviewer Tip:</strong> ${prob.interviewerTips}
         </div>
@@ -653,21 +856,21 @@ class PrepPortalApp {
         </button>
       </div>
 
-      <div style="font-size:0.9rem; line-height:1.5; color:#cbd5e1;">
+      <div style="font-size:0.9rem; line-height:1.5; color:var(--text-main);">
         <strong>Scenario:</strong> ${sql.scenario}
       </div>
 
-      <div style="background:rgba(0,0,0,0.3); padding:10px 14px; border-radius:4px; font-family:var(--font-mono); font-size:0.8rem; border:1px solid var(--border-subtle);">
+      <div style="background:var(--bg-surface-elevated); padding:10px 14px; border-radius:4px; font-family:var(--font-mono); font-size:0.8rem; border:1px solid var(--border-subtle);">
         <strong style="color:var(--g-blue);">Schema:</strong><br>
         ${sql.sampleSchema.replace(/\n/g, '<br>')}
       </div>
 
       <div class="code-container">
         <div class="code-header"><span>SQL Solution (BigQuery / Standard SQL)</span></div>
-        <pre style="padding:14px; color:#38bdf8; font-family:var(--font-mono); font-size:0.85rem; line-height:1.5; overflow-x:auto;">${sql.solutionQuery}</pre>
+        <pre style="padding:14px; color:var(--code-text); font-family:var(--font-mono); font-size:0.85rem; line-height:1.5; overflow-x:auto;">${sql.solutionQuery}</pre>
       </div>
 
-      <div style="background:rgba(52, 168, 83, 0.1); border-left:3px solid var(--g-green); padding:10px 14px; font-size:0.85rem; color:#bbf7d0;">
+      <div style="background:rgba(52, 168, 83, 0.1); border-left:3px solid var(--g-green); padding:10px 14px; font-size:0.85rem; color:var(--text-main);">
         <strong>Architectural Rationale:</strong> ${sql.explanation}
       </div>
     `;
@@ -703,6 +906,21 @@ class PrepPortalApp {
             <div><strong>Latency SLA:</strong> ${sys.latencySLA}</div>
           </div>
 
+          <!-- Interactive Visual Flow Diagram -->
+          <div>
+            <span style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--text-subtle);">End-to-End Architectural Pipeline Flow:</span>
+            <div class="pipeline-flow-container">
+              ${sys.flowNodes ? sys.flowNodes.map((n, i) => `
+                <div class="flow-node">
+                  <div class="flow-tier-name">${n.tier}</div>
+                  <div class="flow-tech-name">${n.tech}</div>
+                  <div class="flow-node-note">${n.note}</div>
+                </div>
+                ${i < sys.flowNodes.length - 1 ? '<span class="flow-arrow">→</span>' : ''}
+              `).join("") : ''}
+            </div>
+          </div>
+
           <div class="design-tier-grid">
             <div class="tier-item"><strong>Ingestion Tier:</strong> ${sys.architectureTiers.ingestion}</div>
             <div class="tier-item"><strong>Streaming / Compute:</strong> ${sys.architectureTiers.streamingEngine}</div>
@@ -736,7 +954,7 @@ class PrepPortalApp {
     this.renderSystemDesign();
   }
 
-  // Leadership
+  // Leadership (G&L) with Automated L5 Grader
   renderLeadership() {
     const grid = document.getElementById("leadershipGrid");
     grid.innerHTML = PREP_DATA.leadershipPrompts.map(prompt => {
@@ -752,26 +970,94 @@ class PrepPortalApp {
 
           <div class="star-input-group">
             <label>Situation (Context, Scale, Constraints)</label>
-            <textarea class="star-textarea" placeholder="Describe the background and technical complexity..." oninput="app.saveStarField('${prompt.id}', 'situation', this.value)">${savedNote.situation || ''}</textarea>
+            <textarea class="star-textarea" id="star-${prompt.id}-sit" placeholder="Describe the background and technical complexity..." oninput="app.saveStarField('${prompt.id}', 'situation', this.value)">${savedNote.situation || ''}</textarea>
           </div>
 
           <div class="star-input-group">
             <label>Task (Your Explicit Ownership as L5)</label>
-            <textarea class="star-textarea" placeholder="What were you specifically responsible for solving?" oninput="app.saveStarField('${prompt.id}', 'task', this.value)">${savedNote.task || ''}</textarea>
+            <textarea class="star-textarea" id="star-${prompt.id}-task" placeholder="What were you specifically responsible for solving?" oninput="app.saveStarField('${prompt.id}', 'task', this.value)">${savedNote.task || ''}</textarea>
           </div>
 
           <div class="star-input-group">
             <label>Action (Architectural Decisions, Consensus, Execution)</label>
-            <textarea class="star-textarea" style="min-height:80px;" placeholder="Detail what YOU personally architected, coded, or led..." oninput="app.saveStarField('${prompt.id}', 'action', this.value)">${savedNote.action || ''}</textarea>
+            <textarea class="star-textarea" id="star-${prompt.id}-act" style="min-height:80px;" placeholder="Detail what YOU personally architected, coded, or led..." oninput="app.saveStarField('${prompt.id}', 'action', this.value)">${savedNote.action || ''}</textarea>
           </div>
 
           <div class="star-input-group">
             <label>Result (Quantified Business Impact & Metrics)</label>
-            <textarea class="star-textarea" placeholder="e.g. Reduced latency by 65%, saved $200k/yr in Cloud slots, zero outages..." oninput="app.saveStarField('${prompt.id}', 'result', this.value)">${savedNote.result || ''}</textarea>
+            <textarea class="star-textarea" id="star-${prompt.id}-res" placeholder="e.g. Reduced latency by 65%, saved $200k/yr in Cloud slots, zero outages..." oninput="app.saveStarField('${prompt.id}', 'result', this.value)">${savedNote.result || ''}</textarea>
+          </div>
+
+          <div>
+            <button class="btn btn-sm btn-primary" onclick="app.evaluateStarStory('${prompt.id}')">
+              ⚡ Grade My Story Against Google L5 Rubric
+            </button>
+            <div id="starGradeBox-${prompt.id}" style="display:none;"></div>
           </div>
         </div>
       `;
     }).join("");
+  }
+
+  evaluateStarStory(id) {
+    const sit = document.getElementById(`star-${id}-sit`)?.value.trim() || "";
+    const task = document.getElementById(`star-${id}-task`)?.value.trim() || "";
+    const act = document.getElementById(`star-${id}-act`)?.value.trim() || "";
+    const res = document.getElementById(`star-${id}-res`)?.value.trim() || "";
+
+    const combined = `${sit} ${task} ${act} ${res}`.toLowerCase();
+    let score = 50;
+    const feedback = [];
+
+    // Check 1: Quantified metrics ($ / % / QPS / TB / latency / ms)
+    const hasNumbers = /\d+[%$kmb]|percent|\d+\s*(seconds|ms|qps|tb|gb|hours)/i.test(combined);
+    if (hasNumbers) {
+      score += 15;
+      feedback.push("✓ Strong quantitative impact metrics detected ($ / % / latency / throughput).");
+    } else {
+      feedback.push("⚠️ Missing quantitative metrics. Quantify impact (e.g. 'reduced latency by 45%', 'saved $120k/yr').");
+    }
+
+    // Check 2: Active first-person ownership ("I architected", "I designed", "I benchmarked")
+    const hasFirstPerson = /\b(i architected|i designed|i implemented|i led|i benchmarked|i proposed|i drove|my responsibility)\b/i.test(combined);
+    if (hasFirstPerson) {
+      score += 15;
+      feedback.push("✓ Strong executive ownership ('I architected / I led') demonstrated.");
+    } else {
+      feedback.push("⚠️ Too much passive voice. Replace 'we did' with 'I architected', 'I evaluated', 'I proposed'.");
+    }
+
+    // Check 3: Trade-off & Technical Rigor
+    const hasTradeoffs = /\b(trade-off|because|instead of|alternative|evaluated|benchmarked|latency vs|cost vs)\b/i.test(combined);
+    if (hasTradeoffs) {
+      score += 10;
+      feedback.push("✓ Clear architectural trade-offs articulated.");
+    } else {
+      feedback.push("⚠️ Add explicit trade-offs (e.g. 'We chose Bigtable over Spanner because write throughput was the bottleneck').");
+    }
+
+    // Check 4: Systemic prevention / guardrails
+    const hasPrevention = /\b(prevented|post-mortem|monitoring|alert|automated|guardrail|ci\/cd|sla)\b/i.test(combined);
+    if (hasPrevention) {
+      score += 10;
+      feedback.push("✓ Systemic preventative guardrails and monitoring mentioned.");
+    } else {
+      feedback.push("⚠️ Mention how you prevented recurrence (e.g. 'instituted automated CI/CD schema validation').");
+    }
+
+    score = Math.min(100, score);
+    const box = document.getElementById(`starGradeBox-${id}`);
+    box.style.display = "block";
+    box.className = "star-grader-box";
+    box.innerHTML = `
+      <div class="star-score-row">
+        <strong>Google L5 Behavioral Score:</strong>
+        <span class="star-score-number">${score} / 100</span>
+      </div>
+      <div class="star-feedback-list">
+        ${feedback.map(f => `<div>${f}</div>`).join("")}
+      </div>
+    `;
   }
 
   saveStarField(id, field, value) {
@@ -826,6 +1112,7 @@ class PrepPortalApp {
       try {
         const imported = JSON.parse(event.target.result);
         this.state = { ...this.state, ...imported };
+        if (this.state.theme) this.applyTheme(this.state.theme);
         this.saveState();
         this.renderAll();
         alert("Progress successfully restored!");
@@ -838,7 +1125,7 @@ class PrepPortalApp {
   }
 }
 
-// Instantiate globally
+// Global instantiation
 let app;
 window.addEventListener("DOMContentLoaded", () => {
   app = new PrepPortalApp();

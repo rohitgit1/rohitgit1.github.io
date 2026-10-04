@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Google Career & L5 Data Mastery Portal | Maximize Offer Odds</title>
-  <meta name="description" content="Strategic Google Career & Interview Preparation Portal: Multi-Role Matcher, DSA in Python, Advanced SQL, Distributed System Design, and Office Study Vault.">
+  <meta name="description" content="Strategic Google Career & Interview Preparation Portal: Multi-Role Matcher, DSA in Python, Advanced SQL, Distributed System Design, Mock Simulator, and Office Study Vault.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -31,25 +31,36 @@
         <span class="pulse-indicator"></span>
         <span>Day <strong id="dayNumberDisplay">1</strong> of 90</span>
       </div>
+
+      <!-- Focus Study Timer Widget -->
+      <div class="study-timer-widget" title="Daily Focus Study Block">
+        <span class="timer-display" id="pomodoroDisplay">25:00</span>
+        <button class="timer-btn" id="btnToggleTimer" title="Start/Pause Focus Timer">▶</button>
+        <button class="timer-btn" id="btnResetTimer" title="Reset Timer">↺</button>
+      </div>
+
       <div class="progress-bar-container" title="Overall 90-Day Google Readiness">
         <div class="progress-info">
           <span>Google Offer Odds</span>
           <span id="readinessPercent">0%</span>
         </div>
         <div class="progress-track">
-          <div class="progress-fill" id="masterProgressBar" style="width: 2%;"></div>
+          <div class="progress-fill" id="masterProgressBar" style="width: 4%;"></div>
         </div>
       </div>
     </div>
 
     <div class="topbar-actions">
-      <button class="btn btn-stealth" id="btnStealthMode" title="Toggle Office Stealth Mode (makes UI look like an enterprise monitoring console)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-        <span>Office Mode</span>
-      </button>
+      <!-- ☀️ / 🌙 / 🕶️ Theme Selector -->
+      <div class="theme-switch-group">
+        <button class="theme-btn active" id="btnThemeDark" onclick="app.setTheme('dark')" title="Sleek Dark Mode">🌙 Dark</button>
+        <button class="theme-btn" id="btnThemeLight" onclick="app.setTheme('light')" title="Clean Google Workspace Light Mode">☀️ Light</button>
+        <button class="theme-btn" id="btnThemeStealth" onclick="app.setTheme('stealth')" title="Discreet Office Telemetry Mode">🕶️ Office</button>
+      </div>
+
       <button class="btn btn-outline" id="btnSyncModal">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-        <span>Sync & Backup</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+        <span>Sync</span>
       </button>
     </div>
   </header>
@@ -65,6 +76,10 @@
           <span>Google Roles Radar</span>
           <span class="badge badge-pulse">Hot</span>
         </button>
+        <button class="nav-item" data-tab="resume">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          <span>Google Resume (XYZ)</span>
+        </button>
         <button class="nav-item" data-tab="dashboard">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
           <span>Daily Mission Control</span>
@@ -75,6 +90,11 @@
         </button>
 
         <div class="nav-section-label" style="margin-top:10px;">PRACTICE & DOJO</div>
+        <button class="nav-item" data-tab="mock">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <span>Mock Interview Mode</span>
+          <span class="badge" style="background:var(--g-blue); color:#fff;">Live</span>
+        </button>
         <button class="nav-item" data-tab="dsa">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
           <span>Python DSA Dojo</span>
@@ -172,12 +192,100 @@
         </div>
 
         <!-- Strategic Roles Comparison Cards -->
-        <div class="roles-grid" id="rolesGrid">
-          <!-- Dynamically populated -->
+        <div class="roles-grid" id="rolesGrid"></div>
+      </section>
+
+      <!-- 1. GOOGLE RESUME BULLETS OPTIMIZER VIEW -->
+      <section id="view-resume" class="content-view">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">Google L5 Resume Bullet Optimizer (XYZ Formula)</h1>
+            <p class="view-subtitle">Google's official hiring formula: <em>"Accomplished [X] as measured by [Y], by doing [Z]"</em></p>
+          </div>
+        </div>
+
+        <div class="resume-grid">
+          <div class="resume-card">
+            <h2 class="card-title">Interactive Bullet Generator</h2>
+            <p class="text-muted">Fill out the three Google components to produce an instant L5-grade bullet point:</p>
+
+            <div class="star-input-group">
+              <label>X - What Did You Accomplish? (High-Level Impact)</label>
+              <textarea class="star-textarea" id="resumeInputX" placeholder="e.g. Reduced BigQuery cloud spend and accelerated analytics query latency..." oninput="app.generateCustomBullet()"></textarea>
+            </div>
+
+            <div class="star-input-group">
+              <label>Y - How Was It Measured? (Numbers, % Reduction, $$ Saved, SLA)</label>
+              <textarea class="star-textarea" id="resumeInputY" placeholder="e.g. $180,000 annual cost savings (35%) and 90% latency reduction (45s to 3.5s)..." oninput="app.generateCustomBullet()"></textarea>
+            </div>
+
+            <div class="star-input-group">
+              <label>Z - How Did You Do It? (Specific Architecture, Technologies & Algorithms)</label>
+              <textarea class="star-textarea" id="resumeInputZ" placeholder="e.g. by re-architecting table partitioning, clustering, and deploying incremental materialized views..." oninput="app.generateCustomBullet()"></textarea>
+            </div>
+
+            <div class="xyz-formula-box">
+              <strong>Live Google-Formatted Resume Bullet:</strong>
+              <div class="generated-bullet-box" id="generatedBulletResult" style="margin-top:8px;">
+                Start filling in X, Y, and Z above to see your bullet point formatted here.
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="app.copyCustomBullet()">Copy Formatted Bullet to Clipboard</button>
+          </div>
+
+          <div class="resume-card">
+            <h2 class="card-title">Pre-Tested Google L5 Data Bullet Templates</h2>
+            <p class="text-muted">Proven formulas used by engineers to pass the Google resume screening bar:</p>
+            <div id="resumeTemplatesList" style="display:flex; flex-direction:column; gap:12px; max-height:550px; overflow-y:auto;"></div>
+          </div>
         </div>
       </section>
 
-      <!-- 1. DASHBOARD VIEW -->
+      <!-- 2. MOCK INTERVIEW SIMULATOR VIEW -->
+      <section id="view-mock" class="content-view">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">Mock Interview Mode (Live 45-Minute Loop Simulation)</h1>
+            <p class="view-subtitle">Simulate real Google interview pacing with milestone checkpoints and live timer</p>
+          </div>
+        </div>
+
+        <div class="mock-selector-grid" id="mockSelectorGrid"></div>
+
+        <div class="mock-active-workspace" id="mockActiveWorkspace">
+          <div class="mock-timer-banner">
+            <div>
+              <span class="badge badge-accent" id="mockRoundBadge">Distributed System Design</span>
+              <h2 style="font-family:var(--font-display); font-size:1.3rem; margin-top:4px;" id="mockTitleDisplay">Select a Mock Scenario Above</h2>
+            </div>
+            <div style="text-align:right;">
+              <div class="mock-countdown" id="mockCountdownDisplay">45:00</div>
+              <div style="display:flex; gap:6px; margin-top:4px;">
+                <button class="btn btn-sm btn-primary" id="btnStartMock">Start 45m Timer</button>
+                <button class="btn btn-sm btn-outline" id="btnPauseMock">Pause</button>
+                <button class="btn btn-sm btn-outline" id="btnResetMock">Reset</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="background:var(--bg-surface-elevated); padding:14px; border-radius:6px; border:1px solid var(--border-subtle);">
+            <strong>Interview Prompt:</strong>
+            <p style="font-size:0.95rem; margin-top:4px;" id="mockPromptDisplay">Choose a scenario above to start your timed round.</p>
+          </div>
+
+          <div>
+            <h3 style="font-family:var(--font-display); font-size:1.1rem; margin-bottom:8px;">Live 45-Minute Checkpoints:</h3>
+            <div class="milestones-tracker" id="mockMilestonesList"></div>
+          </div>
+
+          <div class="code-container">
+            <div class="code-header"><span>Interview Scratchpad & Diagramming Notes</span></div>
+            <textarea class="code-editor" style="height:200px;" id="mockScratchpad" placeholder="Type your high-level architecture, estimations, queries, or Python code here during your mock round..."></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. DASHBOARD VIEW -->
       <section id="view-dashboard" class="content-view">
         <div class="view-header">
           <div>
@@ -243,9 +351,7 @@
               </div>
               <button class="btn btn-sm btn-outline" id="btnMarkDayComplete">Mark Day Done</button>
             </div>
-            <div class="mission-tasks" id="todayMissionTasks">
-              <!-- Dynamically populated -->
-            </div>
+            <div class="mission-tasks" id="todayMissionTasks"></div>
           </div>
 
           <!-- Quick Launch / Office Productivity -->
@@ -257,13 +363,13 @@
                 <strong>Office Deep Study (30–45m):</strong> Open <em>Architecture Vault</em> to read Google Dremel or Spanner whitepapers (looks like technical documentation).
               </li>
               <li>
-                <strong>Interview Intel (20m):</strong> Review <em>Real Google Qs Bank</em> to see exact questions recently asked by interviewers.
+                <strong>Resume Polish (15m):</strong> Use the <em>Google Resume (XYZ)</em> tab to rewrite your projects in official Google format.
               </li>
               <li>
                 <strong>Quick Coffee Break (10m):</strong> Flip 5 flashcards in <em>Office Micro-Drills</em>.
               </li>
               <li>
-                <strong>Evening at Home:</strong> Active Python coding in <em>DSA Pattern Dojo</em>.
+                <strong>Evening at Home:</strong> Active Python coding in <em>DSA Pattern Dojo</em> or run a <em>Mock Interview</em>.
               </li>
             </ul>
             <div class="card-actions">
@@ -273,7 +379,7 @@
         </div>
       </section>
 
-      <!-- 2. ARCHITECTURE READING VAULT VIEW -->
+      <!-- 4. ARCHITECTURE READING VAULT VIEW -->
       <section id="view-reading-vault" class="content-view">
         <div class="view-header">
           <div>
@@ -283,16 +389,12 @@
         </div>
 
         <div class="reading-vault-layout">
-          <div class="vault-nav-panel" id="vaultNav">
-            <!-- Paper tabs -->
-          </div>
-          <div class="vault-content-panel" id="vaultContent">
-            <!-- Article content -->
-          </div>
+          <div class="vault-nav-panel" id="vaultNav"></div>
+          <div class="vault-content-panel" id="vaultContent"></div>
         </div>
       </section>
 
-      <!-- 3. REAL GOOGLE INTERVIEW QUESTIONS BANK VIEW -->
+      <!-- 5. REAL GOOGLE INTERVIEW QUESTIONS BANK VIEW -->
       <section id="view-questions" class="content-view">
         <div class="view-header">
           <div>
@@ -305,17 +407,13 @@
           <div class="search-box">
             <input type="text" id="questionSearchInput" placeholder="Search keywords (e.g. streaming, BigQuery, return rate, migration)..." oninput="app.filterQuestions()">
           </div>
-          <div class="role-question-filters" id="questionRoleFilters">
-            <!-- Filter buttons -->
-          </div>
+          <div class="role-question-filters" id="questionRoleFilters"></div>
         </div>
 
-        <div class="questions-grid" id="questionsGrid">
-          <!-- Question cards -->
-        </div>
+        <div class="questions-grid" id="questionsGrid"></div>
       </section>
 
-      <!-- 4. 90-DAY SCHEDULE VIEW -->
+      <!-- 6. 90-DAY SCHEDULE VIEW -->
       <section id="view-schedule" class="content-view">
         <div class="view-header">
           <div>
@@ -333,7 +431,7 @@
         <div class="schedule-timeline" id="scheduleTimeline"></div>
       </section>
 
-      <!-- 5. DSA PATTERN DOJO VIEW -->
+      <!-- 7. DSA PATTERN DOJO VIEW -->
       <section id="view-dsa" class="content-view">
         <div class="view-header">
           <div>
@@ -351,7 +449,7 @@
         </div>
       </section>
 
-      <!-- 6. SQL & MODELING STUDIO VIEW -->
+      <!-- 8. SQL & MODELING STUDIO VIEW -->
       <section id="view-sql" class="content-view">
         <div class="view-header">
           <div>
@@ -368,31 +466,31 @@
         </div>
       </section>
 
-      <!-- 7. SYSTEM DESIGN VAULT VIEW -->
+      <!-- 9. SYSTEM DESIGN VAULT VIEW -->
       <section id="view-system-design" class="content-view">
         <div class="view-header">
           <div>
             <h1 class="view-title">Distributed System Design Vault</h1>
-            <p class="view-subtitle">10 Battle-tested Google-Scale Data Architectures & 45-Minute Interview Script</p>
+            <p class="view-subtitle">10 Battle-tested Google-Scale Data Architectures with Interactive Pipeline Flows</p>
           </div>
         </div>
 
         <div class="system-design-grid" id="systemDesignGrid"></div>
       </section>
 
-      <!-- 8. LEADERSHIP (G&L) VIEW -->
+      <!-- 10. LEADERSHIP (G&L) VIEW -->
       <section id="view-leadership" class="content-view">
         <div class="view-header">
           <div>
-            <h1 class="view-title">L5 Googliness & Leadership (STAR)</h1>
-            <p class="view-subtitle">Draft, refine, and grade your 8 core Senior stories for the Google L5 bar</p>
+            <h1 class="view-title">L5 Googliness & Leadership (STAR) Grader</h1>
+            <p class="view-subtitle">Draft and automatically grade your 8 core Senior stories against Google L5 rubrics</p>
           </div>
         </div>
 
         <div class="leadership-grid" id="leadershipGrid"></div>
       </section>
 
-      <!-- 9. FLASHCARDS VIEW -->
+      <!-- 11. FLASHCARDS VIEW -->
       <section id="view-flashcards" class="content-view">
         <div class="view-header">
           <div>
