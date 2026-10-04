@@ -885,5 +885,85 @@ ORDER BY total_revenue DESC;`,
       ],
       l5InterviewContext: "Critical for high-throughput streaming systems (IoT, telemetry, view counters). Always demonstrate row-key salting to prevent tablet hotspotting."
     }
+  ],
+
+  // 🐣 Beginner-to-Google ELI5 Primer (First Principles Masterclass)
+  beginnerPrimer: [
+    {
+      id: "eli5-1",
+      topic: "The Imposter Cure: How Google Actually Evaluates Candidates",
+      category: "Mindset & Strategy",
+      badge: "Start Here",
+      analogy: "Google is NOT looking for a human textbook who memorized Wikipedia. They want an engineer who stays calm, breaks big messy problems down into clean small steps, and communicates clearly.",
+      coreConcept: "Why feeling like a beginner is your biggest secret advantage:",
+      breakdown: [
+        "1. The 80/20 Rule: 80% of data interviews at Google revolve around 5 Python primitives (dict, list, set, deque, heap) and 4 SQL clauses (GROUP BY, Window Functions, CASE WHEN, CTEs). You do NOT need to master 200 obscure competitive programming algorithms.",
+        "2. The 'Clarify First' Habit: Candidates who jump into coding instantly fail 70% of the time. Candidates who spend the first 5 minutes asking 3 clarifying questions ('What is the volume of data?', 'Can IDs be duplicate or negative?', 'Is latency or cost our main priority?') pass at 3x the rate because asking questions is the #1 marker of a Senior engineer.",
+        "3. Thinking Aloud: Google interviewers will actively guide and give you hints if you get stuck, PROVIDED you are talking out loud. If you say 'I'm thinking of using a hash map here to trade space for O(1) lookup time, but I'm checking if memory allows it', the interviewer will say 'Great point, memory is plenty, go ahead with the hash map!'"
+      ],
+      actionableTakeaway: "Never pretend to know everything. Be the structured, calm engineer who clarifies assumptions, outlines a plain-English plan first, and writes clean, readable code."
+    },
+    {
+      id: "eli5-2",
+      topic: "The Pizza Restaurant Guide to Distributed Data Systems",
+      category: "System Design ELI5",
+      badge: "Core Architecture",
+      analogy: "Imagine running a bustling pizzeria in New York City serving 10,000 customers every hour.",
+      coreConcept: "Every complex Google Cloud technology mapped to simple kitchen operations:",
+      breakdown: [
+        "1. Cloud Pub/Sub (The Order Ticket Rack): When 5,000 customers scream orders at the cashier at once, the cashier does NOT scream at the cooks. They write order tickets and clip them to an overhead spinning ticket wheel. The cooks grab tickets at their own pace. If the kitchen slows down, tickets safely pile up on the rack without orders being lost. That is 'Decoupled Message Buffering'.",
+        "2. Cloud Dataflow / Apache Beam (The Assembly Line Cooks): Instead of 1 cook making an entire pizza from scratch for 15 minutes, 10 cooks stand along a conveyor belt: Cook 1 spreads dough, Cook 2 adds sauce, Cook 3 adds cheese, Cook 4 bakes it. This is 'Stream & Batch Parallel Processing'.",
+        "3. Cloud Bigtable (The Kitchen Expediter Whiteboard): The manager has a fast dry-erase whiteboard showing: 'Order #42 status: BAKING'. Lookups take 1 millisecond. You can't ask complex questions like 'How much cheese did we use across all pizzas last month?', but you can ask 'Is order #42 ready?' at lightning speed. This is 'Sub-10ms NoSQL Point-Lookups'.",
+        "4. Google BigQuery (The Corporate Accounting Archives): In the back office, the owner keeps a filing cabinet of every receipt from the last 10 years. Once a month, the accountant asks: 'Show me total revenue by zip code on rainy Tuesdays'. It reads millions of receipts in seconds. But you would NEVER use the accountant's ledger to check if a customer's slice is ready right now! That is 'OLAP Data Warehousing vs OLTP'.",
+        "5. Write Hotspotting (The Pepperoni Bottleneck): If an influencer tweets that the Pepperoni Slice is amazing, and 90% of customers order pepperoni, Cook #3 who handles pepperoni gets overwhelmed and collapses while the other 9 cooks sit idle. The fix? 'Key Salting': assign 5 cooks to pepperoni by adding a random tag (Pepperoni-1, Pepperoni-2, Pepperoni-3) to spread the load."
+      ],
+      actionableTakeaway: "In System Design, never memorize tool names blindly. Just ask: 'Do I need an order rack (Pub/Sub), assembly cooks (Dataflow), a quick whiteboard (Bigtable), or the accountant's archive (BigQuery)?'"
+    },
+    {
+      id: "eli5-3",
+      topic: "Python for Beginners: The Only 5 Patterns You Need to Pass",
+      category: "Python Coding",
+      badge: "High Yield",
+      analogy: "You don't need to learn all of Python. You only need 5 basic tools in your toolbelt.",
+      coreConcept: "The 5 Swiss Army Knives of Google Coding:",
+      breakdown: [
+        "1. The Bouncer (Hash Map / Dict): `seen = {}`. Why: Looking through a list of 1 million items takes 1 million steps (O(N)). Looking in a dictionary takes 1 step (O(1)). Whenever a problem asks 'Have we seen this before?' or 'Find the pair', use a dictionary.",
+        "2. The Organizer (`collections.defaultdict(list)`): Automatically creates a list if a key doesn't exist yet. Eliminates messy `if key not in d: d[key] = []` boilerplate.",
+        "3. The Two-Finger Squeeze (Two Pointers): Put one finger at index 0 and one finger at the end. Move them towards each other. Used for sorting, reversing, palindrome checks, and finding sums in sorted arrays.",
+        "4. The Moving Window (Sliding Window): Like looking at a scenic train view through a window frame. As the train moves forward, one tree leaves the frame on the left, and one enters on the right. Never re-calculate the whole view; just subtract what left and add what entered!",
+        "5. The VIP Line (Min-Heap / `heapq`): Keeps the top K elements organized with zero wasted memory. When finding 'Top 10 trending videos out of 100 million', a heap of size 10 uses tiny memory."
+      ],
+      actionableTakeaway: "Whenever you read a LeetCode problem, don't panic. Ask yourself: 'Is this a Bouncer problem, an Organizer problem, a Two-Finger squeeze, or a Moving Window?'"
+    },
+    {
+      id: "eli5-4",
+      topic: "SQL from Ground Zero to Google-Ready in 4 Rules",
+      category: "SQL & Warehousing",
+      badge: "Backdoor Mastery",
+      analogy: "SQL is not math; it is telling a database how to sort and group a spreadsheet.",
+      coreConcept: "The 4 SQL pillars that unlock BIE & Data Engineer roles:",
+      breakdown: [
+        "1. The Kitchen Blender (`GROUP BY`): Collapsing 1,000 transaction rows into 1 row per customer using `SUM()`, `AVG()`, or `COUNT()`. Rule: Every column in your SELECT that isn't inside a SUM/COUNT must be in your GROUP BY!",
+        "2. Department Lottery Tickets (`ROW_NUMBER() OVER (PARTITION BY dept ORDER BY salary DESC)`): Think of giving rank tickets #1, #2, #3 to employees inside their own department. Filter with `WHERE rank = 1` to get the highest earner in each department.",
+        "3. The Running Odometer (`SUM(amount) OVER (ORDER BY date)`): Calculates rolling cumulative balances across time without collapsing rows.",
+        "4. The Safety Net (`COALESCE(revenue, 0)`): Replaces dreaded NULL values with 0 so your math never crashes in production."
+      ],
+      actionableTakeaway: "BIE and Analytics Engineer roles at Google test these 4 rules in 90% of questions. If you master these 4, you can pass the technical SQL round with flying colors."
+    },
+    {
+      id: "eli5-5",
+      topic: "Why BIE & Customer Solutions Engineer are the Smartest Move for Beginners",
+      category: "Google Career Strategy",
+      badge: "Secret Cheat Code",
+      analogy: "If the front door has 10 guards checking dynamic programming algorithms, but the side door is wide open with friendly people asking about SQL and customer architecture, use the side door!",
+      coreConcept: "The Trojan Horse Strategy Explained:",
+      breakdown: [
+        "1. Identical Google Badge & Perks: You are a full-time Googler (FTE) on Day 1. Same stock options (GSUs), same 401k/EPF match, same food, same compensation band ($240k–$360k+ USD / ₹55L–₹85L+ INR).",
+        "2. 80% Lower LeetCode Bar: You will NOT be asked hard LeetCode graphs or dynamic programming. You will be asked clean SQL queries, practical Python data manipulation, and common sense business metric debugging.",
+        "3. Massive Hiring Volume: Google Cloud is expanding rapidly. Enterprise clients need Customer Solutions Engineers (CSEs) and BIEs to help them adopt BigQuery and Looker.",
+        "4. The 12-Month Internal Mobility Rule: Google policy allows full-time employees in good standing to transfer to ANY team or role (including Software Engineer or Core Data Engineer) after 12 months with internal team matching, bypassing the brutal external interview grinder!"
+      ],
+      actionableTakeaway: "Set your primary target as BIE / Analytics Engineer or CSE. Treat pure DE as a stretch goal. Getting the Google offer is what matters — you can pivot anytime once you're inside!"
+    }
   ]
 };

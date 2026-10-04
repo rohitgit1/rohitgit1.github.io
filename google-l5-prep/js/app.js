@@ -294,6 +294,7 @@ class PrepPortalApp {
   renderAll() {
     this.renderHeader();
     this.renderCareerRadar();
+    this.renderPrimer();
     this.renderOutreach();
     this.renderGrillingSimulator();
     this.renderResumeOptimizer();
@@ -445,6 +446,48 @@ class PrepPortalApp {
         </div>
       `;
     }).join("");
+  }
+
+  // 0.5. BEGINNER-TO-GOOGLE ELI5 FIRST PRINCIPLES PRIMER
+  renderPrimer() {
+    const container = document.getElementById("primerGrid");
+    if (!container || !PREP_DATA.beginnerPrimer) return;
+
+    container.innerHTML = PREP_DATA.beginnerPrimer.map((item, idx) => `
+      <div class="primer-card">
+        <div class="primer-header">
+          <div style="display:flex; gap:8px; align-items:center;">
+            <span class="badge badge-accent">${item.category}</span>
+            <span class="badge" style="background:#0284c7; color:#fff;">${item.badge}</span>
+          </div>
+          <span style="font-size:0.8rem; color:var(--text-subtle); font-family:var(--font-mono);">Lesson #${idx + 1}</span>
+        </div>
+
+        <h2 style="font-family:var(--font-display); font-size:1.35rem; color:var(--text-main); margin-top:8px;">${item.topic}</h2>
+
+        <div class="primer-analogy-box">
+          <div style="font-weight:700; text-transform:uppercase; font-size:0.75rem; color:#0284c7; letter-spacing:0.05em; margin-bottom:4px;">💡 Everyday Analogy:</div>
+          <p style="color:var(--text-main); font-size:0.92rem; line-height:1.55;">${item.analogy}</p>
+        </div>
+
+        <div style="margin-top:14px;">
+          <h3 style="font-size:0.95rem; font-weight:700; color:var(--text-main); margin-bottom:8px;">${item.coreConcept}</h3>
+          <div class="primer-breakdown-list">
+            ${item.breakdown.map(pt => `
+              <div class="primer-point-item">
+                <span class="primer-bullet-dot"></span>
+                <span style="line-height:1.55;">${pt}</span>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+
+        <div class="primer-takeaway-banner">
+          <strong>⚡ Actionable Google Rule:</strong>
+          <span>${item.actionableTakeaway}</span>
+        </div>
+      </div>
+    `).join("");
   }
 
   // 1. RECRUITER & REFERRAL OUTREACH ENGINE
