@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google L5 Data Engineer | 90-Day Mastery Portal</title>
+  <meta name="description" content="Dedicated Google L5 Senior Data Engineer Preparation Portal: DSA in Python, Advanced SQL, Distributed System Design, and Googliness.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="theme-dark">
+  <!-- Top Application Bar -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo-icon">
+        <span class="dot g-blue"></span>
+        <span class="dot g-red"></span>
+        <span class="dot g-yellow"></span>
+        <span class="dot g-green"></span>
+      </div>
+      <div class="brand-text">
+        <span class="brand-title">Google L5 Prep Portal</span>
+        <span class="brand-subtitle">Data Engineering & Distributed Systems</span>
+      </div>
+    </div>
+
+    <div class="topbar-center">
+      <div class="day-badge" id="currentDayBadge">
+        <span class="pulse-indicator"></span>
+        <span>Day <strong id="dayNumberDisplay">1</strong> of 90</span>
+      </div>
+      <div class="progress-bar-container" title="Overall 90-Day L5 Completion">
+        <div class="progress-info">
+          <span>Overall Readiness</span>
+          <span id="readinessPercent">0%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="masterProgressBar" style="width: 2%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="topbar-actions">
+      <button class="btn btn-stealth" id="btnStealthMode" title="Toggle Office Stealth Mode (makes UI look like an enterprise monitoring dashboard)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+        <span>Office Mode</span>
+      </button>
+      <button class="btn btn-outline" id="btnSyncModal">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+        <span>Sync & Backup</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main App Layout -->
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <nav class="nav-menu">
+        <button class="nav-item active" data-tab="dashboard">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span>Command Center</span>
+        </button>
+        <button class="nav-item" data-tab="schedule">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          <span>90-Day Curriculum</span>
+        </button>
+        <button class="nav-item" data-tab="dsa">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          <span>DSA Pattern Dojo</span>
+          <span class="badge" id="dsaCountBadge">0/75</span>
+        </button>
+        <button class="nav-item" data-tab="sql">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+          <span>SQL & Modeling Studio</span>
+        </button>
+        <button class="nav-item" data-tab="system-design">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+          <span>System Design Vault</span>
+        </button>
+        <button class="nav-item" data-tab="leadership">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          <span>L5 Googliness & STAR</span>
+        </button>
+        <button class="nav-item" data-tab="flashcards">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <span>Office Micro-Drills</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="office-tip-card">
+          <span class="tip-badge">Office Productivity Tip</span>
+          <p id="dailyOfficeTip">Use 15-minute breaks at work for Flashcard drills & SQL review without touching code.</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- 1. DASHBOARD VIEW -->
+      <section id="view-dashboard" class="content-view active">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">Command Center</h1>
+            <p class="view-subtitle">High-yield execution dashboard for Google L5 Senior Data Engineer</p>
+          </div>
+          <div class="quick-status">
+            <span class="status-pill status-ready">Target Date: January 2027</span>
+          </div>
+        </div>
+
+        <!-- Metric Stat Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon icon-blue">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+            </div>
+            <div class="stat-content">
+              <span class="stat-label">Python DSA Solved</span>
+              <div class="stat-value"><span id="statDsaSolved">0</span> <span class="stat-max">/ 75</span></div>
+              <div class="stat-bar"><div class="stat-fill" id="statDsaBar" style="width: 0%"></div></div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon icon-green">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+            </div>
+            <div class="stat-content">
+              <span class="stat-label">SQL & Modeling Drills</span>
+              <div class="stat-value"><span id="statSqlSolved">0</span> <span class="stat-max">/ 20</span></div>
+              <div class="stat-bar"><div class="stat-fill" id="statSqlBar" style="width: 0%"></div></div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon icon-yellow">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect></svg>
+            </div>
+            <div class="stat-content">
+              <span class="stat-label">System Designs Mastered</span>
+              <div class="stat-value"><span id="statSysSolved">0</span> <span class="stat-max">/ 10</span></div>
+              <div class="stat-bar"><div class="stat-fill" id="statSysBar" style="width: 0%"></div></div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon icon-red">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+            </div>
+            <div class="stat-content">
+              <span class="stat-label">L5 Leadership Stories</span>
+              <div class="stat-value"><span id="statGlSolved">0</span> <span class="stat-max">/ 8</span></div>
+              <div class="stat-bar"><div class="stat-fill" id="statGlBar" style="width: 0%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Today's Execution Mission -->
+        <div class="dashboard-split">
+          <div class="card mission-card">
+            <div class="card-header">
+              <div class="card-header-left">
+                <span class="badge badge-accent">Today's Focus</span>
+                <h2 class="card-title" id="todayMissionTitle">Day 1: Arrays & Hashing (Two Sum & HashMaps)</h2>
+              </div>
+              <button class="btn btn-sm btn-outline" id="btnMarkDayComplete">Mark Day Done</button>
+            </div>
+            <div class="mission-tasks" id="todayMissionTasks">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Quick Launch / Office Productivity -->
+          <div class="card office-mode-card">
+            <h3 class="card-title">Corporate Office Mode Strategy</h3>
+            <p class="text-muted">How to make 100% of your office downtime count without looking distracted:</p>
+            <ul class="strategy-list">
+              <li>
+                <strong>Morning Lull (15m):</strong> Open <em>Office Micro-Drills</em> to flip 5 flashcards on Spark/Beam internals.
+              </li>
+              <li>
+                <strong>Lunch Break (30m):</strong> Review 1 System Design Blueprint (read the bottleneck & trade-off section).
+              </li>
+              <li>
+                <strong>Afternoon Pause (20m):</strong> Read the SQL problem of the day and write the query structure in mental pseudocode.
+              </li>
+              <li>
+                <strong>Evening Home Block:</strong> Active Python coding in the DSA Pattern Dojo.
+              </li>
+            </ul>
+            <div class="card-actions">
+              <button class="btn btn-primary" onclick="app.switchTab('flashcards')">Start 5-Min Office Drill</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. 90-DAY SCHEDULE VIEW -->
+      <section id="view-schedule" class="content-view">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">90-Day Master Curriculum</h1>
+            <p class="view-subtitle">Every single day structured for Google Senior (L5) Data Engineer readiness</p>
+          </div>
+          <div class="phase-filters" id="phaseFilters">
+            <button class="filter-chip active" data-phase="all">All Days (1–90)</button>
+            <button class="filter-chip" data-phase="1">Phase 1: Foundations (1–30)</button>
+            <button class="filter-chip" data-phase="2">Phase 2: Big Data & DAGs (31–60)</button>
+            <button class="filter-chip" data-phase="3">Phase 3: System Design & Mocks (61–90)</button>
+          </div>
+        </div>
+
+        <div class="schedule-timeline" id="scheduleTimeline">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+
+      <!-- 3. DSA PATTERN DOJO VIEW -->
+      <section id="view-dsa" class="content-view">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">Python DSA Pattern Dojo</h1>
+            <p class="view-subtitle">75 High-Yield DE Patterns: DAGs, Heaps, Intervals, Sliding Windows & HashMaps</p>
+          </div>
+          <div class="category-filters" id="dsaCategoryFilters">
+            <!-- Filter buttons -->
+          </div>
+        </div>
+
+        <div class="dsa-workspace">
+          <!-- Problem List Panel -->
+          <div class="dsa-list-panel" id="dsaProblemList">
+            <!-- Problem cards -->
+          </div>
+
+          <!-- Problem Interactive Detail / Workspace -->
+          <div class="dsa-detail-panel" id="dsaWorkspace">
+            <div class="empty-state">Select a problem on the left to start practicing.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. SQL & MODELING STUDIO VIEW -->
+      <section id="view-sql" class="content-view">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">SQL & Kimball Modeling Studio</h1>
+            <p class="view-subtitle">Advanced Window Functions, Sessionization, BigQuery UNNEST & SCD Types 1–6</p>
+          </div>
+        </div>
+
+        <div class="sql-workspace">
+          <div class="sql-list-panel" id="sqlProblemList">
+            <!-- SQL cards -->
+          </div>
+          <div class="sql-detail-panel" id="sqlWorkspace">
+            <div class="empty-state">Select an SQL Challenge on the left.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. SYSTEM DESIGN VAULT VIEW -->
+      <section id="view-system-design" class="content-view">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">Distributed System Design Vault</h1>
+            <p class="view-subtitle">10 Battle-tested Google-Scale Data Architectures & 45-Minute Interview Script</p>
+          </div>
+        </div>
+
+        <div class="system-design-grid" id="systemDesignGrid">
+          <!-- System Design Cards -->
+        </div>
+      </section>
+
+      <!-- 6. LEADERSHIP (G&L) VIEW -->
+      <section id="view-leadership" class="content-view">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">L5 Googliness & Leadership (STAR)</h1>
+            <p class="view-subtitle">Draft, refine, and grade your 8 core Senior stories for the Google L5 bar</p>
+          </div>
+        </div>
+
+        <div class="leadership-grid" id="leadershipGrid">
+          <!-- Leadership Prompts -->
+        </div>
+      </section>
+
+      <!-- 7. FLASHCARDS VIEW -->
+      <section id="view-flashcards" class="content-view">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">Office Micro-Drills (Flashcards)</h1>
+            <p class="view-subtitle">High-yield Big Data, Spark, Beam & Cloud concepts for 5-minute work breaks</p>
+          </div>
+        </div>
+
+        <div class="flashcard-container">
+          <div class="flashcard-card" id="flashcardBox">
+            <div class="flashcard-inner">
+              <div class="flashcard-front">
+                <span class="flashcard-category" id="fcCategory">Category</span>
+                <h3 class="flashcard-question" id="fcQuestion">Question goes here...</h3>
+                <span class="flashcard-hint">Click card to reveal answer</span>
+              </div>
+              <div class="flashcard-back">
+                <span class="flashcard-category" id="fcCategoryBack">Category</span>
+                <p class="flashcard-answer" id="fcAnswer">Answer goes here...</p>
+                <span class="flashcard-hint">Click to flip back</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flashcard-controls">
+            <button class="btn btn-outline" id="btnFcPrev">Previous</button>
+            <span class="flashcard-counter" id="fcCounter">1 / 8</span>
+            <button class="btn btn-primary" id="btnFcNext">Next Card</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Sync & Backup Modal -->
+  <div class="modal-backdrop" id="syncModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title">Sync Progress Across Computers</h2>
+        <button class="modal-close" id="btnCloseSyncModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted">Use this to easily carry your solved problems, code notes, and STAR stories between your home computer and your corporate office laptop without logging in anywhere.</p>
+        
+        <div class="sync-actions">
+          <div class="sync-card">
+            <h3>Export Progress</h3>
+            <p>Download your entire preparation state into a lightweight <code>.json</code> file.</p>
+            <button class="btn btn-primary" id="btnExportJson">Download Backup JSON</button>
+          </div>
+
+          <div class="sync-card">
+            <h3>Import Progress</h3>
+            <p>Upload a previously exported <code>.json</code> file on your office laptop or home machine.</p>
+            <input type="file" id="importFileInput" accept=".json" style="display: none;">
+            <button class="btn btn-outline" id="btnTriggerImport">Choose File & Restore</button>
+          </div>
+        </div>
+
+        <div class="hosting-guide">
+          <h4>How to Host this Live on the Web (Free & 100% Private):</h4>
+          <ol>
+            <li><strong>Option A (GitHub Pages):</strong> Push this directory to your GitHub repository and enable GitHub Pages in settings.</li>
+            <li><strong>Option B (Vercel / Netlify):</strong> Drag and drop this folder onto Vercel or Netlify for an instant, permanent URL accessible anywhere.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
