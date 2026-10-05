@@ -697,7 +697,7 @@ class PrepPortalApp {
       opt.value = s.day;
       const dateStr = this.formatDateForDay(s.day);
       const isBdayEve = s.day === 90;
-      opt.textContent = `Day ${s.day} (${dateStr})${isBdayEve ? ' 🎂 [Final Day Before Jan 3 Birthday]' : ''}: ${s.dsaProblem.title}`;
+      opt.textContent = `Day ${s.day} (${dateStr})${isBdayEve ? ' 🏁 [Day 90 Final Milestone]' : ''}: ${s.dsaProblem.title}`;
       if (s.day === this.state.selectedDay) {
         opt.selected = true;
       }
@@ -776,7 +776,7 @@ class PrepPortalApp {
     const headerEl = document.getElementById("dailyPillarsHeader");
     if (headerEl) {
       if (day === 90) {
-        headerEl.innerHTML = `Day 90 Quota <span style="color:#fbbf24; font-size:0.85rem; font-weight:700;">• ${dateStr} 🎂 Final Milestone Before Jan 3 Birthday!</span>`;
+        headerEl.innerHTML = `Day 90 Quota <span style="color:#2563eb; font-size:0.85rem; font-weight:700;">• ${dateStr} 🏁 Final Sprint Milestone (Target Assessment: Jan 03)</span>`;
       } else {
         headerEl.innerHTML = `Day ${day} Quota <span style="font-size:0.85rem; font-weight:500; color:var(--text-muted);">• ${dateStr} ${isToday ? '<span style="color:#60a5fa; font-weight:700;">(Today)</span>' : ''}</span>`;
       }
@@ -785,9 +785,9 @@ class PrepPortalApp {
     const phaseBadge = document.getElementById("currentPhaseBadge");
     if (phaseBadge) {
       if (day === 90) {
-        phaseBadge.innerHTML = `🎂 Day 90 Finale (Week 13) • Gift to Yourself`;
-        phaseBadge.style.borderColor = "rgba(245, 158, 11, 0.6)";
-        phaseBadge.style.color = "#fbbf24";
+        phaseBadge.innerHTML = `🏁 Day 90 Finale (Week 13) • Graduation & Target Readiness`;
+        phaseBadge.style.borderColor = "rgba(37, 99, 235, 0.6)";
+        phaseBadge.style.color = "#3b82f6";
       } else {
         phaseBadge.textContent = `${sched.phaseName} (Week ${sched.week})`;
         phaseBadge.style.borderColor = "";
@@ -1638,16 +1638,16 @@ class PrepPortalApp {
         <div class="horizon-bar-node ${isCurrent ? 'current-selected' : ''} ${isSolved ? 'solved-day' : ''}"
              data-day="${s.day}"
              data-phase="${s.phase}"
-             title="Day ${s.day} (${dateStr}): ${s.dsaProblem.title}${isSolved ? ' [✓ Solved]' : ''}${isBdayEve ? ' 🎂 [Final Day Before Jan 3 Birthday!]' : ''}"
+             title="Day ${s.day} (${dateStr}): ${s.dsaProblem.title}${isSolved ? ' [✓ Solved]' : ''}${isBdayEve ? ' 🏁 [Day 90 Final Milestone]' : ''}"
              onclick="app.changeSelectedDay(${s.day})">
         </div>
       `;
     });
 
-    // Append the Jan 3 Birthday Celebration Flag right next to Day 90
+    // Append the Jan 03 Benchmark Horizon Flag right next to Day 90
     html += `
-      <span class="bday-horizon-flag" title="Jan 3: Rohit's Birthday &amp; Unconscious Competence Unlocked!">
-        🎂 Jan 3 Birthday
+      <span class="bday-horizon-flag" title="Jan 03: Final Target Benchmark Assessment">
+        🎯 Jan 03 Benchmark
       </span>
     `;
 
