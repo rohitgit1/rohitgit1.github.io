@@ -1,6 +1,349 @@
 // Google India Data Engineering Workspace - Application Logic
 // Zero Fluff • Production-Grade • High Density • Complete 90-Day Progression
 
+// =========================================================================
+// 1. 🔊 ZERO-DEPENDENCY WEB AUDIO HAPTIC SYNTHESIZER
+// =========================================================================
+class AudioHapticEngine {
+  constructor() {
+    this.ctx = null;
+    this.enabled = localStorage.getItem("google_l5_audio_enabled") !== "false";
+  }
+
+  init() {
+    if (!this.ctx && typeof AudioContext !== "undefined") {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      this.ctx = new AudioCtx();
+    }
+  }
+
+  toggle() {
+    this.enabled = !this.enabled;
+    localStorage.setItem("google_l5_audio_enabled", this.enabled ? "true" : "false");
+    if (this.enabled) {
+      this.play("click");
+    }
+    return this.enabled;
+  }
+
+  play(type = "click") {
+    if (!this.enabled) return;
+    try {
+      this.init();
+      if (this.ctx && this.ctx.state === "suspended") {
+        this.ctx.resume();
+      }
+      if (!this.ctx) return;
+
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      if (type === "click") {
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(800, now);
+        osc.frequency.exponentialRampToValueAtTime(300, now + 0.035);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.035);
+        osc.start(now);
+        osc.stop(now + 0.04);
+      } else if (type === "toggle") {
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(450, now);
+        osc.frequency.exponentialRampToValueAtTime(750, now + 0.05);
+        gain.gain.setValueAtTime(0.09, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+        osc.start(now);
+        osc.stop(now + 0.055);
+      } else if (type === "solved") {
+        // Triumphant harmonic arpeggio (C5 -> E5 -> G5)
+        const notes = [523.25, 659.25, 783.99];
+        notes.forEach((freq, idx) => {
+          const noteOsc = this.ctx.createOscillator();
+          const noteGain = this.ctx.createGain();
+          noteOsc.connect(noteGain);
+          noteGain.connect(this.ctx.destination);
+          noteOsc.type = "sine";
+          noteOsc.frequency.setValueAtTime(freq, now + idx * 0.07);
+          noteGain.gain.setValueAtTime(0.12, now + idx * 0.07);
+          noteGain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.28);
+          noteOsc.start(now + idx * 0.07);
+          noteOsc.stop(now + idx * 0.07 + 0.3);
+        });
+      } else if (type === "error") {
+        osc.type = "sawtooth";
+        osc.frequency.setValueAtTime(110, now);
+        osc.frequency.setValueAtTime(80, now + 0.08);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
+        osc.start(now);
+        osc.stop(now + 0.17);
+      } else if (type === "navigate") {
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(600, now);
+        osc.frequency.exponentialRampToValueAtTime(900, now + 0.04);
+        gain.gain.setValueAtTime(0.06, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+        osc.start(now);
+        osc.stop(now + 0.045);
+      }
+    } catch (e) {
+      // Audio autoplay policy fallback
+    }
+  }
+}
+
+// =========================================================================
+// 2. 🌌 GPU-ACCELERATED AMBIENT MESH & INTERACTIVE CONSTELLATION
+// =========================================================================
+class AmbientMeshEngine {
+  constructor() {
+    this.canvas = document.getElementById("ambientMeshCanvas");
+    if (!this.canvas) return;
+    this.ctx = this.canvas.getContext("2d");
+    this.particles = [];
+    this.numParticles = 50;
+    this.mouseX = -1000;
+    this.mouseY = -1000;
+    this.cursorX = -1000;
+    this.cursorY = -1000;
+    this.animId = null;
+    this.isPaused = false;
+
+    this.resize();
+    this.initParticles();
+    this.bindEvents();
+    this.loop();
+  }
+
+  resize() {
+    if (!this.canvas) return;
+    this.width = this.canvas.width = window.innerWidth;
+    this.height = this.canvas.height = window.innerHeight;
+  }
+
+  initParticles() {
+    this.particles = [];
+    for (let i = 0; i < this.numParticles; i++) {
+      this.particles.push({
+        x: Math.random() * this.width,
+        y: Math.random() * this.height,
+        vx: (Math.random() - 0.5) * 0.45,
+        vy: (Math.random() - 0.5) * 0.45,
+        radius: Math.random() * 1.6 + 0.8,
+        baseAlpha: Math.random() * 0.35 + 0.15,
+        pulseSpeed: Math.random() * 0.02 + 0.01,
+        pulseOffset: Math.random() * Math.PI * 2
+      });
+    }
+  }
+
+  bindEvents() {
+    window.addEventListener("resize", () => {
+      this.resize();
+      this.initParticles();
+    });
+
+    window.addEventListener("mousemove", (e) => {
+      this.mouseX = e.clientX;
+      this.mouseY = e.clientY;
+    });
+
+    window.addEventListener("mouseleave", () => {
+      this.mouseX = -1000;
+      this.mouseY = -1000;
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      this.isPaused = document.hidden;
+    });
+  }
+
+  loop() {
+    this.animId = requestAnimationFrame(() => this.loop());
+    if (this.isPaused || !this.ctx) return;
+
+    // Smooth cursor inertia
+    this.cursorX += (this.mouseX - this.cursorX) * 0.08;
+    this.cursorY += (this.mouseY - this.cursorY) * 0.08;
+
+    this.ctx.clearRect(0, 0, this.width, this.height);
+
+    const isLight = document.body.classList.contains("theme-light");
+    const nodeColor = isLight ? "rgba(37, 99, 235," : "rgba(96, 165, 250,";
+    const lineColor = isLight ? "rgba(37, 99, 235," : "rgba(59, 130, 246,";
+
+    // Draw ambient cursor glow aura
+    if (this.cursorX > 0 && this.cursorY > 0) {
+      const grad = this.ctx.createRadialGradient(
+        this.cursorX, this.cursorY, 0,
+        this.cursorX, this.cursorY, 280
+      );
+      if (isLight) {
+        grad.addColorStop(0, "rgba(37, 99, 235, 0.06)");
+        grad.addColorStop(1, "transparent");
+      } else {
+        grad.addColorStop(0, "rgba(59, 130, 246, 0.08)");
+        grad.addColorStop(1, "transparent");
+      }
+      this.ctx.fillStyle = grad;
+      this.ctx.fillRect(0, 0, this.width, this.height);
+    }
+
+    const t = Date.now() * 0.001;
+
+    // Update and draw particles
+    for (let i = 0; i < this.particles.length; i++) {
+      const p = this.particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+
+      if (p.x < 0) p.x = this.width;
+      if (p.x > this.width) p.x = 0;
+      if (p.y < 0) p.y = this.height;
+      if (p.y > this.height) p.y = 0;
+
+      // Mouse proximity repulsion
+      const dx = p.x - this.cursorX;
+      const dy = p.y - this.cursorY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120 && dist > 0) {
+        const force = (120 - dist) / 120 * 1.2;
+        p.x += (dx / dist) * force;
+        p.y += (dy / dist) * force;
+      }
+
+      const alpha = p.baseAlpha + Math.sin(t * p.pulseSpeed * 20 + p.pulseOffset) * 0.1;
+      this.ctx.beginPath();
+      this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      this.ctx.fillStyle = `${nodeColor} ${Math.max(0.05, alpha)})`;
+      this.ctx.fill();
+
+      // Connecting filaments
+      for (let j = i + 1; j < this.particles.length; j++) {
+        const p2 = this.particles[j];
+        const fdx = p.x - p2.x;
+        const fdy = p.y - p2.y;
+        const fdist = Math.sqrt(fdx * fdx + fdy * fdy);
+        if (fdist < 115) {
+          const lalpha = (1 - fdist / 115) * (isLight ? 0.12 : 0.16);
+          this.ctx.beginPath();
+          this.ctx.moveTo(p.x, p.y);
+          this.ctx.lineTo(p2.x, p2.y);
+          this.ctx.strokeStyle = `${lineColor} ${lalpha})`;
+          this.ctx.lineWidth = 0.75;
+          this.ctx.stroke();
+        }
+      }
+    }
+  }
+}
+
+// =========================================================================
+// 3. 🎆 HIGH-FPS FULL-SCREEN CELEBRATION BURST ENGINE
+// =========================================================================
+class BurstEngine {
+  constructor() {
+    this.canvas = document.getElementById("burstFxCanvas");
+    if (!this.canvas) return;
+    this.ctx = this.canvas.getContext("2d");
+    this.particles = [];
+    this.animId = null;
+
+    this.resize();
+    window.addEventListener("resize", () => this.resize());
+  }
+
+  resize() {
+    if (!this.canvas) return;
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  }
+
+  fire(originX, originY, count = 40) {
+    if (!this.canvas || !this.ctx) return;
+    this.resize();
+
+    const colors = [
+      "#60a5fa", // Cyan Blue
+      "#34d399", // Emerald Green
+      "#fbbf24", // Gold Yellow
+      "#a78bfa", // Electric Purple
+      "#ffffff"  // Crisp White
+    ];
+
+    for (let i = 0; i < count; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = Math.random() * 8 + 3;
+      const shapeType = Math.random() > 0.4 ? "rect" : "circle";
+      this.particles.push({
+        x: originX,
+        y: originY,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 2.5,
+        gravity: 0.22,
+        friction: 0.965,
+        size: Math.random() * 6 + 3,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rotation: Math.random() * Math.PI * 2,
+        vRot: (Math.random() - 0.5) * 0.25,
+        alpha: 1,
+        decay: Math.random() * 0.018 + 0.012,
+        shape: shapeType
+      });
+    }
+
+    if (!this.animId) {
+      this.loop();
+    }
+  }
+
+  loop() {
+    if (!this.ctx) return;
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    for (let i = this.particles.length - 1; i >= 0; i--) {
+      const p = this.particles[i];
+      p.vx *= p.friction;
+      p.vy *= p.friction;
+      p.vy += p.gravity;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rotation += p.vRot;
+      p.alpha -= p.decay;
+
+      if (p.alpha <= 0) {
+        this.particles.splice(i, 1);
+        continue;
+      }
+
+      this.ctx.save();
+      this.ctx.globalAlpha = Math.max(0, p.alpha);
+      this.ctx.translate(p.x, p.y);
+      this.ctx.rotate(p.rotation);
+      this.ctx.fillStyle = p.color;
+
+      if (p.shape === "rect") {
+        this.ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+      } else {
+        this.ctx.beginPath();
+        this.ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+        this.ctx.fill();
+      }
+      this.ctx.restore();
+    }
+
+    if (this.particles.length > 0) {
+      this.animId = requestAnimationFrame(() => this.loop());
+    } else {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.animId = null;
+    }
+  }
+}
+
 class PrepPortalApp {
   constructor() {
     this.state = {
@@ -18,6 +361,11 @@ class PrepPortalApp {
       solvedSql: []
     };
 
+    // Micro-Engines (Zero Fluff, High-FPS Physics)
+    this.audio = new AudioHapticEngine();
+    this.mesh = new AmbientMeshEngine();
+    this.burst = new BurstEngine();
+
     // Master PIN Privacy Gate
     this.masterPin = localStorage.getItem("google_l5_master_pin") || "2026";
     this.isUnlocked = sessionStorage.getItem("google_l5_session_unlocked") === "true";
@@ -26,10 +374,6 @@ class PrepPortalApp {
     this.todayDateStr = this.getTodayDateString();
     this.dailyData = this.loadDailyData();
     this.accountabilityInterval = null;
-
-    // In-browser WebAssembly Pyodide engine
-    this.pyodide = null;
-    this.pyodideLoading = false;
 
     this.init();
   }
@@ -42,6 +386,11 @@ class PrepPortalApp {
     this.initAccountabilityClock();
     this.initDaySelector();
     this.renderAll();
+    this.initCardSpotlightPhysics();
+    this.initMagneticButtons();
+    this.updateNavIndicator(false);
+    this.updateSoundToggleBtn();
+    this.renderHorizonTimeline();
   }
 
   // --- Theme Management ---
@@ -132,8 +481,20 @@ class PrepPortalApp {
     });
 
     document.querySelectorAll(".content-view").forEach(view => {
-      view.classList.toggle("active", view.id === `view-${tabId}`);
+      const isActive = view.id === `view-${tabId}`;
+      view.classList.toggle("active", isActive);
+      if (isActive) {
+        const titleEl = view.querySelector(".section-title");
+        if (titleEl) this.scrambleText(titleEl);
+      }
     });
+
+    this.updateNavIndicator(true);
+    this.audio.play("click");
+    setTimeout(() => {
+      this.initCardSpotlightPhysics();
+      this.initMagneticButtons();
+    }, 50);
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -174,8 +535,12 @@ class PrepPortalApp {
       sessionStorage.setItem("google_l5_session_unlocked", "true");
       this.hideSecurityGate();
       if (errEl) errEl.style.display = "none";
+      this.audio.play("solved");
+      this.burst.fire(window.innerWidth / 2, window.innerHeight / 2, 45);
+      setTimeout(() => this.updateNavIndicator(false), 100);
     } else {
       if (errEl) errEl.style.display = "block";
+      this.audio.play("error");
       input.value = "";
       input.focus();
     }
@@ -273,7 +638,13 @@ class PrepPortalApp {
     const select = document.getElementById("daySelectDropdown");
     if (select) select.value = this.state.selectedDay;
 
+    this.audio.play("navigate");
     this.renderDailyPillars();
+    this.renderHorizonTimeline();
+    setTimeout(() => {
+      this.initCardSpotlightPhysics();
+      this.initMagneticButtons();
+    }, 40);
   }
 
   navigateDay(delta) {
@@ -400,9 +771,20 @@ class PrepPortalApp {
     const day = this.state.selectedDay;
     const dayPillars = this.loadDayPillarsState(day);
     dayPillars[num] = !dayPillars[num];
+    if (dayPillars[num]) {
+      this.audio.play("toggle");
+    } else {
+      this.audio.play("click");
+    }
     this.saveDayPillarsState(day, dayPillars);
     this.renderDailyPillars();
     this.renderAccountabilityHistory();
+
+    const doneCount = Object.values(dayPillars).filter(Boolean).length;
+    if (doneCount === 4) {
+      this.audio.play("solved");
+      this.burst.fire(window.innerWidth / 2, window.innerHeight / 2, 50);
+    }
   }
 
   openDojoForCurrentDay() {
@@ -694,22 +1076,30 @@ class PrepPortalApp {
     return solved.includes(id);
   }
 
-  toggleProblemSolved(id) {
+  toggleProblemSolved(id, evt) {
     let solved = JSON.parse(localStorage.getItem("google_l5_solved_dsa") || "[]");
-    if (solved.includes(id)) {
+    const wasSolved = solved.includes(id);
+    if (wasSolved) {
       solved = solved.filter(x => x !== id);
+      this.audio.play("click");
     } else {
       solved.push(id);
+      this.audio.play("solved");
+      const x = evt && evt.clientX ? evt.clientX : window.innerWidth / 2;
+      const y = evt && evt.clientY ? evt.clientY : window.innerHeight / 2;
+      this.burst.fire(x, y, 45);
     }
     localStorage.setItem("google_l5_solved_dsa", JSON.stringify(solved));
     this.renderDsaList();
     this.selectDsaProblem(id);
+    this.renderHorizonTimeline();
   }
 
   copyProblemSolution(id) {
     const p = PREP_DATA.dsaProblems.find(item => item.id === id);
     if (!p) return;
     navigator.clipboard.writeText(p.optimalSolution).then(() => {
+      this.audio.play("click");
       alert("Optimal Python solution copied to clipboard!");
     }).catch(() => {
       prompt("Copy Python Solution:", p.optimalSolution);
@@ -762,14 +1152,14 @@ class PrepPortalApp {
 
         <!-- Primary Action Bar linking directly to official LeetCode -->
         <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:14px;">
-          <a href="${p.leetcodeUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="display:inline-flex; align-items:center; gap:6px; font-weight:600;">
+          <a href="${p.leetcodeUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-magnetic" style="display:inline-flex; align-items:center; gap:6px; font-weight:600;">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
             <span>Solve on LeetCode.com ↗</span>
           </a>
-          <button class="btn btn-outline" onclick="app.toggleProblemSolved('${p.id}')">
+          <button class="btn btn-outline btn-magnetic" onclick="app.toggleProblemSolved('${p.id}', event)">
             ${isSolved ? '✓ Marked as Solved' : '○ Mark as Solved'}
           </button>
-          <button class="btn btn-outline" onclick="app.copyProblemSolution('${p.id}')">
+          <button class="btn btn-outline btn-magnetic" onclick="app.copyProblemSolution('${p.id}')">
             📋 Copy Python Solution
           </button>
         </div>
@@ -1041,6 +1431,149 @@ class PrepPortalApp {
     this.selectSqlProblem(this.state.activeSqlId);
     this.renderDefense();
     this.renderRoles();
+    this.renderHorizonTimeline();
+    setTimeout(() => {
+      this.initCardSpotlightPhysics();
+      this.initMagneticButtons();
+    }, 60);
+  }
+
+  // --- 🪄 INNOVATIVE INTERACTIVE PHYSICS & MOTION UTILITIES ---
+  initCardSpotlightPhysics() {
+    const handleMove = (e, card) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty("--mouse-x", `${x}px`);
+      card.style.setProperty("--mouse-y", `${y}px`);
+
+      // Micro 3D perspective tilt
+      const rx = ((y / rect.height) - 0.5) * -6;
+      const ry = ((x / rect.width) - 0.5) * 6;
+      card.style.transform = `perspective(1000px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateZ(1px)`;
+    };
+
+    const handleLeave = (card) => {
+      card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0)";
+    };
+
+    document.querySelectorAll(".card, .pillar-card, .footer-accountability-card, .dojo-problem-content, .defense-drill-card").forEach(card => {
+      card.removeEventListener("mousemove", card._spotlightMove);
+      card.removeEventListener("mouseleave", card._spotlightLeave);
+      card._spotlightMove = (e) => handleMove(e, card);
+      card._spotlightLeave = () => handleLeave(card);
+      card.addEventListener("mousemove", card._spotlightMove);
+      card.addEventListener("mouseleave", card._spotlightLeave);
+    });
+  }
+
+  initMagneticButtons() {
+    document.querySelectorAll(".btn-magnetic").forEach(btn => {
+      btn.removeEventListener("mousemove", btn._magMove);
+      btn.removeEventListener("mouseleave", btn._magLeave);
+      btn._magMove = (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = `translate(${x * 0.22}px, ${y * 0.22}px)`;
+      };
+      btn._magLeave = () => {
+        btn.style.transform = "translate(0px, 0px)";
+      };
+      btn.addEventListener("mousemove", btn._magMove);
+      btn.addEventListener("mouseleave", btn._magLeave);
+    });
+  }
+
+  updateNavIndicator(animated = true) {
+    const navMenu = document.querySelector(".nav-menu");
+    const indicator = document.getElementById("navIndicatorPill");
+    const activeItem = document.querySelector(".nav-item.active");
+    if (!navMenu || !indicator || !activeItem) return;
+
+    const offsetTop = activeItem.offsetTop;
+    const height = activeItem.offsetHeight;
+
+    if (!animated) {
+      indicator.style.transition = "none";
+    }
+    indicator.style.transform = `translateY(${offsetTop}px)`;
+    indicator.style.height = `${height}px`;
+    indicator.style.opacity = "1";
+    if (!animated) {
+      requestAnimationFrame(() => {
+        indicator.style.transition = "";
+      });
+    }
+  }
+
+  toggleSound() {
+    const isEnabled = this.audio.toggle();
+    this.updateSoundToggleBtn(isEnabled);
+  }
+
+  updateSoundToggleBtn(isEnabled = this.audio.enabled) {
+    const btn = document.getElementById("btnSoundToggle");
+    if (btn) {
+      btn.textContent = isEnabled ? "🔊 Audio: On" : "🔇 Audio: Muted";
+      btn.classList.toggle("muted", !isEnabled);
+    }
+  }
+
+  renderHorizonTimeline() {
+    const container = document.getElementById("horizonTimelineContainer");
+    if (!container || !PREP_DATA.schedule) return;
+
+    const solvedDsa = JSON.parse(localStorage.getItem("google_l5_solved_dsa") || "[]");
+    let solvedDaysCount = 0;
+
+    let html = "";
+    PREP_DATA.schedule.forEach(s => {
+      const isCurrent = s.day === this.state.selectedDay;
+      const isSolved = solvedDsa.includes(s.dsaProblem.id);
+      if (isSolved) solvedDaysCount++;
+
+      html += `
+        <div class="horizon-bar-node ${isCurrent ? 'current-selected' : ''} ${isSolved ? 'solved-day' : ''}"
+             data-day="${s.day}"
+             data-phase="${s.phase}"
+             title="Day ${s.day} (Phase ${s.phase}): ${s.dsaProblem.title}${isSolved ? ' [✓ Solved]' : ''}"
+             onclick="app.changeSelectedDay(${s.day})">
+        </div>
+      `;
+    });
+
+    container.innerHTML = html;
+
+    const statsEl = document.getElementById("horizonStats");
+    if (statsEl) {
+      statsEl.textContent = `Solved: ${solvedDaysCount}/90 Days`;
+    }
+  }
+
+  scrambleText(el) {
+    if (!el) return;
+    const originalText = el.textContent;
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!<>-_\\/[]{}—=+*^?#";
+    let iteration = 0;
+
+    clearInterval(el._scrambleInterval);
+    el._scrambleInterval = setInterval(() => {
+      el.textContent = originalText
+        .split("")
+        .map((char, index) => {
+          if (char === " " || index < iteration) {
+            return originalText[index];
+          }
+          return chars[Math.floor(Math.random() * chars.length)];
+        })
+        .join("");
+
+      if (iteration >= originalText.length) {
+        clearInterval(el._scrambleInterval);
+      }
+      iteration += 1.5;
+    }, 25);
   }
 }
 

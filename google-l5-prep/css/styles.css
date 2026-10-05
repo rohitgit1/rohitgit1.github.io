@@ -67,6 +67,62 @@ body {
   line-height: 1.5;
   font-size: 14px;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* 🌌 Ambient Interactive Mesh & Particles Canvas */
+.ambient-mesh-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+  transition: opacity 0.5s ease;
+}
+
+body.theme-light .ambient-mesh-canvas {
+  opacity: 0.4;
+}
+
+/* 🎆 Full-Screen Milestone Celebration FX Canvas */
+.burst-fx-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10000;
+}
+
+/* Holographic Shimmer Keyframes */
+@keyframes holoShimmerSweep {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulseGlowRing {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(59, 130, 246, 0);
+  }
+}
+
+@keyframes cardCascadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* --- Topbar --- */
@@ -81,6 +137,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 50;
+  backdrop-filter: blur(8px);
 }
 
 .brand {
@@ -96,6 +153,9 @@ body {
   padding: 2px 6px;
   border-radius: 4px;
   background-color: rgba(239, 68, 68, 0.15);
+  background-image: linear-gradient(110deg, transparent 20%, rgba(239, 68, 68, 0.3) 45%, transparent 70%);
+  background-size: 200% 100%;
+  animation: holoShimmerSweep 5s infinite linear;
   color: #f87171;
   border: 1px solid rgba(239, 68, 68, 0.3);
 }
@@ -129,6 +189,13 @@ body {
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 0.8rem;
+  animation: pulseGlowRing 3.5s infinite ease-in-out;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.accountability-clock-pill:hover {
+  border-color: var(--border-active);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.25);
 }
 
 .clock-label {
@@ -145,17 +212,33 @@ body {
 
 .clock-status {
   background-color: rgba(16, 185, 129, 0.15);
+  background-image: linear-gradient(110deg, transparent 20%, rgba(16, 185, 129, 0.3) 45%, transparent 70%);
+  background-size: 200% 100%;
+  animation: holoShimmerSweep 4s infinite linear;
   color: #34d399;
   padding: 2px 8px;
   border-radius: 10px;
   font-weight: 600;
   font-size: 0.75rem;
+  border: 1px solid rgba(16, 185, 129, 0.25);
 }
 
 .topbar-actions {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.sound-toggle-btn {
+  font-size: 0.75rem;
+  padding: 4px 9px;
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.sound-toggle-btn.muted {
+  opacity: 0.65;
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #f87171;
 }
 
 .theme-toggle-group {
@@ -174,12 +257,14 @@ body {
   font-size: 0.75rem;
   border-radius: 4px;
   cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .theme-btn.active {
   background-color: var(--bg-surface);
   color: var(--text-main);
   font-weight: 600;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* --- Layout --- */
@@ -187,6 +272,8 @@ body {
   display: grid;
   grid-template-columns: 240px 1fr;
   min-height: calc(100vh - 54px);
+  position: relative;
+  z-index: 10;
 }
 
 /* --- Sidebar --- */
@@ -197,6 +284,8 @@ body {
   flex-direction: column;
   justify-content: space-between;
   padding: 1.25rem 0.75rem;
+  position: relative;
+  z-index: 10;
 }
 
 .nav-label {
@@ -211,6 +300,22 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  position: relative;
+}
+
+/* 🌊 Fluid Spring Navigation Indicator Pill */
+.nav-indicator-pill {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 38px;
+  background-color: var(--bg-surface-elevated);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent-blue);
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.15);
+  pointer-events: none;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), height 0.2s ease, opacity 0.2s ease;
+  z-index: 0;
 }
 
 .nav-item {
@@ -219,30 +324,35 @@ body {
   gap: 10px;
   padding: 8px 12px;
   border-radius: var(--radius-sm);
-  background: none;
+  background: transparent !important;
   border: none;
   color: var(--text-muted);
   font-size: 0.88rem;
   font-weight: 500;
   text-align: left;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: color 0.2s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .nav-item:hover {
-  background-color: var(--bg-surface-hover);
   color: var(--text-main);
 }
 
 .nav-item.active {
-  background-color: var(--bg-surface-elevated);
   color: var(--text-main);
   font-weight: 600;
-  border-left: 3px solid var(--accent-blue);
+  border-left: none;
 }
 
 .nav-icon {
   font-size: 1rem;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nav-item:hover .nav-icon {
+  transform: scale(1.15) rotate(3deg);
 }
 
 .footer-accountability-card {
@@ -316,6 +426,36 @@ body {
   border-radius: var(--radius-md);
   padding: 1.25rem;
   box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* 🔦 Cursor-Tracking Spotlight Sheen */
+.card::before, .pillar-card::before, .footer-accountability-card::before, .dojo-problem-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(400px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(59, 130, 246, 0.12), transparent 75%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 1;
+}
+
+.card:hover::before, .pillar-card:hover::before, .footer-accountability-card:hover::before, .dojo-problem-content:hover::before {
+  opacity: 1;
+}
+
+body.theme-light .card::before, 
+body.theme-light .pillar-card::before,
+body.theme-light .footer-accountability-card::before {
+  background: radial-gradient(400px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(37, 99, 235, 0.08), transparent 70%);
 }
 
 .card-title {
@@ -323,15 +463,19 @@ body {
   font-weight: 700;
   color: var(--text-main);
   margin-bottom: 4px;
+  position: relative;
+  z-index: 2;
 }
 
 .card-desc {
   font-size: 0.82rem;
   color: var(--text-muted);
   margin-bottom: 10px;
+  position: relative;
+  z-index: 2;
 }
 
-/* --- Buttons --- */
+/* --- Buttons & Micro-Interactions --- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -342,16 +486,26 @@ body {
   font-weight: 600;
   cursor: pointer;
   border: 1px solid transparent;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  position: relative;
+  z-index: 2;
+}
+
+/* 🧲 Magnetic Button Physics */
+.btn-magnetic {
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease, background-color 0.2s ease;
+  will-change: transform;
 }
 
 .btn-primary {
   background-color: var(--accent-blue);
   color: #ffffff;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
 .btn-primary:hover {
   background-color: #2563eb;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.5);
 }
 
 .btn-outline {
@@ -363,6 +517,7 @@ body {
 .btn-outline:hover {
   background-color: var(--bg-surface-elevated);
   border-color: var(--border-active);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .btn-sm {
@@ -373,10 +528,12 @@ body {
 .btn-whatsapp {
   background-color: #10b981;
   color: #ffffff;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
 }
 
 .btn-whatsapp:hover {
   background-color: #059669;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.5);
 }
 
 .text-link-btn {
@@ -400,6 +557,8 @@ body {
   align-items: center;
   flex-wrap: wrap;
   gap: 16px;
+  position: relative;
+  z-index: 2;
 }
 
 .countdown-eyebrow {
@@ -416,6 +575,7 @@ body {
   color: var(--accent-yellow);
   letter-spacing: 0.04em;
   margin: 2px 0;
+  text-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
 }
 
 .countdown-clock-sub {
@@ -432,7 +592,7 @@ body {
 .pillars-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 12px;
+  gap: 14px;
 }
 
 .pillar-card {
@@ -443,13 +603,28 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: all 0.15s ease;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+  position: relative;
+  overflow: hidden;
+}
+
+.pillar-card:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.35), 0 0 14px rgba(59, 130, 246, 0.15);
 }
 
 .pillar-card.completed {
-  border-color: rgba(16, 185, 129, 0.4);
-  background-color: rgba(16, 185, 129, 0.03);
+  border-color: rgba(16, 185, 129, 0.5);
+  background-color: rgba(16, 185, 129, 0.04);
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.12);
 }
+
+.pillar-card:nth-child(1) { animation: cardCascadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.03s both; }
+.pillar-card:nth-child(2) { animation: cardCascadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.07s both; }
+.pillar-card:nth-child(3) { animation: cardCascadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.11s both; }
+.pillar-card:nth-child(4) { animation: cardCascadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both; }
 
 .pillar-top {
   display: flex;
@@ -457,6 +632,8 @@ body {
   align-items: flex-start;
   gap: 10px;
   margin-bottom: 8px;
+  position: relative;
+  z-index: 2;
 }
 
 .pillar-category {
@@ -479,6 +656,11 @@ body {
   height: 20px;
   cursor: pointer;
   accent-color: var(--accent-green);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.pillar-check:hover {
+  transform: scale(1.25);
 }
 
 .pillar-desc {
@@ -487,6 +669,8 @@ body {
   line-height: 1.45;
   margin-bottom: 12px;
   flex-grow: 1;
+  position: relative;
+  z-index: 2;
 }
 
 .pillar-bottom {
@@ -495,16 +679,20 @@ body {
   align-items: center;
   border-top: 1px solid var(--border-subtle);
   padding-top: 8px;
+  position: relative;
+  z-index: 2;
 }
 
 .pillar-state {
   font-size: 0.78rem;
   font-weight: 600;
   color: var(--text-subtle);
+  transition: color 0.2s ease;
 }
 
 .pillar-state.done {
   color: var(--accent-green);
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
 }
 
 .tracker-audit-split {
@@ -1119,18 +1307,28 @@ body {
   color: var(--text-muted);
 }
 
-/* 90-Day Progression Bar */
+/* 90-Day Progression Bar & Trajectory Horizon */
 .day-selector-card {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   background-color: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  padding: 12px 18px;
+  padding: 14px 18px;
   margin-bottom: 1.25rem;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.day-selector-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
   gap: 12px;
+  width: 100%;
 }
 
 .day-selector-left {
@@ -1150,6 +1348,11 @@ body {
   font-size: 0.9rem;
   cursor: pointer;
   outline: none;
+  transition: all 0.2s ease;
+}
+
+.day-select-dropdown:focus {
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
 }
 
 .phase-pill-badge {
@@ -1158,8 +1361,12 @@ body {
   padding: 4px 10px;
   border-radius: 12px;
   background-color: rgba(59, 130, 246, 0.15);
+  background-image: linear-gradient(110deg, transparent 20%, rgba(59, 130, 246, 0.3) 45%, transparent 70%);
+  background-size: 200% 100%;
+  animation: holoShimmerSweep 5s infinite linear;
   color: var(--accent-blue);
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.15);
 }
 
 .day-selector-nav {
@@ -1167,6 +1374,94 @@ body {
   align-items: center;
   gap: 8px;
 }
+
+/* 🌊 90-Day Trajectory Horizon Interactive Track */
+.horizon-track-wrapper {
+  width: 100%;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.horizon-track-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+  color: var(--text-subtle);
+  margin-bottom: 6px;
+}
+
+.horizon-title {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-main);
+}
+
+.horizon-hint {
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-left: 4px;
+}
+
+.horizon-stats {
+  font-family: var(--font-mono);
+  color: #34d399;
+  font-weight: 600;
+}
+
+.horizon-timeline-container {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 40px;
+  padding: 6px 8px;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.horizon-bar-node {
+  flex: 1 0 10px;
+  min-width: 9px;
+  height: 12px;
+  background-color: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+body.theme-light .horizon-bar-node {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.horizon-bar-node:hover {
+  transform: scaleY(2.4) translateY(-2px);
+  background-color: var(--accent-blue) !important;
+  box-shadow: 0 0 12px var(--accent-blue);
+  z-index: 10;
+}
+
+.horizon-bar-node.current-selected {
+  background-color: #60a5fa !important;
+  box-shadow: 0 0 14px rgba(96, 165, 250, 0.95);
+  transform: scaleY(2.1) translateY(-1px);
+  border-top: 2px solid #ffffff;
+  z-index: 5;
+}
+
+.horizon-bar-node.solved-day {
+  background-color: #10b981 !important;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.7);
+}
+
+/* Phase heights for horizon waveform effect */
+.horizon-bar-node[data-phase="1"] { height: 14px; }
+.horizon-bar-node[data-phase="2"] { height: 20px; }
+.horizon-bar-node[data-phase="3"] { height: 26px; }
+.horizon-bar-node[data-phase="4"] { height: 32px; }
 
 /* 90-Day Curriculum Table */
 .curriculum-table-container {
