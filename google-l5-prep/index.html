@@ -148,22 +148,41 @@
           </div>
         </div>
 
+        <!-- 90-Day Interactive Progression Bar -->
+        <div class="day-selector-card">
+          <div class="day-selector-left">
+            <span style="font-weight: 700; font-size: 0.85rem; color: var(--text-subtle);">CURRICULUM DAY:</span>
+            <select id="daySelectDropdown" class="day-select-dropdown" onchange="app.changeSelectedDay(this.value)">
+              <!-- Days 1 to 90 options populated dynamically -->
+            </select>
+            <span class="phase-pill-badge" id="currentPhaseBadge">Phase 1: Foundations (Week 1)</span>
+          </div>
+          <div class="day-selector-nav">
+            <button class="btn btn-sm btn-outline" id="btnPrevDay" onclick="app.navigateDay(-1)" title="Previous Day">◀ Prev</button>
+            <button class="btn btn-sm btn-outline" id="btnNextDay" onclick="app.navigateDay(1)" title="Next Day">Next ▶</button>
+            <button class="btn btn-sm btn-outline" onclick="app.jumpToCurrentDay()">Today</button>
+          </div>
+        </div>
+
         <!-- 4 Daily Mandatory Pillars -->
-        <h2 class="subsection-title">Mandatory Daily Quota (Complete Before 11:59 PM)</h2>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.75rem;">
+          <h2 class="subsection-title" id="dailyPillarsHeader" style="margin-bottom:0;">Day 1 Quota (Target Completion Before 11:59 PM)</h2>
+          <span style="font-size:0.75rem; color:var(--text-subtle);" id="dayCompletionSummary">0/4 Completed</span>
+        </div>
         <div class="pillars-grid">
           <!-- Pillar 1 -->
           <div class="pillar-card" id="pillarCard1">
             <div class="pillar-top">
               <div>
-                <span class="pillar-category">Pillar 1: Data Structures & Algorithms</span>
-                <h3 class="pillar-title">Python LeetCode Medium Problem</h3>
+                <span class="pillar-category" id="pillarCategory1">Pillar 1: Data Structures & Algorithms</span>
+                <h3 class="pillar-title" id="pillarTitle1">LC 1 - Two Sum</h3>
               </div>
               <input type="checkbox" id="checkPillar1" class="pillar-check" onchange="app.togglePillar(1)">
             </div>
-            <p class="pillar-desc">Solve at least 1 Python algorithm in the Dojo (Arrays, Two Pointers, Sliding Window, or DAGs).</p>
+            <p class="pillar-desc" id="pillarDesc1">Arrays & Hashing • Easy | Fundamental lookup pattern for in-memory joins.</p>
             <div class="pillar-bottom">
               <span class="pillar-state" id="pillarStatus1">Pending</span>
-              <button class="btn btn-sm btn-outline" onclick="app.switchTab('practice')">Open Coding Dojo →</button>
+              <button class="btn btn-sm btn-primary" onclick="app.openDojoForCurrentDay()">Solve in Dojo →</button>
             </div>
           </div>
 
@@ -171,15 +190,15 @@
           <div class="pillar-card" id="pillarCard2">
             <div class="pillar-top">
               <div>
-                <span class="pillar-category">Pillar 2: SQL & Kimball Modeling</span>
-                <h3 class="pillar-title">Complex Analytical Query / SCD</h3>
+                <span class="pillar-category" id="pillarCategory2">Pillar 2: SQL & Kimball Modeling</span>
+                <h3 class="pillar-title" id="pillarTitle2">User Sessionization</h3>
               </div>
               <input type="checkbox" id="checkPillar2" class="pillar-check" onchange="app.togglePillar(2)">
             </div>
-            <p class="pillar-desc">Master 1 advanced Window Query (DENSE_RANK, sessionization) or Kimball SCD Type 2 logic.</p>
+            <p class="pillar-desc" id="pillarDesc2">Window Functions | LAG + Cumulative SUM 30-min inactivity session boundary detection.</p>
             <div class="pillar-bottom">
               <span class="pillar-state" id="pillarStatus2">Pending</span>
-              <button class="btn btn-sm btn-outline" onclick="app.switchTab('practice')">Open SQL Workbench →</button>
+              <button class="btn btn-sm btn-outline" onclick="app.openSqlForCurrentDay()">Open SQL Studio →</button>
             </div>
           </div>
 
@@ -187,12 +206,12 @@
           <div class="pillar-card" id="pillarCard3">
             <div class="pillar-top">
               <div>
-                <span class="pillar-category">Pillar 3: Stack Deep-Dive</span>
-                <h3 class="pillar-title">Snowflake / Spark / GCP Internals</h3>
+                <span class="pillar-category" id="pillarCategory3">Pillar 3: Stack Deep-Dive</span>
+                <h3 class="pillar-title" id="pillarTitle3">Snowflake: Micro-partitions & Pruning</h3>
               </div>
               <input type="checkbox" id="checkPillar3" class="pillar-check" onchange="app.togglePillar(3)">
             </div>
-            <p class="pillar-desc">Understand micro-partition pruning, warehouse remote spill, or Spark shuffle skew salting.</p>
+            <p class="pillar-desc" id="pillarDesc3">First-principles storage architecture: 50-500MB immutable columnar storage & metadata skipping.</p>
             <div class="pillar-bottom">
               <span class="pillar-state" id="pillarStatus3">Pending</span>
               <button class="btn btn-sm btn-outline" onclick="app.switchTab('curriculum')">Open Masterclass →</button>
@@ -203,12 +222,12 @@
           <div class="pillar-card" id="pillarCard4">
             <div class="pillar-top">
               <div>
-                <span class="pillar-category">Pillar 4: Defense & Story</span>
-                <h3 class="pillar-title">Siemens/Coke Project Defense</h3>
+                <span class="pillar-category" id="pillarCategory4">Pillar 4: Defense & Story</span>
+                <h3 class="pillar-title" id="pillarTitle4">Siemens: 40k Object Migration AST Parser</h3>
               </div>
               <input type="checkbox" id="checkPillar4" class="pillar-check" onchange="app.togglePillar(4)">
             </div>
-            <p class="pillar-desc">Rehearse defending 1 technical interrogation question on your real Capgemini resume without stuttering.</p>
+            <p class="pillar-desc" id="pillarDesc4">Defend automated Python AST SQL translation, schema drift CI/CD, and zero-loss cutover.</p>
             <div class="pillar-bottom">
               <span class="pillar-state" id="pillarStatus4">Pending</span>
               <button class="btn btn-sm btn-outline" onclick="app.switchTab('defense')">Open Defense Suite →</button>
@@ -276,13 +295,33 @@
 
         <!-- Practice Mode Switcher -->
         <div class="category-pill-bar" style="margin-bottom: 1.25rem;">
-          <button class="cat-pill active" id="btnTabDsa" onclick="app.switchPracticeMode('dsa')">Python Algorithms (LeetCode Google)</button>
-          <button class="cat-pill" id="btnTabSql" onclick="app.switchPracticeMode('sql')">Advanced SQL & Kimball Studio</button>
+          <button class="cat-pill active" id="btnTabDsa" onclick="app.switchPracticeMode('dsa')">Python Algorithms (28 LeetCode Google)</button>
+          <button class="cat-pill" id="btnTabSql" onclick="app.switchPracticeMode('sql')">Advanced SQL Studio (10 Challenges)</button>
+          <button class="cat-pill" id="btnTabCurriculum" onclick="app.switchPracticeMode('curriculum')">🗓️ Full 90-Day Curriculum Map (Days 1–90)</button>
         </div>
 
         <!-- Python DSA Workbench -->
         <div id="practiceDsaWorkspace" class="workbench-split">
-          <div class="workbench-list-panel" id="dsaProblemList"></div>
+          <div class="workbench-list-panel">
+            <div style="margin-bottom: 10px;">
+              <select id="dsaCategoryFilter" class="day-select-dropdown" style="width:100%; font-size:0.78rem;" onchange="app.filterDsaByCategory(this.value)">
+                <option value="all">All Patterns (28 Problems)</option>
+                <option value="Arrays & Hashing">Arrays & Hashing (4)</option>
+                <option value="Prefix Sums">Prefix Sums (1)</option>
+                <option value="Two Pointers">Two Pointers (3)</option>
+                <option value="Sliding Window">Sliding Window (3)</option>
+                <option value="Stack">Stack & Monotonic Stack (3)</option>
+                <option value="Binary Search">Binary Search (2)</option>
+                <option value="Linked List">Linked List (4)</option>
+                <option value="Design & Data Structures">Design & Cache (1)</option>
+                <option value="Intervals">Intervals (2)</option>
+                <option value="Heaps">Heaps & Priority Queues (2)</option>
+                <option value="Graphs & DAGs">Graphs & DAGs (3)</option>
+                <option value="Dynamic Programming">Dynamic Programming (1)</option>
+              </select>
+            </div>
+            <div id="dsaProblemList"></div>
+          </div>
           <div class="workbench-editor-panel" id="dsaWorkspace">
             <div class="empty-state">Select a problem on the left to begin coding.</div>
           </div>
@@ -293,6 +332,35 @@
           <div class="workbench-list-panel" id="sqlProblemList"></div>
           <div class="workbench-editor-panel" id="sqlWorkspace">
             <div class="empty-state">Select an SQL challenge on the left.</div>
+          </div>
+        </div>
+
+        <!-- 90-Day Curriculum Matrix View -->
+        <div id="practiceCurriculumWorkspace" style="display:none;">
+          <div class="curriculum-filter-bar">
+            <input type="text" id="curriculumSearchInput" class="curriculum-search-input" placeholder="Search by LeetCode problem, SQL topic, or keyword..." oninput="app.filterCurriculumTable()">
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="cat-pill active" id="btnPhaseAll" onclick="app.filterCurriculumPhase('all')">All 90 Days</button>
+              <button class="cat-pill" id="btnPhase1" onclick="app.filterCurriculumPhase(1)">Phase 1 (1–25)</button>
+              <button class="cat-pill" id="btnPhase2" onclick="app.filterCurriculumPhase(2)">Phase 2 (26–50)</button>
+              <button class="cat-pill" id="btnPhase3" onclick="app.filterCurriculumPhase(3)">Phase 3 (51–75)</button>
+              <button class="cat-pill" id="btnPhase4" onclick="app.filterCurriculumPhase(4)">Phase 4 (76–90)</button>
+            </div>
+          </div>
+          <div class="curriculum-table-container">
+            <table class="curriculum-table">
+              <thead>
+                <tr>
+                  <th style="width:50px;">Day</th>
+                  <th style="width:120px;">Phase</th>
+                  <th>LeetCode Target & Pattern</th>
+                  <th>SQL Challenge</th>
+                  <th>Lakehouse / System Design</th>
+                  <th style="width:100px;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="curriculumTableBody"></tbody>
+            </table>
           </div>
         </div>
       </section>

@@ -1,5 +1,5 @@
 // Google India Data Engineering Workspace - Application Logic
-// Zero Fluff • Production-Grade • High Density
+// Zero Fluff • Production-Grade • High Density • Complete 90-Day Progression
 
 class PrepPortalApp {
   constructor() {
@@ -10,6 +10,10 @@ class PrepPortalApp {
       activePracticeMode: "dsa",
       activeDsaId: "dsa-1",
       activeSqlId: "sql-1",
+      selectedDay: parseInt(localStorage.getItem("google_l5_selected_day") || "1"),
+      dsaCategoryFilter: "all",
+      curriculumPhaseFilter: "all",
+      curriculumSearchQuery: "",
       solvedDsa: [],
       solvedSql: []
     };
@@ -36,6 +40,7 @@ class PrepPortalApp {
     this.checkSecurityGate();
     this.setupEventListeners();
     this.initAccountabilityClock();
+    this.initDaySelector();
     this.renderAll();
     this.initPyodide();
   }
@@ -130,6 +135,8 @@ class PrepPortalApp {
     document.querySelectorAll(".content-view").forEach(view => {
       view.classList.toggle("active", view.id === `view-${tabId}`);
     });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // --- 🔒 Security Gate & PIN Protection ---
@@ -160,40 +167,19 @@ class PrepPortalApp {
 
   submitSecurityPin() {
     const input = document.getElementById("inputSecurityPin");
-    const pin = (input ? input.value : "").trim();
-    const err = document.getElementById("pinErrorMessage");
+    const errEl = document.getElementById("pinErrorMessage");
+    if (!input) return;
 
-    if (pin === this.masterPin) {
+    if (input.value === this.masterPin) {
       this.isUnlocked = true;
       sessionStorage.setItem("google_l5_session_unlocked", "true");
-      if (err) err.style.display = "none";
       this.hideSecurityGate();
+      if (errEl) errEl.style.display = "none";
     } else {
-      if (err) {
-        err.style.display = "block";
-        err.textContent = "Invalid PIN. (Default Master PIN: 2026)";
-      }
-      if (input) {
-        input.value = "";
-        input.focus();
-      }
+      if (errEl) errEl.style.display = "block";
+      input.value = "";
+      input.focus();
     }
-  }
-
-  changeMasterPin() {
-    const current = prompt("Enter your current Master PIN (default: 2026):");
-    if (current !== this.masterPin) {
-      alert("Incorrect current PIN.");
-      return;
-    }
-    const newPin = prompt("Enter your new Master PIN:");
-    if (!newPin || newPin.length < 4) {
-      alert("PIN must be at least 4 characters.");
-      return;
-    }
-    this.masterPin = newPin;
-    localStorage.setItem("google_l5_master_pin", newPin);
-    alert("Master PIN successfully updated!");
   }
 
   lockApp() {
@@ -202,7 +188,239 @@ class PrepPortalApp {
     this.showSecurityGate();
   }
 
-  // --- ⏰ 24-Hour Daily Accountability Engine (12:00 AM – 11:59 PM) ---
+  changeMasterPin() {
+    const current = prompt("Enter current Master PIN (Default: 2026):");
+    if (current === this.masterPin) {
+      const newPin = prompt("Enter new 4 to 8 digit Master PIN:");
+      if (newPin && newPin.trim().length >= 4) {
+        this.masterPin = newPin.trim();
+        localStorage.setItem("google_l5_master_pin", this.masterPin);
+        alert("Master PIN updated successfully!");
+      } else {
+        alert("PIN must be at least 4 digits.");
+      }
+    } else if (current !== null) {
+      alert("Incorrect current PIN.");
+    }
+  }
+
+  // --- Backup & Restore ---
+  exportBackup() {
+    const backup = {
+      timestamp: new Date().toISOString(),
+      state: this.state,
+      dailyData: this.dailyData,
+      allStorage: {}
+    };
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key.startsWith("google_l5_")) {
+        backup.allStorage[key] = localStorage.getItem(key);
+      }
+    }
+    const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `google_l5_prep_backup_${this.todayDateStr}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  importBackup(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const data = JSON.parse(e.target.result);
+        if (data.allStorage) {
+          Object.keys(data.allStorage).forEach(key => {
+            localStorage.setItem(key, data.allStorage[key]);
+          });
+          alert("Backup successfully restored! Reloading...");
+          window.location.reload();
+        }
+      } catch (err) {
+        alert("Invalid backup file: " + err.message);
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  // --- ⏱️ 90-Day Progression & Day Selector ---
+  initDaySelector() {
+    const select = document.getElementById("daySelectDropdown");
+    if (!select || !PREP_DATA.schedule) return;
+
+    select.innerHTML = "";
+    PREP_DATA.schedule.forEach(s => {
+      const opt = document.createElement("option");
+      opt.value = s.day;
+      opt.textContent = `Day ${s.day}: ${s.dsaProblem.title}`;
+      if (s.day === this.state.selectedDay) {
+        opt.selected = true;
+      }
+      select.appendChild(opt);
+    });
+
+    this.renderDailyPillars();
+  }
+
+  changeSelectedDay(dayNum) {
+    this.state.selectedDay = parseInt(dayNum);
+    localStorage.setItem("google_l5_selected_day", this.state.selectedDay);
+    
+    const select = document.getElementById("daySelectDropdown");
+    if (select) select.value = this.state.selectedDay;
+
+    this.renderDailyPillars();
+  }
+
+  navigateDay(delta) {
+    let nextDay = this.state.selectedDay + delta;
+    if (nextDay < 1) nextDay = 1;
+    if (nextDay > 90) nextDay = 90;
+    this.changeSelectedDay(nextDay);
+  }
+
+  jumpToCurrentDay() {
+    this.changeSelectedDay(1);
+  }
+
+  loadDayPillarsState(dayNum) {
+    const key = `google_l5_day_${dayNum}_pillars`;
+    const saved = localStorage.getItem(key);
+    if (saved) {
+      try { return JSON.parse(saved); } catch (e) {}
+    }
+    return { 1: false, 2: false, 3: false, 4: false };
+  }
+
+  saveDayPillarsState(dayNum, pillars) {
+    const key = `google_l5_day_${dayNum}_pillars`;
+    localStorage.setItem(key, JSON.stringify(pillars));
+    // If it's today's day, sync to dailyData
+    if (dayNum === this.state.selectedDay) {
+      this.dailyData.pillars = pillars;
+      this.saveDailyData();
+    }
+  }
+
+  renderDailyPillars() {
+    const day = this.state.selectedDay;
+    const sched = (PREP_DATA.schedule && PREP_DATA.schedule.find(s => s.day === day)) || {
+      day: day,
+      phase: 1,
+      phaseName: "Phase 1: Foundations",
+      week: 1,
+      dsaProblem: { id: "dsa-1", title: "LC 1 - Two Sum", category: "Arrays & Hashing", difficulty: "Easy" },
+      sqlChallenge: { id: "sql-1", title: "User Sessionization" },
+      techTopic: "Snowflake: Micro-partitions & Pruning",
+      defenseTopic: "Siemens: 40k Object Migration AST Parser"
+    };
+
+    // Header & Phase Badge
+    const headerEl = document.getElementById("dailyPillarsHeader");
+    if (headerEl) headerEl.textContent = `Day ${day} Quota (Target Completion Before 11:59 PM)`;
+
+    const phaseBadge = document.getElementById("currentPhaseBadge");
+    if (phaseBadge) phaseBadge.textContent = `${sched.phaseName} (Week ${sched.week})`;
+
+    // Pillar 1: DSA
+    const cat1 = document.getElementById("pillarCategory1");
+    const title1 = document.getElementById("pillarTitle1");
+    const desc1 = document.getElementById("pillarDesc1");
+    if (cat1) cat1.textContent = `Pillar 1: Data Structures & Algorithms (${sched.dsaProblem.difficulty})`;
+    if (title1) title1.textContent = sched.dsaProblem.title;
+    if (desc1) desc1.textContent = `${sched.dsaProblem.category} • ${sched.dsaProblem.difficulty} | Solve in Dojo with automated Pyodide test harness.`;
+
+    // Pillar 2: SQL
+    const cat2 = document.getElementById("pillarCategory2");
+    const title2 = document.getElementById("pillarTitle2");
+    const desc2 = document.getElementById("pillarDesc2");
+    if (cat2) cat2.textContent = "Pillar 2: SQL & Kimball Modeling";
+    if (title2) title2.textContent = sched.sqlChallenge.title;
+    if (desc2) desc2.textContent = "Master complex query mechanics, window functions, and dimensional schemas.";
+
+    // Pillar 3: Tech Deep-Dive
+    const cat3 = document.getElementById("pillarCategory3");
+    const title3 = document.getElementById("pillarTitle3");
+    const desc3 = document.getElementById("pillarDesc3");
+    if (cat3) cat3.textContent = "Pillar 3: Stack Deep-Dive";
+    if (title3) title3.textContent = sched.techTopic;
+    if (desc3) desc3.textContent = "Production-grade architecture, memory models, query optimization & failure modes.";
+
+    // Pillar 4: Project Defense
+    const cat4 = document.getElementById("pillarCategory4");
+    const title4 = document.getElementById("pillarTitle4");
+    const desc4 = document.getElementById("pillarDesc4");
+    if (cat4) cat4.textContent = "Pillar 4: Defense & Story";
+    if (title4) title4.textContent = sched.defenseTopic;
+    if (desc4) desc4.textContent = "Defend this exact architectural decision on your Capgemini resume without stuttering.";
+
+    // Load Pillar Checkboxes for this day
+    const dayPillars = this.loadDayPillarsState(day);
+    let doneCount = 0;
+    for (let i = 1; i <= 4; i++) {
+      const isDone = !!dayPillars[i];
+      if (isDone) doneCount++;
+      const chk = document.getElementById(`checkPillar${i}`);
+      if (chk) chk.checked = isDone;
+
+      const card = document.getElementById(`pillarCard${i}`);
+      if (card) card.classList.toggle("completed", isDone);
+
+      const statusEl = document.getElementById(`pillarStatus${i}`);
+      if (statusEl) {
+        statusEl.textContent = isDone ? "✓ Done" : "Pending";
+        statusEl.classList.toggle("done", isDone);
+      }
+    }
+
+    const summaryEl = document.getElementById("dayCompletionSummary");
+    if (summaryEl) {
+      summaryEl.textContent = `${doneCount}/4 Completed`;
+      summaryEl.style.color = doneCount === 4 ? "#34d399" : (doneCount >= 2 ? "#fbbf24" : "#9ca3af");
+    }
+
+    const topbarStatus = document.getElementById("topbarTargetStatus");
+    if (topbarStatus) {
+      topbarStatus.textContent = `Day ${day}: ${doneCount}/4 Done`;
+      topbarStatus.style.color = doneCount === 4 ? "#34d399" : (doneCount >= 2 ? "#fbbf24" : "#f87171");
+    }
+  }
+
+  togglePillar(num) {
+    const day = this.state.selectedDay;
+    const dayPillars = this.loadDayPillarsState(day);
+    dayPillars[num] = !dayPillars[num];
+    this.saveDayPillarsState(day, dayPillars);
+    this.renderDailyPillars();
+    this.renderAccountabilityHistory();
+  }
+
+  openDojoForCurrentDay() {
+    const day = this.state.selectedDay;
+    const sched = PREP_DATA.schedule.find(s => s.day === day) || PREP_DATA.schedule[0];
+    const targetProblemId = sched.dsaProblem.id || "dsa-1";
+    
+    this.switchTab("practice");
+    this.switchPracticeMode("dsa");
+    this.selectDsaProblem(targetProblemId);
+  }
+
+  openSqlForCurrentDay() {
+    const day = this.state.selectedDay;
+    const sched = PREP_DATA.schedule.find(s => s.day === day) || PREP_DATA.schedule[0];
+    const targetSqlId = sched.sqlChallenge.id || "sql-1";
+
+    this.switchTab("practice");
+    this.switchPracticeMode("sql");
+    this.selectSqlProblem(targetSqlId);
+  }
+
+  // --- ⏱️ 24-Hour Cutoff Accountability Clock ---
   getTodayDateString() {
     const d = new Date();
     const year = d.getFullYear();
@@ -215,11 +433,7 @@ class PrepPortalApp {
     const key = `google_l5_daily_${this.todayDateStr}`;
     const saved = localStorage.getItem(key);
     if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        console.error(e);
-      }
+      try { return JSON.parse(saved); } catch (e) {}
     }
     return {
       date: this.todayDateStr,
@@ -231,7 +445,6 @@ class PrepPortalApp {
   saveDailyData() {
     const key = `google_l5_daily_${this.todayDateStr}`;
     localStorage.setItem(key, JSON.stringify(this.dailyData));
-    this.updateDailyUI();
   }
 
   initAccountabilityClock() {
@@ -258,7 +471,8 @@ class PrepPortalApp {
     if (dailyClock) dailyClock.textContent = timeStr;
 
     // Urgency Status
-    const completedCount = Object.values(this.dailyData.pillars).filter(Boolean).length;
+    const dayPillars = this.loadDayPillarsState(this.state.selectedDay);
+    const completedCount = Object.values(dayPillars).filter(Boolean).length;
     const msgEl = document.getElementById("countdownUrgencyMessage");
     if (msgEl) {
       if (completedCount === 4) {
@@ -269,11 +483,6 @@ class PrepPortalApp {
         msgEl.innerHTML = `Window resets strictly at 11:59:59 PM IST tonight. (${completedCount}/4 Completed)`;
       }
     }
-  }
-
-  togglePillar(num) {
-    this.dailyData.pillars[num] = !this.dailyData.pillars[num];
-    this.saveDailyData();
   }
 
   saveDailyLogNotes() {
@@ -292,38 +501,10 @@ class PrepPortalApp {
 
   resetTodayTargets() {
     if (confirm("Reset today's daily checklist?")) {
-      this.dailyData.pillars = { 1: false, 2: false, 3: false, 4: false };
-      this.saveDailyData();
-      this.renderAccountability();
+      this.saveDayPillarsState(this.state.selectedDay, { 1: false, 2: false, 3: false, 4: false });
+      this.renderDailyPillars();
+      this.renderAccountabilityHistory();
     }
-  }
-
-  updateDailyUI() {
-    const completedCount = Object.values(this.dailyData.pillars).filter(Boolean).length;
-
-    // Checkboxes and card completion state
-    for (let i = 1; i <= 4; i++) {
-      const isDone = !!this.dailyData.pillars[i];
-      const chk = document.getElementById(`checkPillar${i}`);
-      if (chk) chk.checked = isDone;
-
-      const card = document.getElementById(`pillarCard${i}`);
-      if (card) card.classList.toggle("completed", isDone);
-
-      const statusEl = document.getElementById(`pillarStatus${i}`);
-      if (statusEl) {
-        statusEl.textContent = isDone ? "✓ Done" : "Pending";
-        statusEl.classList.toggle("done", isDone);
-      }
-    }
-
-    const topbarStatus = document.getElementById("topbarTargetStatus");
-    if (topbarStatus) {
-      topbarStatus.textContent = `${completedCount}/4 Done`;
-      topbarStatus.style.color = completedCount === 4 ? "#34d399" : (completedCount >= 2 ? "#fbbf24" : "#f87171");
-    }
-
-    this.renderAccountabilityHistory();
   }
 
   renderAccountability() {
@@ -337,7 +518,8 @@ class PrepPortalApp {
     const notesInput = document.getElementById("dailyLogNotesInput");
     if (notesInput) notesInput.value = this.dailyData.notes || "";
 
-    this.updateDailyUI();
+    this.renderDailyPillars();
+    this.renderAccountabilityHistory();
   }
 
   renderAccountabilityHistory() {
@@ -390,27 +572,30 @@ class PrepPortalApp {
     if (streakEl) streakEl.textContent = `Streak: ${Math.max(1, currentStreak)} Days`;
   }
 
-  // --- 📲 1-Click WhatsApp Daily Accountability Sync ---
+  // --- 📲 WhatsApp Daily Sync ---
   generateDailyReportText() {
-    const completedCount = Object.values(this.dailyData.pillars).filter(Boolean).length;
-    const p1 = this.dailyData.pillars[1] ? "✅ Done" : "⏳ Pending";
-    const p2 = this.dailyData.pillars[2] ? "✅ Done" : "⏳ Pending";
-    const p3 = this.dailyData.pillars[3] ? "✅ Done" : "⏳ Pending";
-    const p4 = this.dailyData.pillars[4] ? "✅ Done" : "⏳ Pending";
+    const day = this.state.selectedDay;
+    const sched = PREP_DATA.schedule.find(s => s.day === day) || PREP_DATA.schedule[0];
+    const dayPillars = this.loadDayPillarsState(day);
+    const completedCount = Object.values(dayPillars).filter(Boolean).length;
+    const p1 = dayPillars[1] ? "✅ Done" : "⏳ Pending";
+    const p2 = dayPillars[2] ? "✅ Done" : "⏳ Pending";
+    const p3 = dayPillars[3] ? "✅ Done" : "⏳ Pending";
+    const p4 = dayPillars[4] ? "✅ Done" : "⏳ Pending";
     const notes = (this.dailyData.notes || "").trim() || "Completed structured engineering study block.";
 
     return `🔥 *Google Data Engineer Daily Accountability Log*
-📅 Date: *${this.todayDateStr}*
+📅 Date: *${this.todayDateStr}* (Day ${day} of 90)
 🎯 Quota Completed: *${completedCount} / 4*
-• Pillar 1 (Python DSA): ${p1}
-• Pillar 2 (SQL & Kimball Modeling): ${p2}
-• Pillar 3 (Snowflake/Spark Deep-Dive): ${p3}
-• Pillar 4 (Siemens/Coke Project Defense): ${p4}
+• Pillar 1 (${sched.dsaProblem.title}): ${p1}
+• Pillar 2 (${sched.sqlChallenge.title}): ${p2}
+• Pillar 3 (${sched.techTopic}): ${p3}
+• Pillar 4 (${sched.defenseTopic}): ${p4}
 
-📝 *Technical Accomplishments:*
+📝 *Technical Notes:*
 "${notes}"
 
-⚡ *Status:* ${completedCount === 4 ? "🏆 Target Crushed (100%)" : "In Progress • Active before 11:59 PM"}
+⚡ *Status:* ${completedCount === 4 ? "🏆 Day Target Crushed (100%)" : "In Progress • Active before 11:59 PM"}
 #GoogleIndia #DataEngineering #Accountability`;
   }
 
@@ -429,7 +614,7 @@ class PrepPortalApp {
     });
   }
 
-  // --- 🔬 Technical Masterclass (Curriculum) ---
+  // --- 🔬 Technical Masterclass ---
   filterMasterclass(category) {
     this.state.activeMasterclassCat = category;
     document.querySelectorAll(".cat-pill").forEach(p => {
@@ -450,13 +635,13 @@ class PrepPortalApp {
     let html = "";
     filtered.forEach(module => {
       html += `
-        <div class="masterclass-card">
-          <div class="masterclass-card-header">
-            <span class="masterclass-category">${module.category.toUpperCase()} ARCHITECTURE</span>
+        <div class="card masterclass-card">
+          <div class="masterclass-header">
+            <span class="masterclass-tag">${module.category.toUpperCase()} ARCHITECTURE</span>
             <h2 class="masterclass-title">${module.title}</h2>
-            <p class="masterclass-summary">${module.summary}</p>
+            <p class="masterclass-subtitle">${module.subtitle}</p>
           </div>
-          <div class="masterclass-topics-list">
+          <div class="masterclass-topics">
             ${module.topics.map(t => `
               <div class="topic-box">
                 <h3 class="topic-box-title">▪ ${t.name}</h3>
@@ -475,28 +660,41 @@ class PrepPortalApp {
     this.state.activePracticeMode = mode;
     const dsaSpace = document.getElementById("practiceDsaWorkspace");
     const sqlSpace = document.getElementById("practiceSqlWorkspace");
+    const curSpace = document.getElementById("practiceCurriculumWorkspace");
+
     const btnDsa = document.getElementById("btnTabDsa");
     const btnSql = document.getElementById("btnTabSql");
+    const btnCur = document.getElementById("btnTabCurriculum");
 
-    if (mode === "dsa") {
-      if (dsaSpace) dsaSpace.style.display = "grid";
-      if (sqlSpace) sqlSpace.style.display = "none";
-      if (btnDsa) btnDsa.classList.add("active");
-      if (btnSql) btnSql.classList.remove("active");
-    } else {
-      if (dsaSpace) dsaSpace.style.display = "none";
-      if (sqlSpace) sqlSpace.style.display = "grid";
-      if (btnDsa) btnDsa.classList.remove("active");
-      if (btnSql) btnSql.classList.add("active");
+    if (dsaSpace) dsaSpace.style.display = mode === "dsa" ? "grid" : "none";
+    if (sqlSpace) sqlSpace.style.display = mode === "sql" ? "grid" : "none";
+    if (curSpace) curSpace.style.display = mode === "curriculum" ? "block" : "none";
+
+    if (btnDsa) btnDsa.classList.toggle("active", mode === "dsa");
+    if (btnSql) btnSql.classList.toggle("active", mode === "sql");
+    if (btnCur) btnCur.classList.toggle("active", mode === "curriculum");
+
+    if (mode === "curriculum") {
+      this.renderCurriculumTable();
     }
+  }
+
+  filterDsaByCategory(category) {
+    this.state.dsaCategoryFilter = category;
+    this.renderDsaList();
   }
 
   renderDsaList() {
     const listPanel = document.getElementById("dsaProblemList");
     if (!listPanel || !PREP_DATA.dsaProblems) return;
 
+    const filter = this.state.dsaCategoryFilter;
+    const problems = (filter === "all")
+      ? PREP_DATA.dsaProblems
+      : PREP_DATA.dsaProblems.filter(p => p.category === filter);
+
     let html = "";
-    PREP_DATA.dsaProblems.forEach(p => {
+    problems.forEach(p => {
       const isActive = p.id === this.state.activeDsaId;
       html += `
         <button class="workbench-item ${isActive ? 'active' : ''}" onclick="app.selectDsaProblem('${p.id}')">
@@ -598,22 +796,19 @@ class PrepPortalApp {
     if (!p) return;
 
     try {
-      this.pyodide.runPython(`
-import sys
-from io import StringIO
-sys.stdout = StringIO()
-      `);
-
-      const fullCode = editor.value + "\n" + p.testHarness;
-      this.pyodide.runPython(fullCode);
-
-      const stdout = this.pyodide.runPython("sys.stdout.getvalue()");
-      output.textContent = stdout || "Code executed successfully with zero stdout errors.";
+      const userCode = editor.value;
+      const fullScript = `${userCode}
+${p.testHarness}`;
+      const result = await this.pyodide.runPythonAsync(fullScript);
+      output.textContent = result || "Execution finished with no output. All tests passed!";
+      output.style.color = "#34d399";
     } catch (err) {
       output.textContent = "Runtime Error:\n" + err;
+      output.style.color = "#f87171";
     }
   }
 
+  // --- SQL Workbench ---
   renderSqlList() {
     const listPanel = document.getElementById("sqlProblemList");
     if (!listPanel || !PREP_DATA.sqlChallenges) return;
@@ -653,86 +848,187 @@ sys.stdout = StringIO()
       <div class="problem-statement">
         <strong>Business Scenario:</strong>
         <p style="margin-top:4px;">${s.scenario}</p>
-        <div style="margin-top:8px; font-family:var(--font-mono); font-size:0.78rem; color:var(--accent-yellow);">
-          <strong>Schema:</strong> ${s.sampleSchema}
+        <div style="margin-top:8px; font-size:0.8rem; color:var(--text-muted);">
+          <strong>Sample Schema:</strong> <code>${s.sampleSchema}</code>
         </div>
       </div>
 
       <div>
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-          <span style="font-weight:600; font-size:0.85rem;">Production Google SQL Query Solution:</span>
-          <button class="btn btn-sm btn-outline" onclick="navigator.clipboard.writeText(document.getElementById('sqlCodeArea').value); alert('SQL copied!');">Copy SQL</button>
+          <span style="font-weight:600; font-size:0.85rem;">Production Google SQL Solution:</span>
+          <button class="btn btn-sm btn-outline" onclick="navigator.clipboard.writeText(document.getElementById('sqlCodeArea').value)">Copy Query</button>
         </div>
-        <textarea class="code-editor-area" id="sqlCodeArea" readonly style="height:220px;">${s.solutionQuery}</textarea>
+        <textarea class="code-editor-area" id="sqlCodeArea" readonly style="height:240px;">${s.solutionQuery}</textarea>
       </div>
 
-      <div style="background:var(--bg-surface-elevated); padding:12px 14px; border-radius:var(--radius-sm); font-size:0.85rem; border-left:3px solid var(--accent-green);">
-        <strong>Architectural Explanation:</strong>
-        <p style="margin-top:4px; color:var(--text-muted);">${s.explanation}</p>
+      <div style="background:var(--bg-surface-elevated); padding:10px 14px; border-radius:var(--radius-sm); font-size:0.82rem; border-left:3px solid var(--accent-blue);">
+        <strong>Architecture & Window Mechanics:</strong> ${s.explanation}
       </div>
     `;
   }
 
-  // --- 🛡️ Resume & Project Defense ---
-  renderResumeDefense() {
-    const container = document.getElementById("projectDefenseContainer");
-    if (!container || !PREP_DATA.resumeDefenseSuite) return;
+  // --- 🗓️ Full 90-Day Curriculum Matrix Table ---
+  filterCurriculumPhase(phase) {
+    this.state.curriculumPhaseFilter = phase;
+    document.querySelectorAll("#btnPhaseAll, #btnPhase1, #btnPhase2, #btnPhase3, #btnPhase4").forEach(btn => {
+      btn.classList.remove("active");
+    });
+    if (phase === 'all') {
+      const btn = document.getElementById("btnPhaseAll");
+      if (btn) btn.classList.add("active");
+    } else {
+      const btn = document.getElementById(`btnPhase${phase}`);
+      if (btn) btn.classList.add("active");
+    }
+    this.renderCurriculumTable();
+  }
+
+  filterCurriculumTable() {
+    const input = document.getElementById("curriculumSearchInput");
+    if (input) {
+      this.state.curriculumSearchQuery = input.value.toLowerCase().trim();
+      this.renderCurriculumTable();
+    }
+  }
+
+  jumpToDayFromCurriculum(dayNum) {
+    this.changeSelectedDay(dayNum);
+    this.openDojoForCurrentDay();
+  }
+
+  renderCurriculumTable() {
+    const tbody = document.getElementById("curriculumTableBody");
+    if (!tbody || !PREP_DATA.schedule) return;
+
+    const phase = this.state.curriculumPhaseFilter;
+    const query = this.state.curriculumSearchQuery;
+
+    let list = PREP_DATA.schedule;
+    if (phase !== "all") {
+      list = list.filter(item => item.phase === parseInt(phase));
+    }
+    if (query) {
+      list = list.filter(item => {
+        return item.dsaProblem.title.toLowerCase().includes(query) ||
+               item.dsaProblem.category.toLowerCase().includes(query) ||
+               item.sqlChallenge.title.toLowerCase().includes(query) ||
+               item.techTopic.toLowerCase().includes(query) ||
+               item.defenseTopic.toLowerCase().includes(query) ||
+               String(item.day).includes(query);
+      });
+    }
 
     let html = "";
-    PREP_DATA.resumeDefenseSuite.forEach(proj => {
+    list.forEach(item => {
+      const isCurrentDay = item.day === this.state.selectedDay;
+      const dayPillars = this.loadDayPillarsState(item.day);
+      const isDone = Object.values(dayPillars).filter(Boolean).length === 4;
+
       html += `
-        <div class="defense-group">
-          <h3 class="defense-group-title">💼 ${proj.project}</h3>
-          ${proj.questions.map(qa => `
-            <div class="qa-card">
-              <div class="qa-q">❓ Interviewer: "${qa.q}"</div>
-              <div class="qa-a"><strong>Staff Response:</strong> ${qa.answer}</div>
-            </div>
-          `).join("")}
+        <tr class="${isCurrentDay ? 'active-day-row' : ''}">
+          <td style="font-weight:700; color:var(--text-main);">Day ${item.day}</td>
+          <td>
+            <span class="phase-pill-badge" style="font-size:0.7rem; padding:2px 6px;">P${item.phase} (W${item.week})</span>
+          </td>
+          <td>
+            <strong>${item.dsaProblem.title}</strong>
+            <div style="font-size:0.74rem; color:var(--text-subtle);">${item.dsaProblem.category} • ${item.dsaProblem.difficulty}</div>
+          </td>
+          <td>
+            <div style="font-weight:600;">${item.sqlChallenge.title}</div>
+          </td>
+          <td>
+            <div style="font-size:0.8rem; color:var(--text-muted);">${item.techTopic}</div>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-outline" onclick="app.jumpToDayFromCurriculum(${item.day})">
+              ${isDone ? '✓ Solved' : 'Open →'}
+            </button>
+          </td>
+        </tr>
+      `;
+    });
+
+    if (list.length === 0) {
+      html = `<tr><td colspan="6" style="text-align:center; padding:20px; color:var(--text-muted);">No matching days found.</td></tr>`;
+    }
+
+    tbody.innerHTML = html;
+  }
+
+  // --- 🛡️ Resume & Project Defense ---
+  renderDefense() {
+    const listPanel = document.getElementById("defenseQuestionsList");
+    if (!listPanel || !PREP_DATA.resumeDefenseSuite) return;
+
+    let html = "";
+    PREP_DATA.resumeDefenseSuite.forEach((q, idx) => {
+      html += `
+        <div class="card defense-card">
+          <div class="defense-badge">${q.project} • INTERROGATION ${idx + 1}</div>
+          <h3 class="defense-q">${q.interviewerTrap}</h3>
+          
+          <div class="defense-answer-box">
+            <div style="font-weight:700; color:var(--accent-green); margin-bottom:4px;">Senior L5 Defense Script:</div>
+            <p style="font-size:0.85rem; line-height:1.5;">${q.bulletproofDefense}</p>
+          </div>
+
+          <div class="defense-meta-row">
+            <span><strong>Resume Bullet:</strong> "${q.resumeBulletTarget}"</span>
+            <span class="defense-tag">${q.architectureKeywords.join(", ")}</span>
+          </div>
         </div>
       `;
     });
-    container.innerHTML = html;
+    listPanel.innerHTML = html;
   }
 
   copyAtsResumeText() {
     const paper = document.getElementById("atsResumePaper");
     if (!paper) return;
-    const text = paper.innerText;
-    navigator.clipboard.writeText(text).then(() => {
-      alert("1-Page Google ATS resume text copied to clipboard!");
+    navigator.clipboard.writeText(paper.innerText).then(() => {
+      alert("Google 1-Page ATS Resume copied to clipboard!");
     }).catch(() => {
-      prompt("Copy your ATS resume below:", text);
+      prompt("Copy resume text:", paper.innerText);
     });
   }
 
   // --- 🎯 Google India Tracks & Bar ---
   renderRoles() {
-    const container = document.getElementById("rolesCleanGrid");
+    const container = document.getElementById("rolesListContainer");
     if (!container || !PREP_DATA.targetRoles) return;
 
     let html = "";
     PREP_DATA.targetRoles.forEach(r => {
       html += `
-        <div class="role-spec-card">
-          <div>
-            <h2 class="role-title">${r.title}</h2>
-            <div class="role-org">${r.organization}</div>
-            <div class="role-comp-box">💰 Compensation Benchmark: ${r.compensationRange}</div>
-            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:10px;">${r.cheatCode}</p>
+        <div class="card role-card">
+          <div class="role-header">
+            <div>
+              <span class="role-org">${r.organization}</span>
+              <h2 class="role-title">${r.title}</h2>
+            </div>
+            <div class="role-comp">${r.compensationRange}</div>
+          </div>
 
-            <h4 style="font-size:0.82rem; font-weight:700; text-transform:uppercase; color:var(--text-subtle); margin-top:12px;">Interview Loops:</h4>
-            <div class="role-loops-list">
+          <div class="role-cheatcode">
+            <strong>Google Hiring Context:</strong> ${r.cheatCode}
+          </div>
+
+          <div class="role-rounds">
+            <h4 style="font-size:0.8rem; text-transform:uppercase; color:var(--text-subtle); margin-bottom:8px;">Interview Loop Structure:</h4>
+            <div class="rounds-list">
               ${r.interviewRounds.map(rnd => `
-                <div class="loop-item">
-                  <strong>${rnd.name}:</strong> ${rnd.desc}
+                <div class="round-item">
+                  <strong>${rnd.name}</strong>: ${rnd.desc}
                 </div>
               `).join("")}
             </div>
           </div>
 
-          <div style="margin-top:14px; padding-top:10px; border-top:1px solid var(--border-subtle);">
-            <a href="${r.googleCareersQuery}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">View Open Positions on Google Careers ↗</a>
+          <div style="margin-top:14px;">
+            <a href="${r.googleCareersQuery}" target="_blank" class="btn btn-sm btn-outline">
+              Search Open Positions on Google Careers ↗
+            </a>
           </div>
         </div>
       `;
@@ -740,7 +1036,7 @@ sys.stdout = StringIO()
     container.innerHTML = html;
   }
 
-  // --- Render All ---
+  // --- Master Render ---
   renderAll() {
     this.renderAccountability();
     this.renderMasterclass();
@@ -748,64 +1044,13 @@ sys.stdout = StringIO()
     this.selectDsaProblem(this.state.activeDsaId);
     this.renderSqlList();
     this.selectSqlProblem(this.state.activeSqlId);
-    this.renderResumeDefense();
+    this.renderDefense();
     this.renderRoles();
-  }
-
-  // --- Backup & Restore ---
-  exportBackup() {
-    const backupObj = {
-      workspaceState: this.state,
-      todayLog: this.dailyData,
-      allDailyLogs: {}
-    };
-
-    // Grab all daily keys
-    for (let i = 0; i < localStorage.length; i++) {
-      const k = localStorage.key(i);
-      if (k && k.startsWith("google_l5_daily_")) {
-        backupObj.allDailyLogs[k] = localStorage.getItem(k);
-      }
-    }
-
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupObj, null, 2));
-    const downloadAnchor = document.createElement("a");
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", `google_prep_backup_${this.todayDateStr}.json`);
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
-  }
-
-  importBackup(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      try {
-        const imported = JSON.parse(event.target.result);
-        if (imported.workspaceState) this.state = { ...this.state, ...imported.workspaceState };
-        if (imported.allDailyLogs) {
-          Object.keys(imported.allDailyLogs).forEach(k => {
-            localStorage.setItem(k, imported.allDailyLogs[k]);
-          });
-        }
-        this.dailyData = this.loadDailyData();
-        this.saveState();
-        this.renderAll();
-        alert("Workspace state successfully restored!");
-        document.getElementById("syncModal").classList.remove("active");
-      } catch (err) {
-        alert("Invalid backup JSON file.");
-      }
-    };
-    reader.readAsText(file);
   }
 }
 
-// Global instantiation
+// Global App Instance
 let app;
-window.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
   app = new PrepPortalApp();
 });
