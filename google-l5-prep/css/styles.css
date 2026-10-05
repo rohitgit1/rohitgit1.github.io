@@ -2627,9 +2627,9 @@ body.theme-light .mc-azure-node {
 
 .jobs-filter-pills-row {
   display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
 }
 
 .filter-group {
