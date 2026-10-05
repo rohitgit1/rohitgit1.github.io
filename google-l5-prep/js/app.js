@@ -42,7 +42,6 @@ class PrepPortalApp {
     this.initAccountabilityClock();
     this.initDaySelector();
     this.renderAll();
-    this.initPyodide();
   }
 
   // --- Theme Management ---
@@ -378,6 +377,12 @@ class PrepPortalApp {
       }
     }
 
+
+    const leetcodeBtn = document.getElementById("pillarLeetCodeBtn1");
+    if (leetcodeBtn) {
+      leetcodeBtn.href = sched.leetcodeUrl || "https://leetcode.com/problemset/all/";
+    }
+
     const summaryEl = document.getElementById("dayCompletionSummary");
     if (summaryEl) {
       summaryEl.textContent = `${doneCount}/4 Completed`;
@@ -684,6 +689,33 @@ class PrepPortalApp {
     this.renderDsaList();
   }
 
+  isProblemSolved(id) {
+    const solved = JSON.parse(localStorage.getItem("google_l5_solved_dsa") || "[]");
+    return solved.includes(id);
+  }
+
+  toggleProblemSolved(id) {
+    let solved = JSON.parse(localStorage.getItem("google_l5_solved_dsa") || "[]");
+    if (solved.includes(id)) {
+      solved = solved.filter(x => x !== id);
+    } else {
+      solved.push(id);
+    }
+    localStorage.setItem("google_l5_solved_dsa", JSON.stringify(solved));
+    this.renderDsaList();
+    this.selectDsaProblem(id);
+  }
+
+  copyProblemSolution(id) {
+    const p = PREP_DATA.dsaProblems.find(item => item.id === id);
+    if (!p) return;
+    navigator.clipboard.writeText(p.optimalSolution).then(() => {
+      alert("Optimal Python solution copied to clipboard!");
+    }).catch(() => {
+      prompt("Copy Python Solution:", p.optimalSolution);
+    });
+  }
+
   renderDsaList() {
     const listPanel = document.getElementById("dsaProblemList");
     if (!listPanel || !PREP_DATA.dsaProblems) return;
@@ -696,11 +728,12 @@ class PrepPortalApp {
     let html = "";
     problems.forEach(p => {
       const isActive = p.id === this.state.activeDsaId;
+      const isSolved = this.isProblemSolved(p.id);
       html += `
         <button class="workbench-item ${isActive ? 'active' : ''}" onclick="app.selectDsaProblem('${p.id}')">
           <div class="workbench-item-header">
             <span class="workbench-item-tag">${p.category}</span>
-            <span style="font-size:0.75rem; color:var(--text-subtle);">${p.difficulty}</span>
+            <span style="font-size:0.75rem; color:${isSolved ? 'var(--accent-green)' : 'var(--text-subtle)'}; font-weight:${isSolved ? '700' : '400'};">${isSolved ? '✓ Solved' : p.difficulty}</span>
           </div>
           <div class="workbench-item-title">${p.title}</div>
         </button>
@@ -717,95 +750,52 @@ class PrepPortalApp {
     const workspace = document.getElementById("dsaWorkspace");
     if (!p || !workspace) return;
 
+    const isSolved = this.isProblemSolved(p.id);
+
     workspace.innerHTML = `
       <div class="problem-header">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:8px;">
           <span style="font-size:0.75rem; font-weight:700; color:var(--accent-blue); text-transform:uppercase;">${p.category} • ${p.difficulty}</span>
           <span style="font-size:0.75rem; color:var(--text-subtle); font-family:var(--font-mono);">Time: ${p.timeComplexity} | Space: ${p.spaceComplexity}</span>
         </div>
-        <h2 style="font-size:1.2rem; font-weight:700; color:var(--text-main);">${p.title}</h2>
+        <h2 style="font-size:1.3rem; font-weight:700; color:var(--text-main); margin-bottom:10px;">${p.title}</h2>
+
+        <!-- Primary Action Bar linking directly to official LeetCode -->
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:14px;">
+          <a href="${p.leetcodeUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="display:inline-flex; align-items:center; gap:6px; font-weight:600;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            <span>Solve on LeetCode.com ↗</span>
+          </a>
+          <button class="btn btn-outline" onclick="app.toggleProblemSolved('${p.id}')">
+            ${isSolved ? '✓ Marked as Solved' : '○ Mark as Solved'}
+          </button>
+          <button class="btn btn-outline" onclick="app.copyProblemSolution('${p.id}')">
+            📋 Copy Python Solution
+          </button>
+        </div>
       </div>
 
       <div class="problem-statement">
-        <strong>Problem:</strong>
-        <p style="margin-top:4px;">${p.problemStatement}</p>
-        <div style="margin-top:8px; font-size:0.8rem; color:var(--text-muted);">
+        <strong>Problem Statement:</strong>
+        <p style="margin-top:4px; line-height:1.5;">${p.problemStatement}</p>
+        <div style="margin-top:8px; font-size:0.8rem; color:var(--text-muted); background:var(--bg-surface-elevated); padding:8px 12px; border-radius:var(--radius-sm); border-left:3px solid var(--accent-blue);">
           <strong>Google DE Relevance:</strong> ${p.deRelevance}
         </div>
       </div>
 
-      <div>
+      <div style="margin-top:14px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-          <span style="font-weight:600; font-size:0.85rem;">Python 3 Solution & Test Harness:</span>
-          <button class="btn btn-sm btn-primary" onclick="app.runPythonCode()">▶ Run Python Tests (WebAssembly)</button>
+          <span style="font-weight:600; font-size:0.85rem; color:var(--text-main);">Optimal Google-Standard Python 3 Solution:</span>
+          <span style="font-size:0.75rem; color:var(--accent-green); font-weight:600;">O(N) Optimal & Scalable</span>
         </div>
-        <textarea class="code-editor-area" id="pythonEditorArea">${p.optimalSolution}</textarea>
+        <pre style="background:var(--bg-surface-elevated); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:14px; font-family:var(--font-mono); font-size:0.82rem; color:var(--text-main); overflow-x:auto; line-height:1.5;"><code>${p.optimalSolution}</code></pre>
       </div>
 
-      <div>
-        <span style="font-weight:600; font-size:0.82rem; color:var(--text-subtle);">Pyodide Execution Output:</span>
-        <div class="test-output-box" id="testOutput">Click 'Run Python Tests' to execute code against Google test cases.</div>
-      </div>
-
-      <div style="background:var(--bg-surface-elevated); padding:10px 14px; border-radius:var(--radius-sm); font-size:0.82rem; border-left:3px solid var(--accent-yellow);">
-        <strong>Interviewer Tips:</strong> ${p.interviewerTips}
+      <div style="background:var(--bg-surface-elevated); padding:12px 14px; border-radius:var(--radius-sm); font-size:0.82rem; border-left:3px solid var(--accent-yellow); margin-top:12px;">
+        <strong style="color:var(--accent-yellow);">Google Interviewer Traps & Follow-Up Questions:</strong>
+        <p style="margin-top:4px; line-height:1.5;">${p.interviewerTips}</p>
       </div>
     `;
-  }
-
-  // --- Pyodide WebAssembly Python Runner ---
-  async initPyodide() {
-    if (this.pyodide || this.pyodideLoading) return;
-    this.pyodideLoading = true;
-    const badge = document.getElementById("pyodideStatusBadge");
-
-    try {
-      if (typeof loadPyodide === "function") {
-        this.pyodide = await loadPyodide();
-        this.pyodideLoading = false;
-        if (badge) {
-          badge.textContent = "Python 3.12 (Pyodide Wasm): Ready ✓";
-          badge.style.color = "var(--accent-green)";
-        }
-      }
-    } catch (err) {
-      this.pyodideLoading = false;
-      if (badge) {
-        badge.textContent = "Python Engine: Ready (Native fallback)";
-      }
-    }
-  }
-
-  async runPythonCode() {
-    const editor = document.getElementById("pythonEditorArea");
-    const output = document.getElementById("testOutput");
-    if (!editor || !output) return;
-
-    output.textContent = "Executing Python code in WebAssembly...";
-
-    if (!this.pyodide) {
-      await this.initPyodide();
-    }
-
-    if (!this.pyodide) {
-      output.textContent = "Python WebAssembly engine is initializing. Please wait a moment and click Run again.";
-      return;
-    }
-
-    const p = PREP_DATA.dsaProblems.find(item => item.id === this.state.activeDsaId);
-    if (!p) return;
-
-    try {
-      const userCode = editor.value;
-      const fullScript = `${userCode}
-${p.testHarness}`;
-      const result = await this.pyodide.runPythonAsync(fullScript);
-      output.textContent = result || "Execution finished with no output. All tests passed!";
-      output.style.color = "#34d399";
-    } catch (err) {
-      output.textContent = "Runtime Error:\n" + err;
-      output.style.color = "#f87171";
-    }
   }
 
   // --- SQL Workbench ---
@@ -941,9 +931,14 @@ ${p.testHarness}`;
             <div style="font-size:0.8rem; color:var(--text-muted);">${item.techTopic}</div>
           </td>
           <td>
-            <button class="btn btn-sm btn-outline" onclick="app.jumpToDayFromCurriculum(${item.day})">
-              ${isDone ? '✓ Solved' : 'Open →'}
-            </button>
+            <div style="display:flex; gap:6px;">
+              <a href="${item.leetcodeUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">
+                ↗ LeetCode
+              </a>
+              <button class="btn btn-sm btn-outline" onclick="app.jumpToDayFromCurriculum(${item.day})">
+                Study →
+              </button>
+            </div>
           </td>
         </tr>
       `;

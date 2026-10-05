@@ -127,7 +127,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    test_cases = [\n        ([2, 7, 11, 15], 9, [0, 1]),\n        ([3, 2, 4], 6, [1, 2]),\n        ([3, 3], 6, [0, 1]),\n        ([-1, -2, -3, -4, -5], -8, [2, 4])\n    ]\n    results = []\n    for i, (nums, target, expected) in enumerate(test_cases):\n        actual = twoSum(nums, target)\n        passed = sorted(actual) == sorted(expected)\n        results.append(f\"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})\")\n    return \"\\n\".join(results)\nprint(run_tests())",
     "timeComplexity": "O(N) single pass",
     "spaceComplexity": "O(N) hash map",
-    "interviewerTips": "Mention single-pass vs two-pass. Discuss memory overhead when N is billions of records (why streaming requires distributed hashing or partition by key)."
+    "interviewerTips": "Mention single-pass vs two-pass. Discuss memory overhead when N is billions of records (why streaming requires distributed hashing or partition by key).",
+    "leetcodeUrl": "https://leetcode.com/problems/two-sum/"
   },
   {
     "id": "dsa-2",
@@ -142,7 +143,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    test_cases = [\n        (\"anagram\", \"nagaram\", True),\n        (\"rat\", \"car\", False),\n        (\"a\", \"ab\", False),\n        (\"rail safety\", \"fairy tales\", True)\n    ]\n    results = []\n    for i, (s, t, expected) in enumerate(test_cases):\n        actual = isAnagram(s, t)\n        passed = actual == expected\n        results.append(f\"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})\")\n    return \"\\n\".join(results)\nprint(run_tests())",
     "timeComplexity": "O(N) where N is length of string",
     "spaceComplexity": "O(1) if lowercase english alphabet (26 chars)",
-    "interviewerTips": "Always ask what the character set is: ASCII, Unicode? In distributed big data, discussing HashPartitioner on string frequency vectors shows depth."
+    "interviewerTips": "Always ask what the character set is: ASCII, Unicode? In distributed big data, discussing HashPartitioner on string frequency vectors shows depth.",
+    "leetcodeUrl": "https://leetcode.com/problems/valid-anagram/"
   },
   {
     "id": "dsa-3",
@@ -157,7 +159,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    test_cases = [\n        ([\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"], 3),\n        ([\"\"], 1),\n        ([\"a\"], 1)\n    ]\n    results = []\n    for i, (strs, expected_group_count) in enumerate(test_cases):\n        actual = groupAnagrams(strs)\n        passed = len(actual) == expected_group_count\n        results.append(f\"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {len(actual)} groups, Expected {expected_group_count})\")\n    return \"\\n\".join(results)\nprint(run_tests())",
     "timeComplexity": "O(N * K) where N is number of strings and K is max length",
     "spaceComplexity": "O(N * K) storing strings in hash map",
-    "interviewerTips": "Explain why using character frequency tuple O(N*K) is asymptotically superior to sorting each string O(N * K log K)."
+    "interviewerTips": "Explain why using character frequency tuple O(N*K) is asymptotically superior to sorting each string O(N * K log K).",
+    "leetcodeUrl": "https://leetcode.com/problems/group-anagrams/"
   },
   {
     "id": "dsa-4",
@@ -172,7 +175,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    test_cases = [\n        ([1, 2, 3, 4], [24, 12, 8, 6]),\n        ([-1, 1, 0, -3, 3], [0, 0, 9, 0, 0])\n    ]\n    results = []\n    for i, (nums, expected) in enumerate(test_cases):\n        actual = productExceptSelf(nums)\n        passed = actual == expected\n        results.append(f\"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})\")\n    return \"\\n\".join(results)\nprint(run_tests())",
     "timeComplexity": "O(N) two linear passes",
     "spaceComplexity": "O(1) extra space (excluding output array)",
-    "interviewerTips": "Highlight why division is forbidden: division by zero crashes, and floating point loss occurs on massive metrics."
+    "interviewerTips": "Highlight why division is forbidden: division by zero crashes, and floating point loss occurs on massive metrics.",
+    "leetcodeUrl": "https://leetcode.com/problems/product-of-array-except-self/"
   },
   {
     "id": "dsa-5",
@@ -187,7 +191,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    test_cases = [\n        ([1, 1, 1], 2, 2),\n        ([1, 2, 3], 3, 2),\n        ([1, -1, 0], 0, 3),\n        ([3, 4, 7, 2, -3, 1, 4, 2], 7, 4)\n    ]\n    results = []\n    for i, (nums, k, expected) in enumerate(test_cases):\n        actual = subarraySum(nums, k)\n        passed = actual == expected\n        results.append(f\"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})\")\n    return \"\\n\".join(results)\nprint(run_tests())",
     "timeComplexity": "O(N) single pass",
     "spaceComplexity": "O(N) prefix sum frequency map",
-    "interviewerTips": "Crucial edge case: initialize prefix_sums with {0: 1} to handle subarrays starting at index 0. Note that sliding window does NOT work if array contains negative numbers."
+    "interviewerTips": "Crucial edge case: initialize prefix_sums with {0: 1} to handle subarrays starting at index 0. Note that sliding window does NOT work if array contains negative numbers.",
+    "leetcodeUrl": "https://leetcode.com/problems/subarray-sum-equals-k/"
   },
   {
     "id": "dsa-6",
@@ -202,7 +207,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    test_cases = [\n        (\"A man, a plan, a canal: Panama\", True),\n        (\"race a car\", False),\n        (\" \", True),\n        (\"0P\", False)\n    ]\n    results = []\n    for i, (s, expected) in enumerate(test_cases):\n        actual = isPalindrome(s)\n        passed = actual == expected\n        results.append(f\"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})\")\n    return \"\\n\".join(results)\nprint(run_tests())",
     "timeComplexity": "O(N) single pass",
     "spaceComplexity": "O(1) in-place without auxiliary string copy",
-    "interviewerTips": "Do not create a sanitized string copy `[c for c in s if c.isalnum()]` because that uses O(N) extra memory. In-place two pointers demonstrates senior memory discipline."
+    "interviewerTips": "Do not create a sanitized string copy `[c for c in s if c.isalnum()]` because that uses O(N) extra memory. In-place two pointers demonstrates senior memory discipline.",
+    "leetcodeUrl": "https://leetcode.com/problems/valid-palindrome/"
   },
   {
     "id": "dsa-7",
@@ -217,7 +223,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    test_cases = [\n        ([-1,0,1,2,-1,-4], [[-1,-1,2],[-1,0,1]]),\n        ([0,1,1], []),\n        ([0,0,0], [[0,0,0]])\n    ]\n    results = []\n    for i, (nums, expected) in enumerate(test_cases):\n        actual = threeSum(nums)\n        passed = len(actual) == len(expected)\n        results.append(f\"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})\")\n    return \"\\n\".join(results)\nprint(run_tests())",
     "timeComplexity": "O(N^2) sorting + two-pointer sweeps",
     "spaceComplexity": "O(1) extra space (excluding output array)",
-    "interviewerTips": "Highlight duplicate skipping logic (`nums[i] == nums[i-1]` and `nums[left] == nums[left+1]`). This shows mastery of edge cases without relying on a slow hash set."
+    "interviewerTips": "Highlight duplicate skipping logic (`nums[i] == nums[i-1]` and `nums[left] == nums[left+1]`). This shows mastery of edge cases without relying on a slow hash set.",
+    "leetcodeUrl": "https://leetcode.com/problems/3sum/"
   },
   {
     "id": "dsa-8",
@@ -232,7 +239,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    test_cases = [\n        ([1,8,6,2,5,4,8,3,7], 49),\n        ([1,1], 1),\n        ([4,3,2,1,4], 16)\n    ]\n    results = []\n    for i, (height, expected) in enumerate(test_cases):\n        actual = maxArea(height)\n        passed = actual == expected\n        results.append(f\"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})\")\n    return \"\\n\".join(results)\nprint(run_tests())",
     "timeComplexity": "O(N) single pass",
     "spaceComplexity": "O(1) constant memory",
-    "interviewerTips": "Prove why moving the shorter pointer is always mathematically correct: moving the taller pointer can never increase the area since width shrinks and height is bottlenecked by the shorter wall."
+    "interviewerTips": "Prove why moving the shorter pointer is always mathematically correct: moving the taller pointer can never increase the area since width shrinks and height is bottlenecked by the shorter wall.",
+    "leetcodeUrl": "https://leetcode.com/problems/container-with-most-water/"
   },
   {
     "id": "dsa-9",
@@ -247,7 +255,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    test_cases = [\n        (\"abcabcbb\", 3),\n        (\"bbbbb\", 1),\n        (\"pwwkew\", 3),\n        (\"\", 0),\n        (\"abba\", 2)\n    ]\n    results = []\n    for i, (s, expected) in enumerate(test_cases):\n        actual = lengthOfLongestSubstring(s)\n        passed = actual == expected\n        results.append(f\"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})\")\n    return \"\\n\".join(results)\nprint(run_tests())",
     "timeComplexity": "O(N) single pass sliding window",
     "spaceComplexity": "O(min(M, N)) where M is alphabet size",
-    "interviewerTips": "The common bug is failing on test cases like 'abba' where the duplicate character was seen before the current 'left' pointer. Ensure char_map[ch] >= left is checked!"
+    "interviewerTips": "The common bug is failing on test cases like 'abba' where the duplicate character was seen before the current 'left' pointer. Ensure char_map[ch] >= left is checked!",
+    "leetcodeUrl": "https://leetcode.com/problems/longest-substring-without-repeating-characters/"
   },
   {
     "id": "dsa-10",
@@ -262,7 +271,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    test_cases = [\n        (\"ADOBECODEBANC\", \"ABC\", \"BANC\"),\n        (\"a\", \"a\", \"a\"),\n        (\"a\", \"aa\", \"\")\n    ]\n    results = []\n    for i, (s, t, expected) in enumerate(test_cases):\n        actual = minWindow(s, t)\n        passed = actual == expected\n        results.append(f\"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got '{actual}', Expected '{expected}')\")\n    return \"\\n\".join(results)\nprint(run_tests())",
     "timeComplexity": "O(S + T) where S and T are lengths of strings",
     "spaceComplexity": "O(S + T) storing character frequencies",
-    "interviewerTips": "Track 'formed' vs 'required' counts instead of checking whether the entire dictionary matches at every step (which would degrade to O(26 * S))."
+    "interviewerTips": "Track 'formed' vs 'required' counts instead of checking whether the entire dictionary matches at every step (which would degrade to O(26 * S)).",
+    "leetcodeUrl": "https://leetcode.com/problems/minimum-window-substring/"
   },
   {
     "id": "dsa-11",
@@ -277,7 +287,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    test_cases = [\n        (\"ABAB\", 2, 4),\n        (\"AABABBA\", 1, 4),\n        (\"ABBB\", 2, 4)\n    ]\n    results = []\n    for i, (s, k, expected) in enumerate(test_cases):\n        actual = characterReplacement(s, k)\n        passed = actual == expected\n        results.append(f\"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})\")\n    return \"\\n\".join(results)\nprint(run_tests())",
     "timeComplexity": "O(N) single pass sliding window",
     "spaceComplexity": "O(26) = O(1) character map",
-    "interviewerTips": "Explain why max_freq does not need to be decremented when shrinking the window: a smaller max_freq will never yield a larger valid window length."
+    "interviewerTips": "Explain why max_freq does not need to be decremented when shrinking the window: a smaller max_freq will never yield a larger valid window length.",
+    "leetcodeUrl": "https://leetcode.com/problems/longest-repeating-character-replacement/"
   },
   {
     "id": "dsa-12",
@@ -292,7 +303,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    test_cases = [\n        (\"()\", True),\n        (\"()[]{}\", True),\n        (\"(]\", False),\n        (\"([)]\", False),\n        (\"{[]}\", True)\n    ]\n    results = []\n    for i, (s, expected) in enumerate(test_cases):\n        actual = isValid(s)\n        passed = actual == expected\n        results.append(f\"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})\")\n    return \"\\n\".join(results)\nprint(run_tests())",
     "timeComplexity": "O(N) linear scan",
     "spaceComplexity": "O(N) stack storage",
-    "interviewerTips": "Mention edge cases immediately: odd string length, string starting with closing bracket, unclosed brackets left on stack."
+    "interviewerTips": "Mention edge cases immediately: odd string length, string starting with closing bracket, unclosed brackets left on stack.",
+    "leetcodeUrl": "https://leetcode.com/problems/valid-parentheses/"
   },
   {
     "id": "dsa-13",
@@ -307,7 +319,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    ms = MinStack()\n    ms.push(-2)\n    ms.push(0)\n    ms.push(-3)\n    m1 = ms.getMin() # -3\n    ms.pop()\n    t1 = ms.top() # 0\n    m2 = ms.getMin() # -2\n    passed = (m1 == -3 and t1 == 0 and m2 == -2)\n    return f\"Test 1: {'PASSED' if passed else 'FAILED'} (Got min1={m1}, top={t1}, min2={m2})\"\nprint(run_tests())",
     "timeComplexity": "O(1) for all operations",
     "spaceComplexity": "O(N) auxiliary min tracker",
-    "interviewerTips": "Explain the space optimization: only push to min_stack when val <= current min, rather than mirroring every single element."
+    "interviewerTips": "Explain the space optimization: only push to min_stack when val <= current min, rather than mirroring every single element.",
+    "leetcodeUrl": "https://leetcode.com/problems/min-stack/"
   },
   {
     "id": "dsa-14",
@@ -322,7 +335,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    test_cases = [\n        ([73,74,75,71,69,72,76,73], [1,1,4,2,1,1,0,0]),\n        ([30,40,50,60], [1,1,1,0]),\n        ([30,60,90], [1,1,0])\n    ]\n    results = []\n    for i, (temps, expected) in enumerate(test_cases):\n        actual = dailyTemperatures(temps)\n        passed = actual == expected\n        results.append(f\"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})\")\n    return \"\\n\".join(results)\nprint(run_tests())",
     "timeComplexity": "O(N) each element pushed and popped at most once",
     "spaceComplexity": "O(N) monotonic stack storage",
-    "interviewerTips": "Emphasize why this is O(N) even with a nested while loop: amortized analysis proves every element enters and leaves the stack at most once."
+    "interviewerTips": "Emphasize why this is O(N) even with a nested while loop: amortized analysis proves every element enters and leaves the stack at most once.",
+    "leetcodeUrl": "https://leetcode.com/problems/daily-temperatures/"
   },
   {
     "id": "dsa-15",
@@ -337,7 +351,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    test_cases = [\n        ([4,5,6,7,0,1,2], 0, 4),\n        ([4,5,6,7,0,1,2], 3, -1),\n        ([1], 0, -1),\n        ([3, 1], 1, 1)\n    ]\n    results = []\n    for i, (nums, target, expected) in enumerate(test_cases):\n        actual = search(nums, target)\n        passed = actual == expected\n        results.append(f\"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})\")\n    return \"\\n\".join(results)\nprint(run_tests())",
     "timeComplexity": "O(log N) binary search",
     "spaceComplexity": "O(1) constant memory",
-    "interviewerTips": "Identify which half of the array is strictly sorted. At least one half is guaranteed to be sorted. Then verify if target falls within that sorted half."
+    "interviewerTips": "Identify which half of the array is strictly sorted. At least one half is guaranteed to be sorted. Then verify if target falls within that sorted half.",
+    "leetcodeUrl": "https://leetcode.com/problems/search-in-rotated-sorted-array/"
   },
   {
     "id": "dsa-16",
@@ -352,7 +367,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    test_cases = [\n        ([3,4,5,1,2], 1),\n        ([4,5,6,7,0,1,2], 0),\n        ([11,13,15,17], 11)\n    ]\n    results = []\n    for i, (nums, expected) in enumerate(test_cases):\n        actual = findMin(nums)\n        passed = actual == expected\n        results.append(f\"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})\")\n    return \"\\n\".join(results)\nprint(run_tests())",
     "timeComplexity": "O(log N)",
     "spaceComplexity": "O(1)",
-    "interviewerTips": "Notice the comparison `nums[mid] > nums[right]`: if true, the minimum must lie strictly to the right of mid (`left = mid + 1`). Otherwise `right = mid`."
+    "interviewerTips": "Notice the comparison `nums[mid] > nums[right]`: if true, the minimum must lie strictly to the right of mid (`left = mid + 1`). Otherwise `right = mid`.",
+    "leetcodeUrl": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/"
   },
   {
     "id": "dsa-17",
@@ -367,7 +383,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    # Helper to build list\n    def build_list(vals):\n        dummy = ListNode(0)\n        curr = dummy\n        for v in vals:\n            curr.next = ListNode(v)\n            curr = curr.next\n        return dummy.next\n    def to_vals(node):\n        out = []\n        while node:\n            out.append(node.val)\n            node = node.next\n        return out\n    \n    head = build_list([1, 2, 3, 4, 5])\n    rev = reverseList(head)\n    actual = to_vals(rev)\n    passed = actual == [5, 4, 3, 2, 1]\n    return f\"Test 1: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected [5, 4, 3, 2, 1])\"\nprint(run_tests())",
     "timeComplexity": "O(N) single pass",
     "spaceComplexity": "O(1) in-place pointer swapping",
-    "interviewerTips": "Always show both iterative O(1) space and recursive O(N) stack approaches to illustrate pros and cons of call stack depth in large datasets."
+    "interviewerTips": "Always show both iterative O(1) space and recursive O(N) stack approaches to illustrate pros and cons of call stack depth in large datasets.",
+    "leetcodeUrl": "https://leetcode.com/problems/reverse-linked-list/"
   },
   {
     "id": "dsa-18",
@@ -382,7 +399,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    class ListNode:\n        def __init__(self, x):\n            self.val = x\n            self.next = None\n    n1, n2, n3, n4 = ListNode(3), ListNode(2), ListNode(0), ListNode(-4)\n    n1.next = n2; n2.next = n3; n3.next = n4; n4.next = n2 # Cycle at pos 1\n    res1 = hasCycle(n1)\n    \n    na, nb = ListNode(1), ListNode(2)\n    na.next = nb # No cycle\n    res2 = hasCycle(na)\n    \n    passed = res1 is True and res2 is False\n    return f\"Test 1: {'PASSED' if passed else 'FAILED'} (Got cycle={res1}, no_cycle={res2})\"\nprint(run_tests())",
     "timeComplexity": "O(N) Floyd's cycle detection",
     "spaceComplexity": "O(1) constant pointers",
-    "interviewerTips": "Explain the mathematical proof: if a cycle exists of length C, the distance between fast and slow increases by 1 each step, so fast is guaranteed to catch slow in at most C steps."
+    "interviewerTips": "Explain the mathematical proof: if a cycle exists of length C, the distance between fast and slow increases by 1 each step, so fast is guaranteed to catch slow in at most C steps.",
+    "leetcodeUrl": "https://leetcode.com/problems/linked-list-cycle/"
   },
   {
     "id": "dsa-19",
@@ -397,7 +415,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    class ListNode:\n        def __init__(self, val=0, next=None):\n            self.val = val\n            self.next = next\n    def build(vals):\n        dummy = ListNode(0)\n        c = dummy\n        for v in vals:\n            c.next = ListNode(v)\n            c = c.next\n        return dummy.next\n    def to_list(node):\n        res = []\n        while node:\n            res.append(node.val)\n            node = node.next\n        return res\n        \n    l1 = build([1, 2, 4])\n    l2 = build([1, 3, 4])\n    merged = mergeTwoLists(l1, l2)\n    actual = to_list(merged)\n    passed = actual == [1, 1, 2, 3, 4, 4]\n    return f\"Test 1: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected [1, 1, 2, 3, 4, 4])\"\nprint(run_tests())",
     "timeComplexity": "O(N + M) single pass",
     "spaceComplexity": "O(1) in-place splicing with dummy node",
-    "interviewerTips": "Connecting this directly to Spark's SortMergeJoinExec proves practical data engineering acumen."
+    "interviewerTips": "Connecting this directly to Spark's SortMergeJoinExec proves practical data engineering acumen.",
+    "leetcodeUrl": "https://leetcode.com/problems/merge-two-sorted-lists/"
   },
   {
     "id": "dsa-20",
@@ -412,7 +431,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    lru = LRUCache(2)\n    lru.put(1, 1)\n    lru.put(2, 2)\n    r1 = lru.get(1) # returns 1\n    lru.put(3, 3) # evicts key 2\n    r2 = lru.get(2) # returns -1 (not found)\n    lru.put(4, 4) # evicts key 1\n    r3 = lru.get(1) # returns -1\n    r4 = lru.get(3) # returns 3\n    r5 = lru.get(4) # returns 4\n    \n    passed = (r1 == 1 and r2 == -1 and r3 == -1 and r4 == 3 and r5 == 4)\n    return f\"Test 1: {'PASSED' if passed else 'FAILED'} (Got {[r1, r2, r3, r4, r5]}, Expected [1, -1, -1, 3, 4])\"\nprint(run_tests())",
     "timeComplexity": "O(1) for both get and put operations",
     "spaceComplexity": "O(Capacity) space complexity",
-    "interviewerTips": "Interviewers will ask how you implement this without OrderedDict: explain Doubly Linked List + HashMap. Mention thread safety with reader-writer locks in multi-threaded ingestion pipelines."
+    "interviewerTips": "Interviewers will ask how you implement this without OrderedDict: explain Doubly Linked List + HashMap. Mention thread safety with reader-writer locks in multi-threaded ingestion pipelines.",
+    "leetcodeUrl": "https://leetcode.com/problems/lru-cache/"
   },
   {
     "id": "dsa-21",
@@ -427,7 +447,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    test_cases = [\n        ([[1,3],[2,6],[8,10],[15,18]], [[1,6],[8,10],[15,18]]),\n        ([[1,4],[4,5]], [[1,5]]),\n        ([[1,4],[0,4]], [[0,4]]),\n        ([[1,4],[2,3]], [[1,4]])\n    ]\n    results = []\n    for i, (intervals, expected) in enumerate(test_cases):\n        actual = merge(intervals)\n        passed = actual == expected\n        results.append(f\"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})\")\n    return \"\\n\".join(results)\nprint(run_tests())",
     "timeComplexity": "O(N log N) sorting step",
     "spaceComplexity": "O(N) for output list",
-    "interviewerTips": "Note how sorting by start time converts a 2D geometric comparison problem into a linear scan. Mention parallel chunk merging if data spans multiple distributed machines."
+    "interviewerTips": "Note how sorting by start time converts a 2D geometric comparison problem into a linear scan. Mention parallel chunk merging if data spans multiple distributed machines.",
+    "leetcodeUrl": "https://leetcode.com/problems/merge-intervals/"
   },
   {
     "id": "dsa-22",
@@ -442,7 +463,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    test_cases = [\n        ([[1,3],[6,9]], [2,5], [[1,5],[6,9]]),\n        ([[1,2],[3,5],[6,7],[8,10],[12,16]], [4,8], [[1,2],[3,10],[12,16]])\n    ]\n    results = []\n    for i, (intervals, newInt, expected) in enumerate(test_cases):\n        actual = insert(intervals, newInt)\n        passed = actual == expected\n        results.append(f\"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})\")\n    return \"\\n\".join(results)\nprint(run_tests())",
     "timeComplexity": "O(N) single linear scan without sorting",
     "spaceComplexity": "O(N) for output array",
-    "interviewerTips": "Because the input is already sorted, you can solve this in O(N) linear time without calling sort() which would cost O(N log N)."
+    "interviewerTips": "Because the input is already sorted, you can solve this in O(N) linear time without calling sort() which would cost O(N log N).",
+    "leetcodeUrl": "https://leetcode.com/problems/insert-interval/"
   },
   {
     "id": "dsa-23",
@@ -457,7 +479,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    test_cases = [\n        ([1,1,1,2,2,3], 2, [1, 2]),\n        ([1], 1, [1]),\n        ([4,1,-1,2,-1,2,3], 2, [-1, 2])\n    ]\n    results = []\n    for i, (nums, k, expected) in enumerate(test_cases):\n        actual = topKFrequent(nums, k)\n        passed = sorted(actual) == sorted(expected)\n        results.append(f\"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})\")\n    return \"\\n\".join(results)\nprint(run_tests())",
     "timeComplexity": "O(N log K) with min-heap of size K",
     "spaceComplexity": "O(N + K) hash map + heap",
-    "interviewerTips": "Discuss Bucket Sort alternative for O(N) linear time when frequency <= N. Discuss Count-Min Sketch for true infinite distributed streaming at Google scale."
+    "interviewerTips": "Discuss Bucket Sort alternative for O(N) linear time when frequency <= N. Discuss Count-Min Sketch for true infinite distributed streaming at Google scale.",
+    "leetcodeUrl": "https://leetcode.com/problems/top-k-frequent-elements/"
   },
   {
     "id": "dsa-24",
@@ -472,7 +495,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    mf = MedianFinder()\n    mf.addNum(1)\n    mf.addNum(2)\n    m1 = mf.findMedian() # 1.5\n    mf.addNum(3)\n    m2 = mf.findMedian() # 2.0\n    passed = (abs(m1 - 1.5) < 1e-5 and abs(m2 - 2.0) < 1e-5)\n    return f\"Test 1: {'PASSED' if passed else 'FAILED'} (Got {[m1, m2]}, Expected [1.5, 2.0])\"\nprint(run_tests())",
     "timeComplexity": "O(log N) for addNum, O(1) for findMedian",
     "spaceComplexity": "O(N) storing stream elements",
-    "interviewerTips": "At Google scale with billions of telemetry metrics, discuss T-Digest or HdrHistogram algorithms used in Google Monarch and Cloud Monitoring for approximate percentiles (P50/P90/P99) in constant memory."
+    "interviewerTips": "At Google scale with billions of telemetry metrics, discuss T-Digest or HdrHistogram algorithms used in Google Monarch and Cloud Monitoring for approximate percentiles (P50/P90/P99) in constant memory.",
+    "leetcodeUrl": "https://leetcode.com/problems/find-median-from-data-stream/"
   },
   {
     "id": "dsa-25",
@@ -487,7 +511,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    test_cases = [\n        (2, [[1,0]], True),\n        (2, [[1,0],[0,1]], False), # Cycle\n        (3, [[0,1],[1,2]], True)\n    ]\n    results = []\n    for i, (n, prereqs, expected) in enumerate(test_cases):\n        actual = canFinish(n, prereqs)\n        passed = actual == expected\n        results.append(f\"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})\")\n    return \"\\n\".join(results)\nprint(run_tests())",
     "timeComplexity": "O(V + E) vertices and edges",
     "spaceComplexity": "O(V + E) for adjacency graph and in-degree array",
-    "interviewerTips": "Highlight that Kahn's algorithm (BFS with in-degree) is naturally non-recursive, avoiding Python's recursion limit on deep pipeline DAGs."
+    "interviewerTips": "Highlight that Kahn's algorithm (BFS with in-degree) is naturally non-recursive, avoiding Python's recursion limit on deep pipeline DAGs.",
+    "leetcodeUrl": "https://leetcode.com/problems/course-schedule/"
   },
   {
     "id": "dsa-26",
@@ -502,7 +527,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    test_cases = [\n        (2, [[1, 0]], [0, 1]),\n        (4, [[1,0],[2,0],[3,1],[3,2]], [0, 1, 2, 3]),\n        (2, [[1, 0], [0, 1]], [])\n    ]\n    results = []\n    for i, (n, prereqs, expected) in enumerate(test_cases):\n        actual = findOrder(n, prereqs)\n        passed = (actual == expected) or (len(actual) == len(expected) and len(expected) > 0)\n        results.append(f\"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})\")\n    return \"\\n\".join(results)\nprint(run_tests())",
     "timeComplexity": "O(V + E) vertices and edges",
     "spaceComplexity": "O(V + E) for adjacency list + in-degree",
-    "interviewerTips": "Explicitly relate this to building an execution plan for an ETL/ELT pipeline. Highlight how Kahn's algorithm detects circular dependencies automatically."
+    "interviewerTips": "Explicitly relate this to building an execution plan for an ETL/ELT pipeline. Highlight how Kahn's algorithm detects circular dependencies automatically.",
+    "leetcodeUrl": "https://leetcode.com/problems/course-schedule-ii/"
   },
   {
     "id": "dsa-27",
@@ -517,7 +543,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    g1 = [\n      [\"1\",\"1\",\"1\",\"1\",\"0\"],\n      [\"1\",\"1\",\"0\",\"1\",\"0\"],\n      [\"1\",\"1\",\"0\",\"0\",\"0\"],\n      [\"0\",\"0\",\"0\",\"0\",\"0\"]\n    ]\n    g2 = [\n      [\"1\",\"1\",\"0\",\"0\",\"0\"],\n      [\"1\",\"1\",\"0\",\"0\",\"0\"],\n      [\"0\",\"0\",\"1\",\"0\",\"0\"],\n      [\"0\",\"0\",\"0\",\"1\",\"1\"]\n    ]\n    r1 = numIslands(g1)\n    r2 = numIslands(g2)\n    passed = (r1 == 1 and r2 == 3)\n    return f\"Test 1: {'PASSED' if passed else 'FAILED'} (Got g1={r1}, g2={r2}, Expected 1, 3)\"\nprint(run_tests())",
     "timeComplexity": "O(M * N) visits every cell at most twice",
     "spaceComplexity": "O(min(M, N)) BFS queue width",
-    "interviewerTips": "Mutating the grid in-place (`grid[r][c] = '0'`) saves an extra visited matrix. Mention Disjoint Set Union (Union-Find) for dynamic distributed graph clustering."
+    "interviewerTips": "Mutating the grid in-place (`grid[r][c] = '0'`) saves an extra visited matrix. Mention Disjoint Set Union (Union-Find) for dynamic distributed graph clustering.",
+    "leetcodeUrl": "https://leetcode.com/problems/number-of-islands/"
   },
   {
     "id": "dsa-28",
@@ -532,7 +559,8 @@ const PREP_DATA = {
     "testHarness": "def run_tests():\n    test_cases = [\n        ([1, 2, 5], 11, 3),\n        ([2], 3, -1),\n        ([1], 0, 0)\n    ]\n    results = []\n    for i, (coins, amt, expected) in enumerate(test_cases):\n        actual = coinChange(coins, amt)\n        passed = actual == expected\n        results.append(f\"Test {i+1}: {'PASSED' if passed else 'FAILED'} (Got {actual}, Expected {expected})\")\n    return \"\\n\".join(results)\nprint(run_tests())",
     "timeComplexity": "O(Amount * len(coins))",
     "spaceComplexity": "O(Amount) 1D DP array",
-    "interviewerTips": "Explain the bottom-up 1D DP transition state: `dp[x] = min(dp[x], dp[x - coin] + 1)`. Mention why greedy algorithms fail (e.g. coins [1, 3, 4] for amount 6: greedy gives 4+1+1=3 coins, optimal is 3+3=2 coins)."
+    "interviewerTips": "Explain the bottom-up 1D DP transition state: `dp[x] = min(dp[x], dp[x - coin] + 1)`. Mention why greedy algorithms fail (e.g. coins [1, 3, 4] for amount 6: greedy gives 4+1+1=3 coins, optimal is 3+3=2 coins).",
+    "leetcodeUrl": "https://leetcode.com/problems/coin-change/"
   }
 ],
 
@@ -868,7 +896,8 @@ Best regards,
       "id": "dsa-1",
       "title": "LC 1 - Two Sum",
       "category": "Arrays & Hashing",
-      "difficulty": "Easy"
+      "difficulty": "Easy",
+      "leetcodeUrl": "https://leetcode.com/problems/two-sum/"
     },
     "sqlChallenge": {
       "id": "sql-1",
@@ -876,7 +905,8 @@ Best regards,
     },
     "techTopic": "Snowflake: Micro-partitions & Pruning",
     "defenseTopic": "Siemens: 40k Object Migration AST Parser",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/two-sum/"
   },
   {
     "day": 2,
@@ -890,7 +920,8 @@ Best regards,
       "id": "dsa-2",
       "title": "LC 242 - Valid Anagram",
       "category": "Arrays & Hashing",
-      "difficulty": "Easy"
+      "difficulty": "Easy",
+      "leetcodeUrl": "https://leetcode.com/problems/valid-anagram/"
     },
     "sqlChallenge": {
       "id": "sql-1",
@@ -898,7 +929,8 @@ Best regards,
     },
     "techTopic": "Snowflake: Clustering Keys & Reclustering",
     "defenseTopic": "Siemens: Automated Schema Drift CI/CD",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/valid-anagram/"
   },
   {
     "day": 3,
@@ -912,7 +944,8 @@ Best regards,
       "id": "dsa-3",
       "title": "LC 49 - Group Anagrams",
       "category": "Arrays & Hashing",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/group-anagrams/"
     },
     "sqlChallenge": {
       "id": "sql-1",
@@ -920,7 +953,8 @@ Best regards,
     },
     "techTopic": "Snowflake: Virtual Warehouse Spilling (Local/Remote)",
     "defenseTopic": "Siemens: 88% Query Latency Optimization",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/group-anagrams/"
   },
   {
     "day": 4,
@@ -934,7 +968,8 @@ Best regards,
       "id": "dsa-5",
       "title": "LC 560 - Subarray Sum Equals K",
       "category": "Prefix Sums",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/subarray-sum-equals-k/"
     },
     "sqlChallenge": {
       "id": "sql-6",
@@ -942,7 +977,8 @@ Best regards,
     },
     "techTopic": "Snowflake: Zero-Copy Cloning & Time Travel",
     "defenseTopic": "Siemens: Bronze-to-Silver PySpark Ingestion",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/subarray-sum-equals-k/"
   },
   {
     "day": 5,
@@ -956,7 +992,8 @@ Best regards,
       "id": "dsa-4",
       "title": "LC 238 - Product of Array Except Self",
       "category": "Arrays & Hashing",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/product-of-array-except-self/"
     },
     "sqlChallenge": {
       "id": "sql-6",
@@ -964,7 +1001,8 @@ Best regards,
     },
     "techTopic": "PySpark: JVM Memory (Driver vs Executor)",
     "defenseTopic": "Databricks: 32% Compute Cost Reduction",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/product-of-array-except-self/"
   },
   {
     "day": 6,
@@ -978,7 +1016,8 @@ Best regards,
       "id": "dsa-6",
       "title": "LC 125 - Valid Palindrome",
       "category": "Two Pointers",
-      "difficulty": "Easy"
+      "difficulty": "Easy",
+      "leetcodeUrl": "https://leetcode.com/problems/valid-palindrome/"
     },
     "sqlChallenge": {
       "id": "sql-1",
@@ -986,7 +1025,8 @@ Best regards,
     },
     "techTopic": "PySpark: Shuffle Partitions & Adaptive Execution (AQE)",
     "defenseTopic": "Databricks: Shuffle Tuning 200 to Dynamic",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/valid-palindrome/"
   },
   {
     "day": 7,
@@ -1000,7 +1040,8 @@ Best regards,
       "id": "dsa-7",
       "title": "LC 15 - 3Sum",
       "category": "Two Pointers",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/3sum/"
     },
     "sqlChallenge": {
       "id": "sql-1",
@@ -1008,7 +1049,8 @@ Best regards,
     },
     "techTopic": "PySpark: Mitigating Join Skew via Key Salting",
     "defenseTopic": "PySpark: Salted Join Implementation Code",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/3sum/"
   },
   {
     "day": 8,
@@ -1022,7 +1064,8 @@ Best regards,
       "id": "dsa-8",
       "title": "LC 11 - Container With Most Water",
       "category": "Two Pointers",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/container-with-most-water/"
     },
     "sqlChallenge": {
       "id": "sql-4",
@@ -1030,7 +1073,8 @@ Best regards,
     },
     "techTopic": "PySpark: Broadcast Hash Join vs Sort-Merge Join",
     "defenseTopic": "PySpark: Broadcast Join Threshold Guardrails",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/container-with-most-water/"
   },
   {
     "day": 9,
@@ -1044,7 +1088,8 @@ Best regards,
       "id": "dsa-9",
       "title": "LC 3 - Longest Substring Without Repeats",
       "category": "Sliding Window",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/longest-substring-without-repeating-characters/"
     },
     "sqlChallenge": {
       "id": "sql-5",
@@ -1052,7 +1097,8 @@ Best regards,
     },
     "techTopic": "Azure ADF: Metadata-Driven Pipeline Framework",
     "defenseTopic": "Coca-Cola: 40+ ADF Parameterized Pipelines",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/longest-substring-without-repeating-characters/"
   },
   {
     "day": 10,
@@ -1066,7 +1112,8 @@ Best regards,
       "id": "dsa-10",
       "title": "LC 76 - Minimum Window Substring",
       "category": "Sliding Window",
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "leetcodeUrl": "https://leetcode.com/problems/minimum-window-substring/"
     },
     "sqlChallenge": {
       "id": "sql-2",
@@ -1074,7 +1121,8 @@ Best regards,
     },
     "techTopic": "Azure ADLS Gen2: Hierarchical Namespace & ACLs",
     "defenseTopic": "Coca-Cola: ADLS Gen2 Multi-Region Architecture",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/minimum-window-substring/"
   },
   {
     "day": 11,
@@ -1088,7 +1136,8 @@ Best regards,
       "id": "dsa-11",
       "title": "LC 424 - Character Replacement",
       "category": "Sliding Window",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/longest-repeating-character-replacement/"
     },
     "sqlChallenge": {
       "id": "sql-2",
@@ -1096,7 +1145,8 @@ Best regards,
     },
     "techTopic": "Azure Key Vault & Managed Identity Security",
     "defenseTopic": "Coca-Cola: Slashing Pipeline MTTR (4h to 25m)",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/longest-repeating-character-replacement/"
   },
   {
     "day": 12,
@@ -1110,7 +1160,8 @@ Best regards,
       "id": "dsa-12",
       "title": "LC 20 - Valid Parentheses",
       "category": "Stack",
-      "difficulty": "Easy"
+      "difficulty": "Easy",
+      "leetcodeUrl": "https://leetcode.com/problems/valid-parentheses/"
     },
     "sqlChallenge": {
       "id": "sql-10",
@@ -1118,7 +1169,8 @@ Best regards,
     },
     "techTopic": "Cloud Storage: Object Stores vs Distributed Filesystems",
     "defenseTopic": "dbt Cloud: 3-Tier Staging, Intermediate, Marts",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/valid-parentheses/"
   },
   {
     "day": 13,
@@ -1132,7 +1184,8 @@ Best regards,
       "id": "dsa-13",
       "title": "LC 155 - Min Stack",
       "category": "Stack",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/min-stack/"
     },
     "sqlChallenge": {
       "id": "sql-9",
@@ -1140,7 +1193,8 @@ Best regards,
     },
     "techTopic": "Pub/Sub Architecture & Ordering Keys",
     "defenseTopic": "dbt Cloud: Automated Schema & Freshness Tests",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/min-stack/"
   },
   {
     "day": 14,
@@ -1154,7 +1208,8 @@ Best regards,
       "id": "dsa-14",
       "title": "LC 739 - Daily Temperatures",
       "category": "Monotonic Stack",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/daily-temperatures/"
     },
     "sqlChallenge": {
       "id": "sql-6",
@@ -1162,7 +1217,8 @@ Best regards,
     },
     "techTopic": "Pub/Sub: Message Retention & Dead-Letter Queues",
     "defenseTopic": "Coca-Cola: Ingesting 12TB Monthly Sales Data",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/daily-temperatures/"
   },
   {
     "day": 15,
@@ -1176,7 +1232,8 @@ Best regards,
       "id": "dsa-14",
       "title": "LC 84 - Largest Rectangle in Histogram",
       "category": "Monotonic Stack",
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "leetcodeUrl": "https://leetcode.com/problems/largest-rectangle-in-histogram/"
     },
     "sqlChallenge": {
       "id": "sql-7",
@@ -1184,7 +1241,8 @@ Best regards,
     },
     "techTopic": "Dataflow: Streaming vs Batch Execution Graph",
     "defenseTopic": "Alert Webhooks & SLA Monitoring Architecture",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/largest-rectangle-in-histogram/"
   },
   {
     "day": 16,
@@ -1198,7 +1256,8 @@ Best regards,
       "id": "dsa-15",
       "title": "LC 33 - Search in Rotated Sorted Array",
       "category": "Binary Search",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/search-in-rotated-sorted-array/"
     },
     "sqlChallenge": {
       "id": "sql-7",
@@ -1206,7 +1265,8 @@ Best regards,
     },
     "techTopic": "BigQuery Storage: Capacitor Columnar & Colossus",
     "defenseTopic": "Siemens: Delta Lake / Parquet Compaction",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/search-in-rotated-sorted-array/"
   },
   {
     "day": 17,
@@ -1220,7 +1280,8 @@ Best regards,
       "id": "dsa-16",
       "title": "LC 153 - Find Min in Rotated Sorted Array",
       "category": "Binary Search",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/"
     },
     "sqlChallenge": {
       "id": "sql-6",
@@ -1228,7 +1289,8 @@ Best regards,
     },
     "techTopic": "BigQuery Compute: Slots & Dremel Multi-Level Trees",
     "defenseTopic": "BigQuery Slot Dynamic Allocation Tuning",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/"
   },
   {
     "day": 18,
@@ -1242,7 +1304,8 @@ Best regards,
       "id": "dsa-17",
       "title": "LC 206 - Reverse Linked List",
       "category": "Linked List",
-      "difficulty": "Easy"
+      "difficulty": "Easy",
+      "leetcodeUrl": "https://leetcode.com/problems/reverse-linked-list/"
     },
     "sqlChallenge": {
       "id": "sql-8",
@@ -1250,7 +1313,8 @@ Best regards,
     },
     "techTopic": "BigQuery Reservation: On-Demand vs Editions",
     "defenseTopic": "Query Cost Governance in Enterprise Lakes",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/reverse-linked-list/"
   },
   {
     "day": 19,
@@ -1264,7 +1328,8 @@ Best regards,
       "id": "dsa-18",
       "title": "LC 141 - Linked List Cycle",
       "category": "Linked List",
-      "difficulty": "Easy"
+      "difficulty": "Easy",
+      "leetcodeUrl": "https://leetcode.com/problems/linked-list-cycle/"
     },
     "sqlChallenge": {
       "id": "sql-9",
@@ -1272,7 +1337,8 @@ Best regards,
     },
     "techTopic": "BigQuery Partitioning (Ingestion vs Date) & Clustering",
     "defenseTopic": "BigQuery Partition Pruning vs Snowflake",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/linked-list-cycle/"
   },
   {
     "day": 20,
@@ -1286,7 +1352,8 @@ Best regards,
       "id": "dsa-19",
       "title": "LC 21 - Merge Two Sorted Lists",
       "category": "Linked List",
-      "difficulty": "Easy"
+      "difficulty": "Easy",
+      "leetcodeUrl": "https://leetcode.com/problems/merge-two-sorted-lists/"
     },
     "sqlChallenge": {
       "id": "sql-10",
@@ -1294,7 +1361,8 @@ Best regards,
     },
     "techTopic": "BigQuery Storage Write API Deduplication Streams",
     "defenseTopic": "High-Throughput CDC Streaming Ingestion",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/merge-two-sorted-lists/"
   },
   {
     "day": 21,
@@ -1308,7 +1376,8 @@ Best regards,
       "id": "dsa-17",
       "title": "LC 143 - Reorder List",
       "category": "Linked List",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/reorder-list/"
     },
     "sqlChallenge": {
       "id": "sql-3",
@@ -1316,7 +1385,8 @@ Best regards,
     },
     "techTopic": "Cloud Spanner: TrueTime & External Consistency",
     "defenseTopic": "Spanner Multi-Region High Availability",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/reorder-list/"
   },
   {
     "day": 22,
@@ -1330,7 +1400,8 @@ Best regards,
       "id": "dsa-18",
       "title": "LC 19 - Remove Nth Node From End",
       "category": "Linked List",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/"
     },
     "sqlChallenge": {
       "id": "sql-3",
@@ -1338,7 +1409,8 @@ Best regards,
     },
     "techTopic": "Cloud Bigtable: LSM Trees & Row Key Hotspotting",
     "defenseTopic": "Bigtable Tablet Server Load Balancing",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/"
   },
   {
     "day": 23,
@@ -1352,7 +1424,8 @@ Best regards,
       "id": "dsa-7",
       "title": "Timed Drill: LC 15 + LC 3",
       "category": "Two Pointers & Window",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/3sum/"
     },
     "sqlChallenge": {
       "id": "sql-1",
@@ -1360,7 +1433,8 @@ Best regards,
     },
     "techTopic": "Kimball Star Schema: Fact vs Dimension Design",
     "defenseTopic": "Star Schema vs Denormalized BigQuery Tables",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/3sum/"
   },
   {
     "day": 24,
@@ -1374,7 +1448,8 @@ Best regards,
       "id": "dsa-14",
       "title": "Timed Drill: LC 739 + LC 33",
       "category": "Stack & Binary Search",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/daily-temperatures/"
     },
     "sqlChallenge": {
       "id": "sql-4",
@@ -1382,7 +1457,8 @@ Best regards,
     },
     "techTopic": "Slowly Changing Dimensions (SCD Types 1, 2, 3)",
     "defenseTopic": "SCD Type 2 Surrogate Keys & End Dates",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/daily-temperatures/"
   },
   {
     "day": 25,
@@ -1396,7 +1472,8 @@ Best regards,
       "id": "dsa-10",
       "title": "Phase 1 Checkpoint Mock Exam",
       "category": "Review & Mock",
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "leetcodeUrl": "https://leetcode.com/problemset/all/"
     },
     "sqlChallenge": {
       "id": "sql-2",
@@ -1404,7 +1481,8 @@ Best regards,
     },
     "techTopic": "SCD Types 4 & 6 (Mini-Dimensions & Hybrid)",
     "defenseTopic": "Full 1-Page Google ATS Resume Live Review",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problemset/all/"
   },
   {
     "day": 26,
@@ -1418,7 +1496,8 @@ Best regards,
       "id": "dsa-25",
       "title": "LC 207 - Course Schedule I (Cycle Detection)",
       "category": "Graphs & DAGs",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/course-schedule/"
     },
     "sqlChallenge": {
       "id": "sql-10",
@@ -1426,7 +1505,8 @@ Best regards,
     },
     "techTopic": "Apache Airflow: DAG Scheduling & Operators",
     "defenseTopic": "Orchestrating Complex Multi-Stage Pipelines",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/course-schedule/"
   },
   {
     "day": 27,
@@ -1440,7 +1520,8 @@ Best regards,
       "id": "dsa-26",
       "title": "LC 210 - Course Schedule II (DAG Order)",
       "category": "Graphs & DAGs",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/course-schedule-ii/"
     },
     "sqlChallenge": {
       "id": "sql-10",
@@ -1448,7 +1529,8 @@ Best regards,
     },
     "techTopic": "Apache Beam: Pipeline DAG Execution Graph",
     "defenseTopic": "Airflow Task Failure Backfill Strategy",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/course-schedule-ii/"
   },
   {
     "day": 28,
@@ -1462,7 +1544,8 @@ Best regards,
       "id": "dsa-27",
       "title": "LC 200 - Number of Islands",
       "category": "Graphs & DAGs",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/number-of-islands/"
     },
     "sqlChallenge": {
       "id": "sql-4",
@@ -1470,7 +1553,8 @@ Best regards,
     },
     "techTopic": "Spark RDD Lineage Graph vs DataFrame Catalyst",
     "defenseTopic": "Catalyst Optimizer Physical Plan Analysis",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/number-of-islands/"
   },
   {
     "day": 29,
@@ -1484,7 +1568,8 @@ Best regards,
       "id": "dsa-27",
       "title": "LC 133 - Clone Graph",
       "category": "Graphs & DAGs",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/clone-graph/"
     },
     "sqlChallenge": {
       "id": "sql-10",
@@ -1492,7 +1577,8 @@ Best regards,
     },
     "techTopic": "Spark Tungsten Engine: Off-Heap Memory & CodeGen",
     "defenseTopic": "Spark Garbage Collection & Memory Tuning",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/clone-graph/"
   },
   {
     "day": 30,
@@ -1506,7 +1592,8 @@ Best regards,
       "id": "dsa-26",
       "title": "LC 269 - Alien Dictionary",
       "category": "Graphs & DAGs",
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "leetcodeUrl": "https://leetcode.com/problems/alien-dictionary/"
     },
     "sqlChallenge": {
       "id": "sql-10",
@@ -1514,7 +1601,8 @@ Best regards,
     },
     "techTopic": "Delta Lake: ACID Transaction Log (_delta_log)",
     "defenseTopic": "Databricks Delta Engine & Parquet Compaction",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/alien-dictionary/"
   },
   {
     "day": 31,
@@ -1528,7 +1616,8 @@ Best regards,
       "id": "dsa-21",
       "title": "LC 56 - Merge Intervals",
       "category": "Intervals",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/merge-intervals/"
     },
     "sqlChallenge": {
       "id": "sql-1",
@@ -1536,7 +1625,8 @@ Best regards,
     },
     "techTopic": "Apache Iceberg Metadata Architecture vs Delta Lake",
     "defenseTopic": "Open Table Formats Comparison in Cloud Lakes",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/merge-intervals/"
   },
   {
     "day": 32,
@@ -1550,7 +1640,8 @@ Best regards,
       "id": "dsa-22",
       "title": "LC 57 - Insert Interval",
       "category": "Intervals",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/insert-interval/"
     },
     "sqlChallenge": {
       "id": "sql-6",
@@ -1558,7 +1649,8 @@ Best regards,
     },
     "techTopic": "CDC Architecture: Debezium WAL to Pub/Sub",
     "defenseTopic": "Debezium Postgres WAL Parsing Mechanics",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/insert-interval/"
   },
   {
     "day": 33,
@@ -1572,7 +1664,8 @@ Best regards,
       "id": "dsa-21",
       "title": "LC 435 - Non-overlapping Intervals",
       "category": "Intervals",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/non-overlapping-intervals/"
     },
     "sqlChallenge": {
       "id": "sql-7",
@@ -1580,7 +1673,8 @@ Best regards,
     },
     "techTopic": "BigQuery Streaming CDC: Storage Write API Streams",
     "defenseTopic": "Ingesting High-Frequency CDC without MERGE Crash",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/non-overlapping-intervals/"
   },
   {
     "day": 34,
@@ -1594,7 +1688,8 @@ Best regards,
       "id": "dsa-23",
       "title": "LC 253 - Meeting Rooms II",
       "category": "Intervals & Heaps",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/meeting-rooms-ii/"
     },
     "sqlChallenge": {
       "id": "sql-1",
@@ -1602,7 +1697,8 @@ Best regards,
     },
     "techTopic": "Stream Processing: Watermarks, Triggers, Windows",
     "defenseTopic": "Handling 4-Hour Late Subway Telemetry in Beam",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/meeting-rooms-ii/"
   },
   {
     "day": 35,
@@ -1616,7 +1712,8 @@ Best regards,
       "id": "dsa-23",
       "title": "LC 347 - Top K Frequent Elements",
       "category": "Heaps",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/top-k-frequent-elements/"
     },
     "sqlChallenge": {
       "id": "sql-2",
@@ -1624,7 +1721,8 @@ Best regards,
     },
     "techTopic": "Beam Windows: Fixed, Sliding, and Session Windows",
     "defenseTopic": "Beam Window State & Memory Management",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/top-k-frequent-elements/"
   },
   {
     "day": 36,
@@ -1638,7 +1736,8 @@ Best regards,
       "id": "dsa-23",
       "title": "LC 215 - Kth Largest Element",
       "category": "Heaps",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/kth-largest-element-in-an-array/"
     },
     "sqlChallenge": {
       "id": "sql-6",
@@ -1646,7 +1745,8 @@ Best regards,
     },
     "techTopic": "Data Skew in Streaming: Key Salting in Dataflow",
     "defenseTopic": "Dataflow Streaming Two-Stage Combiners",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/kth-largest-element-in-an-array/"
   },
   {
     "day": 37,
@@ -1660,7 +1760,8 @@ Best regards,
       "id": "dsa-24",
       "title": "LC 295 - Find Median from Data Stream",
       "category": "Heaps",
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "leetcodeUrl": "https://leetcode.com/problems/find-median-from-data-stream/"
     },
     "sqlChallenge": {
       "id": "sql-6",
@@ -1668,7 +1769,8 @@ Best regards,
     },
     "techTopic": "Exactly-Once Processing: End-to-End Idempotency",
     "defenseTopic": "Pub/Sub + Dataflow + BigQuery Exactly-Once",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/find-median-from-data-stream/"
   },
   {
     "day": 38,
@@ -1682,7 +1784,8 @@ Best regards,
       "id": "dsa-23",
       "title": "LC 23 - Merge K Sorted Lists",
       "category": "Heaps",
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "leetcodeUrl": "https://leetcode.com/problems/merge-k-sorted-lists/"
     },
     "sqlChallenge": {
       "id": "sql-7",
@@ -1690,7 +1793,8 @@ Best regards,
     },
     "techTopic": "Distributed Cache: Redis / Memcached in Pipelines",
     "defenseTopic": "Caching Layer Invalidation Strategies",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/merge-k-sorted-lists/"
   },
   {
     "day": 39,
@@ -1704,7 +1808,8 @@ Best regards,
       "id": "dsa-20",
       "title": "LC 146 - LRU Cache",
       "category": "Design & Data Structures",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/lru-cache/"
     },
     "sqlChallenge": {
       "id": "sql-6",
@@ -1712,7 +1817,8 @@ Best regards,
     },
     "techTopic": "BigQuery BI Engine In-Memory Query Accelerator",
     "defenseTopic": "Sub-Second Executive Dashboard SLAs",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/lru-cache/"
   },
   {
     "day": 40,
@@ -1726,7 +1832,8 @@ Best regards,
       "id": "dsa-20",
       "title": "LC 460 - LFU Cache",
       "category": "Design & Data Structures",
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "leetcodeUrl": "https://leetcode.com/problems/lfu-cache/"
     },
     "sqlChallenge": {
       "id": "sql-9",
@@ -1734,7 +1841,8 @@ Best regards,
     },
     "techTopic": "GCS Storage Classes: Standard, Nearline, Archive",
     "defenseTopic": "Cloud Storage Tiering Cost Optimization",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/lfu-cache/"
   },
   {
     "day": 41,
@@ -1748,7 +1856,8 @@ Best regards,
       "id": "dsa-12",
       "title": "LC 226 - Invert Binary Tree",
       "category": "Trees",
-      "difficulty": "Easy"
+      "difficulty": "Easy",
+      "leetcodeUrl": "https://leetcode.com/problems/invert-binary-tree/"
     },
     "sqlChallenge": {
       "id": "sql-10",
@@ -1756,7 +1865,8 @@ Best regards,
     },
     "techTopic": "Database Indexing: B-Tree, Bitmap, Hash, LSM",
     "defenseTopic": "Why Modern Cloud DWs Replaced B-Trees",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/invert-binary-tree/"
   },
   {
     "day": 42,
@@ -1770,7 +1880,8 @@ Best regards,
       "id": "dsa-12",
       "title": "LC 104 - Maximum Depth of Binary Tree",
       "category": "Trees",
-      "difficulty": "Easy"
+      "difficulty": "Easy",
+      "leetcodeUrl": "https://leetcode.com/problems/maximum-depth-of-binary-tree/"
     },
     "sqlChallenge": {
       "id": "sql-10",
@@ -1778,7 +1889,8 @@ Best regards,
     },
     "techTopic": "Columnar Formats: Parquet vs ORC vs Capacitor",
     "defenseTopic": "Micro-Partition Column Stride Pruning",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/maximum-depth-of-binary-tree/"
   },
   {
     "day": 43,
@@ -1792,7 +1904,8 @@ Best regards,
       "id": "dsa-27",
       "title": "LC 102 - Binary Tree Level Order Traversal",
       "category": "Trees",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/binary-tree-level-order-traversal/"
     },
     "sqlChallenge": {
       "id": "sql-2",
@@ -1800,7 +1913,8 @@ Best regards,
     },
     "techTopic": "Data Warehousing: Fact Constellation Schema",
     "defenseTopic": "Enterprise Lakehouse Dimensional Design",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/binary-tree-level-order-traversal/"
   },
   {
     "day": 44,
@@ -1814,7 +1928,8 @@ Best regards,
       "id": "dsa-15",
       "title": "LC 98 - Validate Binary Search Tree",
       "category": "Trees",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/validate-binary-search-tree/"
     },
     "sqlChallenge": {
       "id": "sql-3",
@@ -1822,7 +1937,8 @@ Best regards,
     },
     "techTopic": "Concurrency Control: MVCC in Cloud SQL / Postgres",
     "defenseTopic": "Transaction Isolation Levels (Read Committed)",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/validate-binary-search-tree/"
   },
   {
     "day": 45,
@@ -1836,7 +1952,8 @@ Best regards,
       "id": "dsa-26",
       "title": "LC 236 - Lowest Common Ancestor",
       "category": "Trees",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/"
     },
     "sqlChallenge": {
       "id": "sql-10",
@@ -1844,7 +1961,8 @@ Best regards,
     },
     "techTopic": "Distributed Consensus: Raft vs Paxos (Spanner)",
     "defenseTopic": "How Spanner Achieves High Availability",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/"
   },
   {
     "day": 46,
@@ -1858,7 +1976,8 @@ Best regards,
       "id": "dsa-3",
       "title": "LC 208 - Implement Trie",
       "category": "Tries",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/implement-trie-prefix-tree/"
     },
     "sqlChallenge": {
       "id": "sql-2",
@@ -1866,7 +1985,8 @@ Best regards,
     },
     "techTopic": "Data Catalog & Governance: Google Dataplex",
     "defenseTopic": "Metadata-Driven Schema Governance",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/implement-trie-prefix-tree/"
   },
   {
     "day": 47,
@@ -1880,7 +2000,8 @@ Best regards,
       "id": "dsa-28",
       "title": "LC 70 - Climbing Stairs",
       "category": "Dynamic Programming",
-      "difficulty": "Easy"
+      "difficulty": "Easy",
+      "leetcodeUrl": "https://leetcode.com/problems/climbing-stairs/"
     },
     "sqlChallenge": {
       "id": "sql-6",
@@ -1888,7 +2009,8 @@ Best regards,
     },
     "techTopic": "Data Quality Frameworks: Great Expectations & dbt",
     "defenseTopic": "Automated Pipeline Quality Guardrails",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/climbing-stairs/"
   },
   {
     "day": 48,
@@ -1902,7 +2024,8 @@ Best regards,
       "id": "dsa-28",
       "title": "LC 322 - Coin Change",
       "category": "Dynamic Programming",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/coin-change/"
     },
     "sqlChallenge": {
       "id": "sql-9",
@@ -1910,7 +2033,8 @@ Best regards,
     },
     "techTopic": "Data Observability: SLAs & Dead-Letter Queues",
     "defenseTopic": "Pipeline Alerting & MTTR Slashing",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/coin-change/"
   },
   {
     "day": 49,
@@ -1924,7 +2048,8 @@ Best regards,
       "id": "dsa-28",
       "title": "LC 300 - Longest Increasing Subsequence",
       "category": "Dynamic Programming",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/longest-increasing-subsequence/"
     },
     "sqlChallenge": {
       "id": "sql-4",
@@ -1932,7 +2057,8 @@ Best regards,
     },
     "techTopic": "Data Lineage & Impact Analysis in Lakehouses",
     "defenseTopic": "Automated Upstream/Downstream Lineage",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/longest-increasing-subsequence/"
   },
   {
     "day": 50,
@@ -1946,7 +2072,8 @@ Best regards,
       "id": "dsa-26",
       "title": "Phase 2 Checkpoint Mock: LC 210 + LC 295",
       "category": "Review & Mock",
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "leetcodeUrl": "https://leetcode.com/problems/course-schedule-ii/"
     },
     "sqlChallenge": {
       "id": "sql-1",
@@ -1954,7 +2081,8 @@ Best regards,
     },
     "techTopic": "Phase 2 Review: Apache Spark + Snowflake",
     "defenseTopic": "Full Architectural Defense Rehearsal",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/course-schedule-ii/"
   },
   {
     "day": 51,
@@ -1968,7 +2096,8 @@ Best regards,
       "id": "dsa-3",
       "title": "LC 78 - Subsets",
       "category": "Backtracking",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/subsets/"
     },
     "sqlChallenge": {
       "id": "sql-2",
@@ -1976,7 +2105,8 @@ Best regards,
     },
     "techTopic": "Design 1: Real-Time Clickstream Ingestion (100k/s)",
     "defenseTopic": "Sizing Pub/Sub, Dataflow, and BigQuery",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/subsets/"
   },
   {
     "day": 52,
@@ -1990,7 +2120,8 @@ Best regards,
       "id": "dsa-3",
       "title": "LC 90 - Subsets II",
       "category": "Backtracking",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/subsets-ii/"
     },
     "sqlChallenge": {
       "id": "sql-7",
@@ -1998,7 +2129,8 @@ Best regards,
     },
     "techTopic": "Design 1: Storage Layer (Bigtable vs BigQuery)",
     "defenseTopic": "Storage Cost vs Latency Trade-offs",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/subsets-ii/"
   },
   {
     "day": 53,
@@ -2012,7 +2144,8 @@ Best regards,
       "id": "dsa-28",
       "title": "LC 39 - Combination Sum",
       "category": "Backtracking",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/combination-sum/"
     },
     "sqlChallenge": {
       "id": "sql-6",
@@ -2020,7 +2153,8 @@ Best regards,
     },
     "techTopic": "Design 1: Latency & Failure Modes",
     "defenseTopic": "Network Partitioning & Backpressure",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/combination-sum/"
   },
   {
     "day": 54,
@@ -2034,7 +2168,8 @@ Best regards,
       "id": "dsa-3",
       "title": "LC 46 - Permutations",
       "category": "Backtracking",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/permutations/"
     },
     "sqlChallenge": {
       "id": "sql-10",
@@ -2042,7 +2177,8 @@ Best regards,
     },
     "techTopic": "Design 2: Global Financial Transaction Ledger",
     "defenseTopic": "Idempotent Upserts in Cloud Spanner",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/permutations/"
   },
   {
     "day": 55,
@@ -2056,7 +2192,8 @@ Best regards,
       "id": "dsa-27",
       "title": "LC 79 - Word Search",
       "category": "Backtracking",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/word-search/"
     },
     "sqlChallenge": {
       "id": "sql-10",
@@ -2064,7 +2201,8 @@ Best regards,
     },
     "techTopic": "Design 2: Multi-Region Active-Active Replication",
     "defenseTopic": "Two-Phase Commit vs Paxos Consensus",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/word-search/"
   },
   {
     "day": 56,
@@ -2078,7 +2216,8 @@ Best regards,
       "id": "dsa-28",
       "title": "LC 139 - Word Break",
       "category": "Dynamic Programming",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/word-break/"
     },
     "sqlChallenge": {
       "id": "sql-2",
@@ -2086,7 +2225,8 @@ Best regards,
     },
     "techTopic": "Design 2: Financial Reconciliation & Double-Entry",
     "defenseTopic": "Daily Balance Reconciliation Pipelines",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/word-break/"
   },
   {
     "day": 57,
@@ -2100,7 +2240,8 @@ Best regards,
       "id": "dsa-28",
       "title": "LC 198 - House Robber",
       "category": "Dynamic Programming",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/house-robber/"
     },
     "sqlChallenge": {
       "id": "sql-6",
@@ -2108,7 +2249,8 @@ Best regards,
     },
     "techTopic": "Design 3: YouTube Real-Time View Count",
     "defenseTopic": "Key Salting & Two-Stage Aggregation",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/house-robber/"
   },
   {
     "day": 58,
@@ -2122,7 +2264,8 @@ Best regards,
       "id": "dsa-28",
       "title": "LC 213 - House Robber II",
       "category": "Dynamic Programming",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/house-robber-ii/"
     },
     "sqlChallenge": {
       "id": "sql-1",
@@ -2130,7 +2273,8 @@ Best regards,
     },
     "techTopic": "Design 3: Handling 40M Viewers (Ronaldo Live)",
     "defenseTopic": "Defending Bigtable Write Hotspotting",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/house-robber-ii/"
   },
   {
     "day": 59,
@@ -2144,7 +2288,8 @@ Best regards,
       "id": "dsa-28",
       "title": "LC 62 - Unique Paths",
       "category": "Dynamic Programming",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/unique-paths/"
     },
     "sqlChallenge": {
       "id": "sql-10",
@@ -2152,7 +2297,8 @@ Best regards,
     },
     "techTopic": "Design 3: Lambda vs Kappa for Trending Videos",
     "defenseTopic": "Real-Time Stream vs Nightly Batch Reconcile",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/unique-paths/"
   },
   {
     "day": 60,
@@ -2166,7 +2312,8 @@ Best regards,
       "id": "dsa-28",
       "title": "LC 1143 - Longest Common Subsequence",
       "category": "Dynamic Programming",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/longest-common-subsequence/"
     },
     "sqlChallenge": {
       "id": "sql-5",
@@ -2174,7 +2321,8 @@ Best regards,
     },
     "techTopic": "Design 4: Enterprise IoT Sensor Telemetry",
     "defenseTopic": "Time-Series Partitioning in Bigtable",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/longest-common-subsequence/"
   },
   {
     "day": 61,
@@ -2188,7 +2336,8 @@ Best regards,
       "id": "dsa-28",
       "title": "LC 72 - Edit Distance",
       "category": "Dynamic Programming",
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "leetcodeUrl": "https://leetcode.com/problems/edit-distance/"
     },
     "sqlChallenge": {
       "id": "sql-5",
@@ -2196,7 +2345,8 @@ Best regards,
     },
     "techTopic": "Design 4: Edge Gateways & Out-of-Order Sensors",
     "defenseTopic": "Allowed Lateness vs Side-Outputs",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/edit-distance/"
   },
   {
     "day": 62,
@@ -2210,7 +2360,8 @@ Best regards,
       "id": "dsa-5",
       "title": "LC 53 - Maximum Subarray",
       "category": "Dynamic Programming",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/maximum-subarray/"
     },
     "sqlChallenge": {
       "id": "sql-6",
@@ -2218,7 +2369,8 @@ Best regards,
     },
     "techTopic": "Design 4: Downsampling & Tiered Storage",
     "defenseTopic": "Compacting 1-sec Telemetry to 1-min Averages",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/maximum-subarray/"
   },
   {
     "day": 63,
@@ -2232,7 +2384,8 @@ Best regards,
       "id": "dsa-4",
       "title": "LC 152 - Maximum Product Subarray",
       "category": "Dynamic Programming",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/maximum-product-subarray/"
     },
     "sqlChallenge": {
       "id": "sql-6",
@@ -2240,7 +2393,8 @@ Best regards,
     },
     "techTopic": "Design 5: Uber/Lyft Real-Time Ride Matching",
     "defenseTopic": "Geo-Hashing & S2 Geometry in Big Data",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/maximum-product-subarray/"
   },
   {
     "day": 64,
@@ -2254,7 +2408,8 @@ Best regards,
       "id": "dsa-8",
       "title": "LC 42 - Trapping Rain Water",
       "category": "Two Pointers / Stack",
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "leetcodeUrl": "https://leetcode.com/problems/trapping-rain-water/"
     },
     "sqlChallenge": {
       "id": "sql-6",
@@ -2262,7 +2417,8 @@ Best regards,
     },
     "techTopic": "Design 5: Driver Location Tracking & TTL",
     "defenseTopic": "Cloud MemoryStore / Redis Geo-Spatial Index",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/trapping-rain-water/"
   },
   {
     "day": 65,
@@ -2276,7 +2432,8 @@ Best regards,
       "id": "dsa-1",
       "title": "LC 73 - Set Matrix Zeroes",
       "category": "Arrays",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/set-matrix-zeroes/"
     },
     "sqlChallenge": {
       "id": "sql-2",
@@ -2284,7 +2441,8 @@ Best regards,
     },
     "techTopic": "Design 5: High-Throughput Matching Engine",
     "defenseTopic": "Kafka / Pub/Sub Event Sourcing Architecture",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/set-matrix-zeroes/"
   },
   {
     "day": 66,
@@ -2298,7 +2456,8 @@ Best regards,
       "id": "dsa-1",
       "title": "LC 54 - Spiral Matrix",
       "category": "Arrays",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/spiral-matrix/"
     },
     "sqlChallenge": {
       "id": "sql-10",
@@ -2306,7 +2465,8 @@ Best regards,
     },
     "techTopic": "Design 6: Google Search Analytics Data Platform",
     "defenseTopic": "BigQuery Dremel Serving Trees & Colossus",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/spiral-matrix/"
   },
   {
     "day": 67,
@@ -2320,7 +2480,8 @@ Best regards,
       "id": "dsa-1",
       "title": "LC 48 - Rotate Image",
       "category": "Arrays",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/rotate-image/"
     },
     "sqlChallenge": {
       "id": "sql-2",
@@ -2328,7 +2489,8 @@ Best regards,
     },
     "techTopic": "Design 6: Privacy Governance & Differential Privacy",
     "defenseTopic": "PII Masking & Column-Level Security",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/rotate-image/"
   },
   {
     "day": 68,
@@ -2342,7 +2504,8 @@ Best regards,
       "id": "dsa-1",
       "title": "LC 41 - First Missing Positive",
       "category": "Arrays",
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "leetcodeUrl": "https://leetcode.com/problems/first-missing-positive/"
     },
     "sqlChallenge": {
       "id": "sql-9",
@@ -2350,7 +2513,8 @@ Best regards,
     },
     "techTopic": "Design 6: Multi-Tenant Data Mesh & Data Products",
     "defenseTopic": "Dataplex Data Governance & Security",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/first-missing-positive/"
   },
   {
     "day": 69,
@@ -2364,7 +2528,8 @@ Best regards,
       "id": "dsa-18",
       "title": "LC 287 - Find the Duplicate Number",
       "category": "Two Pointers",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/find-the-duplicate-number/"
     },
     "sqlChallenge": {
       "id": "sql-7",
@@ -2372,7 +2537,8 @@ Best regards,
     },
     "techTopic": "Design 7: Real-Time Feature Store for ML",
     "defenseTopic": "Feast / Vertex AI Feature Store Architecture",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/find-the-duplicate-number/"
   },
   {
     "day": 70,
@@ -2386,7 +2552,8 @@ Best regards,
       "id": "dsa-1",
       "title": "LC 380 - Insert Delete GetRandom O(1)",
       "category": "Design",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/insert-delete-getrandom-o1/"
     },
     "sqlChallenge": {
       "id": "sql-6",
@@ -2394,7 +2561,8 @@ Best regards,
     },
     "techTopic": "Design 7: Training vs Serving Skew & Online Latency",
     "defenseTopic": "Real-Time Feature Ingestion Pipeline",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/insert-delete-getrandom-o1/"
   },
   {
     "day": 71,
@@ -2408,7 +2576,8 @@ Best regards,
       "id": "dsa-1",
       "title": "LC 128 - Longest Consecutive Sequence",
       "category": "Arrays & Hashing",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/longest-consecutive-sequence/"
     },
     "sqlChallenge": {
       "id": "sql-4",
@@ -2416,7 +2585,8 @@ Best regards,
     },
     "techTopic": "Design 7: Vector Databases & Embeddings at Scale",
     "defenseTopic": "Vertex AI Vector Search / ScaNN",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/longest-consecutive-sequence/"
   },
   {
     "day": 72,
@@ -2430,7 +2600,8 @@ Best regards,
       "id": "dsa-27",
       "title": "LC 994 - Rotting Oranges",
       "category": "Graphs & DAGs",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problems/rotting-oranges/"
     },
     "sqlChallenge": {
       "id": "sql-10",
@@ -2438,7 +2609,8 @@ Best regards,
     },
     "techTopic": "Design 8: Cloud Modernization: Teradata to BigQuery",
     "defenseTopic": "Dual-Run Verification & Cutover Framework",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/rotting-oranges/"
   },
   {
     "day": 73,
@@ -2452,7 +2624,8 @@ Best regards,
       "id": "dsa-3",
       "title": "LC 212 - Word Search II",
       "category": "Tries & Backtracking",
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "leetcodeUrl": "https://leetcode.com/problems/word-search-ii/"
     },
     "sqlChallenge": {
       "id": "sql-2",
@@ -2460,7 +2633,8 @@ Best regards,
     },
     "techTopic": "Design 8: Shadow Testing & Automated Query Hash",
     "defenseTopic": "Shadow-Testing Framework Architecture",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/word-search-ii/"
   },
   {
     "day": 74,
@@ -2474,7 +2648,8 @@ Best regards,
       "id": "dsa-14",
       "title": "LC 84 - Largest Rectangle (Review)",
       "category": "Monotonic Stack",
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "leetcodeUrl": "https://leetcode.com/problems/largest-rectangle-in-histogram/"
     },
     "sqlChallenge": {
       "id": "sql-7",
@@ -2482,7 +2657,8 @@ Best regards,
     },
     "techTopic": "Design 8: Zero-Downtime Data Cutover Strategies",
     "defenseTopic": "Strangler Fig Pattern for Cloud Lakehouses",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problems/largest-rectangle-in-histogram/"
   },
   {
     "day": 75,
@@ -2496,7 +2672,8 @@ Best regards,
       "id": "dsa-26",
       "title": "Phase 3 Checkpoint: Full System Design Mock",
       "category": "Review & Mock",
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "leetcodeUrl": "https://leetcode.com/problemset/all/"
     },
     "sqlChallenge": {
       "id": "sql-1",
@@ -2504,7 +2681,8 @@ Best regards,
     },
     "techTopic": "Phase 3 Review: All 8 System Design Archetypes",
     "defenseTopic": "Siemens & Coca-Cola Production Defense Deep Dive",
-    "estMinutes": 180
+    "estMinutes": 180,
+    "leetcodeUrl": "https://leetcode.com/problemset/all/"
   },
   {
     "day": 76,
@@ -2518,7 +2696,8 @@ Best regards,
       "id": "dsa-7",
       "title": "Rapid Drill 1: Two Pointers & Window",
       "category": "Speed Drills",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problemset/all/"
     },
     "sqlChallenge": {
       "id": "sql-7",
@@ -2526,7 +2705,8 @@ Best regards,
     },
     "techTopic": "Google L5 Trap 1: Bigtable Viral Hotspotting",
     "defenseTopic": "Defend Siemens 40k Object Migration AST Parser",
-    "estMinutes": 240
+    "estMinutes": 240,
+    "leetcodeUrl": "https://leetcode.com/problemset/all/"
   },
   {
     "day": 77,
@@ -2540,7 +2720,8 @@ Best regards,
       "id": "dsa-14",
       "title": "Rapid Drill 2: Stack & Binary Search",
       "category": "Speed Drills",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problemset/all/"
     },
     "sqlChallenge": {
       "id": "sql-1",
@@ -2548,7 +2729,8 @@ Best regards,
     },
     "techTopic": "Google L5 Trap 2: Watermark Memory Explosion",
     "defenseTopic": "Defend Databricks 32% Compute Cost Reduction",
-    "estMinutes": 240
+    "estMinutes": 240,
+    "leetcodeUrl": "https://leetcode.com/problemset/all/"
   },
   {
     "day": 78,
@@ -2562,7 +2744,8 @@ Best regards,
       "id": "dsa-26",
       "title": "Rapid Drill 3: Graphs & DAGs",
       "category": "Speed Drills",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problemset/all/"
     },
     "sqlChallenge": {
       "id": "sql-3",
@@ -2570,7 +2753,8 @@ Best regards,
     },
     "techTopic": "Google L5 Trap 3: BigQuery MERGE Quota Exhaustion",
     "defenseTopic": "Defend PySpark Adaptive Query Execution (AQE)",
-    "estMinutes": 240
+    "estMinutes": 240,
+    "leetcodeUrl": "https://leetcode.com/problemset/all/"
   },
   {
     "day": 79,
@@ -2584,7 +2768,8 @@ Best regards,
       "id": "dsa-23",
       "title": "Rapid Drill 4: Heaps & Priority Queues",
       "category": "Speed Drills",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problemset/all/"
     },
     "sqlChallenge": {
       "id": "sql-8",
@@ -2592,7 +2777,8 @@ Best regards,
     },
     "techTopic": "Google L5 Trap 4: Spanner Monotonic Timestamp",
     "defenseTopic": "Defend PySpark Key Salting Join Implementation",
-    "estMinutes": 240
+    "estMinutes": 240,
+    "leetcodeUrl": "https://leetcode.com/problemset/all/"
   },
   {
     "day": 80,
@@ -2606,7 +2792,8 @@ Best regards,
       "id": "dsa-28",
       "title": "Rapid Drill 5: Dynamic Programming",
       "category": "Speed Drills",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problemset/all/"
     },
     "sqlChallenge": {
       "id": "sql-5",
@@ -2614,7 +2801,8 @@ Best regards,
     },
     "techTopic": "Google L5 Trap 5: BigQuery Slot Contention & Spill",
     "defenseTopic": "Defend Snowflake 88% Query Latency Optimization",
-    "estMinutes": 240
+    "estMinutes": 240,
+    "leetcodeUrl": "https://leetcode.com/problemset/all/"
   },
   {
     "day": 81,
@@ -2628,7 +2816,8 @@ Best regards,
       "id": "dsa-27",
       "title": "Rapid Drill 6: Trees & Graph BFS",
       "category": "Speed Drills",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problemset/all/"
     },
     "sqlChallenge": {
       "id": "sql-9",
@@ -2636,7 +2825,8 @@ Best regards,
     },
     "techTopic": "Google L5 Trap 6: Exactly-Once Guarantees",
     "defenseTopic": "Defend Snowflake Micro-Partition Pruning",
-    "estMinutes": 240
+    "estMinutes": 240,
+    "leetcodeUrl": "https://leetcode.com/problemset/all/"
   },
   {
     "day": 82,
@@ -2650,7 +2840,8 @@ Best regards,
       "id": "dsa-10",
       "title": "Google Coding Simulation 1",
       "category": "Google Simulation",
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "leetcodeUrl": "https://leetcode.com/problemset/all/"
     },
     "sqlChallenge": {
       "id": "sql-1",
@@ -2658,7 +2849,8 @@ Best regards,
     },
     "techTopic": "Googliness 1: Navigating Ambiguity & Tech Debt",
     "defenseTopic": "Defend Coca-Cola 40+ ADF Parameterized Pipelines",
-    "estMinutes": 240
+    "estMinutes": 240,
+    "leetcodeUrl": "https://leetcode.com/problemset/all/"
   },
   {
     "day": 83,
@@ -2672,7 +2864,8 @@ Best regards,
       "id": "dsa-24",
       "title": "Google Coding Simulation 2",
       "category": "Google Simulation",
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "leetcodeUrl": "https://leetcode.com/problemset/all/"
     },
     "sqlChallenge": {
       "id": "sql-4",
@@ -2680,7 +2873,8 @@ Best regards,
     },
     "techTopic": "Googliness 2: Disagreement with Senior Tech Leads",
     "defenseTopic": "Defend Coca-Cola ADLS Gen2 Hierarchical Security",
-    "estMinutes": 240
+    "estMinutes": 240,
+    "leetcodeUrl": "https://leetcode.com/problemset/all/"
   },
   {
     "day": 84,
@@ -2694,7 +2888,8 @@ Best regards,
       "id": "dsa-26",
       "title": "Google Coding Simulation 3",
       "category": "Google Simulation",
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "leetcodeUrl": "https://leetcode.com/problemset/all/"
     },
     "sqlChallenge": {
       "id": "sql-10",
@@ -2702,7 +2897,8 @@ Best regards,
     },
     "techTopic": "Googliness 3: Production Outage & Post-Mortem",
     "defenseTopic": "Defend Coca-Cola MTTR Slashing (4h to 25m)",
-    "estMinutes": 240
+    "estMinutes": 240,
+    "leetcodeUrl": "https://leetcode.com/problemset/all/"
   },
   {
     "day": 85,
@@ -2716,7 +2912,8 @@ Best regards,
       "id": "dsa-23",
       "title": "Google System Design Simulation 1",
       "category": "System Design Mock",
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "leetcodeUrl": "https://leetcode.com/problemset/all/"
     },
     "sqlChallenge": {
       "id": "sql-2",
@@ -2724,7 +2921,8 @@ Best regards,
     },
     "techTopic": "Googliness 4: Cross-Functional Team Influence",
     "defenseTopic": "Defend 3-Tier dbt Cloud Transformation Models",
-    "estMinutes": 240
+    "estMinutes": 240,
+    "leetcodeUrl": "https://leetcode.com/problemset/all/"
   },
   {
     "day": 86,
@@ -2738,7 +2936,8 @@ Best regards,
       "id": "dsa-20",
       "title": "Google System Design Simulation 2",
       "category": "System Design Mock",
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "leetcodeUrl": "https://leetcode.com/problemset/all/"
     },
     "sqlChallenge": {
       "id": "sql-6",
@@ -2746,7 +2945,8 @@ Best regards,
     },
     "techTopic": "Googliness 5: Cost Optimization & ROI",
     "defenseTopic": "Comprehensive Technical Bar Examination",
-    "estMinutes": 240
+    "estMinutes": 240,
+    "leetcodeUrl": "https://leetcode.com/problemset/all/"
   },
   {
     "day": 87,
@@ -2760,7 +2960,8 @@ Best regards,
       "id": "dsa-28",
       "title": "Google System Design Simulation 3",
       "category": "System Design Mock",
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "leetcodeUrl": "https://leetcode.com/problemset/all/"
     },
     "sqlChallenge": {
       "id": "sql-7",
@@ -2768,7 +2969,8 @@ Best regards,
     },
     "techTopic": "Recruiter Outreach: LinkedIn & Cold DMs",
     "defenseTopic": "Referral Networking Strategy for Google India",
-    "estMinutes": 240
+    "estMinutes": 240,
+    "leetcodeUrl": "https://leetcode.com/problemset/all/"
   },
   {
     "day": 88,
@@ -2782,7 +2984,8 @@ Best regards,
       "id": "dsa-26",
       "title": "Full Google Interview Loop Mock (5 Rounds)",
       "category": "Full Mock Loop",
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "leetcodeUrl": "https://leetcode.com/problemset/all/"
     },
     "sqlChallenge": {
       "id": "sql-1",
@@ -2790,7 +2993,8 @@ Best regards,
     },
     "techTopic": "Unconscious Competence: Rapid Fire Flashcards",
     "defenseTopic": "Live Defense of Entire 1-Page ATS Resume",
-    "estMinutes": 240
+    "estMinutes": 240,
+    "leetcodeUrl": "https://leetcode.com/problemset/all/"
   },
   {
     "day": 89,
@@ -2804,7 +3008,8 @@ Best regards,
       "id": "dsa-7",
       "title": "Targeted Weakness Patching & Calibration",
       "category": "Review & Polish",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problemset/all/"
     },
     "sqlChallenge": {
       "id": "sql-3",
@@ -2812,7 +3017,8 @@ Best regards,
     },
     "techTopic": "Final Mental Conditioning & Routine",
     "defenseTopic": "Compensation Negotiation Strategy (50L-1.1Cr)",
-    "estMinutes": 240
+    "estMinutes": 240,
+    "leetcodeUrl": "https://leetcode.com/problemset/all/"
   },
   {
     "day": 90,
@@ -2826,7 +3032,8 @@ Best regards,
       "id": "dsa-1",
       "title": "Master Graduation & Readiness Certification",
       "category": "Certification",
-      "difficulty": "Medium"
+      "difficulty": "Medium",
+      "leetcodeUrl": "https://leetcode.com/problemset/all/"
     },
     "sqlChallenge": {
       "id": "sql-2",
@@ -2834,7 +3041,8 @@ Best regards,
     },
     "techTopic": "Final Readiness Audit: Coding, SQL, Design",
     "defenseTopic": "Ready to Sign Google India Offer Letter",
-    "estMinutes": 240
+    "estMinutes": 240,
+    "leetcodeUrl": "https://leetcode.com/problemset/all/"
   }
 ],
 

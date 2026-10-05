@@ -9,8 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
-  <!-- In-Browser CPython 3.12 WebAssembly Engine -->
-  <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js" defer></script>
 </head>
 <body class="theme-dark">
 
@@ -182,7 +180,10 @@
             <p class="pillar-desc" id="pillarDesc1">Arrays & Hashing • Easy | Fundamental lookup pattern for in-memory joins.</p>
             <div class="pillar-bottom">
               <span class="pillar-state" id="pillarStatus1">Pending</span>
-              <button class="btn btn-sm btn-primary" onclick="app.openDojoForCurrentDay()">Solve in Dojo →</button>
+              <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <a id="pillarLeetCodeBtn1" href="https://leetcode.com/problems/two-sum/" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">↗ Solve on LeetCode</a>
+                <button class="btn btn-sm btn-outline" onclick="app.openDojoForCurrentDay()">Study Notes →</button>
+              </div>
             </div>
           </div>
 
@@ -285,11 +286,8 @@
       <section id="view-practice" class="content-view">
         <div class="section-header">
           <div>
-            <h1 class="section-title">Coding & SQL Workbench</h1>
-            <p class="section-subtitle">Run Python algorithms directly in your browser with WebAssembly Pyodide and master Google-level SQL.</p>
-          </div>
-          <div id="pyodideStatusBadge" class="status-indicator">
-            Python Engine: Initializing Pyodide...
+            <h1 class="section-title">Google Coding & SQL Workbench</h1>
+            <p class="section-subtitle">Curated Google LeetCode problem bank with direct links to official problems, optimal Python 3 solutions, and follow-up traps.</p>
           </div>
         </div>
 
