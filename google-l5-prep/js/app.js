@@ -1099,18 +1099,71 @@ class PrepPortalApp {
     });
   }
 
-  // --- 🔬 Technical Masterclass ---
+  // --- 🔬 Technical Masterclass (First-Principles Production Lab) ---
+  escapeHtml(str) {
+    if (!str) return "";
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
   filterMasterclass(category) {
     this.state.activeMasterclassCat = category;
     document.querySelectorAll(".cat-pill").forEach(p => {
       p.classList.toggle("active", p.textContent.toLowerCase().includes(category) || (category === 'all' && p.textContent === 'All Modules'));
     });
+    this.audio.play("click");
     this.renderMasterclass();
+  }
+
+  switchMasterclassSubtab(moduleId, tabKey) {
+    if (!this.state.mcTabs) this.state.mcTabs = {};
+    this.state.mcTabs[moduleId] = tabKey;
+    this.audio.play("click");
+    this.renderMasterclass();
+  }
+
+  runSnowflakePruningQuery(queryId) {
+    if (!this.state.mcSimulatorState) this.state.mcSimulatorState = {};
+    this.state.mcSimulatorState.snowflakeQuery = queryId;
+    this.audio.play("click");
+    this.renderMasterclass();
+  }
+
+  toggleSparkSkew(scenarioId) {
+    if (!this.state.mcSimulatorState) this.state.mcSimulatorState = {};
+    this.state.mcSimulatorState.sparkScenario = scenarioId;
+    this.audio.play("click");
+    this.renderMasterclass();
+  }
+
+  copyScriptCode(btn, encodedCode) {
+    const rawCode = decodeURIComponent(encodedCode);
+    navigator.clipboard.writeText(rawCode).then(() => {
+      this.audio.play("celebrate");
+      const orig = btn.innerHTML;
+      btn.innerHTML = "✓ Copied!";
+      btn.style.borderColor = "#10b981";
+      btn.style.color = "#10b981";
+      setTimeout(() => {
+        btn.innerHTML = orig;
+        btn.style.borderColor = "";
+        btn.style.color = "";
+      }, 1500);
+    });
   }
 
   renderMasterclass() {
     const container = document.getElementById("masterclassContainer");
     if (!container || !PREP_DATA.techDeepDives) return;
+
+    if (!this.state.mcTabs) this.state.mcTabs = {};
+    if (!this.state.mcSimulatorState) {
+      this.state.mcSimulatorState = { snowflakeQuery: 'q1', sparkScenario: 'skew-default' };
+    }
 
     const cat = this.state.activeMasterclassCat;
     const filtered = (cat === "all") 
@@ -1119,24 +1172,257 @@ class PrepPortalApp {
 
     let html = "";
     filtered.forEach(module => {
-      html += `
-        <div class="card masterclass-card">
-          <div class="masterclass-header">
-            <span class="masterclass-tag">${module.category.toUpperCase()} ARCHITECTURE</span>
-            <h2 class="masterclass-title">${module.title}</h2>
-            <p class="masterclass-subtitle">${module.subtitle}</p>
-          </div>
-          <div class="masterclass-topics">
-            ${module.topics.map(t => `
-              <div class="topic-box">
-                <h3 class="topic-box-title">▪ ${t.name}</h3>
-                <div class="topic-box-content">${t.content}</div>
+      const activeTab = this.state.mcTabs[module.id] || "arch";
+
+      // 1. Module Metrics Grid
+      let metricsHtml = "";
+      if (module.metrics) {
+        metricsHtml = `
+          <div class="mc-metrics-grid">
+            ${module.metrics.map(m => `
+              <div class="mc-metric-box">
+                <div class="mc-metric-label">${m.label}</div>
+                <div class="mc-metric-val">${m.val}</div>
               </div>
             `).join("")}
+          </div>
+        `;
+      }
+
+      // 2. Sub-Tab Navigation Bar
+      const codeCount = module.productionCode ? module.productionCode.length : 0;
+      const bcCount = module.defenseBattlecards ? module.defenseBattlecards.length : 0;
+      const incCount = module.incidentPostMortems ? module.incidentPostMortems.length : 0;
+
+      const tabsNavHtml = `
+        <div class="mc-nav-tabs">
+          <button class="mc-nav-btn ${activeTab === 'arch' ? 'active' : ''}" onclick="app.switchMasterclassSubtab('${module.id}', 'arch')">
+            📐 Architecture Blueprint &amp; Simulator
+          </button>
+          <button class="mc-nav-btn ${activeTab === 'code' ? 'active' : ''}" onclick="app.switchMasterclassSubtab('${module.id}', 'code')">
+            💻 Production Code Lab (${codeCount})
+          </button>
+          <button class="mc-nav-btn ${activeTab === 'defense' ? 'active' : ''}" onclick="app.switchMasterclassSubtab('${module.id}', 'defense')">
+            🛡️ Google L5 Interview Defense (${bcCount})
+          </button>
+          <button class="mc-nav-btn ${activeTab === 'incident' ? 'active' : ''}" onclick="app.switchMasterclassSubtab('${module.id}', 'incident')">
+            🚨 Incident Post-Mortem (${incCount})
+          </button>
+        </div>
+      `;
+
+      // 3. Tab Contents
+      let tabContentHtml = "";
+      if (activeTab === "arch") {
+        let tiersHtml = "";
+        if (module.architecture && module.architecture.tiers) {
+          tiersHtml = `
+            <div class="mc-tiers-grid">
+              ${module.architecture.tiers.map(t => `
+                <div class="mc-tier-card">
+                  <div class="mc-tier-title">${t.name}</div>
+                  <div class="mc-tier-tech">${t.tech}</div>
+                  <div class="mc-tier-details">${t.details}</div>
+                </div>
+              `).join("")}
+            </div>
+          `;
+        }
+
+        let simHtml = "";
+        if (module.architecture && module.architecture.simulator) {
+          const sim = module.architecture.simulator;
+          if (sim.type === "snowflake-pruning") {
+            const activeQId = this.state.mcSimulatorState.snowflakeQuery || "q1";
+            const currentQ = sim.queries.find(q => q.id === activeQId) || sim.queries[0];
+
+            simHtml = `
+              <div class="mc-sim-box">
+                <div class="mc-sim-header">
+                  <span class="mc-sim-title">⚡ Interactive Micro-Partition Pruning &amp; Cluster Depth Simulator</span>
+                  <span style="font-family:var(--font-mono); font-size:0.75rem; color:#3b82f6;">Table: ${sim.tableName}</span>
+                </div>
+                <div class="mc-sim-controls">
+                  ${sim.queries.map(q => `
+                    <div class="mc-sim-query-btn ${q.id === activeQId ? 'active' : ''}" onclick="app.runSnowflakePruningQuery('${q.id}')">
+                      <div class="mc-sim-query-label">${q.label}</div>
+                      <code class="mc-sim-query-sql">${q.sql}</code>
+                    </div>
+                  `).join("")}
+                </div>
+                <div class="mc-partitions-grid">
+                  ${sim.partitions.map(p => {
+                    const isScanned = currentQ.scannedIds.includes(p.id);
+                    return `
+                      <div class="mc-partition-card ${isScanned ? 'scanned' : 'pruned'}">
+                        <div class="mc-p-header">
+                          <span>${p.name}</span>
+                          <span class="mc-p-badge">${isScanned ? 'READ' : 'SKIPPED'}</span>
+                        </div>
+                        <div class="mc-p-detail"><strong>Region:</strong> ${p.region}</div>
+                        <div class="mc-p-detail"><strong>Date:</strong> ${p.dateRange}</div>
+                        <div class="mc-p-detail"><strong>Rows:</strong> ${p.rows} (${p.size})</div>
+                      </div>
+                    `;
+                  }).join("")}
+                </div>
+                <div class="mc-sim-telemetry">
+                  <div class="mc-telemetry-metrics-row">
+                    <div class="mc-t-item">
+                      <span class="mc-t-label">Pruning Rate</span>
+                      <span class="mc-t-val emerald">${currentQ.prunedPercent} (${currentQ.prunedCount}/16 Skipped)</span>
+                    </div>
+                    <div class="mc-t-item">
+                      <span class="mc-t-label">Bytes Scanned</span>
+                      <span class="mc-t-val ${currentQ.scannedCount > 8 ? 'red' : 'emerald'}">${currentQ.bytesScanned} (Saved ${currentQ.bytesSaved})</span>
+                    </div>
+                    <div class="mc-t-item">
+                      <span class="mc-t-label">Query Latency</span>
+                      <span class="mc-t-val">${currentQ.latency}</span>
+                    </div>
+                  </div>
+                  <div class="mc-telemetry-verdict">
+                    <strong>Technical Execution Trace:</strong> ${currentQ.verdict}
+                  </div>
+                </div>
+              </div>
+            `;
+          } else if (sim.type === "spark-skew") {
+            const activeScenId = this.state.mcSimulatorState.sparkScenario || "skew-default";
+            const scen = sim.scenarios.find(s => s.id === activeScenId) || sim.scenarios[0];
+
+            simHtml = `
+              <div class="mc-sim-box">
+                <div class="mc-sim-header">
+                  <span class="mc-sim-title">⚡ Interactive PySpark Partition Skew &amp; Key Salting Simulator</span>
+                  <span style="font-family:var(--font-mono); font-size:0.75rem; color:#3b82f6;">Stage: ${sim.tableName}</span>
+                </div>
+                <div style="display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
+                  ${sim.scenarios.map(s => `
+                    <button class="btn btn-sm ${s.id === activeScenId ? 'btn-primary' : 'btn-outline'}" onclick="app.toggleSparkSkew('${s.id}')">
+                      ${s.name}
+                    </button>
+                  `).join("")}
+                </div>
+                <div class="mc-skew-executors">
+                  ${scen.executors.map(ex => `
+                    <div class="mc-executor-card ${ex.failed ? 'straggler' : 'balanced'}">
+                      <div class="mc-exec-name">
+                        <span>${ex.name}</span>
+                        <span style="color:${ex.failed ? '#ef4444' : '#10b981'};">${ex.failed ? '⚠️ Straggler' : '✓ Done'}</span>
+                      </div>
+                      <div class="mc-exec-task">${ex.task}</div>
+                      <div class="mc-exec-stat-row">
+                        <span>Rows Processed:</span>
+                        <strong>${ex.rows}</strong>
+                      </div>
+                      <div class="mc-exec-stat-row">
+                        <span>JVM Memory:</span>
+                        <strong style="color:${ex.failed ? '#ef4444' : 'inherit'};">${ex.memory}</strong>
+                      </div>
+                      <div class="mc-exec-stat-row">
+                        <span>Stage Time:</span>
+                        <strong>${ex.status}</strong>
+                      </div>
+                    </div>
+                  `).join("")}
+                </div>
+                <div class="mc-sim-telemetry">
+                  <div class="mc-telemetry-verdict">
+                    <strong>Cluster Execution Verdict:</strong> ${scen.verdict}
+                  </div>
+                </div>
+              </div>
+            `;
+          }
+        }
+
+        tabContentHtml = `
+          <div style="margin-bottom:16px;">
+            <p style="font-size:0.86rem; color:var(--text-main); line-height:1.6;">${module.architecture ? module.architecture.overview : ''}</p>
+          </div>
+          ${tiersHtml}
+          ${simHtml}
+        `;
+      } else if (activeTab === "code") {
+        tabContentHtml = `
+          <div class="mc-code-group">
+            ${(module.productionCode || []).map((c, i) => `
+              <div class="mc-code-box">
+                <div class="mc-code-header">
+                  <span class="mc-code-title">${c.title}</span>
+                  <button class="btn btn-sm btn-outline mc-copy-btn" id="btnCopyCode_${module.id}_${i}" onclick="app.copyScriptCode(this, '${encodeURIComponent(c.code)}')">
+                    📋 Copy Script
+                  </button>
+                </div>
+                <pre class="mc-code-block"><code>${this.escapeHtml(c.code)}</code></pre>
+              </div>
+            `).join("")}
+          </div>
+        `;
+      } else if (activeTab === "defense") {
+        tabContentHtml = `
+          <div class="mc-battlecards-list">
+            ${(module.defenseBattlecards || []).map(b => `
+              <div class="mc-battlecard">
+                <div class="mc-bc-question">🎯 Interview Scenario: ${b.question}</div>
+                <div class="mc-bc-trap">
+                  <div class="mc-bc-trap-title">❌ Junior Trap / Common Candidate Blunder</div>
+                  <div class="mc-bc-trap-text">${b.juniorTrap}</div>
+                </div>
+                <div class="mc-bc-staff">
+                  <div class="mc-bc-staff-title">💡 Google L5 Staff Engineer Response (First-Principles)</div>
+                  <div class="mc-bc-staff-text">${b.staffResponse}</div>
+                </div>
+                <div class="mc-bc-internals">
+                  <div class="mc-bc-internals-title">🔍 Under-The-Hood Mechanics (How the Engine Actually Operates)</div>
+                  <div class="mc-bc-internals-text">${b.underTheHood}</div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        `;
+      } else if (activeTab === "incident") {
+        tabContentHtml = `
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            ${(module.incidentPostMortems || []).map(inc => `
+              <div class="mc-incident-card">
+                <div class="mc-inc-title">🚨 ${inc.title}</div>
+                <div class="mc-inc-section">
+                  <div class="mc-inc-sec-title">Production Symptoms</div>
+                  <div class="mc-inc-sec-text">${inc.symptoms}</div>
+                </div>
+                <div class="mc-inc-section">
+                  <div class="mc-inc-sec-title">Root Cause Mechanical Analysis</div>
+                  <div class="mc-inc-sec-text">${inc.rootCause}</div>
+                </div>
+                <div class="mc-inc-section">
+                  <div class="mc-inc-sec-title">Staff Remediation &amp; Permanent Architecture Fix</div>
+                  <div class="mc-inc-sec-text" style="color:#10b981;">${inc.resolution}</div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        `;
+      }
+
+      html += `
+        <div class="masterclass-card">
+          <div class="mc-badge-row">
+            <span class="mc-tag">${module.tag || module.category.toUpperCase() + ' ARCHITECTURE'}</span>
+            <span class="mc-difficulty">Level 4/5 Staff Core</span>
+          </div>
+          <h2 class="mc-title">${module.title}</h2>
+          <p class="mc-summary">${module.summary || ''}</p>
+          ${metricsHtml}
+          ${tabsNavHtml}
+          <div class="mc-tab-content">
+            ${tabContentHtml}
           </div>
         </div>
       `;
     });
+
     container.innerHTML = html;
   }
 
