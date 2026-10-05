@@ -42,13 +42,24 @@ class PrepPortalApp {
     this.pyodide = null;
     this.pyodideLoading = false;
 
+    // Master Security & PIN Gate
+    this.masterPin = localStorage.getItem("google_l5_master_pin") || "2026";
+    this.isUnlocked = sessionStorage.getItem("google_l5_session_unlocked") === "true";
+
+    // 24H Daily Accountability State (12:00 AM to 11:59 PM)
+    this.todayDateStr = this.getTodayDateString();
+    this.dailyData = this.loadDailyData();
+    this.accountabilityInterval = null;
+
     this.init();
   }
 
   init() {
     this.loadState();
     this.applyTheme(this.state.theme);
+    this.checkSecurityGate();
     this.setupEventListeners();
+    this.initAccountabilityClock();
     this.renderAll();
     this.initPyodide();
   }
@@ -175,6 +186,16 @@ class PrepPortalApp {
           }
           this.saveState();
           this.renderAll();
+        }
+      });
+    }
+
+    // Security Gate PIN Enter Key
+    const pinInput = document.getElementById("inputSecurityPin");
+    if (pinInput) {
+      pinInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          this.submitSecurityPin();
         }
       });
     }
@@ -309,6 +330,9 @@ class PrepPortalApp {
     this.renderReadingVault();
     this.renderQuestions();
     this.renderFlashcard();
+    this.renderAccountability();
+    this.renderTechDeepDives();
+    this.renderResumeDefense();
     this.updateStats();
   }
 
@@ -1429,6 +1453,405 @@ _final_output = _stdout_buffer.getvalue()
       }
     };
     reader.readAsText(file);
+  }
+
+  // ==========================================
+  // 🔒 SECURITY GATE & PIN PROTECTION
+  // ==========================================
+  checkSecurityGate() {
+    if (!this.isUnlocked) {
+      this.showSecurityGate();
+    } else {
+      this.hideSecurityGate();
+    }
+  }
+
+  showSecurityGate() {
+    const modal = document.getElementById("securityGateModal");
+    if (modal) modal.style.display = "flex";
+    document.title = "Enterprise Cloud Telemetry & Workspace";
+    const input = document.getElementById("inputSecurityPin");
+    if (input) {
+      input.value = "";
+      setTimeout(() => input.focus(), 100);
+    }
+  }
+
+  hideSecurityGate() {
+    const modal = document.getElementById("securityGateModal");
+    if (modal) modal.style.display = "none";
+    document.title = "Google Career & L5 Data Mastery Portal | Maximize Offer Odds";
+  }
+
+  submitSecurityPin() {
+    const input = document.getElementById("inputSecurityPin");
+    const pin = (input ? input.value : "").trim();
+    const err = document.getElementById("pinErrorMessage");
+
+    if (pin === this.masterPin) {
+      this.isUnlocked = true;
+      sessionStorage.setItem("google_l5_session_unlocked", "true");
+      if (err) err.style.display = "none";
+      this.hideSecurityGate();
+    } else {
+      if (err) {
+        err.style.display = "block";
+        err.textContent = "⚠️ Invalid Master PIN. (Default: 2026)";
+      }
+      if (input) {
+        input.value = "";
+        input.focus();
+      }
+    }
+  }
+
+  appendPinDigit(d) {
+    const input = document.getElementById("inputSecurityPin");
+    if (!input) return;
+    input.value = (input.value || "") + d;
+    if (input.value.length === this.masterPin.length) {
+      this.submitSecurityPin();
+    }
+  }
+
+  clearPinDigits() {
+    const input = document.getElementById("inputSecurityPin");
+    if (input) input.value = "";
+  }
+
+  changeMasterPin() {
+    const current = prompt("Enter your current Master PIN (default: 2026):");
+    if (current !== this.masterPin) {
+      alert("Incorrect current PIN.");
+      return;
+    }
+    const newPin = prompt("Enter your new 4-digit Master PIN:");
+    if (!newPin || newPin.length < 4) {
+      alert("PIN must be at least 4 characters.");
+      return;
+    }
+    this.masterPin = newPin;
+    localStorage.setItem("google_l5_master_pin", newPin);
+    alert("Master PIN successfully updated!");
+  }
+
+  lockApp() {
+    this.isUnlocked = false;
+    sessionStorage.removeItem("google_l5_session_unlocked");
+    this.showSecurityGate();
+  }
+
+  // ==========================================
+  // ⏰ 24-HOUR DAILY ACCOUNTABILITY ENGINE (12:00 AM – 11:59 PM)
+  // ==========================================
+  getTodayDateString() {
+    const d = new Date();
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  loadDailyData() {
+    const key = `google_l5_daily_${this.todayDateStr}`;
+    const saved = localStorage.getItem(key);
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    return {
+      date: this.todayDateStr,
+      pillars: { 1: false, 2: false, 3: false, 4: false },
+      notes: ""
+    };
+  }
+
+  saveDailyData() {
+    const key = `google_l5_daily_${this.todayDateStr}`;
+    localStorage.setItem(key, JSON.stringify(this.dailyData));
+    this.updateDailyUI();
+  }
+
+  initAccountabilityClock() {
+    this.updateAccountabilityClock();
+    if (this.accountabilityInterval) clearInterval(this.accountabilityInterval);
+    this.accountabilityInterval = setInterval(() => this.updateAccountabilityClock(), 1000);
+  }
+
+  updateAccountabilityClock() {
+    const now = new Date();
+    // Compute end of day (23:59:59)
+    const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+    const diffMs = Math.max(0, endOfDay - now);
+
+    const hours = Math.floor(diffMs / (1000 * 60 * 60));
+    const mins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    const secs = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+    const timeStr = `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+    const clockEl = document.getElementById("dailyCountdownClock");
+    if (clockEl) clockEl.textContent = timeStr;
+
+    const dashClockEl = document.getElementById("dashCountdownDigits");
+    if (dashClockEl) dashClockEl.textContent = `${timeStr} Remaining Today`;
+
+    // Urgency message
+    const completedCount = Object.values(this.dailyData.pillars).filter(Boolean).length;
+    const msgEl = document.getElementById("countdownUrgencyMessage");
+    if (msgEl) {
+      if (completedCount === 4) {
+        msgEl.innerHTML = "🏆 <span style='color:var(--g-green); font-weight:700;'>Daily Quota Crushed! (4/4 Completed)</span>";
+      } else if (hours < 6) {
+        msgEl.innerHTML = `🚨 <span style='color:var(--g-red); font-weight:700;'>URGENT: ${hours}h left! Protect your streak!</span>`;
+      } else {
+        msgEl.innerHTML = `🔥 <span style='color:#fbbc05;'>${completedCount}/4 Pillars Complete • Keep pushing!</span>`;
+      }
+    }
+  }
+
+  togglePillar(num) {
+    this.dailyData.pillars[num] = !this.dailyData.pillars[num];
+    this.saveDailyData();
+
+    // Check if all 4 completed -> trigger celebration
+    const completedCount = Object.values(this.dailyData.pillars).filter(Boolean).length;
+    if (completedCount === 4 && typeof confetti === "function") {
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+    }
+  }
+
+  saveDailyLogNotes() {
+    const input = document.getElementById("dailyLogNotesInput");
+    if (input) {
+      this.dailyData.notes = input.value;
+      const key = `google_l5_daily_${this.todayDateStr}`;
+      localStorage.setItem(key, JSON.stringify(this.dailyData));
+      const status = document.getElementById("dailyLogSaveStatus");
+      if (status) {
+        status.textContent = "Saved ✓";
+        setTimeout(() => { if (status) status.textContent = "Auto-saved to date log"; }, 1500);
+      }
+    }
+  }
+
+  resetTodayTargets() {
+    if (confirm("Reset today's daily pillar checkboxes?")) {
+      this.dailyData.pillars = { 1: false, 2: false, 3: false, 4: false };
+      this.saveDailyData();
+      this.renderAccountability();
+    }
+  }
+
+  updateDailyUI() {
+    const completedCount = Object.values(this.dailyData.pillars).filter(Boolean).length;
+
+    // Update pillar check status & card styles
+    for (let i = 1; i <= 4; i++) {
+      const isDone = !!this.dailyData.pillars[i];
+      const chk = document.getElementById(`checkPillar${i}`);
+      if (chk) chk.checked = isDone;
+
+      const card = document.getElementById(`pillarCard${i}`);
+      if (card) card.classList.toggle("completed", isDone);
+
+      const statusEl = document.getElementById(`pillarStatus${i}`);
+      if (statusEl) {
+        statusEl.textContent = isDone ? "✓ Completed" : "Pending";
+        statusEl.classList.toggle("done", isDone);
+      }
+    }
+
+    // Dashboard Pill
+    const dashPill = document.getElementById("dashTargetSummaryPill");
+    if (dashPill) {
+      dashPill.textContent = `Targets: ${completedCount} / 4 Complete`;
+      dashPill.style.color = completedCount === 4 ? "var(--g-green)" : (completedCount >= 2 ? "#fbbc05" : "var(--g-red)");
+    }
+
+    // Status Pill
+    const statusPill = document.getElementById("accountabilityStatusPill");
+    if (statusPill) {
+      if (completedCount === 4) {
+        statusPill.textContent = "🏆 Daily Target Crushed (4/4)";
+        statusPill.style.background = "var(--g-green)";
+      } else {
+        statusPill.textContent = `${completedCount}/4 Targets Complete`;
+        statusPill.style.background = "#ea4335";
+      }
+    }
+
+    this.renderAccountabilityHistory();
+  }
+
+  renderAccountability() {
+    // Formatted date string
+    const d = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const dateStr = d.toLocaleDateString('en-US', options);
+    const dateEl = document.getElementById("accountabilityTodayDate");
+    if (dateEl) dateEl.textContent = dateStr;
+
+    // Notes
+    const notesInput = document.getElementById("dailyLogNotesInput");
+    if (notesInput) notesInput.value = this.dailyData.notes || "";
+
+    this.updateDailyUI();
+  }
+
+  renderAccountabilityHistory() {
+    const container = document.getElementById("accountabilityHistoryList");
+    if (!container) return;
+
+    let html = "";
+    const today = new Date();
+    for (let i = 0; i < 7; i++) {
+      const past = new Date(today);
+      past.setDate(today.getDate() - i);
+      const year = past.getFullYear();
+      const month = String(past.getMonth() + 1).padStart(2, '0');
+      const day = String(past.getDate()).padStart(2, '0');
+      const keyStr = `${year}-${month}-${day}`;
+
+      let record = { pillars: { 1: false, 2: false, 3: false, 4: false } };
+      if (keyStr === this.todayDateStr) {
+        record = this.dailyData;
+      } else {
+        const saved = localStorage.getItem(`google_l5_daily_${keyStr}`);
+        if (saved) {
+          try { record = JSON.parse(saved); } catch (e) {}
+        }
+      }
+
+      const count = Object.values(record.pillars || {}).filter(Boolean).length;
+      const dayName = i === 0 ? "Today" : (i === 1 ? "Yesterday" : past.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }));
+      const badgeStyle = count === 4 
+        ? "background:rgba(52,168,83,0.2); color:#4ade80;" 
+        : (count > 0 ? "background:rgba(251,188,5,0.2); color:#fde047;" : "background:rgba(255,255,255,0.06); color:#94a3b8;");
+
+      html += `
+        <div class="streak-row">
+          <div>
+            <strong>${dayName}</strong>
+            <span class="text-muted" style="margin-left:8px; font-size:0.75rem;">${keyStr}</span>
+          </div>
+          <span class="streak-badge" style="${badgeStyle}">${count} / 4 Done</span>
+        </div>
+      `;
+    }
+    container.innerHTML = html;
+  }
+
+  // ==========================================
+  // 📲 1-CLICK WHATSAPP ACCOUNTABILITY SYNC
+  // ==========================================
+  generateDailyReportText() {
+    const completedCount = Object.values(this.dailyData.pillars).filter(Boolean).length;
+    const p1 = this.dailyData.pillars[1] ? "✅ Done" : "⏳ Pending";
+    const p2 = this.dailyData.pillars[2] ? "✅ Done" : "⏳ Pending";
+    const p3 = this.dailyData.pillars[3] ? "✅ Done" : "⏳ Pending";
+    const p4 = this.dailyData.pillars[4] ? "✅ Done" : "⏳ Pending";
+    const notes = (this.dailyData.notes || "").trim() || "Completed scheduled focus study session.";
+
+    return `🔥 *Google L4/L5 Prep Daily Report*
+📅 Date: *${this.todayDateStr}*
+🎯 Pillars Completed: *${completedCount} / 4*
+- Pillar 1 (Python DSA): ${p1}
+- Pillar 2 (SQL & Modeling): ${p2}
+- Pillar 3 (Snowflake/PySpark Internals): ${p3}
+- Pillar 4 (Siemens/Coke Project Defense): ${p4}
+
+📝 *Daily Technical Accomplishments:*
+"${notes}"
+
+⚡ *Status:* ${completedCount === 4 ? "🏆 Quota Crushed (100%)" : "In Progress • Sprinting before 11:59 PM"}
+#GoogleIndia #DataEngineer #Discipline`;
+  }
+
+  shareDailyProgressWhatsApp() {
+    const text = this.generateDailyReportText();
+    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+    window.open(url, "_blank");
+  }
+
+  copyDailySummary() {
+    const text = this.generateDailyReportText();
+    navigator.clipboard.writeText(text).then(() => {
+      alert("Daily summary report copied to clipboard!");
+    }).catch(() => {
+      prompt("Copy your daily report below:", text);
+    });
+  }
+
+  // ==========================================
+  // 🔬 ZERO-GIMMICK TECH DEEP DIVES
+  // ==========================================
+  renderTechDeepDives() {
+    const container = document.getElementById("deepDivesContainer");
+    if (!container || !PREP_DATA.techDeepDives) return;
+
+    let html = "";
+    PREP_DATA.techDeepDives.forEach(dive => {
+      html += `
+        <div class="deep-dive-card">
+          <div class="deep-dive-header">
+            <span class="deep-dive-category">${dive.category}</span>
+            <h2 class="deep-dive-title">${dive.title}</h2>
+            <p class="deep-dive-summary">${dive.summary}</p>
+          </div>
+          <div class="deep-dive-topics">
+            ${dive.topics.map(t => `
+              <div class="topic-step-box">
+                <div class="topic-step-title">
+                  <span style="color:var(--g-blue); font-weight:800;">▪</span>
+                  <span>${t.name}</span>
+                </div>
+                <div class="topic-step-content">${t.content}</div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `;
+    });
+    container.innerHTML = html;
+  }
+
+  // ==========================================
+  // 🛡️ RESUME & PROJECT DEFENSE SUITE
+  // ==========================================
+  renderResumeDefense() {
+    const container = document.getElementById("projectDefenseContainer");
+    if (!container || !PREP_DATA.resumeDefenseSuite) return;
+
+    let html = "";
+    PREP_DATA.resumeDefenseSuite.forEach(proj => {
+      html += `
+        <div class="defense-project-group">
+          <h3 class="defense-project-title">💼 ${proj.project}</h3>
+          ${proj.questions.map(qa => `
+            <div class="interrogation-block">
+              <div class="interrogation-q">❓ Interviewer: "${qa.q}"</div>
+              <div class="interrogation-ans"><strong>Staff Response:</strong> ${qa.answer}</div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    });
+    container.innerHTML = html;
+  }
+
+  copyAtsResumeText() {
+    const paper = document.getElementById("atsResumePaper");
+    if (!paper) return;
+    const text = paper.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      alert("Google ATS 1-page resume copied to clipboard!");
+    }).catch(() => {
+      prompt("Copy your ATS resume below:", text);
+    });
   }
 }
 

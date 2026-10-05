@@ -15,6 +15,44 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
 </head>
 <body class="theme-dark">
+  <!-- 🔒 SECURITY & PRIVACY GATE (Client-Side Master PIN) -->
+  <div id="securityGateModal" class="security-overlay" style="display:none;">
+    <div class="security-card">
+      <div class="security-shield-icon">
+        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      </div>
+      <span class="security-badge-pill">PRIVATE CANDIDATE PORTAL • ENCRYPTED SESSION</span>
+      <h1 class="security-title">Enterprise Cloud Telemetry & Roadmap</h1>
+      <p class="security-desc">Confidential Google India interview preparation workspace. Protected against office shoulder-surfing and public inspection. Enter your Master PIN to unlock your daily targets, private resume defense, and codebase.</p>
+
+      <div class="pin-box-wrapper">
+        <input type="password" id="inputSecurityPin" class="security-pin-input" maxlength="6" placeholder="••••" autocomplete="off" />
+        <button class="btn btn-primary" id="btnUnlockPortal" onclick="app.submitSecurityPin()">Unlock</button>
+      </div>
+      <div id="pinErrorMessage" class="pin-error-text" style="display:none;">⚠️ Invalid PIN. Please try again.</div>
+
+      <div class="pin-keypad">
+        <button class="keypad-btn" onclick="app.appendPinDigit('1')">1</button>
+        <button class="keypad-btn" onclick="app.appendPinDigit('2')">2</button>
+        <button class="keypad-btn" onclick="app.appendPinDigit('3')">3</button>
+        <button class="keypad-btn" onclick="app.appendPinDigit('4')">4</button>
+        <button class="keypad-btn" onclick="app.appendPinDigit('5')">5</button>
+        <button class="keypad-btn" onclick="app.appendPinDigit('6')">6</button>
+        <button class="keypad-btn" onclick="app.appendPinDigit('7')">7</button>
+        <button class="keypad-btn" onclick="app.appendPinDigit('8')">8</button>
+        <button class="keypad-btn" onclick="app.appendPinDigit('9')">9</button>
+        <button class="keypad-btn btn-clear" onclick="app.clearPinDigits()">CLR</button>
+        <button class="keypad-btn" onclick="app.appendPinDigit('0')">0</button>
+        <button class="keypad-btn btn-enter" onclick="app.submitSecurityPin()">↵</button>
+      </div>
+
+      <div class="security-subtext-bar">
+        <span>Default Master PIN: <strong>2026</strong></span>
+        <button class="btn-text-action" onclick="app.changeMasterPin()">Change PIN</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Top Application Bar -->
   <header class="topbar">
     <div class="brand">
@@ -55,6 +93,12 @@
     </div>
 
     <div class="topbar-actions">
+      <!-- Quick Privacy Lock -->
+      <button class="btn btn-outline" id="btnQuickLock" onclick="app.lockApp()" title="Quick Privacy Lock (PIN protect screen immediately)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        <span>Lock</span>
+      </button>
+
       <!-- ☀️ / 🌙 / 🕶️ Theme Selector -->
       <div class="theme-switch-group">
         <button class="theme-btn active" id="btnThemeDark" onclick="app.setTheme('dark')" title="Sleek Dark Mode">🌙 Dark</button>
@@ -79,6 +123,21 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
           <span>Google Roles Radar</span>
           <span class="badge badge-pulse">Hot</span>
+        </button>
+        <button class="nav-item" data-tab="accountability">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <span>24H Daily Logger</span>
+          <span class="badge" style="background:#ea4335; color:#fff;">12am-11:59pm</span>
+        </button>
+        <button class="nav-item" data-tab="tech-deep-dives">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+          <span>Tech Deep-Dives</span>
+          <span class="badge" style="background:#1e8e3e; color:#fff;">Zero-Gimmick</span>
+        </button>
+        <button class="nav-item" data-tab="resume-defense">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <span>Resume & Defense</span>
+          <span class="badge" style="background:#f9ab00; color:#202124;">Siemens & Coke</span>
         </button>
         <button class="nav-item" data-tab="primer">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
@@ -215,6 +274,236 @@
         </div>
 
         <div class="roles-grid" id="rolesGrid"></div>
+      </section>
+
+      <!-- 0.2. 24-HOUR DAILY ACCOUNTABILITY COMMAND CENTER -->
+      <section id="view-accountability" class="content-view">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">⏰ 24-Hour Daily Accountability Command Center</h1>
+            <p class="view-subtitle">Strict 12:00 AM to 11:59 PM Window. Log real work, protect your streak, and never fall behind on Google targets.</p>
+          </div>
+          <div class="quick-status">
+            <span class="status-pill status-ready" id="accountabilityStatusPill" style="background:#ea4335; color:#fff;">12:00 AM – 11:59 PM Active</span>
+          </div>
+        </div>
+
+        <!-- Accountability Hero Countdown Card -->
+        <div class="card accountability-hero-card">
+          <div class="hero-clock-flex">
+            <div>
+              <span class="badge" style="background:var(--g-blue); color:#fff; font-weight:600; text-transform:uppercase;">Daily Window Countdown</span>
+              <h2 class="hero-date-text" id="accountabilityTodayDate">Monday, October 5, 2026</h2>
+              <p class="text-muted" style="margin-top:4px;">Window resets strictly at <strong>11:59:59 PM IST</strong> tonight. Every minute counts.</p>
+            </div>
+            <div class="hero-countdown-box">
+              <div class="countdown-label">TIME REMAINING TODAY</div>
+              <div class="countdown-time-digits" id="dailyCountdownClock">--:--:--</div>
+              <div class="countdown-sub" id="countdownUrgencyMessage">🔥 Tracking Live IST Clock</div>
+            </div>
+          </div>
+
+          <div class="accountability-action-row">
+            <button class="btn btn-whatsapp" onclick="app.shareDailyProgressWhatsApp()" title="Send formatted daily accountability update to WhatsApp">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              <span>📲 Sync Daily Report to WhatsApp</span>
+            </button>
+            <button class="btn btn-outline" onclick="app.copyDailySummary()" title="Copy text debrief to clipboard">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Copy Daily Summary</span>
+            </button>
+            <button class="btn btn-outline" onclick="app.resetTodayTargets()" title="Reset today's checkboxes if starting fresh">
+              <span>↺ Reset Today's Checkboxes</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 Daily Mandatory Pillars Grid -->
+        <h2 style="font-family:var(--font-display); font-size:1.3rem; margin: 1.5rem 0 0.8rem 0;">🎯 The 4 Mandatory Daily Pillars (Complete Before 11:59 PM)</h2>
+        <div class="daily-pillars-grid">
+          <div class="pillar-card" id="pillarCard1">
+            <div class="pillar-header">
+              <div class="pillar-title-group">
+                <span class="pillar-tag tag-blue">Pillar 1: DSA & Code</span>
+                <h3>Python Algorithm / Wasm Drill</h3>
+              </div>
+              <input type="checkbox" id="checkPillar1" class="pillar-checkbox" onchange="app.togglePillar(1)">
+            </div>
+            <p class="pillar-desc">Solve at least 1 Python DSA problem in the browser Pyodide Dojo. Target: Arrays, Two Pointers, or Sliding Window.</p>
+            <div class="pillar-footer">
+              <span class="pillar-status" id="pillarStatus1">Pending</span>
+              <button class="btn btn-sm btn-outline" onclick="app.switchTab('dsa')">Open Dojo →</button>
+            </div>
+          </div>
+
+          <div class="pillar-card" id="pillarCard2">
+            <div class="pillar-header">
+              <div class="pillar-title-group">
+                <span class="pillar-tag tag-green">Pillar 2: SQL & Modeling</span>
+                <h3>Complex SQL or Kimball Star Schema</h3>
+              </div>
+              <input type="checkbox" id="checkPillar2" class="pillar-checkbox" onchange="app.togglePillar(2)">
+            </div>
+            <p class="pillar-desc">Master 1 advanced Window Query (DENSE_RANK, sessionization) or SCD Type 2 merge logic.</p>
+            <div class="pillar-footer">
+              <span class="pillar-status" id="pillarStatus2">Pending</span>
+              <button class="btn btn-sm btn-outline" onclick="app.switchTab('sql')">Open SQL Studio →</button>
+            </div>
+          </div>
+
+          <div class="pillar-card" id="pillarCard3">
+            <div class="pillar-header">
+              <div class="pillar-title-group">
+                <span class="pillar-tag tag-purple">Pillar 3: Stack Mastery</span>
+                <h3>Snowflake / PySpark Internals</h3>
+              </div>
+              <input type="checkbox" id="checkPillar3" class="pillar-checkbox" onchange="app.togglePillar(3)">
+            </div>
+            <p class="pillar-desc">Deep-dive into micro-partition pruning, warehouse remote spilling, or Spark shuffle skew salting.</p>
+            <div class="pillar-footer">
+              <span class="pillar-status" id="pillarStatus3">Pending</span>
+              <button class="btn btn-sm btn-outline" onclick="app.switchTab('tech-deep-dives')">Open Deep-Dives →</button>
+            </div>
+          </div>
+
+          <div class="pillar-card" id="pillarCard4">
+            <div class="pillar-header">
+              <div class="pillar-title-group">
+                <span class="pillar-tag tag-yellow">Pillar 4: Defense & Story</span>
+                <h3>Siemens/Coke Project Defense & STAR</h3>
+              </div>
+              <input type="checkbox" id="checkPillar4" class="pillar-checkbox" onchange="app.togglePillar(4)">
+            </div>
+            <p class="pillar-desc">Rehearse defending 1 interrogation question from your actual Capgemini resume without stuttering.</p>
+            <div class="pillar-footer">
+              <span class="pillar-status" id="pillarStatus4">Pending</span>
+              <button class="btn btn-sm btn-outline" onclick="app.switchTab('resume-defense')">Open Defense →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Daily Work Log Audit & Streak -->
+        <div class="dashboard-split" style="margin-top:1.5rem;">
+          <div class="card">
+            <h3 class="card-title">📝 Today's Real Accomplishment Log</h3>
+            <p class="text-muted">Record exactly what you built, debugged, or read today. Stored permanently in your daily history:</p>
+            <textarea class="star-textarea" id="dailyLogNotesInput" style="height:140px; margin-top:10px;" placeholder="e.g. Mastered Snowflake micro-partitions vs traditional B-trees. Solved Two Sum and 3Sum in Python Dojo with O(N) hashmap. Rehearsed Siemens Lakehouse ADF migration trade-offs..." oninput="app.saveDailyLogNotes()"></textarea>
+            <div style="margin-top:8px; display:flex; justify-content:space-between; align-items:center;">
+              <span class="text-muted" style="font-size:0.8rem;" id="dailyLogSaveStatus">Auto-saved to date log</span>
+              <button class="btn btn-sm btn-primary" onclick="app.shareDailyProgressWhatsApp()">Share via WhatsApp</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">⚡ 7-Day Accountability Streak & Audit</h3>
+            <p class="text-muted">Daily target completion records over the last 7 calendar days:</p>
+            <div class="streak-history-list" id="accountabilityHistoryList" style="margin-top:12px;"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 0.3. ZERO-GIMMICK TECH DEEP DIVES (DEFEND YOUR STACK) -->
+      <section id="view-tech-deep-dives" class="content-view">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">🔬 Zero-Gimmick Technical Deep Dives (Mastering Your Actual Stack)</h1>
+            <p class="view-subtitle">Master the low-level internals of Snowflake, PySpark, and BigQuery so you never freeze during Senior Google technical interrogations.</p>
+          </div>
+          <div class="quick-status">
+            <span class="status-pill status-ready" style="background:#1e8e3e; color:#fff;">Staff-Grade Substance</span>
+          </div>
+        </div>
+
+        <div class="deep-dives-layout" id="deepDivesContainer"></div>
+      </section>
+
+      <!-- 0.4. GOOGLE ATS RESUME & PROJECT DEFENSE SUITE -->
+      <section id="view-resume-defense" class="content-view">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">🛡️ Google ATS Resume & Project Defense Suite</h1>
+            <p class="view-subtitle">Defend every single line of your Siemens Energy & Coca-Cola projects against Google interviewers who dig into internals.</p>
+          </div>
+          <div class="quick-status">
+            <span class="status-pill status-ready" style="background:#f9ab00; color:#202124;">Real Projects Interrogation</span>
+          </div>
+        </div>
+
+        <div class="resume-defense-split">
+          <!-- 1-Page Google ATS Resume Preview -->
+          <div class="card ats-resume-display-card">
+            <div class="card-header">
+              <div>
+                <span class="badge badge-accent">Google ATS Format</span>
+                <h2 class="card-title">Rohit Singh - 1-Page ATS Resume</h2>
+              </div>
+              <button class="btn btn-sm btn-outline" onclick="app.copyAtsResumeText()">Copy ATS Resume Text</button>
+            </div>
+            
+            <div class="ats-resume-paper" id="atsResumePaper">
+              <div class="ats-header">
+                <h2 class="ats-name">ROHIT SINGH</h2>
+                <div class="ats-contact">
+                  <span>Bengaluru, India</span> • 
+                  <span>rohitsingh.dev@gmail.com</span> • 
+                  <span>linkedin.com/in/rohit-singh</span> • 
+                  <span>github.com/rohitgit1</span>
+                </div>
+              </div>
+
+              <div class="ats-section">
+                <div class="ats-section-title">PROFESSIONAL SUMMARY</div>
+                <p class="ats-text">Cloud & Big Data Engineer with 4+ years architecting enterprise analytical lakehouses, distributed data pipelines, and petabyte-scale cloud warehouses across Azure, Snowflake, Databricks, and GCP. Proven track record migrating 40,000+ database objects, cutting pipeline compute costs by 32%, and accelerating BI query SLAs by 85%.</p>
+              </div>
+
+              <div class="ats-section">
+                <div class="ats-section-title">TECHNICAL SKILLS</div>
+                <div class="ats-skills-line"><strong>Languages:</strong> Python (PySpark, Pandas, NumPy), SQL (Snowflake, BigQuery, PostgreSQL), Bash</div>
+                <div class="ats-skills-line"><strong>Big Data & Cloud:</strong> Apache Spark, Databricks, Google BigQuery, Snowflake, Azure Data Factory (ADF), Cloud Composer (Airflow), GCS, ADLS Gen2</div>
+                <div class="ats-skills-line"><strong>Data Engineering:</strong> Star Schema (Kimball), SCD Type 1/2, Dataform, dbt Cloud, CI/CD, Partition Pruning, Key Salting</div>
+              </div>
+
+              <div class="ats-section">
+                <div class="ats-section-title">WORK EXPERIENCE</div>
+                <div class="ats-job-header">
+                  <strong>Capgemini India</strong> — <em>Associate Consultant (Insights & Data)</em>
+                  <span class="ats-date">Aug 2021 – Present</span>
+                </div>
+
+                <div class="ats-project-subhead">Project 1: Siemens Energy — Next-Gen Analytics Lakehouse (Azure Databricks + Snowflake)</div>
+                <ul class="ats-bullet-list">
+                  <li>Migrated 40,000+ database objects and 250+ analytical schemas from legacy SAP HANA/SQL Server to Snowflake using automated Python AST parsers and CI/CD pipelines with zero data loss.</li>
+                  <li>Engineered multi-hop Bronze-to-Silver PySpark pipelines on Azure Databricks processing 15M+ daily supply-chain events with automated schema drift detection.</li>
+                  <li>Reduced monthly Databricks compute costs by 32% ($14,000/mo savings) by tuning shuffle partitions, enabling Adaptive Query Execution (AQE), and mitigating join skew with key salting.</li>
+                  <li>Architected Snowflake cluster keys on high-cardinality transaction tables, reducing average executive dashboard query latency from 28s to 3.2s via 88% micro-partition pruning.</li>
+                </ul>
+
+                <div class="ats-project-subhead" style="margin-top:10px;">Project 2: The Coca-Cola Company — Global BI Migration & Ingestion Framework</div>
+                <ul class="ats-bullet-list">
+                  <li>Architected metadata-driven ingestion framework using Azure Data Factory (ADF) orchestrating 40+ parameterized pipelines ingesting 12TB+ monthly commercial sales data.</li>
+                  <li>Engineered modular 3-tier dbt Cloud transformation models (Staging, Intermediate, Marts) implementing Kimball dimensional Star Schemas and automated schema tests.</li>
+                  <li>Automated daily pipeline monitoring and alert webhooks via Azure Monitor and Python, slashing pipeline MTTR (Mean Time to Resolution) from 4 hours to under 25 minutes.</li>
+                </ul>
+              </div>
+
+              <div class="ats-section">
+                <div class="ats-section-title">EDUCATION</div>
+                <div class="ats-job-header">
+                  <strong>Pranveer Singh Institute of Technology (PSIT), Kanpur</strong>
+                  <span class="ats-date">2017 – 2021</span>
+                </div>
+                <div class="ats-text">Bachelor of Technology (B.Tech) in Computer Science & Engineering</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Interrogation Defense Q&A -->
+          <div class="card project-defense-card">
+            <h2 class="card-title">🎯 Real Project Technical Interrogation Defense</h2>
+            <p class="text-muted">Exact questions Google interviewers will ask to test if you actually wrote the code or just worked around the tools:</p>
+            <div id="projectDefenseContainer" style="margin-top:14px; display:flex; flex-direction:column; gap:16px; max-height:750px; overflow-y:auto;"></div>
+          </div>
+        </div>
       </section>
 
       <!-- 0.5. BEGINNER-TO-GOOGLE ELI5 FIRST PRINCIPLES PRIMER -->
@@ -368,6 +657,20 @@
           <div>
             <h1 class="view-title">Daily Mission Control</h1>
             <p class="view-subtitle">High-yield execution dashboard for your 90-day Google breakthrough</p>
+          </div>
+        </div>
+
+        <!-- Urgent 24-Hour Accountability Banner -->
+        <div class="card dashboard-accountability-alert-card">
+          <div class="dash-clock-col">
+            <span class="badge" style="background:#ea4335; color:#fff; font-weight:600;">⏰ 24H Window: 12:00 AM – 11:59 PM IST</span>
+            <div class="dash-countdown-digits" id="dashCountdownDigits">--:--:-- Remaining Today</div>
+            <p class="text-muted" style="margin:2px 0 0 0; font-size:0.85rem;">Mandatory Targets: Complete before 11:59:59 PM to maintain your Google prep streak.</p>
+          </div>
+          <div class="dash-clock-actions">
+            <div class="dash-target-pill" id="dashTargetSummaryPill">Targets: 0 / 4 Complete</div>
+            <button class="btn btn-whatsapp" onclick="app.shareDailyProgressWhatsApp()">📲 WhatsApp Sync</button>
+            <button class="btn btn-primary" onclick="app.switchTab('accountability')">Open Daily Logger →</button>
           </div>
         </div>
 

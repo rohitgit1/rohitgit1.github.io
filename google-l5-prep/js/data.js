@@ -1034,5 +1034,115 @@ ORDER BY total_revenue DESC;`,
       ],
       googleInterviewTrap: "Google values single-source-of-truth metrics. Emphasize that Looker's semantic modeling layer prevents metric discrepancy across departments."
     }
+  ],
+
+  // 🔬 Zero-Gimmick Technical Deep Dives (Mastering Your Actual Stack)
+  techDeepDives: [
+    {
+      id: "deep-snowflake",
+      title: "Snowflake Internals Masterclass: Defend Every Line on Your Resume",
+      category: "Data Warehousing",
+      summary: "Understand exactly how Snowflake stores, compresses, and queries data so you never freeze when an interviewer asks about performance tuning.",
+      topics: [
+        {
+          name: "1. Micro-Partitions & Pruning",
+          content: "Snowflake does NOT use traditional B-Tree indexes! Instead, all table data is divided into immutable 'Micro-Partitions' (50MB to 500MB uncompressed, stored columnar). For every micro-partition, Snowflake automatically stores metadata: the min/max values of every column, distinct count, and NULL counts. When you execute a query with WHERE order_date >= '2025-01-01', Snowflake checks the metadata and skips 95% of micro-partitions without reading them. This is called 'Partition Pruning'."
+        },
+        {
+          name: "2. Clustering Keys & Reclustering",
+          content: "By default, micro-partitions are organized by the order data was inserted. If you frequently filter by (store_id, customer_id), and data arrived randomly, those IDs are scattered across thousands of micro-partitions. By defining a CLUSTER BY (order_date, store_id), Snowflake reorganizes the micro-partitions so rows with the same store_id live together. Interview rule: Only cluster large tables (>1TB). Clustering small tables wastes money on automatic background clustering credits!"
+        },
+        {
+          name: "3. Virtual Warehouses & Spilling",
+          content: "A Snowflake Warehouse is pure compute (independent EC2/Azure VMs). If a query needs more memory than the warehouse RAM, it starts 'Spilling to Local Storage' (fast SSD), and if that fills, 'Spilling to Remote Storage' (slow cloud storage blob). When an interviewer asks 'How do you fix high remote spill?', answer: 1) Scale up the warehouse to a larger size with more RAM, or 2) Reduce data scanned by improving partition pruning and eliminating large cross-joins."
+        },
+        {
+          name: "4. Zero-Copy Cloning",
+          content: "When you run CREATE TABLE orders_dev CLONE orders_prod;, Snowflake does NOT duplicate the storage! It simply duplicates the metadata pointers to the existing immutable micro-partitions. You pay $0 extra storage until you modify the dev table (Copy-on-Write). This is how you test schema migrations safely."
+        }
+      ]
+    },
+    {
+      id: "deep-pyspark",
+      title: "PySpark & Databricks Architecture: Driver, Worker, Shuffle & OOMs",
+      category: "Big Data Compute",
+      summary: "Master the mechanics of Apache Spark execution, DAG optimization, memory management, and data skew resolution.",
+      topics: [
+        {
+          name: "1. Driver vs Worker Executors",
+          content: "The Driver is the master process: it parses your Python code, builds the Directed Acyclic Graph (DAG), optimizes the execution plan via Catalyst Optimizer, and schedules tasks. The Worker Executors are JVM processes running on cluster nodes that actually execute the tasks and store data partitions in memory."
+        },
+        {
+          name: "2. Narrow vs Wide Transformations (The Shuffle)",
+          content: "Narrow Transformations (map, filter, withColumn): Each input partition contributes to only ONE output partition. No data moves between machines over the network. Extremely fast!\nWide Transformations (groupBy, join, distinct, repartition): Data must be re-hashed and sent across the physical network between all executors so that records with the same key end up on the same worker. This network transfer is called a 'SHUFFLE' and is the #1 cause of pipeline slowdowns and timeouts."
+        },
+        {
+          name: "3. Broadcast Hash Join",
+          content: "If you join a 10TB transaction fact table with a 50MB customer dimension table, a standard join shuffles all 10TB of data across the network! Instead, use broadcast(dim_customer): Spark copies the 50MB table to all worker nodes once, converting the join into a fast local memory lookup and eliminating 100% of the shuffle!"
+        },
+        {
+          name: "4. Solving Data Skew & Key Salting",
+          content: "If 1 out of 100 partitions contains 90% of the data (e.g. customer_id = NULL or a viral product ID), 99 worker cores will finish in 10 seconds, but 1 worker will struggle for 2 hours and eventually crash with OOM (Out Of Memory). Fix: 'Key Salting' — append a random integer (0..9) to the skewed key, perform a partial aggregation, and then run a secondary aggregation over the unsalted key."
+        }
+      ]
+    },
+    {
+      id: "deep-gcp",
+      title: "Google BigQuery & Cloud Dataflow Architecture",
+      category: "GCP Big Data",
+      summary: "Understand Google's internal systems (Dremel, Colossus, Capacitor, and Apache Beam) to speak like a Staff Google Engineer.",
+      topics: [
+        {
+          name: "1. BigQuery Serverless Slot Architecture",
+          content: "BigQuery does not have virtual warehouses. It allocates virtual CPUs called 'Slots'. A query is broken into stages: Stage 1 reads partitions from Colossus (columnar Capacitor format), Stage 2 aggregates data in memory, Stage 3 merges results. BigQuery dynamically scales slots up and down per query, charging by default $6.25 per TB of data scanned, or through committed slot capacity."
+        },
+        {
+          name: "2. Partitioning vs Clustering in BigQuery",
+          content: "Partitioning divides a table into distinct physical daily/hourly segments (e.g. PARTITION BY DATE(order_timestamp)). Queries with WHERE order_timestamp >= '2025-01-01' prune unneeded partitions entirely. Clustering sorts the data within each partition by up to 4 columns (e.g. CLUSTER BY customer_id, product_id). This allows BigQuery to skip blocks within partitions, drastically slashing query bytes and cost."
+        },
+        {
+          name: "3. Apache Beam / Dataflow Streaming Watermarks",
+          content: "A Watermark is Dataflow's clock for event time: it is a guarantee that the system believes all data older than timestamp T has arrived. If an event arrives with timestamp < Watermark, it is 'late data'. Allowed Lateness tells Dataflow how long to keep the window open for late arrivals before discarding or emitting to a Dead Letter Sink."
+        }
+      ]
+    }
+  ],
+
+  // 🛡️ Resume Defense Q&A: Master Your Real Projects
+  resumeDefenseSuite: [
+    {
+      project: "Siemens Energy: Next-Gen Analytics Lakehouse (Azure Databricks + Snowflake)",
+      questions: [
+        {
+          q: "How did you convert 40,000+ database objects to Snowflake without errors?",
+          answer: "We had legacy SQL Server and SAP HANA schemas. I helped write a Python automated parser using regex and SQL AST libraries to translate dialect differences (e.g. converting NVARCHAR to VARCHAR, date format syntax, and IDENTITY to AUTOINCREMENT). We then deployed them via automated Snowflake stored procedures executed through Azure DevOps CI/CD pipelines, validating row counts and schema integrity with automated reconciliation scripts."
+        },
+        {
+          q: "Why did you use Azure Databricks with PySpark instead of running SQL inside Snowflake directly?",
+          answer: "Snowflake is great for SQL transformations, but our supply chain data arrived from varied external ERP systems and API endpoints requiring complex data cleansing, schema drift validation, and multi-hop Bronze-to-Silver curation. PySpark on Databricks gave us resilient distributed memory for heavy wrangling, parallel API extraction, and complex windowing before loading clean dimensional tables into Snowflake."
+        },
+        {
+          q: "How did you optimize PySpark jobs to reduce compute costs by 32%?",
+          answer: "1) We tuned spark.sql.shuffle.partitions down from the default 200 on smaller hourly pipelines to avoid overhead from hundreds of tiny empty tasks. 2) We enabled Adaptive Query Execution (AQE) to dynamically coalesce shuffle partitions and convert sort-merge joins into broadcast hash joins at runtime. 3) We identified join key data skew on supplier IDs and applied key salting."
+        }
+      ]
+    },
+    {
+      project: "The Coca-Cola Company: BI Migration & ADF Pipelines",
+      questions: [
+        {
+          q: "How did you structure 40+ ADF pipelines across diverse business domains?",
+          answer: "We built metadata-driven pipelines instead of hardcoding 40 separate ADF pipelines. We used a configuration control table in Azure SQL DB listing source tables, target paths, watermark columns, and load frequency. A single master ADF pipeline with a Lookup activity and ForEach loop dynamically triggered parameterized child pipelines, dramatically reducing maintenance overhead."
+        },
+        {
+          q: "How did you implement dbt Cloud with Snowflake?",
+          answer: "We structured dbt into three layers: 1) Staging models (light cleaning, renaming columns, casting data types), 2) Intermediate models (business logic, joining transactions with exchange rates), and 3) Marts (final Star Schema fact and dimension tables). We used dbt incremental models with unique_key to only process new/updated daily records rather than rebuilding full tables every night."
+        },
+        {
+          q: "What cluster keys did you choose on Snowflake and why?",
+          answer: "Our largest fact table was daily sales transactions (billions of rows). We analyzed query profiles and saw that 90% of business queries filtered on sale_date and operating_unit_id. We set CLUSTER BY (sale_date, operating_unit_id), which brought average query execution time down from 25 seconds to under 4 seconds by allowing Snowflake to prune 85%+ of micro-partitions."
+        }
+      ]
+    }
   ]
 };
