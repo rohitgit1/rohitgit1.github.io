@@ -1041,7 +1041,7 @@ ORDER BY total_revenue DESC;`,
     {
       id: "deep-snowflake",
       title: "Snowflake Internals Masterclass: Defend Every Line on Your Resume",
-      category: "Data Warehousing",
+      category: "snowflake",
       summary: "Understand exactly how Snowflake stores, compresses, and queries data so you never freeze when an interviewer asks about performance tuning.",
       topics: [
         {
@@ -1065,7 +1065,7 @@ ORDER BY total_revenue DESC;`,
     {
       id: "deep-pyspark",
       title: "PySpark & Databricks Architecture: Driver, Worker, Shuffle & OOMs",
-      category: "Big Data Compute",
+      category: "spark",
       summary: "Master the mechanics of Apache Spark execution, DAG optimization, memory management, and data skew resolution.",
       topics: [
         {
@@ -1089,7 +1089,7 @@ ORDER BY total_revenue DESC;`,
     {
       id: "deep-gcp",
       title: "Google BigQuery & Cloud Dataflow Architecture",
-      category: "GCP Big Data",
+      category: "gcp",
       summary: "Understand Google's internal systems (Dremel, Colossus, Capacitor, and Apache Beam) to speak like a Staff Google Engineer.",
       topics: [
         {
@@ -1103,6 +1103,46 @@ ORDER BY total_revenue DESC;`,
         {
           name: "3. Apache Beam / Dataflow Streaming Watermarks",
           content: "A Watermark is Dataflow's clock for event time: it is a guarantee that the system believes all data older than timestamp T has arrived. If an event arrives with timestamp < Watermark, it is 'late data'. Allowed Lateness tells Dataflow how long to keep the window open for late arrivals before discarding or emitting to a Dead Letter Sink."
+        }
+      ]
+    },
+    {
+      id: "deep-azure",
+      title: "Azure Data Factory (ADF) & ADLS Gen2: Metadata-Driven Frameworks",
+      category: "azure",
+      summary: "Understand production orchestration, self-hosted integration runtimes, and metadata-driven dynamic ingestion.",
+      topics: [
+        {
+          name: "1. Metadata-Driven Orchestration vs Hardcoded Pipelines",
+          content: "Never build 40 individual pipelines for 40 tables! Instead, build a single dynamic pipeline driven by a control table in Azure SQL: control_table(source_system, source_schema, source_table, target_path, watermark_column, active_flag). The ADF pipeline runs a Lookup activity on the control table, feeds the array to a ForEach activity, and executes parameterized copy activities. Adding a new table requires 0 pipeline changes—just 1 INSERT into the control table."
+        },
+        {
+          name: "2. Self-Hosted Integration Runtime (SHIR) vs Azure IR",
+          content: "Azure IR runs on Microsoft-managed serverless compute in the public cloud. If your source database (e.g. SAP HANA, on-prem Oracle) sits behind an enterprise corporate firewall without public internet access, you MUST install a Self-Hosted Integration Runtime (SHIR) on an internal VM. The SHIR initiates outbound TLS connections over port 443 to ADF, eliminating the need to open inbound firewall holes."
+        },
+        {
+          name: "3. ADLS Gen2: Hierarchical Namespace (HNS) vs Blob Storage",
+          content: "Standard cloud blob storage has a flat namespace with virtual path delimiters (/); renaming a folder with 10,000 files requires 10,000 individual copy and delete API calls (O(N) time and cost)! ADLS Gen2 with Hierarchical Namespace enabled has real POSIX directory structures: renaming or deleting a directory is a single O(1) metadata pointer atomic operation. This is critical for ACID transactions and temporary staging directory swaps in data engineering pipelines."
+        }
+      ]
+    },
+    {
+      id: "deep-kimball",
+      title: "Kimball Dimensional Modeling & Modern Star Schemas (SCD Types 1–6)",
+      category: "kimball",
+      summary: "Master Fact vs Dimension tables, conformed dimensions, Slowly Changing Dimensions, and modern dbt ELT modeling.",
+      topics: [
+        {
+          name: "1. Star Schema vs 3NF (Why Normalized Schemas Fail in OLAP)",
+          content: "3rd Normal Form (3NF) minimizes write redundancy for transactional OLTP, but requires 8-way joins to answer simple business questions. Star Schema denormalizes descriptive attributes into wide Dimension tables surrounding central Fact tables. In modern cloud columnar warehouses (BigQuery, Snowflake), columnar compression makes denormalization extremely cheap, while eliminating high-cost relational joins."
+        },
+        {
+          name: "2. Slowly Changing Dimensions (SCD Type 1 vs Type 2)",
+          content: "SCD Type 1: Overwrite existing value (e.g., correcting customer typo). Historical context is permanently lost.\nSCD Type 2: Preserve full historical audit trail. Add new row with surrogate key, effective_start_date, effective_end_date, and is_current flag. When a customer moves from NY to CA, existing orders remain associated with NY, while new orders link to the CA row. In modern SQL, this is implemented using MERGE statements or dbt snapshot blocks."
+        },
+        {
+          name: "3. The 3-Tier Modern ELT Architecture (Staging, Intermediate, Marts)",
+          content: "Tier 1: Staging (Raw 1:1 view of source data with renamed columns, cast data types, and deduplication). Tier 2: Intermediate (Complex business logic joins, currency conversion, session windowing). Tier 3: Marts (Final Kimball Fact and Dimension tables served to analysts). This separation guarantees that if upstream source schemas drift, only Tier 1 staging models require updates."
         }
       ]
     }

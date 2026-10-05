@@ -3,52 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Google Career & L5 Data Mastery Portal | Maximize Offer Odds</title>
-  <meta name="description" content="Strategic Google Career & Interview Preparation Portal: Pyodide WebAssembly Python Runner, Multi-Role Matcher, L5 Grilling Simulator, and Outreach Engine.">
+  <title>Engineering Workspace & Google India Prep | Confidential</title>
+  <meta name="description" content="Confidential Data Engineering Preparation & Daily Accountability Workspace.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <!-- In-Browser CPython 3.12 WebAssembly Engine -->
   <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js" defer></script>
-  <!-- Confetti Celebration -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
 </head>
 <body class="theme-dark">
-  <!-- 🔒 SECURITY & PRIVACY GATE (Client-Side Master PIN) -->
+
+  <!-- 🔒 MINIMALIST SECURITY GATE (Client-Side Master PIN) -->
   <div id="securityGateModal" class="security-overlay" style="display:none;">
     <div class="security-card">
-      <div class="security-shield-icon">
-        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-      </div>
-      <span class="security-badge-pill">PRIVATE CANDIDATE PORTAL • ENCRYPTED SESSION</span>
-      <h1 class="security-title">Enterprise Cloud Telemetry & Roadmap</h1>
-      <p class="security-desc">Confidential Google India interview preparation workspace. Protected against office shoulder-surfing and public inspection. Enter your Master PIN to unlock your daily targets, private resume defense, and codebase.</p>
-
-      <div class="pin-box-wrapper">
-        <input type="password" id="inputSecurityPin" class="security-pin-input" maxlength="6" placeholder="••••" autocomplete="off" />
+      <div class="security-lock-icon">🔒</div>
+      <h1 class="security-title">Candidate Workspace</h1>
+      <p class="security-desc">Private engineering study repository and daily telemetry. Enter your Master PIN to unlock.</p>
+      
+      <div class="pin-entry-row">
+        <input type="password" id="inputSecurityPin" class="security-pin-input" maxlength="8" placeholder="Enter PIN" autocomplete="off" autofocus />
         <button class="btn btn-primary" id="btnUnlockPortal" onclick="app.submitSecurityPin()">Unlock</button>
       </div>
-      <div id="pinErrorMessage" class="pin-error-text" style="display:none;">⚠️ Invalid PIN. Please try again.</div>
+      <div id="pinErrorMessage" class="pin-error-text" style="display:none;">Invalid Master PIN. Please try again.</div>
 
-      <div class="pin-keypad">
-        <button class="keypad-btn" onclick="app.appendPinDigit('1')">1</button>
-        <button class="keypad-btn" onclick="app.appendPinDigit('2')">2</button>
-        <button class="keypad-btn" onclick="app.appendPinDigit('3')">3</button>
-        <button class="keypad-btn" onclick="app.appendPinDigit('4')">4</button>
-        <button class="keypad-btn" onclick="app.appendPinDigit('5')">5</button>
-        <button class="keypad-btn" onclick="app.appendPinDigit('6')">6</button>
-        <button class="keypad-btn" onclick="app.appendPinDigit('7')">7</button>
-        <button class="keypad-btn" onclick="app.appendPinDigit('8')">8</button>
-        <button class="keypad-btn" onclick="app.appendPinDigit('9')">9</button>
-        <button class="keypad-btn btn-clear" onclick="app.clearPinDigits()">CLR</button>
-        <button class="keypad-btn" onclick="app.appendPinDigit('0')">0</button>
-        <button class="keypad-btn btn-enter" onclick="app.submitSecurityPin()">↵</button>
-      </div>
-
-      <div class="security-subtext-bar">
-        <span>Default Master PIN: <strong>2026</strong></span>
-        <button class="btn-text-action" onclick="app.changeMasterPin()">Change PIN</button>
+      <div class="security-footer-row">
+        <span>Default PIN: <code>2026</code></span>
+        <button class="text-link-btn" onclick="app.changeMasterPin()">Change PIN</button>
       </div>
     </div>
   </div>
@@ -56,391 +37,285 @@
   <!-- Top Application Bar -->
   <header class="topbar">
     <div class="brand">
-      <div class="logo-icon">
-        <span class="dot g-blue"></span>
-        <span class="dot g-red"></span>
-        <span class="dot g-yellow"></span>
-        <span class="dot g-green"></span>
-      </div>
+      <div class="brand-badge">CONFIDENTIAL</div>
       <div class="brand-text">
-        <span class="brand-title">Google Career & L5 Portal</span>
-        <span class="brand-subtitle">Multi-Role Strategy & Data Architecture</span>
+        <span class="brand-title">ROHIT SINGH</span>
+        <span class="brand-sep">/</span>
+        <span class="brand-sub">Google India L4/L5 Prep</span>
       </div>
     </div>
 
     <div class="topbar-center">
-      <div class="day-badge" id="currentDayBadge">
-        <span class="pulse-indicator"></span>
-        <span>Day <strong id="dayNumberDisplay">1</strong> of 90</span>
-      </div>
-
-      <!-- Focus Study Timer Widget -->
-      <div class="study-timer-widget" title="Daily Focus Study Block">
-        <span class="timer-display" id="pomodoroDisplay">25:00</span>
-        <button class="timer-btn" id="btnToggleTimer" title="Start/Pause Focus Timer">▶</button>
-        <button class="timer-btn" id="btnResetTimer" title="Reset Timer">↺</button>
-      </div>
-
-      <div class="progress-bar-container" title="Overall 90-Day Google Readiness">
-        <div class="progress-info">
-          <span>Google Offer Odds</span>
-          <span id="readinessPercent">0%</span>
-        </div>
-        <div class="progress-track">
-          <div class="progress-fill" id="masterProgressBar" style="width: 4%;"></div>
-        </div>
+      <div class="accountability-clock-pill" title="Daily Cutoff: 11:59:59 PM IST">
+        <span class="clock-label">TODAY'S CUTOFF:</span>
+        <span class="clock-time" id="topbarCountdownClock">--:--:--</span>
+        <span class="clock-status" id="topbarTargetStatus">0/4 Done</span>
       </div>
     </div>
 
     <div class="topbar-actions">
-      <!-- Quick Privacy Lock -->
-      <button class="btn btn-outline" id="btnQuickLock" onclick="app.lockApp()" title="Quick Privacy Lock (PIN protect screen immediately)">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-        <span>Lock</span>
+      <button class="btn btn-sm btn-outline" id="btnQuickLock" onclick="app.lockApp()" title="Instantly Lock Screen (Disguise Tab)">
+        🔒 Lock
       </button>
 
-      <!-- ☀️ / 🌙 / 🕶️ Theme Selector -->
-      <div class="theme-switch-group">
-        <button class="theme-btn active" id="btnThemeDark" onclick="app.setTheme('dark')" title="Sleek Dark Mode">🌙 Dark</button>
-        <button class="theme-btn" id="btnThemeLight" onclick="app.setTheme('light')" title="Clean Google Workspace Light Mode">☀️ Light</button>
-        <button class="theme-btn" id="btnThemeStealth" onclick="app.setTheme('stealth')" title="Discreet Office Telemetry Mode">🕶️ Office</button>
+      <div class="theme-toggle-group">
+        <button class="theme-btn active" id="btnThemeDark" onclick="app.setTheme('dark')">🌙 Dark</button>
+        <button class="theme-btn" id="btnThemeLight" onclick="app.setTheme('light')">☀️ Light</button>
       </div>
 
-      <button class="btn btn-outline" id="btnSyncModal">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-        <span>Sync</span>
+      <button class="btn btn-sm btn-outline" id="btnSyncModal" title="Backup or Restore Progress">
+        Sync / Export
       </button>
     </div>
   </header>
 
   <!-- Main App Layout -->
   <div class="app-layout">
-    <!-- Sidebar Navigation -->
+    <!-- Sidebar Navigation (5 Clean Workspaces) -->
     <aside class="sidebar">
       <nav class="nav-menu">
-        <div class="nav-section-label">STRATEGY & CAREER</div>
-        <button class="nav-item active" data-tab="roles">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
-          <span>Google Roles Radar</span>
-          <span class="badge badge-pulse">Hot</span>
+        <div class="nav-label">WORKSPACES</div>
+        <button class="nav-item active" data-tab="tracker">
+          <span class="nav-icon">⏱️</span>
+          <span>Daily Execution (24H)</span>
         </button>
-        <button class="nav-item" data-tab="accountability">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          <span>24H Daily Logger</span>
-          <span class="badge" style="background:#ea4335; color:#fff;">12am-11:59pm</span>
+        <button class="nav-item" data-tab="curriculum">
+          <span class="nav-icon">🔬</span>
+          <span>Technical Masterclass</span>
         </button>
-        <button class="nav-item" data-tab="tech-deep-dives">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
-          <span>Tech Deep-Dives</span>
-          <span class="badge" style="background:#1e8e3e; color:#fff;">Zero-Gimmick</span>
+        <button class="nav-item" data-tab="practice">
+          <span class="nav-icon">💻</span>
+          <span>Coding & SQL Dojo</span>
         </button>
-        <button class="nav-item" data-tab="resume-defense">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-          <span>Resume & Defense</span>
-          <span class="badge" style="background:#f9ab00; color:#202124;">Siemens & Coke</span>
+        <button class="nav-item" data-tab="defense">
+          <span class="nav-icon">🛡️</span>
+          <span>Resume & Project Defense</span>
         </button>
-        <button class="nav-item" data-tab="primer">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-          <span>Beginner's ELI5 Vault</span>
-          <span class="badge" style="background:#0284c7; color:#fff;">Start Here</span>
-        </button>
-        <button class="nav-item" data-tab="bridge">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
-          <span>Azure ➔ GCP Bridge</span>
-          <span class="badge" style="background:#ea4335; color:#fff;">Crucial</span>
-        </button>
-        <button class="nav-item" data-tab="outreach">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-          <span>Recruiter Cold DMs</span>
-        </button>
-        <button class="nav-item" data-tab="resume">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-          <span>Google Resume (XYZ)</span>
-        </button>
-        <button class="nav-item" data-tab="dashboard">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-          <span>Daily Mission Control</span>
-        </button>
-        <button class="nav-item" data-tab="schedule">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-          <span>90-Day Curriculum</span>
-        </button>
-
-        <div class="nav-section-label" style="margin-top:10px;">PRACTICE & DOJO</div>
-        <button class="nav-item" data-tab="dsa">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-          <span>Live Python Dojo</span>
-          <span class="badge" style="background:#1e8e3e; color:#fff;">Pyodide</span>
-        </button>
-        <button class="nav-item" data-tab="grill">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-          <span>L5 Grilling Simulator</span>
-          <span class="badge" style="background:var(--g-red); color:#fff;">Senior</span>
-        </button>
-        <button class="nav-item" data-tab="mock">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          <span>Mock Interview Mode</span>
-          <span class="badge" style="background:var(--g-blue); color:#fff;">Live</span>
-        </button>
-        <button class="nav-item" data-tab="sql">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
-          <span>SQL & Modeling Studio</span>
-        </button>
-        <button class="nav-item" data-tab="system-design">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
-          <span>System Design Vault</span>
-        </button>
-        <button class="nav-item" data-tab="leadership">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
-          <span>L5 Googliness & STAR</span>
-        </button>
-
-        <div class="nav-section-label" style="margin-top:10px;">OFFICE STUDY & INTEL</div>
-        <button class="nav-item" data-tab="reading-vault">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-          <span>Architecture Vault</span>
-        </button>
-        <button class="nav-item" data-tab="questions">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-          <span>Real Google Qs Bank</span>
-        </button>
-        <button class="nav-item" data-tab="flashcards">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-          <span>Office Micro-Drills</span>
+        <button class="nav-item" data-tab="roles">
+          <span class="nav-icon">🎯</span>
+          <span>Google India Tracks & Bar</span>
         </button>
       </nav>
 
       <div class="sidebar-footer">
-        <div class="office-tip-card">
-          <span class="tip-badge">Strategic Google Rule</span>
-          <p id="dailyOfficeTip">Getting into Google via BIE, CSE, or PSO gives you full L5 comp. Internal transfers to SWE/DE unlock automatically after 12 months!</p>
+        <div class="footer-accountability-card">
+          <div class="footer-accountability-header">
+            <strong>Target Quota:</strong>
+            <span id="footerStreakDisplay">Streak: 1 Day</span>
+          </div>
+          <p class="footer-accountability-text">Complete 4 daily pillars before 11:59 PM to stay on schedule for your 90-day window.</p>
         </div>
       </div>
     </aside>
 
     <!-- Main Content Area -->
     <main class="main-content">
-      <!-- 0. SMART GOOGLE CAREER RADAR & ODDS CALCULATOR VIEW -->
-      <section id="view-roles" class="content-view active">
-        <div class="view-header">
+
+      <!-- ==================================================== -->
+      <!-- 1. WORKSPACE: DAILY 24H ACCOUNTABILITY & AUDIT -->
+      <!-- ==================================================== -->
+      <section id="view-tracker" class="content-view active">
+        <div class="section-header">
           <div>
-            <h1 class="view-title">Google Multi-Role Career Radar & Trojan Horse Strategy</h1>
-            <p class="view-subtitle">Maximize your probability of an offer by targeting high-win-rate roles matching your 5+ yr data background</p>
+            <h1 class="section-title">Daily Execution & Accountability Tracker</h1>
+            <p class="section-subtitle">Strict 12:00 AM – 11:59 PM IST daily execution window. Zero procrastination, permanent audit history.</p>
           </div>
-          <div class="quick-status">
-            <span class="status-pill status-ready">Strategic Backdoors Active</span>
+          <div class="section-meta">
+            <span class="status-indicator" id="trackerDateDisplay">Loading Date...</span>
           </div>
         </div>
 
-        <!-- Role Odds & Fit Calculator -->
-        <div class="card calculator-card">
-          <div class="calculator-header">
-            <div>
-              <h2 class="card-title">🎯 Interactive Google Role Fit & Odds Calculator</h2>
-              <p class="text-muted">Adjust your current confidence across 6 dimensions to see which Google role yields the highest probability of an offer today:</p>
+        <!-- Accountability Hero Countdown -->
+        <div class="card countdown-banner-card">
+          <div class="countdown-banner-content">
+            <div class="countdown-banner-meta">
+              <span class="countdown-eyebrow">DAILY CUTOFF WINDOW</span>
+              <h2 class="countdown-clock-digits" id="dailyCountdownClock">--:--:--</h2>
+              <p class="countdown-clock-sub" id="countdownUrgencyMessage">Window resets strictly at 11:59:59 PM IST tonight.</p>
             </div>
-            <div class="top-recommended-badge" id="topRecBadge">
-              <span class="badge-label">Top Recommended Target:</span>
-              <strong id="topRecRoleName">Calculating...</strong>
-            </div>
-          </div>
-
-          <div class="sliders-grid">
-            <div class="slider-group">
-              <div class="slider-label"><span>Python DSA (LeetCode)</span><span class="slider-val" id="valDsa">4 / 10</span></div>
-              <input type="range" min="1" max="10" value="4" class="slider-input" id="slideDsa" oninput="app.recalcRoleOdds()">
-            </div>
-            <div class="slider-group">
-              <div class="slider-label"><span>Advanced SQL & Kimball Modeling</span><span class="slider-val" id="valSql">8 / 10</span></div>
-              <input type="range" min="1" max="10" value="8" class="slider-input" id="slideSql" oninput="app.recalcRoleOdds()">
-            </div>
-            <div class="slider-group">
-              <div class="slider-label"><span>Distributed Systems Design</span><span class="slider-val" id="valSys">6 / 10</span></div>
-              <input type="range" min="1" max="10" value="6" class="slider-input" id="slideSys" oninput="app.recalcRoleOdds()">
-            </div>
-            <div class="slider-group">
-              <div class="slider-label"><span>Cloud & Big Data Platforms (GCP/Spark)</span><span class="slider-val" id="valCloud">7 / 10</span></div>
-              <input type="range" min="1" max="10" value="7" class="slider-input" id="slideCloud" oninput="app.recalcRoleOdds()">
-            </div>
-            <div class="slider-group">
-              <div class="slider-label"><span>Business Analytics & KPIs</span><span class="slider-val" id="valBiz">7 / 10</span></div>
-              <input type="range" min="1" max="10" value="7" class="slider-input" id="slideBiz" oninput="app.recalcRoleOdds()">
-            </div>
-            <div class="slider-group">
-              <div class="slider-label"><span>Client Facing / Technical Consulting</span><span class="slider-val" id="valClient">6 / 10</span></div>
-              <input type="range" min="1" max="10" value="6" class="slider-input" id="slideClient" oninput="app.recalcRoleOdds()">
+            <div class="countdown-banner-actions">
+              <button class="btn btn-whatsapp" onclick="app.shareDailyProgressWhatsApp()" title="Sync Today's Progress to WhatsApp">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                <span>Sync to WhatsApp</span>
+              </button>
+              <button class="btn btn-outline" onclick="app.copyDailySummary()">
+                📋 Copy Summary
+              </button>
+              <button class="btn btn-outline" onclick="app.resetTodayTargets()">
+                ↺ Reset Today
+              </button>
             </div>
           </div>
         </div>
 
-        <div class="roles-grid" id="rolesGrid"></div>
-      </section>
-
-      <!-- 0.2. 24-HOUR DAILY ACCOUNTABILITY COMMAND CENTER -->
-      <section id="view-accountability" class="content-view">
-        <div class="view-header">
-          <div>
-            <h1 class="view-title">⏰ 24-Hour Daily Accountability Command Center</h1>
-            <p class="view-subtitle">Strict 12:00 AM to 11:59 PM Window. Log real work, protect your streak, and never fall behind on Google targets.</p>
-          </div>
-          <div class="quick-status">
-            <span class="status-pill status-ready" id="accountabilityStatusPill" style="background:#ea4335; color:#fff;">12:00 AM – 11:59 PM Active</span>
-          </div>
-        </div>
-
-        <!-- Accountability Hero Countdown Card -->
-        <div class="card accountability-hero-card">
-          <div class="hero-clock-flex">
-            <div>
-              <span class="badge" style="background:var(--g-blue); color:#fff; font-weight:600; text-transform:uppercase;">Daily Window Countdown</span>
-              <h2 class="hero-date-text" id="accountabilityTodayDate">Monday, October 5, 2026</h2>
-              <p class="text-muted" style="margin-top:4px;">Window resets strictly at <strong>11:59:59 PM IST</strong> tonight. Every minute counts.</p>
-            </div>
-            <div class="hero-countdown-box">
-              <div class="countdown-label">TIME REMAINING TODAY</div>
-              <div class="countdown-time-digits" id="dailyCountdownClock">--:--:--</div>
-              <div class="countdown-sub" id="countdownUrgencyMessage">🔥 Tracking Live IST Clock</div>
-            </div>
-          </div>
-
-          <div class="accountability-action-row">
-            <button class="btn btn-whatsapp" onclick="app.shareDailyProgressWhatsApp()" title="Send formatted daily accountability update to WhatsApp">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-              <span>📲 Sync Daily Report to WhatsApp</span>
-            </button>
-            <button class="btn btn-outline" onclick="app.copyDailySummary()" title="Copy text debrief to clipboard">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-              <span>Copy Daily Summary</span>
-            </button>
-            <button class="btn btn-outline" onclick="app.resetTodayTargets()" title="Reset today's checkboxes if starting fresh">
-              <span>↺ Reset Today's Checkboxes</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- 4 Daily Mandatory Pillars Grid -->
-        <h2 style="font-family:var(--font-display); font-size:1.3rem; margin: 1.5rem 0 0.8rem 0;">🎯 The 4 Mandatory Daily Pillars (Complete Before 11:59 PM)</h2>
-        <div class="daily-pillars-grid">
+        <!-- 4 Daily Mandatory Pillars -->
+        <h2 class="subsection-title">Mandatory Daily Quota (Complete Before 11:59 PM)</h2>
+        <div class="pillars-grid">
+          <!-- Pillar 1 -->
           <div class="pillar-card" id="pillarCard1">
-            <div class="pillar-header">
-              <div class="pillar-title-group">
-                <span class="pillar-tag tag-blue">Pillar 1: DSA & Code</span>
-                <h3>Python Algorithm / Wasm Drill</h3>
-              </div>
-              <input type="checkbox" id="checkPillar1" class="pillar-checkbox" onchange="app.togglePillar(1)">
-            </div>
-            <p class="pillar-desc">Solve at least 1 Python DSA problem in the browser Pyodide Dojo. Target: Arrays, Two Pointers, or Sliding Window.</p>
-            <div class="pillar-footer">
-              <span class="pillar-status" id="pillarStatus1">Pending</span>
-              <button class="btn btn-sm btn-outline" onclick="app.switchTab('dsa')">Open Dojo →</button>
-            </div>
-          </div>
-
-          <div class="pillar-card" id="pillarCard2">
-            <div class="pillar-header">
-              <div class="pillar-title-group">
-                <span class="pillar-tag tag-green">Pillar 2: SQL & Modeling</span>
-                <h3>Complex SQL or Kimball Star Schema</h3>
-              </div>
-              <input type="checkbox" id="checkPillar2" class="pillar-checkbox" onchange="app.togglePillar(2)">
-            </div>
-            <p class="pillar-desc">Master 1 advanced Window Query (DENSE_RANK, sessionization) or SCD Type 2 merge logic.</p>
-            <div class="pillar-footer">
-              <span class="pillar-status" id="pillarStatus2">Pending</span>
-              <button class="btn btn-sm btn-outline" onclick="app.switchTab('sql')">Open SQL Studio →</button>
-            </div>
-          </div>
-
-          <div class="pillar-card" id="pillarCard3">
-            <div class="pillar-header">
-              <div class="pillar-title-group">
-                <span class="pillar-tag tag-purple">Pillar 3: Stack Mastery</span>
-                <h3>Snowflake / PySpark Internals</h3>
-              </div>
-              <input type="checkbox" id="checkPillar3" class="pillar-checkbox" onchange="app.togglePillar(3)">
-            </div>
-            <p class="pillar-desc">Deep-dive into micro-partition pruning, warehouse remote spilling, or Spark shuffle skew salting.</p>
-            <div class="pillar-footer">
-              <span class="pillar-status" id="pillarStatus3">Pending</span>
-              <button class="btn btn-sm btn-outline" onclick="app.switchTab('tech-deep-dives')">Open Deep-Dives →</button>
-            </div>
-          </div>
-
-          <div class="pillar-card" id="pillarCard4">
-            <div class="pillar-header">
-              <div class="pillar-title-group">
-                <span class="pillar-tag tag-yellow">Pillar 4: Defense & Story</span>
-                <h3>Siemens/Coke Project Defense & STAR</h3>
-              </div>
-              <input type="checkbox" id="checkPillar4" class="pillar-checkbox" onchange="app.togglePillar(4)">
-            </div>
-            <p class="pillar-desc">Rehearse defending 1 interrogation question from your actual Capgemini resume without stuttering.</p>
-            <div class="pillar-footer">
-              <span class="pillar-status" id="pillarStatus4">Pending</span>
-              <button class="btn btn-sm btn-outline" onclick="app.switchTab('resume-defense')">Open Defense →</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Daily Work Log Audit & Streak -->
-        <div class="dashboard-split" style="margin-top:1.5rem;">
-          <div class="card">
-            <h3 class="card-title">📝 Today's Real Accomplishment Log</h3>
-            <p class="text-muted">Record exactly what you built, debugged, or read today. Stored permanently in your daily history:</p>
-            <textarea class="star-textarea" id="dailyLogNotesInput" style="height:140px; margin-top:10px;" placeholder="e.g. Mastered Snowflake micro-partitions vs traditional B-trees. Solved Two Sum and 3Sum in Python Dojo with O(N) hashmap. Rehearsed Siemens Lakehouse ADF migration trade-offs..." oninput="app.saveDailyLogNotes()"></textarea>
-            <div style="margin-top:8px; display:flex; justify-content:space-between; align-items:center;">
-              <span class="text-muted" style="font-size:0.8rem;" id="dailyLogSaveStatus">Auto-saved to date log</span>
-              <button class="btn btn-sm btn-primary" onclick="app.shareDailyProgressWhatsApp()">Share via WhatsApp</button>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3 class="card-title">⚡ 7-Day Accountability Streak & Audit</h3>
-            <p class="text-muted">Daily target completion records over the last 7 calendar days:</p>
-            <div class="streak-history-list" id="accountabilityHistoryList" style="margin-top:12px;"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 0.3. ZERO-GIMMICK TECH DEEP DIVES (DEFEND YOUR STACK) -->
-      <section id="view-tech-deep-dives" class="content-view">
-        <div class="view-header">
-          <div>
-            <h1 class="view-title">🔬 Zero-Gimmick Technical Deep Dives (Mastering Your Actual Stack)</h1>
-            <p class="view-subtitle">Master the low-level internals of Snowflake, PySpark, and BigQuery so you never freeze during Senior Google technical interrogations.</p>
-          </div>
-          <div class="quick-status">
-            <span class="status-pill status-ready" style="background:#1e8e3e; color:#fff;">Staff-Grade Substance</span>
-          </div>
-        </div>
-
-        <div class="deep-dives-layout" id="deepDivesContainer"></div>
-      </section>
-
-      <!-- 0.4. GOOGLE ATS RESUME & PROJECT DEFENSE SUITE -->
-      <section id="view-resume-defense" class="content-view">
-        <div class="view-header">
-          <div>
-            <h1 class="view-title">🛡️ Google ATS Resume & Project Defense Suite</h1>
-            <p class="view-subtitle">Defend every single line of your Siemens Energy & Coca-Cola projects against Google interviewers who dig into internals.</p>
-          </div>
-          <div class="quick-status">
-            <span class="status-pill status-ready" style="background:#f9ab00; color:#202124;">Real Projects Interrogation</span>
-          </div>
-        </div>
-
-        <div class="resume-defense-split">
-          <!-- 1-Page Google ATS Resume Preview -->
-          <div class="card ats-resume-display-card">
-            <div class="card-header">
+            <div class="pillar-top">
               <div>
-                <span class="badge badge-accent">Google ATS Format</span>
-                <h2 class="card-title">Rohit Singh - 1-Page ATS Resume</h2>
+                <span class="pillar-category">Pillar 1: Data Structures & Algorithms</span>
+                <h3 class="pillar-title">Python LeetCode Medium Problem</h3>
               </div>
-              <button class="btn btn-sm btn-outline" onclick="app.copyAtsResumeText()">Copy ATS Resume Text</button>
+              <input type="checkbox" id="checkPillar1" class="pillar-check" onchange="app.togglePillar(1)">
             </div>
-            
-            <div class="ats-resume-paper" id="atsResumePaper">
+            <p class="pillar-desc">Solve at least 1 Python algorithm in the Dojo (Arrays, Two Pointers, Sliding Window, or DAGs).</p>
+            <div class="pillar-bottom">
+              <span class="pillar-state" id="pillarStatus1">Pending</span>
+              <button class="btn btn-sm btn-outline" onclick="app.switchTab('practice')">Open Coding Dojo →</button>
+            </div>
+          </div>
+
+          <!-- Pillar 2 -->
+          <div class="pillar-card" id="pillarCard2">
+            <div class="pillar-top">
+              <div>
+                <span class="pillar-category">Pillar 2: SQL & Kimball Modeling</span>
+                <h3 class="pillar-title">Complex Analytical Query / SCD</h3>
+              </div>
+              <input type="checkbox" id="checkPillar2" class="pillar-check" onchange="app.togglePillar(2)">
+            </div>
+            <p class="pillar-desc">Master 1 advanced Window Query (DENSE_RANK, sessionization) or Kimball SCD Type 2 logic.</p>
+            <div class="pillar-bottom">
+              <span class="pillar-state" id="pillarStatus2">Pending</span>
+              <button class="btn btn-sm btn-outline" onclick="app.switchTab('practice')">Open SQL Workbench →</button>
+            </div>
+          </div>
+
+          <!-- Pillar 3 -->
+          <div class="pillar-card" id="pillarCard3">
+            <div class="pillar-top">
+              <div>
+                <span class="pillar-category">Pillar 3: Stack Deep-Dive</span>
+                <h3 class="pillar-title">Snowflake / Spark / GCP Internals</h3>
+              </div>
+              <input type="checkbox" id="checkPillar3" class="pillar-check" onchange="app.togglePillar(3)">
+            </div>
+            <p class="pillar-desc">Understand micro-partition pruning, warehouse remote spill, or Spark shuffle skew salting.</p>
+            <div class="pillar-bottom">
+              <span class="pillar-state" id="pillarStatus3">Pending</span>
+              <button class="btn btn-sm btn-outline" onclick="app.switchTab('curriculum')">Open Masterclass →</button>
+            </div>
+          </div>
+
+          <!-- Pillar 4 -->
+          <div class="pillar-card" id="pillarCard4">
+            <div class="pillar-top">
+              <div>
+                <span class="pillar-category">Pillar 4: Defense & Story</span>
+                <h3 class="pillar-title">Siemens/Coke Project Defense</h3>
+              </div>
+              <input type="checkbox" id="checkPillar4" class="pillar-check" onchange="app.togglePillar(4)">
+            </div>
+            <p class="pillar-desc">Rehearse defending 1 technical interrogation question on your real Capgemini resume without stuttering.</p>
+            <div class="pillar-bottom">
+              <span class="pillar-state" id="pillarStatus4">Pending</span>
+              <button class="btn btn-sm btn-outline" onclick="app.switchTab('defense')">Open Defense Suite →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Daily Work Log & 7-Day Audit -->
+        <div class="tracker-audit-split">
+          <div class="card">
+            <h3 class="card-title">📝 Today's Engineering Audit Log</h3>
+            <p class="card-desc">Record exactly what you coded, debugged, read, or built today. Stored permanently in your daily record:</p>
+            <textarea class="audit-textarea" id="dailyLogNotesInput" placeholder="e.g. Mastered Snowflake micro-partitions vs traditional B-trees. Solved Subarray Sum Equals K in Python Dojo with O(N) hashmap. Rehearsed Siemens Lakehouse ADF migration trade-offs..." oninput="app.saveDailyLogNotes()"></textarea>
+            <div class="audit-textarea-footer">
+              <span class="audit-save-indicator" id="dailyLogSaveStatus">Auto-saved to daily log</span>
+              <button class="btn btn-sm btn-primary" onclick="app.shareDailyProgressWhatsApp()">Share Report to WhatsApp</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">⚡ 7-Day Audit Trail</h3>
+            <p class="card-desc">Daily quota completion records over the last 7 calendar days:</p>
+            <div class="audit-history-list" id="accountabilityHistoryList"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================== -->
+      <!-- 2. WORKSPACE: TECHNICAL MASTERCLASS (THE REAL STACK) -->
+      <!-- ==================================================== -->
+      <section id="view-curriculum" class="content-view">
+        <div class="section-header">
+          <div>
+            <h1 class="section-title">Core Technical Masterclass (Defend Your Actual Stack)</h1>
+            <p class="section-subtitle">Deep, production-grade first-principles architecture. Understand memory, storage, query execution, and failure modes.</p>
+          </div>
+        </div>
+
+        <!-- Masterclass Category Switcher -->
+        <div class="category-pill-bar">
+          <button class="cat-pill active" onclick="app.filterMasterclass('all')">All Modules</button>
+          <button class="cat-pill" onclick="app.filterMasterclass('snowflake')">Snowflake Internals</button>
+          <button class="cat-pill" onclick="app.filterMasterclass('spark')">Apache Spark & PySpark</button>
+          <button class="cat-pill" onclick="app.filterMasterclass('azure')">Azure ADF & ADLS Gen2</button>
+          <button class="cat-pill" onclick="app.filterMasterclass('gcp')">Google BigQuery & Dataflow</button>
+          <button class="cat-pill" onclick="app.filterMasterclass('kimball')">Kimball Data Modeling</button>
+        </div>
+
+        <div class="masterclass-container" id="masterclassContainer"></div>
+      </section>
+
+      <!-- ==================================================== -->
+      <!-- 3. WORKSPACE: CODING & SQL DOJO -->
+      <!-- ==================================================== -->
+      <section id="view-practice" class="content-view">
+        <div class="section-header">
+          <div>
+            <h1 class="section-title">Coding & SQL Workbench</h1>
+            <p class="section-subtitle">Run Python algorithms directly in your browser with WebAssembly Pyodide and master Google-level SQL.</p>
+          </div>
+          <div id="pyodideStatusBadge" class="status-indicator">
+            Python Engine: Initializing Pyodide...
+          </div>
+        </div>
+
+        <!-- Practice Mode Switcher -->
+        <div class="category-pill-bar" style="margin-bottom: 1.25rem;">
+          <button class="cat-pill active" id="btnTabDsa" onclick="app.switchPracticeMode('dsa')">Python Algorithms (LeetCode Google)</button>
+          <button class="cat-pill" id="btnTabSql" onclick="app.switchPracticeMode('sql')">Advanced SQL & Kimball Studio</button>
+        </div>
+
+        <!-- Python DSA Workbench -->
+        <div id="practiceDsaWorkspace" class="workbench-split">
+          <div class="workbench-list-panel" id="dsaProblemList"></div>
+          <div class="workbench-editor-panel" id="dsaWorkspace">
+            <div class="empty-state">Select a problem on the left to begin coding.</div>
+          </div>
+        </div>
+
+        <!-- SQL Workbench -->
+        <div id="practiceSqlWorkspace" class="workbench-split" style="display:none;">
+          <div class="workbench-list-panel" id="sqlProblemList"></div>
+          <div class="workbench-editor-panel" id="sqlWorkspace">
+            <div class="empty-state">Select an SQL challenge on the left.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================== -->
+      <!-- 4. WORKSPACE: RESUME & PROJECT DEFENSE -->
+      <!-- ==================================================== -->
+      <section id="view-defense" class="content-view">
+        <div class="section-header">
+          <div>
+            <h1 class="section-title">Google ATS Resume & Real Project Defense</h1>
+            <p class="section-subtitle">1-Page Google ATS formatted resume and rigorous technical interview defense scripts for Siemens Energy and Coca-Cola.</p>
+          </div>
+          <button class="btn btn-sm btn-outline" onclick="app.copyAtsResumeText()">Copy 1-Page ATS Resume</button>
+        </div>
+
+        <div class="defense-split">
+          <!-- Left: 1-Page Google ATS Resume Paper -->
+          <div class="card resume-card">
+            <h2 class="card-title">Rohit Singh — 1-Page Google ATS Resume</h2>
+            <p class="card-desc">Formatted with Google's official XYZ formula. Zero fluff, quantifiable metrics.</p>
+
+            <div class="ats-paper" id="atsResumePaper">
               <div class="ats-header">
                 <h2 class="ats-name">ROHIT SINGH</h2>
                 <div class="ats-contact">
@@ -459,8 +334,8 @@
               <div class="ats-section">
                 <div class="ats-section-title">TECHNICAL SKILLS</div>
                 <div class="ats-skills-line"><strong>Languages:</strong> Python (PySpark, Pandas, NumPy), SQL (Snowflake, BigQuery, PostgreSQL), Bash</div>
-                <div class="ats-skills-line"><strong>Big Data & Cloud:</strong> Apache Spark, Databricks, Google BigQuery, Snowflake, Azure Data Factory (ADF), Cloud Composer (Airflow), GCS, ADLS Gen2</div>
-                <div class="ats-skills-line"><strong>Data Engineering:</strong> Star Schema (Kimball), SCD Type 1/2, Dataform, dbt Cloud, CI/CD, Partition Pruning, Key Salting</div>
+                <div class="ats-skills-line"><strong>Cloud & Big Data:</strong> Apache Spark, Databricks, Google BigQuery, Snowflake, Azure Data Factory (ADF), Cloud Composer (Airflow), GCS, ADLS Gen2</div>
+                <div class="ats-skills-line"><strong>Data Engineering:</strong> Kimball Star Schema, SCD Type 1/2, Dataform, dbt Cloud, CI/CD, Partition Pruning, Key Salting</div>
               </div>
 
               <div class="ats-section">
@@ -497,412 +372,29 @@
             </div>
           </div>
 
-          <!-- Project Interrogation Defense Q&A -->
-          <div class="card project-defense-card">
-            <h2 class="card-title">🎯 Real Project Technical Interrogation Defense</h2>
-            <p class="text-muted">Exact questions Google interviewers will ask to test if you actually wrote the code or just worked around the tools:</p>
-            <div id="projectDefenseContainer" style="margin-top:14px; display:flex; flex-direction:column; gap:16px; max-height:750px; overflow-y:auto;"></div>
+          <!-- Right: Project Interrogation Defense Q&A -->
+          <div class="card defense-card">
+            <h2 class="card-title">Interviewer Technical Defense Scripts</h2>
+            <p class="card-desc">Exact questions interviewers ask to probe if you understand the internals or just used the tools:</p>
+            <div id="projectDefenseContainer" class="defense-qa-container"></div>
           </div>
         </div>
       </section>
 
-      <!-- 0.5. BEGINNER-TO-GOOGLE ELI5 FIRST PRINCIPLES PRIMER -->
-      <section id="view-primer" class="content-view">
-        <div class="view-header">
+      <!-- ==================================================== -->
+      <!-- 5. WORKSPACE: GOOGLE INDIA TRACKS & EVALUATION BAR -->
+      <!-- ==================================================== -->
+      <section id="view-roles" class="content-view">
+        <div class="section-header">
           <div>
-            <h1 class="view-title">🐣 Beginner-to-Google ELI5 Primer (First Principles Masterclass)</h1>
-            <p class="view-subtitle">Zero jargon. No intimidation. Complex Google distributed systems and coding patterns explained with everyday kitchen analogies.</p>
-          </div>
-          <div class="quick-status">
-            <span class="status-pill status-ready" style="background:#0284c7; color:#fff;">Zero-to-Hero Foundation</span>
+            <h1 class="section-title">Google India Hiring Tracks & Evaluation Criteria</h1>
+            <p class="section-subtitle">Real, factual breakdown of roles matching a 4-year data consultant background in Bangalore, Hyderabad, Pune, and Gurgaon.</p>
           </div>
         </div>
 
-        <div class="primer-grid" id="primerGrid"></div>
+        <div class="roles-clean-grid" id="rolesCleanGrid"></div>
       </section>
 
-      <!-- 0.6. AZURE & SNOWFLAKE TO GCP ROSETTA STONE VIEW -->
-      <section id="view-bridge" class="content-view">
-        <div class="view-header">
-          <div>
-            <h1 class="view-title">🔄 Azure & Snowflake ➔ Google Cloud (GCP) Rosetta Stone</h1>
-            <p class="view-subtitle">Convert your 4 years of Capgemini Azure & Snowflake experience directly into Google Cloud interview dominance</p>
-          </div>
-          <div class="quick-status">
-            <span class="status-pill status-ready" style="background:#ea4335; color:#fff;">Enterprise Translation Engine</span>
-          </div>
-        </div>
-
-        <div class="rosetta-grid" id="rosettaGrid"></div>
-      </section>
-
-      <!-- 1. RECRUITER & REFERRAL OUTREACH ENGINE VIEW -->
-      <section id="view-outreach" class="content-view">
-        <div class="view-header">
-          <div>
-            <h1 class="view-title">Google Recruiter & Referral Cold Outreach Engine</h1>
-            <p class="view-subtitle">High-conversion LinkedIn InMail and cold DM templates designed for 5+ year data candidates</p>
-          </div>
-        </div>
-
-        <div class="outreach-grid" id="outreachGrid"></div>
-      </section>
-
-      <!-- 2. L5 GRILLING SIMULATOR VIEW -->
-      <section id="view-grill" class="content-view">
-        <div class="view-header">
-          <div>
-            <h1 class="view-title">Google L5 Grilling Simulator (Architectural Edge-Case Traps)</h1>
-            <p class="view-subtitle">Learn the exact difference between what Junior Engineers say and how Staff/L5 Google Engineers respond</p>
-          </div>
-        </div>
-
-        <div class="grill-grid" id="grillGrid"></div>
-      </section>
-
-      <!-- 3. GOOGLE RESUME BULLETS OPTIMIZER VIEW -->
-      <section id="view-resume" class="content-view">
-        <div class="view-header">
-          <div>
-            <h1 class="view-title">Google L5 Resume Bullet Optimizer (XYZ Formula)</h1>
-            <p class="view-subtitle">Google's official hiring formula: <em>"Accomplished [X] as measured by [Y], by doing [Z]"</em></p>
-          </div>
-        </div>
-
-        <div class="resume-grid">
-          <div class="resume-card">
-            <h2 class="card-title">Interactive Bullet Generator</h2>
-            <p class="text-muted">Fill out the three Google components to produce an instant L5-grade bullet point:</p>
-
-            <div class="star-input-group">
-              <label>X - What Did You Accomplish? (High-Level Impact)</label>
-              <textarea class="star-textarea" id="resumeInputX" placeholder="e.g. Reduced BigQuery cloud spend and accelerated analytics query latency..." oninput="app.generateCustomBullet()"></textarea>
-            </div>
-
-            <div class="star-input-group">
-              <label>Y - How Was It Measured? (Numbers, % Reduction, $$ Saved, SLA)</label>
-              <textarea class="star-textarea" id="resumeInputY" placeholder="e.g. $180,000 annual cost savings (35%) and 90% latency reduction (45s to 3.5s)..." oninput="app.generateCustomBullet()"></textarea>
-            </div>
-
-            <div class="star-input-group">
-              <label>Z - How Did You Do It? (Specific Architecture, Technologies & Algorithms)</label>
-              <textarea class="star-textarea" id="resumeInputZ" placeholder="e.g. by re-architecting table partitioning, clustering, and deploying incremental materialized views..." oninput="app.generateCustomBullet()"></textarea>
-            </div>
-
-            <div class="xyz-formula-box">
-              <strong>Live Google-Formatted Resume Bullet:</strong>
-              <div class="generated-bullet-box" id="generatedBulletResult" style="margin-top:8px;">
-                Start filling in X, Y, and Z above to see your bullet point formatted here.
-              </div>
-            </div>
-            <button class="btn btn-primary" onclick="app.copyCustomBullet()">Copy Formatted Bullet to Clipboard</button>
-          </div>
-
-          <div class="resume-card">
-            <h2 class="card-title">Pre-Tested Google L5 Data Bullet Templates</h2>
-            <p class="text-muted">Proven formulas used by engineers to pass the Google resume screening bar:</p>
-            <div id="resumeTemplatesList" style="display:flex; flex-direction:column; gap:12px; max-height:550px; overflow-y:auto;"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 4. MOCK INTERVIEW SIMULATOR VIEW -->
-      <section id="view-mock" class="content-view">
-        <div class="view-header">
-          <div>
-            <h1 class="view-title">Mock Interview Mode (Live 45-Minute Loop Simulation)</h1>
-            <p class="view-subtitle">Simulate real Google interview pacing with milestone checkpoints and live timer</p>
-          </div>
-        </div>
-
-        <div class="mock-selector-grid" id="mockSelectorGrid"></div>
-
-        <div class="mock-active-workspace" id="mockActiveWorkspace">
-          <div class="mock-timer-banner">
-            <div>
-              <span class="badge badge-accent" id="mockRoundBadge">Distributed System Design</span>
-              <h2 style="font-family:var(--font-display); font-size:1.3rem; margin-top:4px;" id="mockTitleDisplay">Select a Mock Scenario Above</h2>
-            </div>
-            <div style="text-align:right;">
-              <div class="mock-countdown" id="mockCountdownDisplay">45:00</div>
-              <div style="display:flex; gap:6px; margin-top:4px; flex-wrap:wrap; justify-content:flex-end;">
-                <button class="btn btn-sm btn-primary" id="btnStartMock">Start 45m Timer</button>
-                <button class="btn btn-sm btn-outline" id="btnPauseMock">Pause</button>
-                <button class="btn btn-sm btn-outline" id="btnResetMock">Reset</button>
-                <button class="btn btn-sm btn-outline" id="btnVoiceMock" onclick="app.speakMockPrompt()" title="Listen to interviewer prompt aloud">🔊 Voice Prompt</button>
-              </div>
-            </div>
-          </div>
-
-          <div style="background:var(--bg-surface-elevated); padding:14px; border-radius:6px; border:1px solid var(--border-subtle);">
-            <strong>Interview Prompt:</strong>
-            <p style="font-size:0.95rem; margin-top:4px;" id="mockPromptDisplay">Choose a scenario above to start your timed round.</p>
-          </div>
-
-          <div>
-            <h3 style="font-family:var(--font-display); font-size:1.1rem; margin-bottom:8px;">Live 45-Minute Checkpoints:</h3>
-            <div class="milestones-tracker" id="mockMilestonesList"></div>
-          </div>
-
-          <div class="code-container">
-            <div class="code-header"><span>Interview Scratchpad & Diagramming Notes</span></div>
-            <textarea class="code-editor" style="height:200px;" id="mockScratchpad" placeholder="Type your high-level architecture, estimations, queries, or Python code here during your mock round..."></textarea>
-          </div>
-        </div>
-      </section>
-
-      <!-- 5. DASHBOARD VIEW -->
-      <section id="view-dashboard" class="content-view">
-        <div class="view-header">
-          <div>
-            <h1 class="view-title">Daily Mission Control</h1>
-            <p class="view-subtitle">High-yield execution dashboard for your 90-day Google breakthrough</p>
-          </div>
-        </div>
-
-        <!-- Urgent 24-Hour Accountability Banner -->
-        <div class="card dashboard-accountability-alert-card">
-          <div class="dash-clock-col">
-            <span class="badge" style="background:#ea4335; color:#fff; font-weight:600;">⏰ 24H Window: 12:00 AM – 11:59 PM IST</span>
-            <div class="dash-countdown-digits" id="dashCountdownDigits">--:--:-- Remaining Today</div>
-            <p class="text-muted" style="margin:2px 0 0 0; font-size:0.85rem;">Mandatory Targets: Complete before 11:59:59 PM to maintain your Google prep streak.</p>
-          </div>
-          <div class="dash-clock-actions">
-            <div class="dash-target-pill" id="dashTargetSummaryPill">Targets: 0 / 4 Complete</div>
-            <button class="btn btn-whatsapp" onclick="app.shareDailyProgressWhatsApp()">📲 WhatsApp Sync</button>
-            <button class="btn btn-primary" onclick="app.switchTab('accountability')">Open Daily Logger →</button>
-          </div>
-        </div>
-
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-icon icon-blue">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-            </div>
-            <div class="stat-content">
-              <span class="stat-label">Python DSA Solved</span>
-              <div class="stat-value"><span id="statDsaSolved">0</span> <span class="stat-max">/ 75</span></div>
-              <div class="stat-bar"><div class="stat-fill" id="statDsaBar" style="width: 0%"></div></div>
-            </div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-icon icon-green">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
-            </div>
-            <div class="stat-content">
-              <span class="stat-label">SQL & Modeling Drills</span>
-              <div class="stat-value"><span id="statSqlSolved">0</span> <span class="stat-max">/ 20</span></div>
-              <div class="stat-bar"><div class="stat-fill" id="statSqlBar" style="width: 0%"></div></div>
-            </div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-icon icon-yellow">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect></svg>
-            </div>
-            <div class="stat-content">
-              <span class="stat-label">System Designs Mastered</span>
-              <div class="stat-value"><span id="statSysSolved">0</span> <span class="stat-max">/ 10</span></div>
-              <div class="stat-bar"><div class="stat-fill" id="statSysBar" style="width: 0%"></div></div>
-            </div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-icon icon-red">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
-            </div>
-            <div class="stat-content">
-              <span class="stat-label">L5 Leadership Stories</span>
-              <div class="stat-value"><span id="statGlSolved">0</span> <span class="stat-max">/ 8</span></div>
-              <div class="stat-bar"><div class="stat-fill" id="statGlBar" style="width: 0%"></div></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="dashboard-split">
-          <div class="card mission-card">
-            <div class="card-header">
-              <div class="card-header-left">
-                <span class="badge badge-accent">Today's Focus</span>
-                <h2 class="card-title" id="todayMissionTitle">Day 1: Arrays & Hashing (Two Sum & HashMaps)</h2>
-              </div>
-              <button class="btn btn-sm btn-outline" id="btnMarkDayComplete">Mark Day Done</button>
-            </div>
-            <div class="mission-tasks" id="todayMissionTasks"></div>
-          </div>
-
-          <div class="card office-mode-card">
-            <h3 class="card-title">Corporate Office Downtime Playbook</h3>
-            <p class="text-muted">Turn 100% of your office downtime into high-leverage Google prep without drawing attention:</p>
-            <ul class="strategy-list">
-              <li>
-                <strong>Office Deep Study (30–45m):</strong> Open <em>Architecture Vault</em> or <em>L5 Grilling Simulator</em> to master edge-case traps.
-              </li>
-              <li>
-                <strong>Recruiter Outreach (15m):</strong> Copy battle-tested DMs in <em>Recruiter Cold DMs</em> to reach Google sourcers directly.
-              </li>
-              <li>
-                <strong>Live Coding Drill (20m):</strong> Run Python algorithms in <em>Live Python Dojo</em> with live WebAssembly test execution!
-              </li>
-              <li>
-                <strong>Evening at Home:</strong> Deep-dive into <em>Mock Interview Mode</em>.
-              </li>
-            </ul>
-            <div class="card-actions">
-              <button class="btn btn-primary" onclick="app.switchTab('dsa')">Open Live Python Dojo</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 6. LIVE PYTHON DSA DOJO (WITH IN-BROWSER CPYTHON EXECUTION) -->
-      <section id="view-dsa" class="content-view">
-        <div class="view-header">
-          <div>
-            <h1 class="view-title">Live Python DSA Pattern Dojo</h1>
-            <p class="view-subtitle">Run CPython 3.12 directly in your browser with automated test validation via WebAssembly</p>
-          </div>
-          <div id="pyodideStatusBadge" class="status-pill status-ready" style="font-family:var(--font-mono); font-size:0.75rem;">
-            Python Engine: Loading Pyodide...
-          </div>
-        </div>
-
-        <div class="category-filters" id="dsaCategoryFilters" style="margin-bottom:1.5rem;"></div>
-
-        <div class="dsa-workspace">
-          <div class="dsa-list-panel" id="dsaProblemList"></div>
-          <div class="dsa-detail-panel" id="dsaWorkspace">
-            <div class="empty-state">Select a problem on the left to start practicing.</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 7. ARCHITECTURE READING VAULT VIEW -->
-      <section id="view-reading-vault" class="content-view">
-        <div class="view-header">
-          <div>
-            <h1 class="view-title">Google Architecture & Whitepapers Vault</h1>
-            <p class="view-subtitle">High-yield architectural papers summarized for discreet, high-value office reading</p>
-          </div>
-        </div>
-
-        <div class="reading-vault-layout">
-          <div class="vault-nav-panel" id="vaultNav"></div>
-          <div class="vault-content-panel" id="vaultContent"></div>
-        </div>
-      </section>
-
-      <!-- 8. REAL GOOGLE INTERVIEW QUESTIONS BANK VIEW -->
-      <section id="view-questions" class="content-view">
-        <div class="view-header">
-          <div>
-            <h1 class="view-title">Real Recent Google Interview Questions Bank</h1>
-            <p class="view-subtitle">Curated from recent Google interview debriefs across Data Engineer, BIE, CSE, and Cloud</p>
-          </div>
-        </div>
-
-        <div class="questions-filters-bar">
-          <div class="search-box">
-            <input type="text" id="questionSearchInput" placeholder="Search keywords (e.g. streaming, BigQuery, return rate, migration)..." oninput="app.filterQuestions()">
-          </div>
-          <div class="role-question-filters" id="questionRoleFilters"></div>
-        </div>
-
-        <div class="questions-grid" id="questionsGrid"></div>
-      </section>
-
-      <!-- 9. 90-DAY SCHEDULE VIEW -->
-      <section id="view-schedule" class="content-view">
-        <div class="view-header">
-          <div>
-            <h1 class="view-title">90-Day Master Curriculum</h1>
-            <p class="view-subtitle">Every single day structured for Google Senior (L5) Data Engineer readiness</p>
-          </div>
-          <div class="phase-filters" id="phaseFilters">
-            <button class="filter-chip active" data-phase="all">All Days (1–90)</button>
-            <button class="filter-chip" data-phase="1">Phase 1: Foundations (1–30)</button>
-            <button class="filter-chip" data-phase="2">Phase 2: Big Data & DAGs (31–60)</button>
-            <button class="filter-chip" data-phase="3">Phase 3: System Design & Mocks (61–90)</button>
-          </div>
-        </div>
-
-        <div class="schedule-timeline" id="scheduleTimeline"></div>
-      </section>
-
-      <!-- 10. SQL & MODELING STUDIO VIEW -->
-      <section id="view-sql" class="content-view">
-        <div class="view-header">
-          <div>
-            <h1 class="view-title">SQL & Kimball Modeling Studio</h1>
-            <p class="view-subtitle">Advanced Window Functions, Sessionization, BigQuery UNNEST & SCD Types 1–6</p>
-          </div>
-        </div>
-
-        <div class="sql-workspace">
-          <div class="sql-list-panel" id="sqlProblemList"></div>
-          <div class="sql-detail-panel" id="sqlWorkspace">
-            <div class="empty-state">Select an SQL Challenge on the left.</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 11. SYSTEM DESIGN VAULT VIEW -->
-      <section id="view-system-design" class="content-view">
-        <div class="view-header">
-          <div>
-            <h1 class="view-title">Distributed System Design Vault</h1>
-            <p class="view-subtitle">10 Battle-tested Google-Scale Data Architectures with Interactive Pipeline Flows</p>
-          </div>
-        </div>
-
-        <div class="system-design-grid" id="systemDesignGrid"></div>
-      </section>
-
-      <!-- 12. LEADERSHIP (G&L) VIEW -->
-      <section id="view-leadership" class="content-view">
-        <div class="view-header">
-          <div>
-            <h1 class="view-title">L5 Googliness & Leadership (STAR) Grader</h1>
-            <p class="view-subtitle">Draft and automatically grade your 8 core Senior stories against Google L5 rubrics</p>
-          </div>
-        </div>
-
-        <div class="leadership-grid" id="leadershipGrid"></div>
-      </section>
-
-      <!-- 13. FLASHCARDS VIEW -->
-      <section id="view-flashcards" class="content-view">
-        <div class="view-header">
-          <div>
-            <h1 class="view-title">Office Micro-Drills (Flashcards)</h1>
-            <p class="view-subtitle">High-yield Big Data, Spark, Beam & Cloud concepts for 5-minute work breaks</p>
-          </div>
-        </div>
-
-        <div class="flashcard-container">
-          <div class="flashcard-card" id="flashcardBox">
-            <div class="flashcard-inner">
-              <div class="flashcard-front">
-                <span class="flashcard-category" id="fcCategory">Category</span>
-                <h3 class="flashcard-question" id="fcQuestion">Question goes here...</h3>
-                <span class="flashcard-hint">Click card to reveal answer</span>
-              </div>
-              <div class="flashcard-back">
-                <span class="flashcard-category" id="fcCategoryBack">Category</span>
-                <p class="flashcard-answer" id="fcAnswer">Answer goes here...</p>
-                <span class="flashcard-hint">Click to flip back</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="flashcard-controls">
-            <button class="btn btn-outline" id="btnFcPrev">Previous</button>
-            <span class="flashcard-counter" id="fcCounter">1 / 8</span>
-            <button class="btn btn-primary" id="btnFcNext">Next Card</button>
-          </div>
-        </div>
-      </section>
     </main>
   </div>
 
@@ -910,30 +402,25 @@
   <div class="modal-backdrop" id="syncModal">
     <div class="modal-box">
       <div class="modal-header">
-        <h2 class="modal-title">Sync Progress Across Computers</h2>
+        <h2 class="modal-title">Sync & Export Workspace State</h2>
         <button class="modal-close" id="btnCloseSyncModal">&times;</button>
       </div>
       <div class="modal-body">
-        <p class="text-muted">Use this to easily carry your solved problems, code notes, and STAR stories between your home computer and your corporate office laptop without logging in anywhere.</p>
+        <p class="card-desc">Transfer your solved problems, daily notes, and audit history between your corporate office laptop and personal machine without external servers.</p>
         
-        <div class="sync-actions">
-          <div class="sync-card">
+        <div class="sync-actions-grid">
+          <div class="sync-action-box">
             <h3>Export Progress</h3>
-            <p>Download your entire preparation state into a lightweight <code>.json</code> file.</p>
+            <p>Download your entire state as a lightweight JSON file.</p>
             <button class="btn btn-primary" id="btnExportJson">Download Backup JSON</button>
           </div>
 
-          <div class="sync-card">
+          <div class="sync-action-box">
             <h3>Import Progress</h3>
-            <p>Upload a previously exported <code>.json</code> file on your office laptop or home machine.</p>
+            <p>Restore state from a previously saved JSON export.</p>
             <input type="file" id="importFileInput" accept=".json" style="display: none;">
             <button class="btn btn-outline" id="btnTriggerImport">Choose File & Restore</button>
           </div>
-        </div>
-
-        <div class="hosting-guide">
-          <h4>Live Deployment Status:</h4>
-          <p>This portal is hosted live and updated on your GitHub Pages at: <a href="https://rohitgit1.github.io/google-l5-prep/" target="_blank" style="color:var(--g-blue); font-weight:600;">https://rohitgit1.github.io/google-l5-prep/</a></p>
         </div>
       </div>
     </div>
