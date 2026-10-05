@@ -85,7 +85,7 @@ body {
 }
 
 body.theme-light .ambient-mesh-canvas {
-  opacity: 0.4;
+  opacity: 0.95;
 }
 
 /* 🎆 Full-Screen Milestone Celebration FX Canvas */
@@ -454,8 +454,28 @@ body.theme-light .ambient-mesh-canvas {
 
 body.theme-light .card::before, 
 body.theme-light .pillar-card::before,
-body.theme-light .footer-accountability-card::before {
-  background: radial-gradient(400px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(37, 99, 235, 0.08), transparent 70%);
+body.theme-light .footer-accountability-card::before,
+body.theme-light .dojo-problem-content::before {
+  background: radial-gradient(420px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(37, 99, 235, 0.22), transparent 75%) !important;
+}
+
+body.theme-light .card,
+body.theme-light .pillar-card,
+body.theme-light .footer-accountability-card {
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+body.theme-light .card:hover,
+body.theme-light .pillar-card:hover {
+  border-color: rgba(37, 99, 235, 0.65) !important;
+  box-shadow: 0 20px 38px -8px rgba(37, 99, 235, 0.18), 0 6px 14px rgba(0, 0, 0, 0.08), 0 0 18px rgba(37, 99, 235, 0.25) !important;
+}
+
+body.theme-light .pillar-card.completed {
+  border-color: rgba(5, 150, 105, 0.65) !important;
+  background-color: rgba(5, 150, 105, 0.06) !important;
+  box-shadow: 0 6px 20px rgba(5, 150, 105, 0.15) !important;
 }
 
 .card-title {
@@ -1529,28 +1549,30 @@ body.theme-light .footer-accountability-card::before {
   position: relative;
 }
 
+body.theme-light .horizon-timeline-container {
+  background-color: #f1f5f9;
+  border-color: rgba(0, 0, 0, 0.14);
+}
+
 body.theme-light .horizon-bar-node {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(30, 41, 59, 0.28) !important;
 }
 
-.horizon-bar-node:hover {
-  transform: scaleY(2.4) translateY(-2px);
-  background-color: var(--accent-blue) !important;
-  box-shadow: 0 0 12px var(--accent-blue);
-  z-index: 10;
+body.theme-light .horizon-bar-node:hover {
+  background-color: #2563eb !important;
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.8) !important;
 }
 
-.horizon-bar-node.current-selected {
-  background-color: #60a5fa !important;
-  box-shadow: 0 0 14px rgba(96, 165, 250, 0.95);
-  transform: scaleY(2.1) translateY(-1px);
-  border-top: 2px solid #ffffff;
+body.theme-light .horizon-bar-node.current-selected {
+  background-color: #2563eb !important;
+  box-shadow: 0 0 16px rgba(37, 99, 235, 0.95) !important;
+  border-top: 2px solid #0f172a !important;
   z-index: 5;
 }
 
-.horizon-bar-node.solved-day {
-  background-color: #10b981 !important;
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.7);
+body.theme-light .horizon-bar-node.solved-day {
+  background-color: #059669 !important;
+  box-shadow: 0 0 10px rgba(5, 150, 105, 0.7) !important;
 }
 
 /* Phase heights for horizon waveform effect */

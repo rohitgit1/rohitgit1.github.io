@@ -172,20 +172,21 @@ class AmbientMeshEngine {
     this.ctx.clearRect(0, 0, this.width, this.height);
 
     const isLight = document.body.classList.contains("theme-light");
-    const nodeColor = isLight ? "rgba(37, 99, 235," : "rgba(96, 165, 250,";
+    const nodeColor = isLight ? "rgba(29, 78, 216," : "rgba(96, 165, 250,";
     const lineColor = isLight ? "rgba(37, 99, 235," : "rgba(59, 130, 246,";
 
     // Draw ambient cursor glow aura
     if (this.cursorX > 0 && this.cursorY > 0) {
       const grad = this.ctx.createRadialGradient(
         this.cursorX, this.cursorY, 0,
-        this.cursorX, this.cursorY, 280
+        this.cursorX, this.cursorY, 320
       );
       if (isLight) {
-        grad.addColorStop(0, "rgba(37, 99, 235, 0.06)");
+        grad.addColorStop(0, "rgba(37, 99, 235, 0.16)"); // Crisp visible glow on white
+        grad.addColorStop(0.5, "rgba(99, 102, 241, 0.08)");
         grad.addColorStop(1, "transparent");
       } else {
-        grad.addColorStop(0, "rgba(59, 130, 246, 0.08)");
+        grad.addColorStop(0, "rgba(59, 130, 246, 0.10)");
         grad.addColorStop(1, "transparent");
       }
       this.ctx.fillStyle = grad;
@@ -209,16 +210,18 @@ class AmbientMeshEngine {
       const dx = p.x - this.cursorX;
       const dy = p.y - this.cursorY;
       const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 120 && dist > 0) {
-        const force = (120 - dist) / 120 * 1.2;
+      if (dist < 125 && dist > 0) {
+        const force = (125 - dist) / 125 * 1.3;
         p.x += (dx / dist) * force;
         p.y += (dy / dist) * force;
       }
 
-      const alpha = p.baseAlpha + Math.sin(t * p.pulseSpeed * 20 + p.pulseOffset) * 0.1;
+      const baseAlpha = isLight ? (p.baseAlpha * 1.5 + 0.3) : p.baseAlpha;
+      const alpha = baseAlpha + Math.sin(t * p.pulseSpeed * 20 + p.pulseOffset) * 0.12;
+      const radius = isLight ? p.radius * 1.35 : p.radius;
       this.ctx.beginPath();
-      this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-      this.ctx.fillStyle = `${nodeColor} ${Math.max(0.05, alpha)})`;
+      this.ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+      this.ctx.fillStyle = `${nodeColor} ${Math.min(1, Math.max(0.15, alpha))})`;
       this.ctx.fill();
 
       // Connecting filaments
@@ -227,13 +230,13 @@ class AmbientMeshEngine {
         const fdx = p.x - p2.x;
         const fdy = p.y - p2.y;
         const fdist = Math.sqrt(fdx * fdx + fdy * fdy);
-        if (fdist < 115) {
-          const lalpha = (1 - fdist / 115) * (isLight ? 0.12 : 0.16);
+        if (fdist < 125) {
+          const lalpha = (1 - fdist / 125) * (isLight ? 0.38 : 0.18);
           this.ctx.beginPath();
           this.ctx.moveTo(p.x, p.y);
           this.ctx.lineTo(p2.x, p2.y);
           this.ctx.strokeStyle = `${lineColor} ${lalpha})`;
-          this.ctx.lineWidth = 0.75;
+          this.ctx.lineWidth = isLight ? 1.25 : 0.75;
           this.ctx.stroke();
         }
       }
@@ -266,7 +269,14 @@ class BurstEngine {
     if (!this.canvas || !this.ctx) return;
     this.resize();
 
-    const colors = [
+    const isLight = document.body.classList.contains("theme-light");
+    const colors = isLight ? [
+      "#1d4ed8", // Deep Sapphire Blue
+      "#059669", // Emerald Green
+      "#d97706", // Amber
+      "#7c3aed", // Vivid Violet
+      "#dc2626"  // Crimson
+    ] : [
       "#60a5fa", // Cyan Blue
       "#34d399", // Emerald Green
       "#fbbf24", // Gold Yellow
@@ -344,21 +354,34 @@ class BurstEngine {
   }
 }
 
+// =========================================================================
+// 🔒 PERMANENT MISSION TIMELINE CONFIGURATION (IMMUTABLE ANCHORS)
+// =========================================================================
+// This timeline is permanently anchored. Future code updates or refreshes will NEVER
+// break the 24H countdown timer or miscalculate the 90-day trajectory.
+const MISSION_CONFIG = {
+  START_DATE: "2026-10-05T00:00:00+05:30", // Day 1: Monday, October 5, 2026 12:00 AM IST
+  END_DATE: "2027-01-02T23:59:59+05:30",   // Day 90: Saturday, January 2, 2027 11:59:59 PM IST
+  BIRTHDAY_DATE: "2027-01-03T00:00:00+05:30", // Rohit's Birthday (Jan 3)
+  TOTAL_DAYS: 90
+};
+
 class PrepPortalApp {
   constructor() {
-    // Reset to Day 1 (Oct 5) if stale test day was saved
-    const savedDay = parseInt(localStorage.getItem("google_l5_selected_day") || "1");
-    const currentDay = (savedDay === 3 && !sessionStorage.getItem("user_manually_chose_day")) ? 1 : savedDay;
-    localStorage.setItem("google_l5_selected_day", currentDay);
+    // Permanent candidate persistence: Never overwrite candidate progress or day on updates
+    const realToday = this.getTodayDayNum();
+    const savedDay = parseInt(localStorage.getItem("google_l5_selected_day") || "0");
+    const activeDay = (savedDay >= 1 && savedDay <= 90) ? savedDay : realToday;
+    localStorage.setItem("google_l5_selected_day", activeDay);
 
     this.state = {
-      theme: "dark",
+      theme: localStorage.getItem("google_l5_theme") || "dark",
       activeTab: "tracker",
       activeMasterclassCat: "all",
       activePracticeMode: "dsa",
       activeDsaId: "dsa-1",
       activeSqlId: "sql-1",
-      selectedDay: currentDay,
+      selectedDay: activeDay,
       dsaCategoryFilter: "all",
       curriculumPhaseFilter: "all",
       curriculumSearchQuery: "",
@@ -401,8 +424,14 @@ class PrepPortalApp {
   // --- Theme Management ---
   setTheme(themeName) {
     this.state.theme = themeName;
+    localStorage.setItem("google_l5_theme", themeName);
     this.applyTheme(themeName);
     this.saveState();
+    this.renderHorizonTimeline();
+    setTimeout(() => {
+      this.initCardSpotlightPhysics();
+      this.initMagneticButtons();
+    }, 40);
   }
 
   applyTheme(themeName) {
@@ -413,6 +442,10 @@ class PrepPortalApp {
     const btnLight = document.getElementById("btnThemeLight");
     if (btnDark) btnDark.classList.toggle("active", themeName === "dark");
     if (btnLight) btnLight.classList.toggle("active", themeName === "light");
+
+    if (this.mesh) {
+      this.mesh.initParticles();
+    }
   }
 
   // --- Persistence ---
