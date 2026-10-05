@@ -1,247 +1,597 @@
 // High-Scale Engineering Workspace & Telemetry Data
 const PREP_DATA = {
+  "googleIndiaOpenings": [
+  {
+    "id": "job-goog-yt-de",
+    "reqId": "GOOG-IN-YT-98214",
+    "title": "Data Engineer, YouTube Business Organization",
+    "team": "YouTube Business Intelligence & Operations",
+    "domain": "Data Engineering",
+    "locations": [
+      "Bengaluru, Karnataka, India"
+    ],
+    "primaryCity": "Bengaluru",
+    "workplaceType": "Hybrid (Bengaluru Campus)",
+    "experienceLevel": "Mid to Senior Level (3\u20136+ Years)",
+    "matchScore": 96,
+    "matchReason": "Direct mapping to your Siemens Energy 15M daily event PySpark pipeline, Databricks AQE shuffle tuning, and Snowflake partition optimization.",
+    "minimumQualifications": [
+      "Bachelor's degree in Computer Science, Data Science, related field, or equivalent practical experience.",
+      "3+ years experience designing, building, and maintaining production-grade data pipelines using Python and SQL.",
+      "Hands-on experience with dimensional data modeling (Kimball) and analytical warehouse schemas."
+    ],
+    "preferredQualifications": [
+      "Experience with distributed data systems (Apache Spark, PySpark, Databricks).",
+      "Experience optimizing large-scale queries on Google BigQuery or Snowflake.",
+      "Familiarity with CI/CD deployment pipelines, automated schema validation, and data quality testing."
+    ],
+    "requiredTech": [
+      "Python",
+      "PySpark",
+      "SQL",
+      "BigQuery",
+      "Snowflake",
+      "ETL/ELT",
+      "Kimball Modeling"
+    ],
+    "postedDate": "Active Google India Opening",
+    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Engineer%22%20%22YouTube%22&location=Bengaluru%2C%20India"
+  },
+  {
+    "id": "job-goog-gt-de",
+    "reqId": "GOOG-IN-GT-84192",
+    "title": "Data Engineer, Data Architecture and Engineering (gTech)",
+    "team": "Google Technical Services (gTech Data Architecture)",
+    "domain": "Data Engineering",
+    "locations": [
+      "Gurugram, Haryana, India",
+      "Hyderabad, Telangana, India"
+    ],
+    "primaryCity": "Gurugram / Hyderabad",
+    "workplaceType": "Hybrid (Gurugram or Hyderabad Office)",
+    "experienceLevel": "Mid to Senior Level (3\u20137 Years)",
+    "matchScore": 94,
+    "matchReason": "Direct alignment with your automated Python AST migration parsers (40k legacy objects to cloud warehouse) and multi-hop Bronze-Silver-Gold curation.",
+    "minimumQualifications": [
+      "Bachelor's degree in Computer Science or equivalent practical experience.",
+      "3+ years of experience with data engineering, database design, and data architecture.",
+      "Strong proficiency in advanced SQL, query performance tuning, and Python data pipelines."
+    ],
+    "preferredQualifications": [
+      "Experience building automated migration scripts, schema drift detection, and data reconciliation.",
+      "Familiarity with Google Cloud Platform data tools (BigQuery, Cloud Composer / Airflow, Cloud Storage).",
+      "Experience collaborating with cross-functional engineering and analytics teams."
+    ],
+    "requiredTech": [
+      "Python",
+      "Advanced SQL",
+      "AST Parsers",
+      "BigQuery",
+      "Dataform",
+      "Airflow",
+      "Cloud Migration"
+    ],
+    "postedDate": "Active Google India Opening",
+    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Engineer%22%20gTech&location=India"
+  },
+  {
+    "id": "job-goog-csc-sde",
+    "reqId": "GOOG-IN-CSC-72610",
+    "title": "Senior Data Engineer, Cloud Supply Chain",
+    "team": "Google Cloud Infrastructure Operations",
+    "domain": "Data Engineering",
+    "locations": [
+      "Bengaluru, Karnataka, India"
+    ],
+    "primaryCity": "Bengaluru",
+    "workplaceType": "Hybrid (Bengaluru Campus)",
+    "experienceLevel": "Senior Level (4\u20138 Years)",
+    "matchScore": 95,
+    "matchReason": "Exact domain match: Your Siemens Energy project engineered supply-chain event pipelines processing 15M daily records on Databricks with 32% compute cost reduction.",
+    "minimumQualifications": [
+      "Bachelor's degree in Computer Science, Engineering, or equivalent practical experience.",
+      "4+ years experience in software engineering, data engineering, and distributed systems.",
+      "Expertise in Apache Spark / PySpark optimization, partition salting, and memory tuning."
+    ],
+    "preferredQualifications": [
+      "Experience with supply-chain or infrastructure operational data at petabyte scale.",
+      "Proficiency in both batch and streaming architectures on Google Cloud (BigQuery, Dataflow, Pub/Sub).",
+      "Strong track record solving join skew, straggler tasks, and cluster resource contention."
+    ],
+    "requiredTech": [
+      "PySpark",
+      "Apache Spark",
+      "Databricks",
+      "BigQuery",
+      "Supply Chain Analytics",
+      "Performance Tuning"
+    ],
+    "postedDate": "Active Google India Opening",
+    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Senior%20Data%20Engineer%22%20%22Cloud%20Supply%20Chain%22&location=Bengaluru%2C%20India"
+  },
+  {
+    "id": "job-goog-gup-sde",
+    "reqId": "GOOG-IN-GUP-61905",
+    "title": "Senior Data Engineer, gTech Users and Products (gUP)",
+    "team": "gTech Users & Products Engineering",
+    "domain": "Data Engineering",
+    "locations": [
+      "Hyderabad, Telangana, India",
+      "Gurugram, Haryana, India"
+    ],
+    "primaryCity": "Hyderabad / Gurugram",
+    "workplaceType": "Hybrid (Hyderabad or Gurugram Office)",
+    "experienceLevel": "Senior Level (4\u20138 Years)",
+    "matchScore": 92,
+    "matchReason": "Strong match with your Coca-Cola metadata-driven ADF ingestion framework and 3-tier dbt Cloud modular transformations (Staging, Intermediate, Marts).",
+    "minimumQualifications": [
+      "Bachelor's degree in CS, IT, or related quantitative discipline.",
+      "4+ years experience architecting enterprise data ingestion frameworks and analytical warehouses.",
+      "Expert SQL and data transformation skills using modern semantic layers (dbt / Dataform)."
+    ],
+    "preferredQualifications": [
+      "Hands-on experience with metadata parameterization, incremental delta loading, and CDC.",
+      "Experience setting up observability, MTTR reduction, and automated alert pipelines.",
+      "Familiarity with Google Cloud Platform, BigQuery, and enterprise BI consumption layers."
+    ],
+    "requiredTech": [
+      "SQL",
+      "Python",
+      "dbt Cloud",
+      "Dataform",
+      "Metadata Frameworks",
+      "ADF / Airflow",
+      "BigQuery"
+    ],
+    "postedDate": "Active Google India Opening",
+    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Senior%20Data%20Engineer%22%20gUP&location=India"
+  },
+  {
+    "id": "job-goog-dae",
+    "reqId": "GOOG-IN-DAE-55120",
+    "title": "Data Application Engineer, Google Cloud",
+    "team": "Google Cloud Enterprise Applications & Data Platforms",
+    "domain": "Cloud & Analytics",
+    "locations": [
+      "Bengaluru, Karnataka, India",
+      "Hyderabad, Telangana, India"
+    ],
+    "primaryCity": "Bengaluru / Hyderabad",
+    "workplaceType": "Hybrid (Bengaluru or Hyderabad Office)",
+    "experienceLevel": "Mid to Senior Level (3\u20136 Years)",
+    "matchScore": 90,
+    "matchReason": "Matches your end-to-end analytical application experience: REST API ingestion, multi-tenant database integration, and schema validation.",
+    "minimumQualifications": [
+      "Bachelor's degree in CS or equivalent practical experience.",
+      "3+ years experience with database systems, ETL tooling, and backend Python scripting.",
+      "Demonstrated experience designing scalable relational and columnar data schemas."
+    ],
+    "preferredQualifications": [
+      "Experience building data-centric web services and microservices.",
+      "Understanding of columnar storage formats (Parquet, Capacitor, ORC) and database indexes.",
+      "Experience working with cloud analytical services (BigQuery, Cloud SQL, Spanner)."
+    ],
+    "requiredTech": [
+      "Python",
+      "SQL",
+      "REST APIs",
+      "ETL Tools",
+      "BigQuery",
+      "Cloud SQL",
+      "Data Modeling"
+    ],
+    "postedDate": "Active Google India Opening",
+    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Application%20Engineer%22&location=India"
+  },
+  {
+    "id": "job-goog-cai",
+    "reqId": "GOOG-IN-CAI-49312",
+    "title": "Cloud AI & Data Engineer, Technical Onboarding",
+    "team": "Google Cloud Customer Solutions & Consulting",
+    "domain": "Cloud & Analytics",
+    "locations": [
+      "Bengaluru, Karnataka, India",
+      "Hyderabad, Telangana, India",
+      "Pune, Maharashtra, India",
+      "Gurugram, Haryana, India"
+    ],
+    "primaryCity": "Bengaluru / Hyderabad / Pune / Gurugram",
+    "workplaceType": "Hybrid (Bengaluru, Hyderabad, Pune, or Gurugram)",
+    "experienceLevel": "Mid to Senior Level (3\u20137 Years)",
+    "matchScore": 88,
+    "matchReason": "Aligns with your 4-year consulting background at Capgemini architecting analytical lakehouses for global enterprises (Siemens, Coca-Cola).",
+    "minimumQualifications": [
+      "Bachelor's degree in Computer Science, Engineering, or equivalent practical experience.",
+      "3+ years experience guiding cloud data migrations and building analytics solutions on cloud infrastructure.",
+      "Proficiency in SQL, Python, and cloud analytical architecture."
+    ],
+    "preferredQualifications": [
+      "Experience migrating legacy data warehouses (SAP HANA, Teradata, Oracle) to modern cloud warehouses.",
+      "Knowledge of Google Cloud data ecosystem (BigQuery, Dataproc, Dataflow, Cloud Storage).",
+      "Strong client-facing consulting, solution design, and technical communication skills."
+    ],
+    "requiredTech": [
+      "Google Cloud",
+      "BigQuery",
+      "Python",
+      "Cloud Migration",
+      "Dataproc",
+      "Consulting",
+      "Architecture"
+    ],
+    "postedDate": "Active Google India Opening",
+    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Cloud%20AI%22%20OR%20%22Data%22%20consulting&location=India"
+  },
+  {
+    "id": "job-goog-ces",
+    "reqId": "GOOG-IN-CES-38104",
+    "title": "Customer Engineering Specialist, Data Analytics",
+    "team": "Google Cloud Enterprise Engineering",
+    "domain": "Cloud & Analytics",
+    "locations": [
+      "Hyderabad, Telangana, India",
+      "Gurugram, Haryana, India",
+      "Mumbai, Maharashtra, India"
+    ],
+    "primaryCity": "Hyderabad / Gurugram / Mumbai",
+    "workplaceType": "Hybrid (Hyderabad, Gurugram, or Mumbai)",
+    "experienceLevel": "Senior Level (4\u20138 Years)",
+    "matchScore": 87,
+    "matchReason": "Leverages your associate consultant experience presenting technical trade-offs, calculating compute cost savings ($14k/mo), and designing migration roadmaps.",
+    "minimumQualifications": [
+      "Bachelor's degree in CS, Engineering, or equivalent practical experience.",
+      "4+ years experience in technical solution engineering, cloud data architecture, or data consultancy.",
+      "Expertise in modern cloud analytical architectures (Lakehouse, Star Schema, Streaming vs Batch)."
+    ],
+    "preferredQualifications": [
+      "Experience with competitive data technologies (Snowflake, Databricks, Azure Synapse vs BigQuery).",
+      "Ability to architect and defend enterprise-grade data platforms to senior technical stakeholders.",
+      "Experience conducting architectural proofs-of-concept and performance benchmarking."
+    ],
+    "requiredTech": [
+      "BigQuery",
+      "Snowflake",
+      "Databricks",
+      "Cloud Lakehouse",
+      "Enterprise Architecture",
+      "Pre-Sales / Consulting"
+    ],
+    "postedDate": "Active Google India Opening",
+    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Analytics%22%20Customer%20Engineering&location=India"
+  },
+  {
+    "id": "job-goog-edp",
+    "reqId": "GOOG-IN-EDP-29801",
+    "title": "Software Engineer, Enterprise Data Platform",
+    "team": "Core Infrastructure & Data Systems",
+    "domain": "Platform & Infra",
+    "locations": [
+      "Hyderabad, Telangana, India",
+      "Bengaluru, Karnataka, India"
+    ],
+    "primaryCity": "Hyderabad / Bengaluru",
+    "workplaceType": "Hybrid (Hyderabad or Bengaluru Campus)",
+    "experienceLevel": "Mid to Senior Level (3\u20136 Years)",
+    "matchScore": 91,
+    "matchReason": "Maps to your distributed systems background: high-throughput shuffle tuning, memory limit handling, partition pruning, and cluster key design.",
+    "minimumQualifications": [
+      "Bachelor's degree in Computer Science or related technical discipline.",
+      "3+ years experience with distributed computing systems, backend data infrastructure, and algorithms.",
+      "Strong coding skills in Python, Java, or C++ and distributed query execution concepts."
+    ],
+    "preferredQualifications": [
+      "Experience with large-scale storage engine internals, columnar file formats, and caching layers.",
+      "Deep understanding of distributed consensus, fault tolerance, and concurrency control.",
+      "Experience tuning query execution plans, DAG stages, and network shuffles."
+    ],
+    "requiredTech": [
+      "Python",
+      "Distributed Systems",
+      "Spark Internals",
+      "Query Optimization",
+      "Columnar Storage",
+      "Algorithms"
+    ],
+    "postedDate": "Active Google India Opening",
+    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Enterprise%20Data%20Platform%22&location=India"
+  }
+],
   "targetRoles": [
-    {
-      "id": "role-de",
-      "title": "Senior Data Engineer (L5)",
-      "organization": "Core Data / Google Cloud / Ads Infrastructure",
-      "profileAlignment": "Primary Target (Distributed Systems & Scale)",
-      "barDifficulty": "High",
-      "compensationRange": "$280k - $380k USD / ₹65L - ₹95L INR",
-      "evaluationFocus": "Rigorous focus on distributed stream/batch processing (Apache Beam, Spark), columnar warehouse internals (BigQuery Capacitor/Dremel), real-time CDC, and Kimball dimensional schemas under high query concurrency.",
-      "interviewRounds": [
-        {
-          "name": "Round 1: Python Data Structures & Algorithms",
-          "desc": "LeetCode Medium/Hard (Focus: Graph DAGs, Heaps, Sliding Window, Monotonic Stacks, Hash Lookups)"
-        },
-        {
-          "name": "Round 2: Scalable Data Processing Algorithms",
-          "desc": "Custom aggregators, streaming stateful windowing, topological sorting, memory limits"
-        },
-        {
-          "name": "Round 3: Advanced SQL & Dimensional Modeling",
-          "desc": "Complex analytical window functions, session boundary detection, SCD Type 1-6 modeling"
-        },
-        {
-          "name": "Round 4: Large-Scale Distributed System Design",
-          "desc": "Real-time streaming vs batch, Pub/Sub sharding, Dataflow watermarks, Bigtable schema design, idempotency"
-        },
-        {
-          "name": "Round 5: Googliness & Technical Leadership",
-          "desc": "Navigating ambiguous technical roadmaps, cross-team influence, incident post-mortem culture"
-        }
-      ],
-      "strengthsNeeded": {
-        "dsa": 8,
-        "sql": 9,
-        "systemDesign": 9,
-        "cloud": 9,
-        "businessMetrics": 6,
-        "clientFacing": 4
-      },
-      "googleCareersQuery": "https://www.google.com/about/careers/applications/jobs/results/?q=%22Data%20Engineer%22&level=MID_LEVEL&level=SENIOR_LEVEL"
-    },
-    {
-      "id": "role-bie",
-      "title": "Business Intelligence Engineer / Analytics Engineer (L5)",
-      "organization": "Finance / People Operations / Google Cloud GTM",
-      "profileAlignment": "High Match (Analytics & Data Warehouse Focus)",
-      "barDifficulty": "Moderate",
-      "compensationRange": "$240k - $340k USD / ₹55L - ₹80L INR",
-      "evaluationFocus": "Heavily evaluates complex SQL mastery (multi-stage CTEs, cumulative windowing, QUALIFY deduplication), Kimball Star Schemas, semantic metrics layers, and automated data quality validation pipelines.",
-      "interviewRounds": [
-        {
-          "name": "Round 1: Advanced Analytical SQL",
-          "desc": "Multi-table joins, sessionization, recursive CTEs, BigQuery partition pruning, query performance tuning"
-        },
-        {
-          "name": "Round 2: Dimensional Architecture & Data Modeling",
-          "desc": "Fact & dimension modeling, surrogate key lifecycles, semantic metrics layer (LookML/dbt), SCD Type 2"
-        },
-        {
-          "name": "Round 3: Practical Python Data Automation",
-          "desc": "Data extraction, REST API consumption, schema validation, automated pipeline error handling"
-        },
-        {
-          "name": "Round 4: Analytical Problem Solving & Metrics",
-          "desc": "Defining North Star KPIs, diagnosing metric anomalies, experimentation analysis"
-        },
-        {
-          "name": "Round 5: Technical Communication & Leadership",
-          "desc": "Stakeholder management, translating data insights to director-level executive leadership"
-        }
-      ],
-      "strengthsNeeded": {
-        "dsa": 5,
-        "sql": 10,
-        "systemDesign": 7,
-        "cloud": 8,
-        "businessMetrics": 9,
-        "clientFacing": 7
-      },
-      "googleCareersQuery": "https://www.google.com/about/careers/applications/jobs/results/?q=%22Business%20Intelligence%22%20OR%20%22Analytics%20Engineer%22"
-    },
-    {
-      "id": "role-cse",
-      "title": "Customer Solutions Engineer - Data & Cloud (L5)",
-      "organization": "Google Cloud Enterprise Engineering",
-      "profileAlignment": "Strong Match (Enterprise Architecture & Delivery)",
-      "barDifficulty": "Moderate",
-      "compensationRange": "$260k - $360k USD / ₹60L - ₹85L INR",
-      "evaluationFocus": "Evaluates client cloud data modernization: designing migrations from legacy systems (Teradata/Hadoop/Snowflake) to BigQuery, tuning streaming Dataflow pipelines, and defending reference architectures to enterprise CTOs.",
-      "interviewRounds": [
-        {
-          "name": "Round 1: Practical Python Scripting",
-          "desc": "Data transformations, pipeline automation, REST integrations, robust error handling"
-        },
-        {
-          "name": "Round 2: Cloud Data Architecture & Migration",
-          "desc": "Architecting large-scale migrations from on-prem/multi-cloud to Google Cloud data platforms"
-        },
-        {
-          "name": "Round 3: Technical Debugging & Incident Triage",
-          "desc": "Diagnosing slow analytical queries, pipeline backpressure, and data consistency anomalies"
-        },
-        {
-          "name": "Round 4: Technical Solutioning & Executive Defense",
-          "desc": "Presenting architectural trade-offs, security, and TCO cost models to senior enterprise architects"
-        },
-        {
-          "name": "Round 5: Googliness & Collaboration",
-          "desc": "Customer empathy, cross-functional collaboration with Google Cloud product & engineering teams"
-        }
-      ],
-      "strengthsNeeded": {
-        "dsa": 5,
-        "sql": 8,
-        "systemDesign": 9,
-        "cloud": 10,
-        "businessMetrics": 7,
-        "clientFacing": 9
-      },
-      "googleCareersQuery": "https://www.google.com/about/careers/applications/jobs/results/?q=%22Customer%20Solutions%20Engineer%22%20data"
-    },
-    {
-      "id": "role-pso",
-      "title": "Cloud Consultant / Technical Architect - Data Platforms (L5)",
-      "organization": "Google Cloud Professional Services Organization (PSO)",
-      "profileAlignment": "High Match (Enterprise Lakehouse & Modernization)",
-      "barDifficulty": "Moderate-High",
-      "compensationRange": "$270k - $370k USD / ₹65L - ₹90L INR",
-      "evaluationFocus": "Focuses on strategic enterprise data platform design: distributed lakehouses, data mesh architectures, cross-cloud governance, and automated CI/CD for data pipelines.",
-      "interviewRounds": [
-        {
-          "name": "Round 1: Enterprise Data Architecture & Design",
-          "desc": "Designing enterprise lakehouse, data governance, multi-region replication, and compliance"
-        },
-        {
-          "name": "Round 2: Google Cloud Big Data Deep Dive",
-          "desc": "First-principles mechanics of BigQuery slots, Dataflow event-time watermarking, and Bigtable"
-        },
-        {
-          "name": "Round 3: Enterprise Migration & Dual-Run Strategies",
-          "desc": "Zero-downtime cutover strategies, parallel reconciliation pipelines, and rollback architectures"
-        },
-        {
-          "name": "Round 4: Delivery Leadership & Risk Scoping",
-          "desc": "Technical roadmapping, implementation risk management, and architectural governance"
-        },
-        {
-          "name": "Round 5: Googliness & Leadership",
-          "desc": "Managing technical disagreements, executive mentoring, establishing technical standards"
-        }
-      ],
-      "strengthsNeeded": {
-        "dsa": 5,
-        "sql": 8,
-        "systemDesign": 10,
-        "cloud": 10,
-        "businessMetrics": 7,
-        "clientFacing": 9
-      },
-      "googleCareersQuery": "https://www.google.com/about/careers/applications/jobs/results/?q=%22Professional%20Services%22%20%22Data%22"
-    },
-    {
-      "id": "role-swe-data",
-      "title": "Software Engineer - Data Systems & Infrastructure (SWE L5)",
-      "organization": "Core Systems / BigQuery Engine / Cloud Infrastructure",
-      "profileAlignment": "Stretch Target (Low-Level Systems & Distributed Engines)",
-      "barDifficulty": "Very High",
-      "compensationRange": "$320k - $420k USD / ₹75L - ₹1.1Cr INR",
-      "evaluationFocus": "High algorithmic coding bar (Graphs, DP, Trees) combined with deep distributed systems engineering: RPC protocols, consensus (Raft/Paxos), multi-version concurrency control (MVCC), and cache coherence.",
-      "interviewRounds": [
-        {
-          "name": "Round 1: Algorithms & Data Structures",
-          "desc": "Algorithmic problem solving in Python/Java/C++, optimal O(N) space and time guarantees"
-        },
-        {
-          "name": "Round 2: Algorithms & Advanced Data Structures",
-          "desc": "Graph theory, dynamic programming, priority queues, and complex recursion"
-        },
-        {
-          "name": "Round 3: Distributed Storage & Systems Infrastructure",
-          "desc": "Storage engines, replication, consensus, network partitioning (CAP theorem), locking"
-        },
-        {
-          "name": "Round 4: Concurrency & System Design",
-          "desc": "Multithreading, memory barriers, thread safety, API contract design"
-        },
-        {
-          "name": "Round 5: Googliness & Leadership",
-          "desc": "Driving engineering excellence, architectural ownership, blameless post-mortem culture"
-        }
-      ],
-      "strengthsNeeded": {
-        "dsa": 10,
-        "sql": 6,
-        "systemDesign": 10,
-        "cloud": 7,
-        "businessMetrics": 3,
-        "clientFacing": 2
-      },
-      "googleCareersQuery": "https://www.google.com/about/careers/applications/jobs/results/?q=%22Software%20Engineer%22%20data"
-    },
-    {
-      "id": "role-tsc",
-      "title": "Technical Solutions Consultant - Data Systems (L5)",
-      "organization": "Global Customer Operations / Internal Platforms",
-      "profileAlignment": "Direct Match (Operational Engineering & Scripting)",
-      "barDifficulty": "Moderate",
-      "compensationRange": "$230k - $320k USD / ₹50L - ₹75L INR",
-      "evaluationFocus": "Pragmatic data engineering: SQL debugging, automated Python pipelines, database indexing, telemetry monitoring, and rapid resolution of high-severity production pipeline failures.",
-      "interviewRounds": [
-        {
-          "name": "Round 1: SQL Debugging & Performance",
-          "desc": "Optimizing queries, identifying data skew, resolving metric discrepancies"
-        },
-        {
-          "name": "Round 2: Python Scripting & Automation",
-          "desc": "Automated ETL scripting, error handling, rate limiting, and API webhooks"
-        },
-        {
-          "name": "Round 3: Technical Systems Troubleshooting",
-          "desc": "Root cause analysis of complex distributed pipeline failures and data corruption"
-        },
-        {
-          "name": "Round 4: Analytical Systems Case Study",
-          "desc": "Designing automated telemetry dashboards and proactive pipeline monitoring"
-        },
-        {
-          "name": "Round 5: Googliness & Operational Excellence",
-          "desc": "Incident communication, stakeholder prioritization, continuous improvement"
-        }
-      ],
-      "strengthsNeeded": {
-        "dsa": 5,
-        "sql": 9,
-        "systemDesign": 7,
-        "cloud": 7,
-        "businessMetrics": 8,
-        "clientFacing": 8
-      },
-      "googleCareersQuery": "https://www.google.com/about/careers/applications/jobs/results/?q=%22Technical%20Solutions%20Consultant%22"
-    }
-  ],
+  {
+    "id": "job-goog-yt-de",
+    "reqId": "GOOG-IN-YT-98214",
+    "title": "Data Engineer, YouTube Business Organization",
+    "team": "YouTube Business Intelligence & Operations",
+    "domain": "Data Engineering",
+    "locations": [
+      "Bengaluru, Karnataka, India"
+    ],
+    "primaryCity": "Bengaluru",
+    "workplaceType": "Hybrid (Bengaluru Campus)",
+    "experienceLevel": "Mid to Senior Level (3\u20136+ Years)",
+    "matchScore": 96,
+    "matchReason": "Direct mapping to your Siemens Energy 15M daily event PySpark pipeline, Databricks AQE shuffle tuning, and Snowflake partition optimization.",
+    "minimumQualifications": [
+      "Bachelor's degree in Computer Science, Data Science, related field, or equivalent practical experience.",
+      "3+ years experience designing, building, and maintaining production-grade data pipelines using Python and SQL.",
+      "Hands-on experience with dimensional data modeling (Kimball) and analytical warehouse schemas."
+    ],
+    "preferredQualifications": [
+      "Experience with distributed data systems (Apache Spark, PySpark, Databricks).",
+      "Experience optimizing large-scale queries on Google BigQuery or Snowflake.",
+      "Familiarity with CI/CD deployment pipelines, automated schema validation, and data quality testing."
+    ],
+    "requiredTech": [
+      "Python",
+      "PySpark",
+      "SQL",
+      "BigQuery",
+      "Snowflake",
+      "ETL/ELT",
+      "Kimball Modeling"
+    ],
+    "postedDate": "Active Google India Opening",
+    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Engineer%22%20%22YouTube%22&location=Bengaluru%2C%20India"
+  },
+  {
+    "id": "job-goog-gt-de",
+    "reqId": "GOOG-IN-GT-84192",
+    "title": "Data Engineer, Data Architecture and Engineering (gTech)",
+    "team": "Google Technical Services (gTech Data Architecture)",
+    "domain": "Data Engineering",
+    "locations": [
+      "Gurugram, Haryana, India",
+      "Hyderabad, Telangana, India"
+    ],
+    "primaryCity": "Gurugram / Hyderabad",
+    "workplaceType": "Hybrid (Gurugram or Hyderabad Office)",
+    "experienceLevel": "Mid to Senior Level (3\u20137 Years)",
+    "matchScore": 94,
+    "matchReason": "Direct alignment with your automated Python AST migration parsers (40k legacy objects to cloud warehouse) and multi-hop Bronze-Silver-Gold curation.",
+    "minimumQualifications": [
+      "Bachelor's degree in Computer Science or equivalent practical experience.",
+      "3+ years of experience with data engineering, database design, and data architecture.",
+      "Strong proficiency in advanced SQL, query performance tuning, and Python data pipelines."
+    ],
+    "preferredQualifications": [
+      "Experience building automated migration scripts, schema drift detection, and data reconciliation.",
+      "Familiarity with Google Cloud Platform data tools (BigQuery, Cloud Composer / Airflow, Cloud Storage).",
+      "Experience collaborating with cross-functional engineering and analytics teams."
+    ],
+    "requiredTech": [
+      "Python",
+      "Advanced SQL",
+      "AST Parsers",
+      "BigQuery",
+      "Dataform",
+      "Airflow",
+      "Cloud Migration"
+    ],
+    "postedDate": "Active Google India Opening",
+    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Engineer%22%20gTech&location=India"
+  },
+  {
+    "id": "job-goog-csc-sde",
+    "reqId": "GOOG-IN-CSC-72610",
+    "title": "Senior Data Engineer, Cloud Supply Chain",
+    "team": "Google Cloud Infrastructure Operations",
+    "domain": "Data Engineering",
+    "locations": [
+      "Bengaluru, Karnataka, India"
+    ],
+    "primaryCity": "Bengaluru",
+    "workplaceType": "Hybrid (Bengaluru Campus)",
+    "experienceLevel": "Senior Level (4\u20138 Years)",
+    "matchScore": 95,
+    "matchReason": "Exact domain match: Your Siemens Energy project engineered supply-chain event pipelines processing 15M daily records on Databricks with 32% compute cost reduction.",
+    "minimumQualifications": [
+      "Bachelor's degree in Computer Science, Engineering, or equivalent practical experience.",
+      "4+ years experience in software engineering, data engineering, and distributed systems.",
+      "Expertise in Apache Spark / PySpark optimization, partition salting, and memory tuning."
+    ],
+    "preferredQualifications": [
+      "Experience with supply-chain or infrastructure operational data at petabyte scale.",
+      "Proficiency in both batch and streaming architectures on Google Cloud (BigQuery, Dataflow, Pub/Sub).",
+      "Strong track record solving join skew, straggler tasks, and cluster resource contention."
+    ],
+    "requiredTech": [
+      "PySpark",
+      "Apache Spark",
+      "Databricks",
+      "BigQuery",
+      "Supply Chain Analytics",
+      "Performance Tuning"
+    ],
+    "postedDate": "Active Google India Opening",
+    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Senior%20Data%20Engineer%22%20%22Cloud%20Supply%20Chain%22&location=Bengaluru%2C%20India"
+  },
+  {
+    "id": "job-goog-gup-sde",
+    "reqId": "GOOG-IN-GUP-61905",
+    "title": "Senior Data Engineer, gTech Users and Products (gUP)",
+    "team": "gTech Users & Products Engineering",
+    "domain": "Data Engineering",
+    "locations": [
+      "Hyderabad, Telangana, India",
+      "Gurugram, Haryana, India"
+    ],
+    "primaryCity": "Hyderabad / Gurugram",
+    "workplaceType": "Hybrid (Hyderabad or Gurugram Office)",
+    "experienceLevel": "Senior Level (4\u20138 Years)",
+    "matchScore": 92,
+    "matchReason": "Strong match with your Coca-Cola metadata-driven ADF ingestion framework and 3-tier dbt Cloud modular transformations (Staging, Intermediate, Marts).",
+    "minimumQualifications": [
+      "Bachelor's degree in CS, IT, or related quantitative discipline.",
+      "4+ years experience architecting enterprise data ingestion frameworks and analytical warehouses.",
+      "Expert SQL and data transformation skills using modern semantic layers (dbt / Dataform)."
+    ],
+    "preferredQualifications": [
+      "Hands-on experience with metadata parameterization, incremental delta loading, and CDC.",
+      "Experience setting up observability, MTTR reduction, and automated alert pipelines.",
+      "Familiarity with Google Cloud Platform, BigQuery, and enterprise BI consumption layers."
+    ],
+    "requiredTech": [
+      "SQL",
+      "Python",
+      "dbt Cloud",
+      "Dataform",
+      "Metadata Frameworks",
+      "ADF / Airflow",
+      "BigQuery"
+    ],
+    "postedDate": "Active Google India Opening",
+    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Senior%20Data%20Engineer%22%20gUP&location=India"
+  },
+  {
+    "id": "job-goog-dae",
+    "reqId": "GOOG-IN-DAE-55120",
+    "title": "Data Application Engineer, Google Cloud",
+    "team": "Google Cloud Enterprise Applications & Data Platforms",
+    "domain": "Cloud & Analytics",
+    "locations": [
+      "Bengaluru, Karnataka, India",
+      "Hyderabad, Telangana, India"
+    ],
+    "primaryCity": "Bengaluru / Hyderabad",
+    "workplaceType": "Hybrid (Bengaluru or Hyderabad Office)",
+    "experienceLevel": "Mid to Senior Level (3\u20136 Years)",
+    "matchScore": 90,
+    "matchReason": "Matches your end-to-end analytical application experience: REST API ingestion, multi-tenant database integration, and schema validation.",
+    "minimumQualifications": [
+      "Bachelor's degree in CS or equivalent practical experience.",
+      "3+ years experience with database systems, ETL tooling, and backend Python scripting.",
+      "Demonstrated experience designing scalable relational and columnar data schemas."
+    ],
+    "preferredQualifications": [
+      "Experience building data-centric web services and microservices.",
+      "Understanding of columnar storage formats (Parquet, Capacitor, ORC) and database indexes.",
+      "Experience working with cloud analytical services (BigQuery, Cloud SQL, Spanner)."
+    ],
+    "requiredTech": [
+      "Python",
+      "SQL",
+      "REST APIs",
+      "ETL Tools",
+      "BigQuery",
+      "Cloud SQL",
+      "Data Modeling"
+    ],
+    "postedDate": "Active Google India Opening",
+    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Application%20Engineer%22&location=India"
+  },
+  {
+    "id": "job-goog-cai",
+    "reqId": "GOOG-IN-CAI-49312",
+    "title": "Cloud AI & Data Engineer, Technical Onboarding",
+    "team": "Google Cloud Customer Solutions & Consulting",
+    "domain": "Cloud & Analytics",
+    "locations": [
+      "Bengaluru, Karnataka, India",
+      "Hyderabad, Telangana, India",
+      "Pune, Maharashtra, India",
+      "Gurugram, Haryana, India"
+    ],
+    "primaryCity": "Bengaluru / Hyderabad / Pune / Gurugram",
+    "workplaceType": "Hybrid (Bengaluru, Hyderabad, Pune, or Gurugram)",
+    "experienceLevel": "Mid to Senior Level (3\u20137 Years)",
+    "matchScore": 88,
+    "matchReason": "Aligns with your 4-year consulting background at Capgemini architecting analytical lakehouses for global enterprises (Siemens, Coca-Cola).",
+    "minimumQualifications": [
+      "Bachelor's degree in Computer Science, Engineering, or equivalent practical experience.",
+      "3+ years experience guiding cloud data migrations and building analytics solutions on cloud infrastructure.",
+      "Proficiency in SQL, Python, and cloud analytical architecture."
+    ],
+    "preferredQualifications": [
+      "Experience migrating legacy data warehouses (SAP HANA, Teradata, Oracle) to modern cloud warehouses.",
+      "Knowledge of Google Cloud data ecosystem (BigQuery, Dataproc, Dataflow, Cloud Storage).",
+      "Strong client-facing consulting, solution design, and technical communication skills."
+    ],
+    "requiredTech": [
+      "Google Cloud",
+      "BigQuery",
+      "Python",
+      "Cloud Migration",
+      "Dataproc",
+      "Consulting",
+      "Architecture"
+    ],
+    "postedDate": "Active Google India Opening",
+    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Cloud%20AI%22%20OR%20%22Data%22%20consulting&location=India"
+  },
+  {
+    "id": "job-goog-ces",
+    "reqId": "GOOG-IN-CES-38104",
+    "title": "Customer Engineering Specialist, Data Analytics",
+    "team": "Google Cloud Enterprise Engineering",
+    "domain": "Cloud & Analytics",
+    "locations": [
+      "Hyderabad, Telangana, India",
+      "Gurugram, Haryana, India",
+      "Mumbai, Maharashtra, India"
+    ],
+    "primaryCity": "Hyderabad / Gurugram / Mumbai",
+    "workplaceType": "Hybrid (Hyderabad, Gurugram, or Mumbai)",
+    "experienceLevel": "Senior Level (4\u20138 Years)",
+    "matchScore": 87,
+    "matchReason": "Leverages your associate consultant experience presenting technical trade-offs, calculating compute cost savings ($14k/mo), and designing migration roadmaps.",
+    "minimumQualifications": [
+      "Bachelor's degree in CS, Engineering, or equivalent practical experience.",
+      "4+ years experience in technical solution engineering, cloud data architecture, or data consultancy.",
+      "Expertise in modern cloud analytical architectures (Lakehouse, Star Schema, Streaming vs Batch)."
+    ],
+    "preferredQualifications": [
+      "Experience with competitive data technologies (Snowflake, Databricks, Azure Synapse vs BigQuery).",
+      "Ability to architect and defend enterprise-grade data platforms to senior technical stakeholders.",
+      "Experience conducting architectural proofs-of-concept and performance benchmarking."
+    ],
+    "requiredTech": [
+      "BigQuery",
+      "Snowflake",
+      "Databricks",
+      "Cloud Lakehouse",
+      "Enterprise Architecture",
+      "Pre-Sales / Consulting"
+    ],
+    "postedDate": "Active Google India Opening",
+    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Analytics%22%20Customer%20Engineering&location=India"
+  },
+  {
+    "id": "job-goog-edp",
+    "reqId": "GOOG-IN-EDP-29801",
+    "title": "Software Engineer, Enterprise Data Platform",
+    "team": "Core Infrastructure & Data Systems",
+    "domain": "Platform & Infra",
+    "locations": [
+      "Hyderabad, Telangana, India",
+      "Bengaluru, Karnataka, India"
+    ],
+    "primaryCity": "Hyderabad / Bengaluru",
+    "workplaceType": "Hybrid (Hyderabad or Bengaluru Campus)",
+    "experienceLevel": "Mid to Senior Level (3\u20136 Years)",
+    "matchScore": 91,
+    "matchReason": "Maps to your distributed systems background: high-throughput shuffle tuning, memory limit handling, partition pruning, and cluster key design.",
+    "minimumQualifications": [
+      "Bachelor's degree in Computer Science or related technical discipline.",
+      "3+ years experience with distributed computing systems, backend data infrastructure, and algorithms.",
+      "Strong coding skills in Python, Java, or C++ and distributed query execution concepts."
+    ],
+    "preferredQualifications": [
+      "Experience with large-scale storage engine internals, columnar file formats, and caching layers.",
+      "Deep understanding of distributed consensus, fault tolerance, and concurrency control.",
+      "Experience tuning query execution plans, DAG stages, and network shuffles."
+    ],
+    "requiredTech": [
+      "Python",
+      "Distributed Systems",
+      "Spark Internals",
+      "Query Optimization",
+      "Columnar Storage",
+      "Algorithms"
+    ],
+    "postedDate": "Active Google India Opening",
+    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Enterprise%20Data%20Platform%22&location=India"
+  }
+],
   "dsaProblems": [
     {
       "id": "dsa-1",

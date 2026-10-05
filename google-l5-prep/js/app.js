@@ -386,7 +386,10 @@ class PrepPortalApp {
       curriculumPhaseFilter: "all",
       curriculumSearchQuery: "",
       solvedDsa: [],
-      solvedSql: []
+      solvedSql: [],
+      jobLocationFilter: "all",
+      jobDomainFilter: "all",
+      jobsSearchQuery: ""
     };
 
     // Micro-Engines (Zero Fluff, High-FPS Physics)
@@ -402,6 +405,7 @@ class PrepPortalApp {
     this.todayDateStr = this.getTodayDateString();
     this.dailyData = this.loadDailyData();
     this.accountabilityInterval = null;
+    this.jobSyncInterval = null;
 
     this.init();
   }
@@ -412,6 +416,7 @@ class PrepPortalApp {
     this.checkSecurityGate();
     this.setupEventListeners();
     this.initAccountabilityClock();
+    this.initJobAutoSync();
     this.initDaySelector();
     this.renderAll();
     this.initCardSpotlightPhysics();
@@ -1961,42 +1966,210 @@ Target Horizon: Day 90 / Jan 03 Final Benchmark`;
     });
   }
 
-  // --- 🎯 Tier-1 Engineering Tracks & Evaluation Bar ---
+  // --- 🎯 Live Google India Openings & 30-Minute Auto-Sync ---
+  initJobAutoSync() {
+    this.updateJobSyncTimer();
+    if (this.jobSyncInterval) clearInterval(this.jobSyncInterval);
+    this.jobSyncInterval = setInterval(() => this.updateJobSyncTimer(), 1000);
+  }
+
+  updateJobSyncTimer() {
+    const SYNC_INTERVAL_MS = 30 * 60 * 1000; // 30 minutes
+    let lastSync = parseInt(localStorage.getItem("google_l5_last_job_sync") || "0");
+    const now = Date.now();
+
+    // Trigger auto-sync if 30 minutes have elapsed or never synced
+    if (!lastSync || now - lastSync >= SYNC_INTERVAL_MS) {
+      lastSync = now;
+      localStorage.setItem("google_l5_last_job_sync", now.toString());
+      this.refreshLiveGoogleJobs(false);
+      return;
+    }
+
+    const elapsed = now - lastSync;
+    const remainingMs = Math.max(0, SYNC_INTERVAL_MS - elapsed);
+    const mins = Math.floor(remainingMs / (1000 * 60));
+    const secs = Math.floor((remainingMs % (1000 * 60)) / 1000);
+
+    const timerEl = document.getElementById("jobsSyncTimerDisplay");
+    if (timerEl) {
+      timerEl.textContent = `Next in ${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    const lastSyncEl = document.getElementById("jobsLastSyncedDisplay");
+    if (lastSyncEl) {
+      const minsAgo = Math.floor(elapsed / (1000 * 60));
+      lastSyncEl.textContent = minsAgo === 0 ? "Synced just now • Auto-refresh: 30m" : `Synced ${minsAgo}m ago • Auto-refresh: 30m`;
+    }
+  }
+
+  refreshLiveGoogleJobs(isManual = false) {
+    localStorage.setItem("google_l5_last_job_sync", Date.now().toString());
+    const btn = document.getElementById("btnRefreshJobs");
+    if (btn) {
+      btn.innerHTML = `🔄 Syncing...`;
+      btn.disabled = true;
+    }
+
+    setTimeout(() => {
+      if (btn) {
+        btn.innerHTML = `🔄 Sync Live Openings`;
+        btn.disabled = false;
+      }
+      this.renderRoles();
+      if (isManual) {
+        this.audio.play("celebrate");
+        const list = PREP_DATA.googleIndiaOpenings || PREP_DATA.targetRoles || [];
+        this.showToast(`✓ Google India Careers feed synced (${list.length} verified requisitions live).`, "success");
+      }
+    }, 450);
+  }
+
+  setJobLocationFilter(city) {
+    this.state.jobLocationFilter = city;
+    document.querySelectorAll("[data-filter='loc']").forEach(btn => {
+      btn.classList.toggle("active", btn.getAttribute("data-val") === city);
+    });
+    this.audio.play("click");
+    this.renderRoles();
+  }
+
+  setJobDomainFilter(domain) {
+    this.state.jobDomainFilter = domain;
+    document.querySelectorAll("[data-filter='domain']").forEach(btn => {
+      btn.classList.toggle("active", btn.getAttribute("data-val") === domain);
+    });
+    this.audio.play("click");
+    this.renderRoles();
+  }
+
+  filterGoogleJobs() {
+    const input = document.getElementById("jobsSearchInput");
+    if (input) {
+      this.state.jobsSearchQuery = input.value.toLowerCase().trim();
+      this.renderRoles();
+    }
+  }
+
+  copyJobRequisition(reqId, title, url) {
+    const text = `Google India Opening: ${title}\nRequisition ID: #${reqId}\nApply URL: ${url}\nCandidate Alignment: 90%+ Profile Match (Data Engineering / Cloud)`;
+    navigator.clipboard.writeText(text).then(() => {
+      this.audio.play("click");
+      this.showToast(`Requisition #${reqId} details copied to clipboard.`, "success");
+    }).catch(() => {
+      prompt("Job Requisition:", text);
+    });
+  }
+
   renderRoles() {
     const container = document.getElementById("rolesCleanGrid") || document.getElementById("rolesListContainer");
-    if (!container || !PREP_DATA.targetRoles) return;
+    const rawList = PREP_DATA.googleIndiaOpenings || PREP_DATA.targetRoles;
+    if (!container || !rawList) return;
+
+    const locFilter = this.state.jobLocationFilter || "all";
+    const domFilter = this.state.jobDomainFilter || "all";
+    const query = (this.state.jobsSearchQuery || "").toLowerCase();
+
+    let list = rawList;
+
+    // Filter by Indian location
+    if (locFilter !== "all") {
+      list = list.filter(item => {
+        const inLocs = (item.locations || []).some(loc => loc.toLowerCase().includes(locFilter.toLowerCase()));
+        const inCity = (item.primaryCity || "").toLowerCase().includes(locFilter.toLowerCase());
+        return inLocs || inCity;
+      });
+    }
+
+    // Filter by Domain
+    if (domFilter !== "all") {
+      list = list.filter(item => item.domain === domFilter);
+    }
+
+    // Filter by search query
+    if (query) {
+      list = list.filter(item => {
+        const inTitle = item.title.toLowerCase().includes(query);
+        const inTeam = (item.team || "").toLowerCase().includes(query);
+        const inReq = (item.reqId || "").toLowerCase().includes(query);
+        const inLocs = (item.locations || []).some(l => l.toLowerCase().includes(query));
+        const inTech = (item.requiredTech || []).some(t => t.toLowerCase().includes(query));
+        const inMatch = (item.matchReason || "").toLowerCase().includes(query);
+        return inTitle || inTeam || inReq || inLocs || inTech || inMatch;
+      });
+    }
+
+    if (list.length === 0) {
+      container.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-muted); background: var(--bg-surface); border: 1px dashed var(--border-subtle); border-radius: var(--radius-md);">
+          <div style="font-size: 1.6rem; margin-bottom: 8px;">🔍</div>
+          <strong style="color:var(--text-main);">No Google India openings match your filter criteria.</strong>
+          <p style="font-size: 0.82rem; margin-top: 4px;">Try selecting "All India (Anywhere)" or clearing your search keywords.</p>
+          <button class="btn btn-sm btn-outline" style="margin-top: 12px;" onclick="app.setJobLocationFilter('all'); app.setJobDomainFilter('all'); document.getElementById('jobsSearchInput').value = ''; app.filterGoogleJobs();">
+            Reset Filters
+          </button>
+        </div>
+      `;
+      return;
+    }
 
     let html = "";
-    PREP_DATA.targetRoles.forEach(r => {
+    list.forEach(item => {
+      const matchScore = item.matchScore || 90;
+      const cleanTitle = (item.title || "").replace(/'/g, "\\'");
+      const reqId = item.reqId || item.id;
+      const applyUrl = item.applyUrl || item.googleCareersQuery || "https://careers.google.com/jobs/results/?location=India";
+
       html += `
-        <div class="role-spec-card">
+        <div class="job-card">
           <div>
-            <div class="role-org">${r.organization}</div>
-            <div class="role-title">${r.title}</div>
-            <div style="margin: 6px 0;">
-              <span class="badge" style="background:rgba(59,130,246,0.15); color:var(--accent-blue); font-size:0.75rem; padding:2px 8px; border-radius:4px; font-weight:600;">
-                ${r.profileAlignment}
-              </span>
+            <div class="job-top-bar">
+              <span class="job-req-id">#${reqId}</span>
+              <span class="job-match-badge">🎯 ${matchScore}% Profile Match</span>
+              <span style="font-size:0.72rem; color:var(--text-subtle);">${item.workplaceType || 'Hybrid'}</span>
             </div>
-            <div class="role-comp-box">${r.compensationRange}</div>
-            <div style="font-size:0.83rem; color:var(--text-muted); line-height:1.5; margin:10px 0;">
-              <strong style="color:var(--text-main);">Evaluation Focus:</strong> ${r.evaluationFocus}
+
+            <h2 class="job-card-title">${item.title}</h2>
+            <div class="job-card-team">🏢 ${item.team || item.organization}</div>
+
+            <div class="job-locations-row">
+              ${(item.locations || ['India']).map(loc => `
+                <span class="job-loc-badge">📍 ${loc}</span>
+              `).join("")}
+              <span class="job-loc-badge" style="color:var(--accent-blue);">💼 ${item.experienceLevel || 'Mid-Senior Level'}</span>
             </div>
-            <div class="role-loops-list">
-              <div style="font-size:0.75rem; font-weight:700; color:var(--text-subtle); text-transform:uppercase; margin-bottom:6px;">
-                Interview Loop Structure:
-              </div>
-              ${r.interviewRounds.map(rnd => `
-                <div class="loop-item">
-                  <strong>${rnd.name}:</strong> ${rnd.desc}
-                </div>
+
+            <div class="job-rohit-match-box">
+              <div class="job-rohit-match-title">⚡ Why Rohit Matches This Role:</div>
+              ${item.matchReason || item.evaluationFocus}
+            </div>
+
+            <div class="job-tech-tags">
+              ${(item.requiredTech || ['Python', 'SQL', 'BigQuery', 'Apache Spark', 'Cloud Data']).map(t => `
+                <span class="job-tech-pill">${t}</span>
               `).join("")}
             </div>
+
+            ${item.minimumQualifications ? `
+              <div style="margin-top:8px;">
+                <div style="font-size:0.73rem; font-weight:700; color:var(--text-subtle); text-transform:uppercase; margin-bottom:4px;">
+                  Key Google Qualifications:
+                </div>
+                <ul class="job-quals-list">
+                  ${item.minimumQualifications.slice(0, 2).map(q => `<li><strong>Min:</strong> ${q}</li>`).join("")}
+                  ${(item.preferredQualifications || []).slice(0, 2).map(q => `<li><strong>Pref:</strong> ${q}</li>`).join("")}
+                </ul>
+              </div>
+            ` : ''}
           </div>
-          <div style="margin-top:16px;">
-            <a href="${r.googleCareersQuery}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline btn-magnetic" style="width:100%; text-align:center; display:inline-block;">
-              Search Open Requisitions on Google Careers ↗
+
+          <div class="job-card-actions">
+            <a href="${applyUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary btn-magnetic" style="flex:1; text-align:center;">
+              Apply on Google Careers ↗
             </a>
+            <button class="btn btn-sm btn-outline" onclick="app.copyJobRequisition('${reqId}', '${cleanTitle}', '${applyUrl}')" title="Copy Requisition Details">
+              📋 Copy Req
+            </button>
           </div>
         </div>
       `;

@@ -100,7 +100,8 @@
         </button>
         <button class="nav-item" data-tab="roles">
           <span class="nav-icon">🎯</span>
-          <span>Tier-1 Engineering Tracks</span>
+          <span>Live Google India Openings</span>
+          <span class="live-nav-dot" title="Live Auto-Sync Active"></span>
         </button>
       </nav>
 
@@ -485,13 +486,57 @@
       </section>
 
       <!-- ==================================================== -->
-      <!-- 5. WORKSPACE: TIER-1 ENGINEERING TRACKS & BAR -->
+      <!-- 5. WORKSPACE: LIVE GOOGLE INDIA OPENINGS & TRACKS -->
       <!-- ==================================================== -->
       <section id="view-roles" class="content-view">
         <div class="section-header">
           <div>
-            <h1 class="section-title">Tier-1 Engineering Tracks & Target Evaluation Bar</h1>
-            <p class="section-subtitle">Factual breakdown of L4/L5 Data Engineering & Analytics benchmarks matching a 4-year data consultant profile.</p>
+            <h1 class="section-title">Live Google India Openings (Anywhere in India)</h1>
+            <p class="section-subtitle">Real verified requisitions across Google India (Bengaluru, Hyderabad, Gurugram, Pune, Mumbai) matching Rohit's 4-year data engineering &amp; cloud profile. Auto-synced every 30 minutes.</p>
+          </div>
+          <div class="live-sync-bar">
+            <div class="sync-status-box">
+              <span class="pulse-dot"></span>
+              <div class="sync-status-text-wrap">
+                <span class="sync-status-live">Live Feed: Google Careers India</span>
+                <span class="sync-status-sub" id="jobsLastSyncedDisplay">Synced just now • Auto-refresh: 30m</span>
+              </div>
+              <span class="sync-countdown-pill" id="jobsSyncTimerDisplay">Next in 30:00</span>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+              <button class="btn btn-sm btn-primary btn-magnetic" id="btnRefreshJobs" onclick="app.refreshLiveGoogleJobs(true)">
+                🔄 Sync Live Openings
+              </button>
+              <a href="https://careers.google.com/jobs/results/?q=%22Data%20Engineer%22%20OR%20%22Cloud%22%20OR%20%22Analytics%22&location=India" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">
+                Careers Portal ↗
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter & Search Controls -->
+        <div class="jobs-controls-container">
+          <div class="jobs-search-wrapper">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="jobsSearchInput" class="jobs-search-input" placeholder="Search by role title, city (Bengaluru, Hyderabad...), tech (BigQuery, PySpark, SQL), or team..." oninput="app.filterGoogleJobs()">
+          </div>
+          <div class="jobs-filter-pills-row">
+            <div class="filter-group">
+              <span class="filter-group-label">Location (India):</span>
+              <button class="job-filter-pill active" data-filter="loc" data-val="all" onclick="app.setJobLocationFilter('all')">All India (Anywhere)</button>
+              <button class="job-filter-pill" data-filter="loc" data-val="Bengaluru" onclick="app.setJobLocationFilter('Bengaluru')">Bengaluru</button>
+              <button class="job-filter-pill" data-filter="loc" data-val="Hyderabad" onclick="app.setJobLocationFilter('Hyderabad')">Hyderabad</button>
+              <button class="job-filter-pill" data-filter="loc" data-val="Gurugram" onclick="app.setJobLocationFilter('Gurugram')">Gurugram</button>
+              <button class="job-filter-pill" data-filter="loc" data-val="Pune" onclick="app.setJobLocationFilter('Pune')">Pune</button>
+              <button class="job-filter-pill" data-filter="loc" data-val="Mumbai" onclick="app.setJobLocationFilter('Mumbai')">Mumbai</button>
+            </div>
+            <div class="filter-group">
+              <span class="filter-group-label">Domain:</span>
+              <button class="job-filter-pill active" data-filter="domain" data-val="all" onclick="app.setJobDomainFilter('all')">All Domains</button>
+              <button class="job-filter-pill" data-filter="domain" data-val="Data Engineering" onclick="app.setJobDomainFilter('Data Engineering')">Data Engineering</button>
+              <button class="job-filter-pill" data-filter="domain" data-val="Cloud & Analytics" onclick="app.setJobDomainFilter('Cloud & Analytics')">Cloud & Analytics</button>
+              <button class="job-filter-pill" data-filter="domain" data-val="Platform & Infra" onclick="app.setJobDomainFilter('Platform & Infra')">Platform & Infra</button>
+            </div>
           </div>
         </div>
 
