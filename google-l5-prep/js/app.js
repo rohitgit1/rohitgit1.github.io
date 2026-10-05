@@ -2051,7 +2051,11 @@ Target Horizon: Day 90 / Jan 03 Final Benchmark`;
     }
   }
 
-  copyJobRequisition(reqId, title, url) {
+  copyJobRequisition(reqId) {
+    const list = PREP_DATA.googleIndiaOpenings || PREP_DATA.targetRoles || [];
+    const item = list.find(j => (j.reqId || j.id) === reqId);
+    const title = item ? item.title : reqId;
+    const url = item ? (item.applyUrl || item.googleCareersQuery || "https://careers.google.com/jobs/results/?location=India") : "https://careers.google.com/jobs/results/?location=India";
     const text = `Google India Opening: ${title}\nRequisition ID: #${reqId}\nApply URL: ${url}\nCandidate Alignment: 90%+ Profile Match (Data Engineering / Cloud)`;
     navigator.clipboard.writeText(text).then(() => {
       this.audio.play("click");
@@ -2167,7 +2171,7 @@ Target Horizon: Day 90 / Jan 03 Final Benchmark`;
             <a href="${applyUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary btn-magnetic" style="flex:1; text-align:center;">
               Apply on Google Careers ↗
             </a>
-            <button class="btn btn-sm btn-outline" onclick="app.copyJobRequisition('${reqId}', '${cleanTitle}', '${applyUrl}')" title="Copy Requisition Details">
+            <button class="btn btn-sm btn-outline" onclick="app.copyJobRequisition('${reqId}')" title="Copy Requisition Details">
               📋 Copy Req
             </button>
           </div>
