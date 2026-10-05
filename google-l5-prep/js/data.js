@@ -965,5 +965,74 @@ ORDER BY total_revenue DESC;`,
       ],
       actionableTakeaway: "Set your primary target as BIE / Analytics Engineer or CSE. Treat pure DE as a stretch goal. Getting the Google offer is what matters — you can pivot anytime once you're inside!"
     }
+  ],
+
+  // 🔄 Azure & Snowflake ➔ Google Cloud (GCP) Rosetta Stone
+  azureToGcpRosetta: [
+    {
+      azureSnowflakeTech: "Snowflake Data Warehouse",
+      gcpTech: "Google BigQuery",
+      analogy: "Both are high-speed analytical engines that store data by column instead of row.",
+      keyDifferences: [
+        "Compute Architecture: Snowflake provisions Virtual Warehouses (XS, S, M, L... 4XL). BigQuery is completely serverless using dynamic 'Slots' (workers).",
+        "Storage vs Compute: Both decouple compute from storage. Snowflake stores data in micro-partitions. BigQuery stores data in Capacitor format on Colossus (Google's internal distributed file system).",
+        "Pricing Model: Snowflake charges credit consumption per second of running warehouse. BigQuery offers on-demand per TB scanned ($6.25/TB) and flat-rate slot reservations."
+      ],
+      googleInterviewTrap: "If asked how to optimize BigQuery like Snowflake, DO NOT say 'scale up the warehouse'. Say: 'In BigQuery, we partition by date/timestamp and cluster by high-cardinality search keys (e.g. customer_id, order_id) to eliminate scanning unnecessary bytes and reduce slot-time.'"
+    },
+    {
+      azureSnowflakeTech: "Azure Databricks (PySpark)",
+      gcpTech: "Cloud Dataproc & Cloud Dataflow",
+      analogy: "Databricks runs Apache Spark on Azure VMs. Dataproc runs native Spark on GCP. Dataflow runs Apache Beam.",
+      keyDifferences: [
+        "Dataproc: Fast-starting (90 second) managed Spark/Hadoop clusters on GCP. All your existing PySpark code runs on Dataproc with zero code changes!",
+        "Dataflow: Google's proprietary serverless runner for Apache Beam. Handles both streaming and batch with autoscaling workers and unified event-time windowing.",
+        "When to use which: Use Dataproc for migrating existing Spark jobs with minimal rewrite. Use Dataflow for greenfield streaming pipelines and tighter GCP integrations."
+      ],
+      googleInterviewTrap: "Interviewers will ask: 'Why choose Dataflow over Spark on Dataproc?' Answer: 'Dataflow provides fully serverless auto-scaling (scaling up and down dynamically without cluster resizing downtime) and native event-time watermark handling without managing cluster worker VMs.'"
+    },
+    {
+      azureSnowflakeTech: "Azure Data Factory (ADF)",
+      gcpTech: "Cloud Composer (Apache Airflow)",
+      analogy: "Both schedule and orchestrate multi-step data pipelines.",
+      keyDifferences: [
+        "ADF: Visual UI drag-and-drop canvas with JSON configuration behind the scenes.",
+        "Cloud Composer: Managed Apache Airflow written as pure Python-as-Code (DAGs). Highly testable with CI/CD and modular unit tests.",
+        "Extensibility: Cloud Composer can trigger any external API, BigQuery job, Dataproc cluster, or Dataflow pipeline using native GCP Airflow operators."
+      ],
+      googleInterviewTrap: "Google engineering culture strongly favors Code-over-GUI. Highlight that you write Python DAGs with modular tasks, dynamic task mapping, and automated unit testing rather than relying on point-and-click UI tools."
+    },
+    {
+      azureSnowflakeTech: "ADLS Gen2 (Data Lake)",
+      gcpTech: "Google Cloud Storage (GCS)",
+      analogy: "The massive, cheap storage warehouse where all raw files, parquet tables, and backups live.",
+      keyDifferences: [
+        "Both are high-durability (99.999999999% 11 9s) object storage.",
+        "ADLS Gen2 uses hierarchical namespaces (real directory structures). GCS uses a flat namespace with virtual prefix directories.",
+        "GCS integrates natively with BigQuery via BigLake external tables, allowing SQL queries directly over Parquet/Iceberg files in GCS without loading."
+      ],
+      googleInterviewTrap: "Mention BigQuery BigLake external tables: 'We can query Parquet files stored in GCS directly from BigQuery without data duplication using BigLake storage delegations.'"
+    },
+    {
+      azureSnowflakeTech: "dbt Cloud",
+      gcpTech: "Dataform (Native to BigQuery)",
+      analogy: "Writing modular SQL transformation models with Git version control and dependency graphs.",
+      keyDifferences: [
+        "Both use SQL SELECT statements as models and generate dependency DAGs.",
+        "Dataform is fully integrated into the Google Cloud Console for BigQuery at zero additional software licensing cost.",
+        "dbt Core is also widely used inside Google for analytical engineering teams."
+      ],
+      googleInterviewTrap: "Mention how dbt or Dataform enforces data contracts, schema testing (not_null, unique), and documentation lineage automatically inside the BigQuery catalog."
+    },
+    {
+      azureSnowflakeTech: "Power BI",
+      gcpTech: "Google Looker",
+      analogy: "The dashboard layer where executives and business stakeholders look at numbers.",
+      keyDifferences: [
+        "Power BI: Uses DAX and Power Query with imported or DirectQuery models.",
+        "Looker: Centered around LookML (Looker Modeling Language) — a centralized semantic metrics layer defining business metrics (e.g. 'Active User', 'Net Revenue') once in code so no two dashboards show conflicting numbers."
+      ],
+      googleInterviewTrap: "Google values single-source-of-truth metrics. Emphasize that Looker's semantic modeling layer prevents metric discrepancy across departments."
+    }
   ]
 };

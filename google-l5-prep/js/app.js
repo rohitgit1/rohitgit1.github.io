@@ -295,6 +295,7 @@ class PrepPortalApp {
     this.renderHeader();
     this.renderCareerRadar();
     this.renderPrimer();
+    this.renderRosettaBridge();
     this.renderOutreach();
     this.renderGrillingSimulator();
     this.renderResumeOptimizer();
@@ -485,6 +486,44 @@ class PrepPortalApp {
         <div class="primer-takeaway-banner">
           <strong>⚡ Actionable Google Rule:</strong>
           <span>${item.actionableTakeaway}</span>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  // 0.6. AZURE & SNOWFLAKE TO GCP ROSETTA STONE
+  renderRosettaBridge() {
+    const container = document.getElementById("rosettaGrid");
+    if (!container || !PREP_DATA.azureToGcpRosetta) return;
+
+    container.innerHTML = PREP_DATA.azureToGcpRosetta.map(card => `
+      <div class="rosetta-card">
+        <div class="rosetta-header">
+          <div class="rosetta-tech-badge azure-badge">
+            <span style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.04em;">Your Current Stack:</span>
+            <strong>${card.azureSnowflakeTech}</strong>
+          </div>
+          <div class="rosetta-arrow">➔</div>
+          <div class="rosetta-tech-badge gcp-badge">
+            <span style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.04em;">Google Cloud Target:</span>
+            <strong>${card.gcpTech}</strong>
+          </div>
+        </div>
+
+        <div class="rosetta-analogy">
+          <strong>💡 Conceptual Bridge:</strong> ${card.analogy}
+        </div>
+
+        <div style="margin-top:10px;">
+          <strong style="font-size:0.82rem; text-transform:uppercase; color:var(--text-subtle);">Key Architectural Differences for Interviews:</strong>
+          <ul class="rosetta-diff-list" style="margin-top:6px;">
+            ${card.keyDifferences.map(d => `<li>${d}</li>`).join("")}
+          </ul>
+        </div>
+
+        <div class="rosetta-trap-box">
+          <strong>⚠️ Google Interview Trap & Cheat Code:</strong>
+          <p style="margin-top:4px; font-size:0.88rem; line-height:1.5;">${card.googleInterviewTrap}</p>
         </div>
       </div>
     `).join("");
