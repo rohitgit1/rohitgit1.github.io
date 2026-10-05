@@ -1,597 +1,597 @@
 // High-Scale Engineering Workspace & Telemetry Data
 const PREP_DATA = {
   "googleIndiaOpenings": [
-  {
-    "id": "job-goog-yt-de",
-    "reqId": "GOOG-IN-YT-98214",
-    "title": "Data Engineer, YouTube Business Organization",
-    "team": "YouTube Business Intelligence & Operations",
-    "domain": "Data Engineering",
-    "locations": [
-      "Bengaluru, Karnataka, India"
-    ],
-    "primaryCity": "Bengaluru",
-    "workplaceType": "Hybrid (Bengaluru Campus)",
-    "experienceLevel": "Mid to Senior Level (3\u20136+ Years)",
-    "matchScore": 96,
-    "matchReason": "Direct mapping to your Siemens Energy 15M daily event PySpark pipeline, Databricks AQE shuffle tuning, and Snowflake partition optimization.",
-    "minimumQualifications": [
-      "Bachelor's degree in Computer Science, Data Science, related field, or equivalent practical experience.",
-      "3+ years experience designing, building, and maintaining production-grade data pipelines using Python and SQL.",
-      "Hands-on experience with dimensional data modeling (Kimball) and analytical warehouse schemas."
-    ],
-    "preferredQualifications": [
-      "Experience with distributed data systems (Apache Spark, PySpark, Databricks).",
-      "Experience optimizing large-scale queries on Google BigQuery or Snowflake.",
-      "Familiarity with CI/CD deployment pipelines, automated schema validation, and data quality testing."
-    ],
-    "requiredTech": [
-      "Python",
-      "PySpark",
-      "SQL",
-      "BigQuery",
-      "Snowflake",
-      "ETL/ELT",
-      "Kimball Modeling"
-    ],
-    "postedDate": "Active Google India Opening",
-    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Engineer%22%20%22YouTube%22&location=Bengaluru%2C%20India"
-  },
-  {
-    "id": "job-goog-gt-de",
-    "reqId": "GOOG-IN-GT-84192",
-    "title": "Data Engineer, Data Architecture and Engineering (gTech)",
-    "team": "Google Technical Services (gTech Data Architecture)",
-    "domain": "Data Engineering",
-    "locations": [
-      "Gurugram, Haryana, India",
-      "Hyderabad, Telangana, India"
-    ],
-    "primaryCity": "Gurugram / Hyderabad",
-    "workplaceType": "Hybrid (Gurugram or Hyderabad Office)",
-    "experienceLevel": "Mid to Senior Level (3\u20137 Years)",
-    "matchScore": 94,
-    "matchReason": "Direct alignment with your automated Python AST migration parsers (40k legacy objects to cloud warehouse) and multi-hop Bronze-Silver-Gold curation.",
-    "minimumQualifications": [
-      "Bachelor's degree in Computer Science or equivalent practical experience.",
-      "3+ years of experience with data engineering, database design, and data architecture.",
-      "Strong proficiency in advanced SQL, query performance tuning, and Python data pipelines."
-    ],
-    "preferredQualifications": [
-      "Experience building automated migration scripts, schema drift detection, and data reconciliation.",
-      "Familiarity with Google Cloud Platform data tools (BigQuery, Cloud Composer / Airflow, Cloud Storage).",
-      "Experience collaborating with cross-functional engineering and analytics teams."
-    ],
-    "requiredTech": [
-      "Python",
-      "Advanced SQL",
-      "AST Parsers",
-      "BigQuery",
-      "Dataform",
-      "Airflow",
-      "Cloud Migration"
-    ],
-    "postedDate": "Active Google India Opening",
-    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Engineer%22%20gTech&location=India"
-  },
-  {
-    "id": "job-goog-csc-sde",
-    "reqId": "GOOG-IN-CSC-72610",
-    "title": "Senior Data Engineer, Cloud Supply Chain",
-    "team": "Google Cloud Infrastructure Operations",
-    "domain": "Data Engineering",
-    "locations": [
-      "Bengaluru, Karnataka, India"
-    ],
-    "primaryCity": "Bengaluru",
-    "workplaceType": "Hybrid (Bengaluru Campus)",
-    "experienceLevel": "Senior Level (4\u20138 Years)",
-    "matchScore": 95,
-    "matchReason": "Exact domain match: Your Siemens Energy project engineered supply-chain event pipelines processing 15M daily records on Databricks with 32% compute cost reduction.",
-    "minimumQualifications": [
-      "Bachelor's degree in Computer Science, Engineering, or equivalent practical experience.",
-      "4+ years experience in software engineering, data engineering, and distributed systems.",
-      "Expertise in Apache Spark / PySpark optimization, partition salting, and memory tuning."
-    ],
-    "preferredQualifications": [
-      "Experience with supply-chain or infrastructure operational data at petabyte scale.",
-      "Proficiency in both batch and streaming architectures on Google Cloud (BigQuery, Dataflow, Pub/Sub).",
-      "Strong track record solving join skew, straggler tasks, and cluster resource contention."
-    ],
-    "requiredTech": [
-      "PySpark",
-      "Apache Spark",
-      "Databricks",
-      "BigQuery",
-      "Supply Chain Analytics",
-      "Performance Tuning"
-    ],
-    "postedDate": "Active Google India Opening",
-    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Senior%20Data%20Engineer%22%20%22Cloud%20Supply%20Chain%22&location=Bengaluru%2C%20India"
-  },
-  {
-    "id": "job-goog-gup-sde",
-    "reqId": "GOOG-IN-GUP-61905",
-    "title": "Senior Data Engineer, gTech Users and Products (gUP)",
-    "team": "gTech Users & Products Engineering",
-    "domain": "Data Engineering",
-    "locations": [
-      "Hyderabad, Telangana, India",
-      "Gurugram, Haryana, India"
-    ],
-    "primaryCity": "Hyderabad / Gurugram",
-    "workplaceType": "Hybrid (Hyderabad or Gurugram Office)",
-    "experienceLevel": "Senior Level (4\u20138 Years)",
-    "matchScore": 92,
-    "matchReason": "Strong match with your Coca-Cola metadata-driven ADF ingestion framework and 3-tier dbt Cloud modular transformations (Staging, Intermediate, Marts).",
-    "minimumQualifications": [
-      "Bachelor's degree in CS, IT, or related quantitative discipline.",
-      "4+ years experience architecting enterprise data ingestion frameworks and analytical warehouses.",
-      "Expert SQL and data transformation skills using modern semantic layers (dbt / Dataform)."
-    ],
-    "preferredQualifications": [
-      "Hands-on experience with metadata parameterization, incremental delta loading, and CDC.",
-      "Experience setting up observability, MTTR reduction, and automated alert pipelines.",
-      "Familiarity with Google Cloud Platform, BigQuery, and enterprise BI consumption layers."
-    ],
-    "requiredTech": [
-      "SQL",
-      "Python",
-      "dbt Cloud",
-      "Dataform",
-      "Metadata Frameworks",
-      "ADF / Airflow",
-      "BigQuery"
-    ],
-    "postedDate": "Active Google India Opening",
-    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Senior%20Data%20Engineer%22%20gUP&location=India"
-  },
-  {
-    "id": "job-goog-dae",
-    "reqId": "GOOG-IN-DAE-55120",
-    "title": "Data Application Engineer, Google Cloud",
-    "team": "Google Cloud Enterprise Applications & Data Platforms",
-    "domain": "Cloud & Analytics",
-    "locations": [
-      "Bengaluru, Karnataka, India",
-      "Hyderabad, Telangana, India"
-    ],
-    "primaryCity": "Bengaluru / Hyderabad",
-    "workplaceType": "Hybrid (Bengaluru or Hyderabad Office)",
-    "experienceLevel": "Mid to Senior Level (3\u20136 Years)",
-    "matchScore": 90,
-    "matchReason": "Matches your end-to-end analytical application experience: REST API ingestion, multi-tenant database integration, and schema validation.",
-    "minimumQualifications": [
-      "Bachelor's degree in CS or equivalent practical experience.",
-      "3+ years experience with database systems, ETL tooling, and backend Python scripting.",
-      "Demonstrated experience designing scalable relational and columnar data schemas."
-    ],
-    "preferredQualifications": [
-      "Experience building data-centric web services and microservices.",
-      "Understanding of columnar storage formats (Parquet, Capacitor, ORC) and database indexes.",
-      "Experience working with cloud analytical services (BigQuery, Cloud SQL, Spanner)."
-    ],
-    "requiredTech": [
-      "Python",
-      "SQL",
-      "REST APIs",
-      "ETL Tools",
-      "BigQuery",
-      "Cloud SQL",
-      "Data Modeling"
-    ],
-    "postedDate": "Active Google India Opening",
-    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Application%20Engineer%22&location=India"
-  },
-  {
-    "id": "job-goog-cai",
-    "reqId": "GOOG-IN-CAI-49312",
-    "title": "Cloud AI & Data Engineer, Technical Onboarding",
-    "team": "Google Cloud Customer Solutions & Consulting",
-    "domain": "Cloud & Analytics",
-    "locations": [
-      "Bengaluru, Karnataka, India",
-      "Hyderabad, Telangana, India",
-      "Pune, Maharashtra, India",
-      "Gurugram, Haryana, India"
-    ],
-    "primaryCity": "Bengaluru / Hyderabad / Pune / Gurugram",
-    "workplaceType": "Hybrid (Bengaluru, Hyderabad, Pune, or Gurugram)",
-    "experienceLevel": "Mid to Senior Level (3\u20137 Years)",
-    "matchScore": 88,
-    "matchReason": "Aligns with your 4-year consulting background at Capgemini architecting analytical lakehouses for global enterprises (Siemens, Coca-Cola).",
-    "minimumQualifications": [
-      "Bachelor's degree in Computer Science, Engineering, or equivalent practical experience.",
-      "3+ years experience guiding cloud data migrations and building analytics solutions on cloud infrastructure.",
-      "Proficiency in SQL, Python, and cloud analytical architecture."
-    ],
-    "preferredQualifications": [
-      "Experience migrating legacy data warehouses (SAP HANA, Teradata, Oracle) to modern cloud warehouses.",
-      "Knowledge of Google Cloud data ecosystem (BigQuery, Dataproc, Dataflow, Cloud Storage).",
-      "Strong client-facing consulting, solution design, and technical communication skills."
-    ],
-    "requiredTech": [
-      "Google Cloud",
-      "BigQuery",
-      "Python",
-      "Cloud Migration",
-      "Dataproc",
-      "Consulting",
-      "Architecture"
-    ],
-    "postedDate": "Active Google India Opening",
-    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Cloud%20AI%22%20OR%20%22Data%22%20consulting&location=India"
-  },
-  {
-    "id": "job-goog-ces",
-    "reqId": "GOOG-IN-CES-38104",
-    "title": "Customer Engineering Specialist, Data Analytics",
-    "team": "Google Cloud Enterprise Engineering",
-    "domain": "Cloud & Analytics",
-    "locations": [
-      "Hyderabad, Telangana, India",
-      "Gurugram, Haryana, India",
-      "Mumbai, Maharashtra, India"
-    ],
-    "primaryCity": "Hyderabad / Gurugram / Mumbai",
-    "workplaceType": "Hybrid (Hyderabad, Gurugram, or Mumbai)",
-    "experienceLevel": "Senior Level (4\u20138 Years)",
-    "matchScore": 87,
-    "matchReason": "Leverages your associate consultant experience presenting technical trade-offs, calculating compute cost savings ($14k/mo), and designing migration roadmaps.",
-    "minimumQualifications": [
-      "Bachelor's degree in CS, Engineering, or equivalent practical experience.",
-      "4+ years experience in technical solution engineering, cloud data architecture, or data consultancy.",
-      "Expertise in modern cloud analytical architectures (Lakehouse, Star Schema, Streaming vs Batch)."
-    ],
-    "preferredQualifications": [
-      "Experience with competitive data technologies (Snowflake, Databricks, Azure Synapse vs BigQuery).",
-      "Ability to architect and defend enterprise-grade data platforms to senior technical stakeholders.",
-      "Experience conducting architectural proofs-of-concept and performance benchmarking."
-    ],
-    "requiredTech": [
-      "BigQuery",
-      "Snowflake",
-      "Databricks",
-      "Cloud Lakehouse",
-      "Enterprise Architecture",
-      "Pre-Sales / Consulting"
-    ],
-    "postedDate": "Active Google India Opening",
-    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Analytics%22%20Customer%20Engineering&location=India"
-  },
-  {
-    "id": "job-goog-edp",
-    "reqId": "GOOG-IN-EDP-29801",
-    "title": "Software Engineer, Enterprise Data Platform",
-    "team": "Core Infrastructure & Data Systems",
-    "domain": "Platform & Infra",
-    "locations": [
-      "Hyderabad, Telangana, India",
-      "Bengaluru, Karnataka, India"
-    ],
-    "primaryCity": "Hyderabad / Bengaluru",
-    "workplaceType": "Hybrid (Hyderabad or Bengaluru Campus)",
-    "experienceLevel": "Mid to Senior Level (3\u20136 Years)",
-    "matchScore": 91,
-    "matchReason": "Maps to your distributed systems background: high-throughput shuffle tuning, memory limit handling, partition pruning, and cluster key design.",
-    "minimumQualifications": [
-      "Bachelor's degree in Computer Science or related technical discipline.",
-      "3+ years experience with distributed computing systems, backend data infrastructure, and algorithms.",
-      "Strong coding skills in Python, Java, or C++ and distributed query execution concepts."
-    ],
-    "preferredQualifications": [
-      "Experience with large-scale storage engine internals, columnar file formats, and caching layers.",
-      "Deep understanding of distributed consensus, fault tolerance, and concurrency control.",
-      "Experience tuning query execution plans, DAG stages, and network shuffles."
-    ],
-    "requiredTech": [
-      "Python",
-      "Distributed Systems",
-      "Spark Internals",
-      "Query Optimization",
-      "Columnar Storage",
-      "Algorithms"
-    ],
-    "postedDate": "Active Google India Opening",
-    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Enterprise%20Data%20Platform%22&location=India"
-  }
-],
+    {
+      "id": "job-goog-yt-de",
+      "reqId": "GOOG-IN-YT-98214",
+      "title": "Data Engineer, YouTube Business Organization",
+      "team": "YouTube Business Intelligence & Operations",
+      "domain": "Data Engineering",
+      "locations": [
+        "Bengaluru, Karnataka, India"
+      ],
+      "primaryCity": "Bengaluru",
+      "workplaceType": "Hybrid (Bengaluru Campus)",
+      "experienceLevel": "Mid to Senior Level (3–6+ Years)",
+      "matchScore": 96,
+      "matchReason": "Direct mapping to your Siemens Energy 15M daily event PySpark pipeline, Databricks AQE shuffle tuning, and Snowflake partition optimization.",
+      "minimumQualifications": [
+        "Bachelor's degree in Computer Science, Data Science, related field, or equivalent practical experience.",
+        "3+ years experience designing, building, and maintaining production-grade data pipelines using Python and SQL.",
+        "Hands-on experience with dimensional data modeling (Kimball) and analytical warehouse schemas."
+      ],
+      "preferredQualifications": [
+        "Experience with distributed data systems (Apache Spark, PySpark, Databricks).",
+        "Experience optimizing large-scale queries on Google BigQuery or Snowflake.",
+        "Familiarity with CI/CD deployment pipelines, automated schema validation, and data quality testing."
+      ],
+      "requiredTech": [
+        "Python",
+        "PySpark",
+        "SQL",
+        "BigQuery",
+        "Snowflake",
+        "ETL/ELT",
+        "Kimball Modeling"
+      ],
+      "postedDate": "Active Google India Opening",
+      "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Engineer%22%20%22YouTube%22&location=Bengaluru%2C%20India"
+    },
+    {
+      "id": "job-goog-gt-de",
+      "reqId": "GOOG-IN-GT-84192",
+      "title": "Data Engineer, Data Architecture and Engineering (gTech)",
+      "team": "Google Technical Services (gTech Data Architecture)",
+      "domain": "Data Engineering",
+      "locations": [
+        "Gurugram, Haryana, India",
+        "Hyderabad, Telangana, India"
+      ],
+      "primaryCity": "Gurugram / Hyderabad",
+      "workplaceType": "Hybrid (Gurugram or Hyderabad Office)",
+      "experienceLevel": "Mid to Senior Level (3–7 Years)",
+      "matchScore": 94,
+      "matchReason": "Direct alignment with your automated Python AST migration parsers (40k legacy objects to cloud warehouse) and multi-hop Bronze-Silver-Gold curation.",
+      "minimumQualifications": [
+        "Bachelor's degree in Computer Science or equivalent practical experience.",
+        "3+ years of experience with data engineering, database design, and data architecture.",
+        "Strong proficiency in advanced SQL, query performance tuning, and Python data pipelines."
+      ],
+      "preferredQualifications": [
+        "Experience building automated migration scripts, schema drift detection, and data reconciliation.",
+        "Familiarity with Google Cloud Platform data tools (BigQuery, Cloud Composer / Airflow, Cloud Storage).",
+        "Experience collaborating with cross-functional engineering and analytics teams."
+      ],
+      "requiredTech": [
+        "Python",
+        "Advanced SQL",
+        "AST Parsers",
+        "BigQuery",
+        "Dataform",
+        "Airflow",
+        "Cloud Migration"
+      ],
+      "postedDate": "Active Google India Opening",
+      "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Engineer%22%20gTech&location=India"
+    },
+    {
+      "id": "job-goog-csc-sde",
+      "reqId": "GOOG-IN-CSC-72610",
+      "title": "Senior Data Engineer, Cloud Supply Chain",
+      "team": "Google Cloud Infrastructure Operations",
+      "domain": "Data Engineering",
+      "locations": [
+        "Bengaluru, Karnataka, India"
+      ],
+      "primaryCity": "Bengaluru",
+      "workplaceType": "Hybrid (Bengaluru Campus)",
+      "experienceLevel": "Senior Level (4–8 Years)",
+      "matchScore": 95,
+      "matchReason": "Exact domain match: Your Siemens Energy project engineered supply-chain event pipelines processing 15M daily records on Databricks with 32% compute cost reduction.",
+      "minimumQualifications": [
+        "Bachelor's degree in Computer Science, Engineering, or equivalent practical experience.",
+        "4+ years experience in software engineering, data engineering, and distributed systems.",
+        "Expertise in Apache Spark / PySpark optimization, partition salting, and memory tuning."
+      ],
+      "preferredQualifications": [
+        "Experience with supply-chain or infrastructure operational data at petabyte scale.",
+        "Proficiency in both batch and streaming architectures on Google Cloud (BigQuery, Dataflow, Pub/Sub).",
+        "Strong track record solving join skew, straggler tasks, and cluster resource contention."
+      ],
+      "requiredTech": [
+        "PySpark",
+        "Apache Spark",
+        "Databricks",
+        "BigQuery",
+        "Supply Chain Analytics",
+        "Performance Tuning"
+      ],
+      "postedDate": "Active Google India Opening",
+      "applyUrl": "https://careers.google.com/jobs/results/?q=%22Senior%20Data%20Engineer%22%20%22Cloud%20Supply%20Chain%22&location=Bengaluru%2C%20India"
+    },
+    {
+      "id": "job-goog-gup-sde",
+      "reqId": "GOOG-IN-GUP-61905",
+      "title": "Senior Data Engineer, gTech Users and Products (gUP)",
+      "team": "gTech Users & Products Engineering",
+      "domain": "Data Engineering",
+      "locations": [
+        "Hyderabad, Telangana, India",
+        "Gurugram, Haryana, India"
+      ],
+      "primaryCity": "Hyderabad / Gurugram",
+      "workplaceType": "Hybrid (Hyderabad or Gurugram Office)",
+      "experienceLevel": "Senior Level (4–8 Years)",
+      "matchScore": 92,
+      "matchReason": "Strong match with your Coca-Cola metadata-driven ADF ingestion framework and 3-tier dbt Cloud modular transformations (Staging, Intermediate, Marts).",
+      "minimumQualifications": [
+        "Bachelor's degree in CS, IT, or related quantitative discipline.",
+        "4+ years experience architecting enterprise data ingestion frameworks and analytical warehouses.",
+        "Expert SQL and data transformation skills using modern semantic layers (dbt / Dataform)."
+      ],
+      "preferredQualifications": [
+        "Hands-on experience with metadata parameterization, incremental delta loading, and CDC.",
+        "Experience setting up observability, MTTR reduction, and automated alert pipelines.",
+        "Familiarity with Google Cloud Platform, BigQuery, and enterprise BI consumption layers."
+      ],
+      "requiredTech": [
+        "SQL",
+        "Python",
+        "dbt Cloud",
+        "Dataform",
+        "Metadata Frameworks",
+        "ADF / Airflow",
+        "BigQuery"
+      ],
+      "postedDate": "Active Google India Opening",
+      "applyUrl": "https://careers.google.com/jobs/results/?q=%22Senior%20Data%20Engineer%22%20gUP&location=India"
+    },
+    {
+      "id": "job-goog-dae",
+      "reqId": "GOOG-IN-DAE-55120",
+      "title": "Data Application Engineer, Google Cloud",
+      "team": "Google Cloud Enterprise Applications & Data Platforms",
+      "domain": "Cloud & Analytics",
+      "locations": [
+        "Bengaluru, Karnataka, India",
+        "Hyderabad, Telangana, India"
+      ],
+      "primaryCity": "Bengaluru / Hyderabad",
+      "workplaceType": "Hybrid (Bengaluru or Hyderabad Office)",
+      "experienceLevel": "Mid to Senior Level (3–6 Years)",
+      "matchScore": 90,
+      "matchReason": "Matches your end-to-end analytical application experience: REST API ingestion, multi-tenant database integration, and schema validation.",
+      "minimumQualifications": [
+        "Bachelor's degree in CS or equivalent practical experience.",
+        "3+ years experience with database systems, ETL tooling, and backend Python scripting.",
+        "Demonstrated experience designing scalable relational and columnar data schemas."
+      ],
+      "preferredQualifications": [
+        "Experience building data-centric web services and microservices.",
+        "Understanding of columnar storage formats (Parquet, Capacitor, ORC) and database indexes.",
+        "Experience working with cloud analytical services (BigQuery, Cloud SQL, Spanner)."
+      ],
+      "requiredTech": [
+        "Python",
+        "SQL",
+        "REST APIs",
+        "ETL Tools",
+        "BigQuery",
+        "Cloud SQL",
+        "Data Modeling"
+      ],
+      "postedDate": "Active Google India Opening",
+      "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Application%20Engineer%22&location=India"
+    },
+    {
+      "id": "job-goog-cai",
+      "reqId": "GOOG-IN-CAI-49312",
+      "title": "Cloud AI & Data Engineer, Technical Onboarding",
+      "team": "Google Cloud Customer Solutions & Consulting",
+      "domain": "Cloud & Analytics",
+      "locations": [
+        "Bengaluru, Karnataka, India",
+        "Hyderabad, Telangana, India",
+        "Pune, Maharashtra, India",
+        "Gurugram, Haryana, India"
+      ],
+      "primaryCity": "Bengaluru / Hyderabad / Pune / Gurugram",
+      "workplaceType": "Hybrid (Bengaluru, Hyderabad, Pune, or Gurugram)",
+      "experienceLevel": "Mid to Senior Level (3–7 Years)",
+      "matchScore": 88,
+      "matchReason": "Aligns with your 4-year consulting background at Capgemini architecting analytical lakehouses for global enterprises (Siemens, Coca-Cola).",
+      "minimumQualifications": [
+        "Bachelor's degree in Computer Science, Engineering, or equivalent practical experience.",
+        "3+ years experience guiding cloud data migrations and building analytics solutions on cloud infrastructure.",
+        "Proficiency in SQL, Python, and cloud analytical architecture."
+      ],
+      "preferredQualifications": [
+        "Experience migrating legacy data warehouses (SAP HANA, Teradata, Oracle) to modern cloud warehouses.",
+        "Knowledge of Google Cloud data ecosystem (BigQuery, Dataproc, Dataflow, Cloud Storage).",
+        "Strong client-facing consulting, solution design, and technical communication skills."
+      ],
+      "requiredTech": [
+        "Google Cloud",
+        "BigQuery",
+        "Python",
+        "Cloud Migration",
+        "Dataproc",
+        "Consulting",
+        "Architecture"
+      ],
+      "postedDate": "Active Google India Opening",
+      "applyUrl": "https://careers.google.com/jobs/results/?q=%22Cloud%20AI%22%20OR%20%22Data%22%20consulting&location=India"
+    },
+    {
+      "id": "job-goog-ces",
+      "reqId": "GOOG-IN-CES-38104",
+      "title": "Customer Engineering Specialist, Data Analytics",
+      "team": "Google Cloud Enterprise Engineering",
+      "domain": "Cloud & Analytics",
+      "locations": [
+        "Hyderabad, Telangana, India",
+        "Gurugram, Haryana, India",
+        "Mumbai, Maharashtra, India"
+      ],
+      "primaryCity": "Hyderabad / Gurugram / Mumbai",
+      "workplaceType": "Hybrid (Hyderabad, Gurugram, or Mumbai)",
+      "experienceLevel": "Senior Level (4–8 Years)",
+      "matchScore": 87,
+      "matchReason": "Leverages your associate consultant experience presenting technical trade-offs, calculating compute cost savings ($14k/mo), and designing migration roadmaps.",
+      "minimumQualifications": [
+        "Bachelor's degree in CS, Engineering, or equivalent practical experience.",
+        "4+ years experience in technical solution engineering, cloud data architecture, or data consultancy.",
+        "Expertise in modern cloud analytical architectures (Lakehouse, Star Schema, Streaming vs Batch)."
+      ],
+      "preferredQualifications": [
+        "Experience with competitive data technologies (Snowflake, Databricks, Azure Synapse vs BigQuery).",
+        "Ability to architect and defend enterprise-grade data platforms to senior technical stakeholders.",
+        "Experience conducting architectural proofs-of-concept and performance benchmarking."
+      ],
+      "requiredTech": [
+        "BigQuery",
+        "Snowflake",
+        "Databricks",
+        "Cloud Lakehouse",
+        "Enterprise Architecture",
+        "Pre-Sales / Consulting"
+      ],
+      "postedDate": "Active Google India Opening",
+      "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Analytics%22%20Customer%20Engineering&location=India"
+    },
+    {
+      "id": "job-goog-edp",
+      "reqId": "GOOG-IN-EDP-29801",
+      "title": "Software Engineer, Enterprise Data Platform",
+      "team": "Core Infrastructure & Data Systems",
+      "domain": "Platform & Infra",
+      "locations": [
+        "Hyderabad, Telangana, India",
+        "Bengaluru, Karnataka, India"
+      ],
+      "primaryCity": "Hyderabad / Bengaluru",
+      "workplaceType": "Hybrid (Hyderabad or Bengaluru Campus)",
+      "experienceLevel": "Mid to Senior Level (3–6 Years)",
+      "matchScore": 91,
+      "matchReason": "Maps to your distributed systems background: high-throughput shuffle tuning, memory limit handling, partition pruning, and cluster key design.",
+      "minimumQualifications": [
+        "Bachelor's degree in Computer Science or related technical discipline.",
+        "3+ years experience with distributed computing systems, backend data infrastructure, and algorithms.",
+        "Strong coding skills in Python, Java, or C++ and distributed query execution concepts."
+      ],
+      "preferredQualifications": [
+        "Experience with large-scale storage engine internals, columnar file formats, and caching layers.",
+        "Deep understanding of distributed consensus, fault tolerance, and concurrency control.",
+        "Experience tuning query execution plans, DAG stages, and network shuffles."
+      ],
+      "requiredTech": [
+        "Python",
+        "Distributed Systems",
+        "Spark Internals",
+        "Query Optimization",
+        "Columnar Storage",
+        "Algorithms"
+      ],
+      "postedDate": "Active Google India Opening",
+      "applyUrl": "https://careers.google.com/jobs/results/?q=%22Enterprise%20Data%20Platform%22&location=India"
+    }
+  ],
   "targetRoles": [
-  {
-    "id": "job-goog-yt-de",
-    "reqId": "GOOG-IN-YT-98214",
-    "title": "Data Engineer, YouTube Business Organization",
-    "team": "YouTube Business Intelligence & Operations",
-    "domain": "Data Engineering",
-    "locations": [
-      "Bengaluru, Karnataka, India"
-    ],
-    "primaryCity": "Bengaluru",
-    "workplaceType": "Hybrid (Bengaluru Campus)",
-    "experienceLevel": "Mid to Senior Level (3\u20136+ Years)",
-    "matchScore": 96,
-    "matchReason": "Direct mapping to your Siemens Energy 15M daily event PySpark pipeline, Databricks AQE shuffle tuning, and Snowflake partition optimization.",
-    "minimumQualifications": [
-      "Bachelor's degree in Computer Science, Data Science, related field, or equivalent practical experience.",
-      "3+ years experience designing, building, and maintaining production-grade data pipelines using Python and SQL.",
-      "Hands-on experience with dimensional data modeling (Kimball) and analytical warehouse schemas."
-    ],
-    "preferredQualifications": [
-      "Experience with distributed data systems (Apache Spark, PySpark, Databricks).",
-      "Experience optimizing large-scale queries on Google BigQuery or Snowflake.",
-      "Familiarity with CI/CD deployment pipelines, automated schema validation, and data quality testing."
-    ],
-    "requiredTech": [
-      "Python",
-      "PySpark",
-      "SQL",
-      "BigQuery",
-      "Snowflake",
-      "ETL/ELT",
-      "Kimball Modeling"
-    ],
-    "postedDate": "Active Google India Opening",
-    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Engineer%22%20%22YouTube%22&location=Bengaluru%2C%20India"
-  },
-  {
-    "id": "job-goog-gt-de",
-    "reqId": "GOOG-IN-GT-84192",
-    "title": "Data Engineer, Data Architecture and Engineering (gTech)",
-    "team": "Google Technical Services (gTech Data Architecture)",
-    "domain": "Data Engineering",
-    "locations": [
-      "Gurugram, Haryana, India",
-      "Hyderabad, Telangana, India"
-    ],
-    "primaryCity": "Gurugram / Hyderabad",
-    "workplaceType": "Hybrid (Gurugram or Hyderabad Office)",
-    "experienceLevel": "Mid to Senior Level (3\u20137 Years)",
-    "matchScore": 94,
-    "matchReason": "Direct alignment with your automated Python AST migration parsers (40k legacy objects to cloud warehouse) and multi-hop Bronze-Silver-Gold curation.",
-    "minimumQualifications": [
-      "Bachelor's degree in Computer Science or equivalent practical experience.",
-      "3+ years of experience with data engineering, database design, and data architecture.",
-      "Strong proficiency in advanced SQL, query performance tuning, and Python data pipelines."
-    ],
-    "preferredQualifications": [
-      "Experience building automated migration scripts, schema drift detection, and data reconciliation.",
-      "Familiarity with Google Cloud Platform data tools (BigQuery, Cloud Composer / Airflow, Cloud Storage).",
-      "Experience collaborating with cross-functional engineering and analytics teams."
-    ],
-    "requiredTech": [
-      "Python",
-      "Advanced SQL",
-      "AST Parsers",
-      "BigQuery",
-      "Dataform",
-      "Airflow",
-      "Cloud Migration"
-    ],
-    "postedDate": "Active Google India Opening",
-    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Engineer%22%20gTech&location=India"
-  },
-  {
-    "id": "job-goog-csc-sde",
-    "reqId": "GOOG-IN-CSC-72610",
-    "title": "Senior Data Engineer, Cloud Supply Chain",
-    "team": "Google Cloud Infrastructure Operations",
-    "domain": "Data Engineering",
-    "locations": [
-      "Bengaluru, Karnataka, India"
-    ],
-    "primaryCity": "Bengaluru",
-    "workplaceType": "Hybrid (Bengaluru Campus)",
-    "experienceLevel": "Senior Level (4\u20138 Years)",
-    "matchScore": 95,
-    "matchReason": "Exact domain match: Your Siemens Energy project engineered supply-chain event pipelines processing 15M daily records on Databricks with 32% compute cost reduction.",
-    "minimumQualifications": [
-      "Bachelor's degree in Computer Science, Engineering, or equivalent practical experience.",
-      "4+ years experience in software engineering, data engineering, and distributed systems.",
-      "Expertise in Apache Spark / PySpark optimization, partition salting, and memory tuning."
-    ],
-    "preferredQualifications": [
-      "Experience with supply-chain or infrastructure operational data at petabyte scale.",
-      "Proficiency in both batch and streaming architectures on Google Cloud (BigQuery, Dataflow, Pub/Sub).",
-      "Strong track record solving join skew, straggler tasks, and cluster resource contention."
-    ],
-    "requiredTech": [
-      "PySpark",
-      "Apache Spark",
-      "Databricks",
-      "BigQuery",
-      "Supply Chain Analytics",
-      "Performance Tuning"
-    ],
-    "postedDate": "Active Google India Opening",
-    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Senior%20Data%20Engineer%22%20%22Cloud%20Supply%20Chain%22&location=Bengaluru%2C%20India"
-  },
-  {
-    "id": "job-goog-gup-sde",
-    "reqId": "GOOG-IN-GUP-61905",
-    "title": "Senior Data Engineer, gTech Users and Products (gUP)",
-    "team": "gTech Users & Products Engineering",
-    "domain": "Data Engineering",
-    "locations": [
-      "Hyderabad, Telangana, India",
-      "Gurugram, Haryana, India"
-    ],
-    "primaryCity": "Hyderabad / Gurugram",
-    "workplaceType": "Hybrid (Hyderabad or Gurugram Office)",
-    "experienceLevel": "Senior Level (4\u20138 Years)",
-    "matchScore": 92,
-    "matchReason": "Strong match with your Coca-Cola metadata-driven ADF ingestion framework and 3-tier dbt Cloud modular transformations (Staging, Intermediate, Marts).",
-    "minimumQualifications": [
-      "Bachelor's degree in CS, IT, or related quantitative discipline.",
-      "4+ years experience architecting enterprise data ingestion frameworks and analytical warehouses.",
-      "Expert SQL and data transformation skills using modern semantic layers (dbt / Dataform)."
-    ],
-    "preferredQualifications": [
-      "Hands-on experience with metadata parameterization, incremental delta loading, and CDC.",
-      "Experience setting up observability, MTTR reduction, and automated alert pipelines.",
-      "Familiarity with Google Cloud Platform, BigQuery, and enterprise BI consumption layers."
-    ],
-    "requiredTech": [
-      "SQL",
-      "Python",
-      "dbt Cloud",
-      "Dataform",
-      "Metadata Frameworks",
-      "ADF / Airflow",
-      "BigQuery"
-    ],
-    "postedDate": "Active Google India Opening",
-    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Senior%20Data%20Engineer%22%20gUP&location=India"
-  },
-  {
-    "id": "job-goog-dae",
-    "reqId": "GOOG-IN-DAE-55120",
-    "title": "Data Application Engineer, Google Cloud",
-    "team": "Google Cloud Enterprise Applications & Data Platforms",
-    "domain": "Cloud & Analytics",
-    "locations": [
-      "Bengaluru, Karnataka, India",
-      "Hyderabad, Telangana, India"
-    ],
-    "primaryCity": "Bengaluru / Hyderabad",
-    "workplaceType": "Hybrid (Bengaluru or Hyderabad Office)",
-    "experienceLevel": "Mid to Senior Level (3\u20136 Years)",
-    "matchScore": 90,
-    "matchReason": "Matches your end-to-end analytical application experience: REST API ingestion, multi-tenant database integration, and schema validation.",
-    "minimumQualifications": [
-      "Bachelor's degree in CS or equivalent practical experience.",
-      "3+ years experience with database systems, ETL tooling, and backend Python scripting.",
-      "Demonstrated experience designing scalable relational and columnar data schemas."
-    ],
-    "preferredQualifications": [
-      "Experience building data-centric web services and microservices.",
-      "Understanding of columnar storage formats (Parquet, Capacitor, ORC) and database indexes.",
-      "Experience working with cloud analytical services (BigQuery, Cloud SQL, Spanner)."
-    ],
-    "requiredTech": [
-      "Python",
-      "SQL",
-      "REST APIs",
-      "ETL Tools",
-      "BigQuery",
-      "Cloud SQL",
-      "Data Modeling"
-    ],
-    "postedDate": "Active Google India Opening",
-    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Application%20Engineer%22&location=India"
-  },
-  {
-    "id": "job-goog-cai",
-    "reqId": "GOOG-IN-CAI-49312",
-    "title": "Cloud AI & Data Engineer, Technical Onboarding",
-    "team": "Google Cloud Customer Solutions & Consulting",
-    "domain": "Cloud & Analytics",
-    "locations": [
-      "Bengaluru, Karnataka, India",
-      "Hyderabad, Telangana, India",
-      "Pune, Maharashtra, India",
-      "Gurugram, Haryana, India"
-    ],
-    "primaryCity": "Bengaluru / Hyderabad / Pune / Gurugram",
-    "workplaceType": "Hybrid (Bengaluru, Hyderabad, Pune, or Gurugram)",
-    "experienceLevel": "Mid to Senior Level (3\u20137 Years)",
-    "matchScore": 88,
-    "matchReason": "Aligns with your 4-year consulting background at Capgemini architecting analytical lakehouses for global enterprises (Siemens, Coca-Cola).",
-    "minimumQualifications": [
-      "Bachelor's degree in Computer Science, Engineering, or equivalent practical experience.",
-      "3+ years experience guiding cloud data migrations and building analytics solutions on cloud infrastructure.",
-      "Proficiency in SQL, Python, and cloud analytical architecture."
-    ],
-    "preferredQualifications": [
-      "Experience migrating legacy data warehouses (SAP HANA, Teradata, Oracle) to modern cloud warehouses.",
-      "Knowledge of Google Cloud data ecosystem (BigQuery, Dataproc, Dataflow, Cloud Storage).",
-      "Strong client-facing consulting, solution design, and technical communication skills."
-    ],
-    "requiredTech": [
-      "Google Cloud",
-      "BigQuery",
-      "Python",
-      "Cloud Migration",
-      "Dataproc",
-      "Consulting",
-      "Architecture"
-    ],
-    "postedDate": "Active Google India Opening",
-    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Cloud%20AI%22%20OR%20%22Data%22%20consulting&location=India"
-  },
-  {
-    "id": "job-goog-ces",
-    "reqId": "GOOG-IN-CES-38104",
-    "title": "Customer Engineering Specialist, Data Analytics",
-    "team": "Google Cloud Enterprise Engineering",
-    "domain": "Cloud & Analytics",
-    "locations": [
-      "Hyderabad, Telangana, India",
-      "Gurugram, Haryana, India",
-      "Mumbai, Maharashtra, India"
-    ],
-    "primaryCity": "Hyderabad / Gurugram / Mumbai",
-    "workplaceType": "Hybrid (Hyderabad, Gurugram, or Mumbai)",
-    "experienceLevel": "Senior Level (4\u20138 Years)",
-    "matchScore": 87,
-    "matchReason": "Leverages your associate consultant experience presenting technical trade-offs, calculating compute cost savings ($14k/mo), and designing migration roadmaps.",
-    "minimumQualifications": [
-      "Bachelor's degree in CS, Engineering, or equivalent practical experience.",
-      "4+ years experience in technical solution engineering, cloud data architecture, or data consultancy.",
-      "Expertise in modern cloud analytical architectures (Lakehouse, Star Schema, Streaming vs Batch)."
-    ],
-    "preferredQualifications": [
-      "Experience with competitive data technologies (Snowflake, Databricks, Azure Synapse vs BigQuery).",
-      "Ability to architect and defend enterprise-grade data platforms to senior technical stakeholders.",
-      "Experience conducting architectural proofs-of-concept and performance benchmarking."
-    ],
-    "requiredTech": [
-      "BigQuery",
-      "Snowflake",
-      "Databricks",
-      "Cloud Lakehouse",
-      "Enterprise Architecture",
-      "Pre-Sales / Consulting"
-    ],
-    "postedDate": "Active Google India Opening",
-    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Analytics%22%20Customer%20Engineering&location=India"
-  },
-  {
-    "id": "job-goog-edp",
-    "reqId": "GOOG-IN-EDP-29801",
-    "title": "Software Engineer, Enterprise Data Platform",
-    "team": "Core Infrastructure & Data Systems",
-    "domain": "Platform & Infra",
-    "locations": [
-      "Hyderabad, Telangana, India",
-      "Bengaluru, Karnataka, India"
-    ],
-    "primaryCity": "Hyderabad / Bengaluru",
-    "workplaceType": "Hybrid (Hyderabad or Bengaluru Campus)",
-    "experienceLevel": "Mid to Senior Level (3\u20136 Years)",
-    "matchScore": 91,
-    "matchReason": "Maps to your distributed systems background: high-throughput shuffle tuning, memory limit handling, partition pruning, and cluster key design.",
-    "minimumQualifications": [
-      "Bachelor's degree in Computer Science or related technical discipline.",
-      "3+ years experience with distributed computing systems, backend data infrastructure, and algorithms.",
-      "Strong coding skills in Python, Java, or C++ and distributed query execution concepts."
-    ],
-    "preferredQualifications": [
-      "Experience with large-scale storage engine internals, columnar file formats, and caching layers.",
-      "Deep understanding of distributed consensus, fault tolerance, and concurrency control.",
-      "Experience tuning query execution plans, DAG stages, and network shuffles."
-    ],
-    "requiredTech": [
-      "Python",
-      "Distributed Systems",
-      "Spark Internals",
-      "Query Optimization",
-      "Columnar Storage",
-      "Algorithms"
-    ],
-    "postedDate": "Active Google India Opening",
-    "applyUrl": "https://careers.google.com/jobs/results/?q=%22Enterprise%20Data%20Platform%22&location=India"
-  }
-],
+    {
+      "id": "job-goog-yt-de",
+      "reqId": "GOOG-IN-YT-98214",
+      "title": "Data Engineer, YouTube Business Organization",
+      "team": "YouTube Business Intelligence & Operations",
+      "domain": "Data Engineering",
+      "locations": [
+        "Bengaluru, Karnataka, India"
+      ],
+      "primaryCity": "Bengaluru",
+      "workplaceType": "Hybrid (Bengaluru Campus)",
+      "experienceLevel": "Mid to Senior Level (3–6+ Years)",
+      "matchScore": 96,
+      "matchReason": "Direct mapping to your Siemens Energy 15M daily event PySpark pipeline, Databricks AQE shuffle tuning, and Snowflake partition optimization.",
+      "minimumQualifications": [
+        "Bachelor's degree in Computer Science, Data Science, related field, or equivalent practical experience.",
+        "3+ years experience designing, building, and maintaining production-grade data pipelines using Python and SQL.",
+        "Hands-on experience with dimensional data modeling (Kimball) and analytical warehouse schemas."
+      ],
+      "preferredQualifications": [
+        "Experience with distributed data systems (Apache Spark, PySpark, Databricks).",
+        "Experience optimizing large-scale queries on Google BigQuery or Snowflake.",
+        "Familiarity with CI/CD deployment pipelines, automated schema validation, and data quality testing."
+      ],
+      "requiredTech": [
+        "Python",
+        "PySpark",
+        "SQL",
+        "BigQuery",
+        "Snowflake",
+        "ETL/ELT",
+        "Kimball Modeling"
+      ],
+      "postedDate": "Active Google India Opening",
+      "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Engineer%22%20%22YouTube%22&location=Bengaluru%2C%20India"
+    },
+    {
+      "id": "job-goog-gt-de",
+      "reqId": "GOOG-IN-GT-84192",
+      "title": "Data Engineer, Data Architecture and Engineering (gTech)",
+      "team": "Google Technical Services (gTech Data Architecture)",
+      "domain": "Data Engineering",
+      "locations": [
+        "Gurugram, Haryana, India",
+        "Hyderabad, Telangana, India"
+      ],
+      "primaryCity": "Gurugram / Hyderabad",
+      "workplaceType": "Hybrid (Gurugram or Hyderabad Office)",
+      "experienceLevel": "Mid to Senior Level (3–7 Years)",
+      "matchScore": 94,
+      "matchReason": "Direct alignment with your automated Python AST migration parsers (40k legacy objects to cloud warehouse) and multi-hop Bronze-Silver-Gold curation.",
+      "minimumQualifications": [
+        "Bachelor's degree in Computer Science or equivalent practical experience.",
+        "3+ years of experience with data engineering, database design, and data architecture.",
+        "Strong proficiency in advanced SQL, query performance tuning, and Python data pipelines."
+      ],
+      "preferredQualifications": [
+        "Experience building automated migration scripts, schema drift detection, and data reconciliation.",
+        "Familiarity with Google Cloud Platform data tools (BigQuery, Cloud Composer / Airflow, Cloud Storage).",
+        "Experience collaborating with cross-functional engineering and analytics teams."
+      ],
+      "requiredTech": [
+        "Python",
+        "Advanced SQL",
+        "AST Parsers",
+        "BigQuery",
+        "Dataform",
+        "Airflow",
+        "Cloud Migration"
+      ],
+      "postedDate": "Active Google India Opening",
+      "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Engineer%22%20gTech&location=India"
+    },
+    {
+      "id": "job-goog-csc-sde",
+      "reqId": "GOOG-IN-CSC-72610",
+      "title": "Senior Data Engineer, Cloud Supply Chain",
+      "team": "Google Cloud Infrastructure Operations",
+      "domain": "Data Engineering",
+      "locations": [
+        "Bengaluru, Karnataka, India"
+      ],
+      "primaryCity": "Bengaluru",
+      "workplaceType": "Hybrid (Bengaluru Campus)",
+      "experienceLevel": "Senior Level (4–8 Years)",
+      "matchScore": 95,
+      "matchReason": "Exact domain match: Your Siemens Energy project engineered supply-chain event pipelines processing 15M daily records on Databricks with 32% compute cost reduction.",
+      "minimumQualifications": [
+        "Bachelor's degree in Computer Science, Engineering, or equivalent practical experience.",
+        "4+ years experience in software engineering, data engineering, and distributed systems.",
+        "Expertise in Apache Spark / PySpark optimization, partition salting, and memory tuning."
+      ],
+      "preferredQualifications": [
+        "Experience with supply-chain or infrastructure operational data at petabyte scale.",
+        "Proficiency in both batch and streaming architectures on Google Cloud (BigQuery, Dataflow, Pub/Sub).",
+        "Strong track record solving join skew, straggler tasks, and cluster resource contention."
+      ],
+      "requiredTech": [
+        "PySpark",
+        "Apache Spark",
+        "Databricks",
+        "BigQuery",
+        "Supply Chain Analytics",
+        "Performance Tuning"
+      ],
+      "postedDate": "Active Google India Opening",
+      "applyUrl": "https://careers.google.com/jobs/results/?q=%22Senior%20Data%20Engineer%22%20%22Cloud%20Supply%20Chain%22&location=Bengaluru%2C%20India"
+    },
+    {
+      "id": "job-goog-gup-sde",
+      "reqId": "GOOG-IN-GUP-61905",
+      "title": "Senior Data Engineer, gTech Users and Products (gUP)",
+      "team": "gTech Users & Products Engineering",
+      "domain": "Data Engineering",
+      "locations": [
+        "Hyderabad, Telangana, India",
+        "Gurugram, Haryana, India"
+      ],
+      "primaryCity": "Hyderabad / Gurugram",
+      "workplaceType": "Hybrid (Hyderabad or Gurugram Office)",
+      "experienceLevel": "Senior Level (4–8 Years)",
+      "matchScore": 92,
+      "matchReason": "Strong match with your Coca-Cola metadata-driven ADF ingestion framework and 3-tier dbt Cloud modular transformations (Staging, Intermediate, Marts).",
+      "minimumQualifications": [
+        "Bachelor's degree in CS, IT, or related quantitative discipline.",
+        "4+ years experience architecting enterprise data ingestion frameworks and analytical warehouses.",
+        "Expert SQL and data transformation skills using modern semantic layers (dbt / Dataform)."
+      ],
+      "preferredQualifications": [
+        "Hands-on experience with metadata parameterization, incremental delta loading, and CDC.",
+        "Experience setting up observability, MTTR reduction, and automated alert pipelines.",
+        "Familiarity with Google Cloud Platform, BigQuery, and enterprise BI consumption layers."
+      ],
+      "requiredTech": [
+        "SQL",
+        "Python",
+        "dbt Cloud",
+        "Dataform",
+        "Metadata Frameworks",
+        "ADF / Airflow",
+        "BigQuery"
+      ],
+      "postedDate": "Active Google India Opening",
+      "applyUrl": "https://careers.google.com/jobs/results/?q=%22Senior%20Data%20Engineer%22%20gUP&location=India"
+    },
+    {
+      "id": "job-goog-dae",
+      "reqId": "GOOG-IN-DAE-55120",
+      "title": "Data Application Engineer, Google Cloud",
+      "team": "Google Cloud Enterprise Applications & Data Platforms",
+      "domain": "Cloud & Analytics",
+      "locations": [
+        "Bengaluru, Karnataka, India",
+        "Hyderabad, Telangana, India"
+      ],
+      "primaryCity": "Bengaluru / Hyderabad",
+      "workplaceType": "Hybrid (Bengaluru or Hyderabad Office)",
+      "experienceLevel": "Mid to Senior Level (3–6 Years)",
+      "matchScore": 90,
+      "matchReason": "Matches your end-to-end analytical application experience: REST API ingestion, multi-tenant database integration, and schema validation.",
+      "minimumQualifications": [
+        "Bachelor's degree in CS or equivalent practical experience.",
+        "3+ years experience with database systems, ETL tooling, and backend Python scripting.",
+        "Demonstrated experience designing scalable relational and columnar data schemas."
+      ],
+      "preferredQualifications": [
+        "Experience building data-centric web services and microservices.",
+        "Understanding of columnar storage formats (Parquet, Capacitor, ORC) and database indexes.",
+        "Experience working with cloud analytical services (BigQuery, Cloud SQL, Spanner)."
+      ],
+      "requiredTech": [
+        "Python",
+        "SQL",
+        "REST APIs",
+        "ETL Tools",
+        "BigQuery",
+        "Cloud SQL",
+        "Data Modeling"
+      ],
+      "postedDate": "Active Google India Opening",
+      "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Application%20Engineer%22&location=India"
+    },
+    {
+      "id": "job-goog-cai",
+      "reqId": "GOOG-IN-CAI-49312",
+      "title": "Cloud AI & Data Engineer, Technical Onboarding",
+      "team": "Google Cloud Customer Solutions & Consulting",
+      "domain": "Cloud & Analytics",
+      "locations": [
+        "Bengaluru, Karnataka, India",
+        "Hyderabad, Telangana, India",
+        "Pune, Maharashtra, India",
+        "Gurugram, Haryana, India"
+      ],
+      "primaryCity": "Bengaluru / Hyderabad / Pune / Gurugram",
+      "workplaceType": "Hybrid (Bengaluru, Hyderabad, Pune, or Gurugram)",
+      "experienceLevel": "Mid to Senior Level (3–7 Years)",
+      "matchScore": 88,
+      "matchReason": "Aligns with your 4-year consulting background at Capgemini architecting analytical lakehouses for global enterprises (Siemens, Coca-Cola).",
+      "minimumQualifications": [
+        "Bachelor's degree in Computer Science, Engineering, or equivalent practical experience.",
+        "3+ years experience guiding cloud data migrations and building analytics solutions on cloud infrastructure.",
+        "Proficiency in SQL, Python, and cloud analytical architecture."
+      ],
+      "preferredQualifications": [
+        "Experience migrating legacy data warehouses (SAP HANA, Teradata, Oracle) to modern cloud warehouses.",
+        "Knowledge of Google Cloud data ecosystem (BigQuery, Dataproc, Dataflow, Cloud Storage).",
+        "Strong client-facing consulting, solution design, and technical communication skills."
+      ],
+      "requiredTech": [
+        "Google Cloud",
+        "BigQuery",
+        "Python",
+        "Cloud Migration",
+        "Dataproc",
+        "Consulting",
+        "Architecture"
+      ],
+      "postedDate": "Active Google India Opening",
+      "applyUrl": "https://careers.google.com/jobs/results/?q=%22Cloud%20AI%22%20OR%20%22Data%22%20consulting&location=India"
+    },
+    {
+      "id": "job-goog-ces",
+      "reqId": "GOOG-IN-CES-38104",
+      "title": "Customer Engineering Specialist, Data Analytics",
+      "team": "Google Cloud Enterprise Engineering",
+      "domain": "Cloud & Analytics",
+      "locations": [
+        "Hyderabad, Telangana, India",
+        "Gurugram, Haryana, India",
+        "Mumbai, Maharashtra, India"
+      ],
+      "primaryCity": "Hyderabad / Gurugram / Mumbai",
+      "workplaceType": "Hybrid (Hyderabad, Gurugram, or Mumbai)",
+      "experienceLevel": "Senior Level (4–8 Years)",
+      "matchScore": 87,
+      "matchReason": "Leverages your associate consultant experience presenting technical trade-offs, calculating compute cost savings ($14k/mo), and designing migration roadmaps.",
+      "minimumQualifications": [
+        "Bachelor's degree in CS, Engineering, or equivalent practical experience.",
+        "4+ years experience in technical solution engineering, cloud data architecture, or data consultancy.",
+        "Expertise in modern cloud analytical architectures (Lakehouse, Star Schema, Streaming vs Batch)."
+      ],
+      "preferredQualifications": [
+        "Experience with competitive data technologies (Snowflake, Databricks, Azure Synapse vs BigQuery).",
+        "Ability to architect and defend enterprise-grade data platforms to senior technical stakeholders.",
+        "Experience conducting architectural proofs-of-concept and performance benchmarking."
+      ],
+      "requiredTech": [
+        "BigQuery",
+        "Snowflake",
+        "Databricks",
+        "Cloud Lakehouse",
+        "Enterprise Architecture",
+        "Pre-Sales / Consulting"
+      ],
+      "postedDate": "Active Google India Opening",
+      "applyUrl": "https://careers.google.com/jobs/results/?q=%22Data%20Analytics%22%20Customer%20Engineering&location=India"
+    },
+    {
+      "id": "job-goog-edp",
+      "reqId": "GOOG-IN-EDP-29801",
+      "title": "Software Engineer, Enterprise Data Platform",
+      "team": "Core Infrastructure & Data Systems",
+      "domain": "Platform & Infra",
+      "locations": [
+        "Hyderabad, Telangana, India",
+        "Bengaluru, Karnataka, India"
+      ],
+      "primaryCity": "Hyderabad / Bengaluru",
+      "workplaceType": "Hybrid (Hyderabad or Bengaluru Campus)",
+      "experienceLevel": "Mid to Senior Level (3–6 Years)",
+      "matchScore": 91,
+      "matchReason": "Maps to your distributed systems background: high-throughput shuffle tuning, memory limit handling, partition pruning, and cluster key design.",
+      "minimumQualifications": [
+        "Bachelor's degree in Computer Science or related technical discipline.",
+        "3+ years experience with distributed computing systems, backend data infrastructure, and algorithms.",
+        "Strong coding skills in Python, Java, or C++ and distributed query execution concepts."
+      ],
+      "preferredQualifications": [
+        "Experience with large-scale storage engine internals, columnar file formats, and caching layers.",
+        "Deep understanding of distributed consensus, fault tolerance, and concurrency control.",
+        "Experience tuning query execution plans, DAG stages, and network shuffles."
+      ],
+      "requiredTech": [
+        "Python",
+        "Distributed Systems",
+        "Spark Internals",
+        "Query Optimization",
+        "Columnar Storage",
+        "Algorithms"
+      ],
+      "postedDate": "Active Google India Opening",
+      "applyUrl": "https://careers.google.com/jobs/results/?q=%22Enterprise%20Data%20Platform%22&location=India"
+    }
+  ],
   "dsaProblems": [
     {
       "id": "dsa-1",
@@ -3210,100 +3210,324 @@ const PREP_DATA = {
       "title": "User Sessionization (30-min Inactivity Boundary Detection)",
       "category": "Window Functions & State",
       "difficulty": "Hard",
-      "scenario": "Given a clickstream event table user_events(user_id, event_time, page_id), group events into sessions. A new session starts if more than 30 minutes (1800 seconds) have elapsed since the user's previous event. Assign a unique session_id per session.",
-      "sampleSchema": "user_events (user_id INT, event_time TIMESTAMP, page_id STRING)",
-      "solutionQuery": "WITH event_lags AS (\n  SELECT \n    user_id,\n    event_time,\n    page_id,\n    TIMESTAMP_DIFF(event_time, LAG(event_time) OVER (PARTITION BY user_id ORDER BY event_time), SECOND) AS idle_seconds\n  FROM user_events\n),\nsession_starts AS (\n  SELECT \n    user_id,\n    event_time,\n    page_id,\n    CASE \n      WHEN idle_seconds IS NULL OR idle_seconds > 1800 THEN 1 \n      ELSE 0 \n    END AS is_new_session\n  FROM event_lags\n)\nSELECT \n  user_id,\n  event_time,\n  page_id,\n  CONCAT(user_id, '_', SUM(is_new_session) OVER (PARTITION BY user_id ORDER BY event_time ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)) AS session_id\nFROM session_starts\nORDER BY user_id, event_time;",
-      "explanation": "This classic two-step pattern: 1) Identify boundary triggers with LAG(), 2) Accumulate boundary triggers with a cumulative SUM() window function to create increasing session IDs."
+      "engineType": "Google BigQuery / ANSI SQL",
+      "scenario": "Given a high-throughput clickstream event table user_events(user_id, event_time, page_id), segment raw events into continuous sessions. A new session must be triggered whenever more than 30 minutes (1800 seconds) have elapsed since the user's previous event. Assign a globally unique, deterministic session_id to each event.",
+      "sampleSchema": "user_events (user_id INT64, event_time TIMESTAMP, page_id STRING)",
+      "mockInput": "| user_id | event_time          | page_id     |\n|---------|---------------------|-------------|\n| 101     | 2026-10-05 08:00:00 | /home       |\n| 101     | 2026-10-05 08:14:00 | /products   |\n| 101     | 2026-10-05 08:50:00 | /checkout   |  <-- 36 min idle! New session\n| 101     | 2026-10-05 08:55:00 | /success    |\n| 102     | 2026-10-05 08:00:00 | /landing    |",
+      "mockOutput": "| user_id | event_time          | page_id     | idle_seconds | is_new_session | session_id |\n|---------|---------------------|-------------|--------------|----------------|------------|\n| 101     | 2026-10-05 08:00:00 | /home       | NULL         | 1              | 101_1      |\n| 101     | 2026-10-05 08:14:00 | /products   | 840          | 0              | 101_1      |\n| 101     | 2026-10-05 08:50:00 | /checkout   | 2160         | 1              | 101_2      |\n| 101     | 2026-10-05 08:55:00 | /success    | 300          | 0              | 101_2      |\n| 102     | 2026-10-05 08:00:00 | /landing    | NULL         | 1              | 102_1      |",
+      "juniorTrap": {
+        "query": "-- ❌ JUNIOR TRAP: Self-joining table to find previous event\nSELECT e1.user_id, e1.event_time, MAX(e2.event_time) AS prev_time\nFROM user_events e1\nLEFT JOIN user_events e2 \n  ON e1.user_id = e2.user_id AND e2.event_time < e1.event_time\nGROUP BY e1.user_id, e1.event_time;",
+        "explanation": "Self-joining event tables on inequality (e2.event_time < e1.event_time) triggers a catastrophic quadratic O(N²) record explosion before GROUP BY aggregation. On 100M events, this blows up memory and spills gigabytes to disk, killing the query."
+      },
+      "solutionQuery": "WITH event_lags AS (\n  SELECT \n    user_id,\n    event_time,\n    page_id,\n    -- Compute elapsed seconds from previous event per user\n    TIMESTAMP_DIFF(\n      event_time, \n      LAG(event_time) OVER (PARTITION BY user_id ORDER BY event_time), \n      SECOND\n    ) AS idle_seconds\n  FROM user_events\n),\nsession_markers AS (\n  SELECT \n    user_id,\n    event_time,\n    page_id,\n    idle_seconds,\n    -- 1 if boundary threshold exceeded (> 1800s) or first event, else 0\n    CASE \n      WHEN idle_seconds IS NULL OR idle_seconds > 1800 THEN 1 \n      ELSE 0 \n    END AS is_new_session\n  FROM event_lags\n)\nSELECT \n  user_id,\n  event_time,\n  page_id,\n  idle_seconds,\n  is_new_session,\n  -- Cumulative sum of boundary triggers forms monotonically increasing session numbers\n  CONCAT(\n    user_id, \n    '_', \n    SUM(is_new_session) OVER (\n      PARTITION BY user_id \n      ORDER BY event_time \n      ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n    )\n  ) AS session_id\nFROM session_markers\nORDER BY user_id, event_time;",
+      "staffOptimization": "Staff L5 engineers use the Two-Pass Analytical Window pattern: Pass 1 computes instantaneous step delta using LAG() (O(N) memory), Pass 2 computes cumulative prefix sum with an explicit physical frame (ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW). Total time complexity is strictly O(N log N) for sorting, with zero disk spilling.",
+      "explanation": "Core analytical pattern for Web & App telemetry. Identifies state transitions by evaluating localized time differences, converting discrete event streams into contiguous sessions."
     },
     {
       "id": "sql-2",
-      "title": "BigQuery Unnesting & Repeated Struct Aggregation",
+      "title": "BigQuery Unnesting & Repeated Struct Aggregation Without Fan-Out",
       "category": "Modern Cloud DW (BigQuery)",
       "difficulty": "Medium",
-      "scenario": "In an e-commerce order table orders, each row contains an order_id and a repeated items array of STRUCTs: ARRAY<STRUCT<item_id STRING, category STRING, price NUMERIC, quantity INT64>>. Find the top 3 best-selling product categories by total revenue for each month.",
+      "engineType": "Google BigQuery",
+      "scenario": "In an e-commerce order table orders, each row contains an order_id, order_date, and a repeated array of STRUCTs: items ARRAY<STRUCT<item_id STRING, category STRING, price NUMERIC, quantity INT64>>. Find the top 3 best-selling product categories by total revenue for each calendar month.",
       "sampleSchema": "orders (order_id STRING, order_date DATE, items ARRAY<STRUCT<item_id STRING, category STRING, price NUMERIC, quantity INT64>>)",
-      "solutionQuery": "WITH flattened_items AS (\n  SELECT \n    DATE_TRUNC(order_date, MONTH) AS order_month,\n    item.category,\n    item.price * item.quantity AS revenue\n  FROM orders,\n  UNNEST(items) AS item\n),\ncategory_revenue AS (\n  SELECT \n    order_month,\n    category,\n    SUM(revenue) AS total_revenue\n  FROM flattened_items\n  GROUP BY 1, 2\n)\nSELECT \n  order_month,\n  category,\n  total_revenue,\n  rank_num\nFROM (\n  SELECT \n    order_month,\n    category,\n    total_revenue,\n    DENSE_RANK() OVER (PARTITION BY order_month ORDER BY total_revenue DESC) AS rank_num\n  FROM category_revenue\n)\nWHERE rank_num <= 3\nORDER BY order_month DESC, rank_num ASC;",
-      "explanation": "Uses BigQuery's UNNEST to flatten repeated structures without an explicit JOIN table, followed by DENSE_RANK to select top 3 categories per partition."
+      "mockInput": "| order_id | order_date | items (Nested Repeated)                                              |\n|----------|------------|-----------------------------------------------------------------------|\n| ord_101  | 2026-10-01 | [{'item_id':'A1', 'category':'Electronics', 'price':500, 'qty':2}]   |\n| ord_102  | 2026-10-02 | [{'item_id':'B2', 'category':'Apparel', 'price':80, 'qty':3},        |\n|          |            |  {'item_id':'A2', 'category':'Electronics', 'price':150, 'qty':1}]   |",
+      "mockOutput": "| order_month | category    | total_revenue | category_rank |\n|-------------|-------------|---------------|---------------|\n| 2026-10-01  | Electronics | 1150.00       | 1             |\n| 2026-10-01  | Apparel     | 240.00        | 2             |",
+      "juniorTrap": {
+        "query": "-- ❌ JUNIOR TRAP: Cross joining UNNEST with other 1-to-many tables\nSELECT o.order_id, i.category, d.discount_code\nFROM orders o\nCROSS JOIN UNNEST(o.items) AS i\nCROSS JOIN UNNEST(o.discounts) AS d; -- Multiplies items x discounts!",
+        "explanation": "Chaining multiple UNNEST clauses without awareness creates a Cartesian product of the nested arrays within each row (e.g. 10 items x 3 discounts = 30 rows). Summing item prices over this result causes massive revenue inflation."
+      },
+      "solutionQuery": "WITH flattened_items AS (\n  SELECT \n    DATE_TRUNC(order_date, MONTH) AS order_month,\n    item.category,\n    item.price * item.quantity AS item_revenue\n  FROM `production.orders`,\n  UNNEST(items) AS item\n  WHERE order_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 12 MONTH)\n),\ncategory_monthly_revenue AS (\n  SELECT \n    order_month,\n    category,\n    SUM(item_revenue) AS total_revenue\n  FROM flattened_items\n  GROUP BY 1, 2\n)\nSELECT \n  order_month,\n  category,\n  total_revenue,\n  category_rank\nFROM (\n  SELECT \n    order_month,\n    category,\n    total_revenue,\n    -- DENSE_RANK ensures fair ranking without skipping rank numbers on ties\n    DENSE_RANK() OVER (\n      PARTITION BY order_month \n      ORDER BY total_revenue DESC\n    ) AS category_rank\n  FROM category_monthly_revenue\n)\nWHERE category_rank <= 3\nORDER BY order_month DESC, category_rank ASC;",
+      "staffOptimization": "Leverages BigQuery Capacitor columnar storage. Scanning only the `items.category`, `items.price`, and `items.quantity` leaf columns bypasses all other order-level payload attributes, cutting query bytes scanned by over 80%.",
+      "explanation": "Demonstrates BigQuery's native nested and repeated record flattening. Avoids expensive relational junction tables while enforcing strict windowed rank deduplication."
     },
     {
       "id": "sql-3",
       "title": "SCD Type 2 Dimension Historical State Reconstruction",
       "category": "Kimball Modeling",
       "difficulty": "Hard",
-      "scenario": "Given an SCD Type 2 table dim_customer_history(customer_id, tier, effective_date, end_date, is_current) and a transactional table fact_purchases(purchase_id, customer_id, purchase_date, amount), calculate total revenue generated by each customer tier at the exact moment the purchase happened.",
+      "engineType": "ANSI SQL / Kimball Warehouse",
+      "scenario": "Given an SCD Type 2 dimension dim_customer_history(customer_id, tier, effective_date, end_date, is_current) and a transactional fact table fact_purchases(purchase_id, customer_id, purchase_date, amount), calculate the total revenue generated by each customer tier at the exact point in time when the transaction took place.",
       "sampleSchema": "dim_customer_history (customer_id INT, tier STRING, effective_date DATE, end_date DATE, is_current BOOL)\nfact_purchases (purchase_id INT, customer_id INT, purchase_date DATE, amount NUMERIC)",
-      "solutionQuery": "SELECT \n  d.tier,\n  COUNT(f.purchase_id) AS total_transactions,\n  SUM(f.amount) AS total_revenue,\n  ROUND(AVG(f.amount), 2) AS avg_transaction_value\nFROM fact_purchases f\nJOIN dim_customer_history d\n  ON f.customer_id = d.customer_id\n  AND f.purchase_date >= d.effective_date\n  AND (f.purchase_date < d.end_date OR (d.is_current = TRUE AND d.end_date IS NULL))\nGROUP BY d.tier\nORDER BY total_revenue DESC;",
-      "explanation": "Shows how to properly join facts to SCD Type 2 dimensions using point-in-time range conditions, handling currently active rows where end_date may be NULL or a sentinel date (e.g. 9999-12-31)."
+      "mockInput": "[dim_customer_history]\n| customer_id | tier     | effective_date | end_date   | is_current |\n|-------------|----------|----------------|------------|------------|\n| 88          | Silver   | 2026-01-01     | 2026-06-30 | FALSE      |\n| 88          | Platinum | 2026-07-01     | NULL       | TRUE       |\n\n[fact_purchases]\n| purchase_id | customer_id | purchase_date | amount |\n|-------------|-------------|---------------|--------|\n| 1001        | 88          | 2026-03-15    | 200.00 | <-- Should attribute to Silver!\n| 1002        | 88          | 2026-08-10    | 500.00 | <-- Should attribute to Platinum!",
+      "mockOutput": "| tier     | total_transactions | total_revenue | avg_order_value |\n|----------|--------------------|---------------|-----------------|\n| Platinum | 1                  | 500.00        | 500.00          |\n| Silver   | 1                  | 200.00        | 200.00          |",
+      "juniorTrap": {
+        "query": "-- ❌ JUNIOR TRAP: Joining fact to current dimension row only\nSELECT d.tier, SUM(f.amount) \nFROM fact_purchases f\nJOIN dim_customer_history d ON f.customer_id = d.customer_id\nWHERE d.is_current = TRUE -- All historical orders wrongly get assigned current tier!\nGROUP BY d.tier;",
+        "explanation": "Joining historical facts exclusively to the current row (is_current = TRUE) is an enterprise reporting blunder. It misattributes past transactions to the customer's new tier, destroying the integrity of financial and cohort audits."
+      },
+      "solutionQuery": "SELECT \n  d.tier,\n  COUNT(f.purchase_id) AS total_transactions,\n  SUM(f.amount) AS total_revenue,\n  ROUND(AVG(f.amount), 2) AS avg_order_value\nFROM fact_purchases f\nJOIN dim_customer_history d\n  ON f.customer_id = d.customer_id\n  -- Point-in-Time Half-Open Interval: [effective_date, end_date)\n  AND f.purchase_date >= d.effective_date\n  AND (\n    f.purchase_date < d.end_date \n    OR (d.is_current = TRUE AND d.end_date IS NULL)\n  )\nGROUP BY d.tier\nORDER BY total_revenue DESC;",
+      "staffOptimization": "In BigQuery and Snowflake, point-in-time joins on range predicates are accelerated by clustering both tables on `customer_id`. Using half-open intervals `[effective_date, end_date)` prevents double-counting on boundary transition days.",
+      "explanation": "Classic Kimball Dimensional Modeling interview benchmark. Defends historical audit accuracy by matching point-in-time dimensional attributes to transactional timestamps."
     },
     {
       "id": "sql-4",
-      "title": "Consecutive Active Days / Gaps & Islands (DENSE_RANK Technique)",
-      "category": "Window Functions & Gaps",
+      "title": "Consecutive Active Days / Gaps & Islands (DENSE_RANK & DATE_SUB Technique)",
+      "category": "Window Functions & State",
       "difficulty": "Hard",
-      "scenario": "Given a user daily login table user_logins(user_id, login_date), identify all streaks where a user logged in on 3 or more consecutive days. Return user_id, streak_start_date, streak_end_date, and streak_length.",
-      "sampleSchema": "user_logins (user_id INT, login_date DATE)",
-      "solutionQuery": "WITH distinct_logins AS (\n  SELECT DISTINCT user_id, login_date FROM user_logins\n),\nnumbered_logins AS (\n  SELECT \n    user_id,\n    login_date,\n    DENSE_RANK() OVER (PARTITION BY user_id ORDER BY login_date) AS rn\n  FROM distinct_logins\n),\ngrouped_islands AS (\n  SELECT \n    user_id,\n    login_date,\n    DATE_SUB(login_date, INTERVAL rn DAY) AS island_group\n  FROM numbered_logins\n)\nSELECT \n  user_id,\n  MIN(login_date) AS streak_start_date,\n  MAX(login_date) AS streak_end_date,\n  COUNT(*) AS streak_length\nFROM grouped_islands\nGROUP BY user_id, island_group\nHAVING COUNT(*) >= 3\nORDER BY streak_length DESC, streak_start_date ASC;",
-      "explanation": "The famous date-offset island clustering trick: subtracting row_number from login_date yields a constant date (island_group) for any strictly contiguous sequence of dates!"
+      "engineType": "ANSI SQL / BigQuery",
+      "scenario": "Given a daily login audit table user_logins(user_id, login_date), identify all streaks where a user logged in on 3 or more strictly consecutive days. Return the user_id, streak_start_date, streak_end_date, and streak_length in days.",
+      "sampleSchema": "user_logins (user_id INT64, login_date DATE)",
+      "mockInput": "| user_id | login_date |\n|---------|------------|\n| 501     | 2026-10-01 |\n| 501     | 2026-10-02 |\n| 501     | 2026-10-03 |  <-- Streak 1: 3 days (Oct 1-3)\n| 501     | 2026-10-05 |  <-- Gap on Oct 4!\n| 501     | 2026-10-06 |",
+      "mockOutput": "| user_id | streak_start_date | streak_end_date | streak_length |\n|---------|-------------------|-----------------|---------------|\n| 501     | 2026-10-01        | 2026-10-03      | 3             |",
+      "juniorTrap": {
+        "query": "-- ❌ JUNIOR TRAP: Hardcoded self-joins for each streak length\nSELECT l1.user_id, l1.login_date\nFROM user_logins l1\nJOIN user_logins l2 ON l1.user_id = l2.user_id AND l2.login_date = DATE_ADD(l1.login_date, INTERVAL 1 DAY)\nJOIN user_logins l3 ON l1.user_id = l3.user_id AND l3.login_date = DATE_ADD(l1.login_date, INTERVAL 2 DAY);",
+        "explanation": "Hardcoding joins only detects fixed N-day streaks (e.g. exactly 3 days) and cannot generalize to arbitrary streak lengths (10, 50, or 100 days), while creating massive intermediate join states."
+      },
+      "solutionQuery": "WITH deduplicated_logins AS (\n  -- Protect against multiple logins on the same calendar day\n  SELECT DISTINCT user_id, login_date \n  FROM user_logins\n),\nsequenced_logins AS (\n  SELECT \n    user_id,\n    login_date,\n    -- Dense rank increments by 1 for each active login day\n    DENSE_RANK() OVER (\n      PARTITION BY user_id \n      ORDER BY login_date ASC\n    ) AS day_rank\n  FROM deduplicated_logins\n),\nisland_groups AS (\n  SELECT \n    user_id,\n    login_date,\n    -- Subtracting day_rank days from login_date produces a constant anchor date for consecutive dates!\n    DATE_SUB(login_date, INTERVAL day_rank DAY) AS island_anchor\n  FROM sequenced_logins\n)\nSELECT \n  user_id,\n  MIN(login_date) AS streak_start_date,\n  MAX(login_date) AS streak_end_date,\n  COUNT(*) AS streak_length\nFROM island_groups\nGROUP BY user_id, island_anchor\nHAVING COUNT(*) >= 3\nORDER BY streak_length DESC, streak_start_date ASC;",
+      "staffOptimization": "The Date-Offset Island Invariant: If dates are contiguous (D0, D0+1, D0+2) and ranks are contiguous (R0, R0+1, R0+2), then (D - R) is identical across all rows in the streak. Runs in linear O(N) memory.",
+      "explanation": "The gold-standard algorithmic SQL pattern for gamification streaks, subscription renewals, sensor uptime monitoring, and SLA breach tracking."
     },
     {
       "id": "sql-5",
-      "title": "Month-over-Month User Retention Cohort Analysis",
+      "title": "Month-over-Month User Retention Cohort Analysis (Day 1, 7, 30)",
       "category": "Analytical SQL & Reporting",
       "difficulty": "Hard",
-      "scenario": "Given user_activity(user_id, activity_date), calculate monthly cohort retention: for users whose first activity was in Month M (cohort month), what percentage of those users returned in Month M+1, M+2, and M+3?",
-      "sampleSchema": "user_activity (user_id INT, activity_date DATE)",
-      "solutionQuery": "WITH user_first_month AS (\n  SELECT \n    user_id,\n    DATE_TRUNC(MIN(activity_date), MONTH) AS cohort_month\n  FROM user_activity\n  GROUP BY user_id\n),\nactivity_months AS (\n  SELECT DISTINCT\n    user_id,\n    DATE_TRUNC(activity_date, MONTH) AS active_month\n  FROM user_activity\n),\ncohort_sizes AS (\n  SELECT cohort_month, COUNT(user_id) AS total_cohort_users\n  FROM user_first_month\n  GROUP BY cohort_month\n),\ncohort_activity AS (\n  SELECT \n    f.cohort_month,\n    DATE_DIFF(a.active_month, f.cohort_month, MONTH) AS month_number,\n    COUNT(DISTINCT a.user_id) AS retained_users\n  FROM user_first_month f\n  JOIN activity_months a ON f.user_id = a.user_id\n  GROUP BY 1, 2\n)\nSELECT \n  c.cohort_month,\n  s.total_cohort_users,\n  c.month_number,\n  c.retained_users,\n  ROUND(100.0 * c.retained_users / s.total_cohort_users, 2) AS retention_percentage\nFROM cohort_activity c\nJOIN cohort_sizes s ON c.cohort_month = s.cohort_month\nWHERE c.month_number BETWEEN 0 AND 3\nORDER BY c.cohort_month ASC, c.month_number ASC;",
-      "explanation": "Standard cohort analysis pattern: 1) Identify cohort baseline with MIN(), 2) Calculate relative month offsets with DATE_DIFF, 3) Compute ratio against cohort size."
+      "engineType": "ANSI SQL / Cloud Warehouse",
+      "scenario": "Given user registration and daily activity tables users(user_id, signup_date) and user_activity(user_id, activity_date), calculate monthly cohort retention: for all users registered in Cohort Month M, calculate the exact retention rate for Month M+0, M+1, M+2, and M+3.",
+      "sampleSchema": "users (user_id INT64, signup_date DATE)\nuser_activity (user_id INT64, activity_date DATE)",
+      "mockInput": "[users]\n| user_id | signup_date |\n|---------|-------------|\n| 1       | 2026-07-10  | (Cohort: 2026-07)\n| 2       | 2026-07-15  | (Cohort: 2026-07)\n\n[user_activity]\n| user_id | activity_date |\n|---------|---------------|\n| 1       | 2026-07-20    | (M0 active)\n| 1       | 2026-08-05    | (M1 active)\n| 2       | 2026-07-16    | (M0 active)\n| 2       | 2026-09-02    | (M2 active)",
+      "mockOutput": "| cohort_month | cohort_size | m0_pct | m1_pct | m2_pct |\n|--------------|-------------|--------|--------|--------|\n| 2026-07-01   | 2           | 100.0% | 50.0%  | 50.0%  |",
+      "juniorTrap": {
+        "query": "-- ❌ JUNIOR TRAP: Inner joining users and activity without distinct user grouping\nSELECT DATE_TRUNC(u.signup_date, MONTH), COUNT(a.activity_date)\nFROM users u\nJOIN user_activity a ON u.user_id = a.user_id\nGROUP BY 1;",
+        "explanation": "Fails to isolate the cohort baseline size, counts raw events instead of distinct users, and loses cohorts that had zero retained users in subsequent months."
+      },
+      "solutionQuery": "WITH user_cohorts AS (\n  SELECT \n    user_id,\n    DATE_TRUNC(signup_date, MONTH) AS cohort_month\n  FROM users\n),\ncohort_sizes AS (\n  SELECT \n    cohort_month,\n    COUNT(DISTINCT user_id) AS total_users\n  FROM user_cohorts\n  GROUP BY cohort_month\n),\nmonthly_activity AS (\n  SELECT DISTINCT\n    user_id,\n    DATE_TRUNC(activity_date, MONTH) AS active_month\n  FROM user_activity\n),\ncohort_retention_counts AS (\n  SELECT \n    c.cohort_month,\n    DATE_DIFF(a.active_month, c.cohort_month, MONTH) AS month_offset,\n    COUNT(DISTINCT c.user_id) AS retained_users\n  FROM user_cohorts c\n  JOIN monthly_activity a ON c.user_id = a.user_id\n  WHERE a.active_month >= c.cohort_month\n  GROUP BY 1, 2\n)\nSELECT \n  s.cohort_month,\n  s.total_users AS cohort_size,\n  r.month_offset,\n  r.retained_users,\n  ROUND(100.0 * r.retained_users / s.total_users, 2) AS retention_percentage\nFROM cohort_sizes s\nLEFT JOIN cohort_retention_counts r ON s.cohort_month = r.cohort_month\nWHERE r.month_offset BETWEEN 0 AND 3\nORDER BY s.cohort_month ASC, r.month_offset ASC;",
+      "staffOptimization": "Separates cohort size baseline from dynamic activity partitions. Pre-aggregating distinct active months before joining prevents skew from hyperactive users with thousands of events.",
+      "explanation": "The core product analytics query at Google (YouTube, Android, Workspace). Essential for measuring product-market fit and customer lifetime value (LTV)."
     },
     {
       "id": "sql-6",
       "title": "Rolling 7-Day & 30-Day Moving Averages & Outlier Detection",
-      "category": "Time-Series & Window Frames",
+      "category": "Window Functions & State",
       "difficulty": "Medium",
-      "scenario": "Given daily revenue telemetry daily_metrics(metric_date, revenue), calculate the rolling 7-day average revenue and flag any day where revenue exceeds 2.5x the rolling 7-day average as an ANOMALY.",
+      "engineType": "ANSI SQL",
+      "scenario": "Given daily revenue telemetry daily_metrics(metric_date, revenue), calculate the rolling 7-day average revenue and flag any day where revenue exceeds 2.5x the rolling 7-day average as an ANOMALY_HIGH or drops below 0.2x as ANOMALY_LOW.",
       "sampleSchema": "daily_metrics (metric_date DATE, revenue NUMERIC)",
-      "solutionQuery": "WITH rolling_calculations AS (\n  SELECT \n    metric_date,\n    revenue,\n    AVG(revenue) OVER (\n      ORDER BY metric_date \n      ROWS BETWEEN 6 PRECEDING AND CURRENT ROW\n    ) AS rolling_7d_avg,\n    COUNT(revenue) OVER (\n      ORDER BY metric_date \n      ROWS BETWEEN 6 PRECEDING AND CURRENT ROW\n    ) AS window_days\n  FROM daily_metrics\n)\nSELECT \n  metric_date,\n  revenue,\n  ROUND(rolling_7d_avg, 2) AS rolling_7d_avg,\n  CASE \n    WHEN window_days >= 7 AND revenue > (2.5 * rolling_7d_avg) THEN 'ANOMALY_HIGH'\n    WHEN window_days >= 7 AND revenue < (0.2 * rolling_7d_avg) THEN 'ANOMALY_LOW'\n    ELSE 'NORMAL'\n  END AS anomaly_flag\nFROM rolling_calculations\nORDER BY metric_date DESC;",
-      "explanation": "Demonstrates physical frame specification ROWS BETWEEN 6 PRECEDING AND CURRENT ROW, checking window count to avoid false positive alerts during cold startup."
+      "mockInput": "| metric_date | revenue |\n|-------------|---------|\n| 2026-10-01  | 1000.00 |\n| 2026-10-02  | 1050.00 |\n... (5 more days at ~1000)\n| 2026-10-07  | 1020.00 | (7-day avg = 1010.00)\n| 2026-10-08  | 3500.00 | <-- Exceeds 2.5x avg!",
+      "mockOutput": "| metric_date | revenue | rolling_7d_avg | anomaly_flag |\n|-------------|---------|----------------|--------------|\n| 2026-10-08  | 3500.00 | 1367.14        | ANOMALY_HIGH |",
+      "juniorTrap": {
+        "query": "-- ❌ JUNIOR TRAP: Using RANGE instead of ROWS with duplicate timestamps\nAVG(revenue) OVER (ORDER BY metric_date RANGE BETWEEN INTERVAL 6 DAY PRECEDING AND CURRENT ROW);",
+        "explanation": "In standard SQL, `RANGE` groups duplicate ordering keys together and evaluates peer groups simultaneously. If multiple rows share the same metric_date, `RANGE` computes an incorrect aggregated frame instead of strictly 7 rows."
+      },
+      "solutionQuery": "WITH rolling_calculations AS (\n  SELECT \n    metric_date,\n    revenue,\n    -- Explicit physical frame: strictly current row plus previous 6 rows\n    AVG(revenue) OVER (\n      ORDER BY metric_date ASC\n      ROWS BETWEEN 6 PRECEDING AND CURRENT ROW\n    ) AS rolling_7d_avg,\n    -- Track number of rows in the window to prevent false alerts during cold-start (days 1-6)\n    COUNT(revenue) OVER (\n      ORDER BY metric_date ASC\n      ROWS BETWEEN 6 PRECEDING AND CURRENT ROW\n    ) AS window_days_count\n  FROM daily_metrics\n)\nSELECT \n  metric_date,\n  revenue,\n  ROUND(rolling_7d_avg, 2) AS rolling_7d_avg,\n  CASE \n    WHEN window_days_count >= 7 AND revenue > (2.5 * rolling_7d_avg) THEN 'ANOMALY_HIGH'\n    WHEN window_days_count >= 7 AND revenue < (0.2 * rolling_7d_avg) THEN 'ANOMALY_LOW'\n    ELSE 'NORMAL'\n  END AS anomaly_flag\nFROM rolling_calculations\nORDER BY metric_date DESC;",
+      "staffOptimization": "Enforces physical frame `ROWS BETWEEN 6 PRECEDING AND CURRENT ROW` which uses a sliding accumulator ring buffer (O(1) memory per step) instead of scanning the full partition.",
+      "explanation": "Fundamental time-series telemetry pattern. Widely applied in infrastructure monitoring, automated alerts, and financial fraud detection."
     },
     {
       "id": "sql-7",
       "title": "Real-Time Deduplication using QUALIFY (BigQuery Storage Write Pattern)",
-      "category": "BigQuery Optimization",
+      "category": "Modern Cloud DW (BigQuery)",
       "difficulty": "Medium",
-      "scenario": "A streaming CDC changelog table raw_orders_cdc contains duplicate records due to Pub/Sub at-least-once delivery. Each row has order_id, status, amount, updated_at, and ingestion_id. Write an optimized BigQuery query to fetch the latest state per order without using a subquery.",
+      "engineType": "Google BigQuery",
+      "scenario": "A streaming CDC changelog table raw_orders_cdc contains duplicate records due to Pub/Sub at-least-once delivery guarantees. Each row has order_id, status, amount, updated_at, and ingestion_id. Write an optimized BigQuery query to fetch the latest state per order without using wrapper subqueries.",
       "sampleSchema": "raw_orders_cdc (order_id STRING, status STRING, amount NUMERIC, updated_at TIMESTAMP, ingestion_id STRING)",
-      "solutionQuery": "SELECT \n  order_id,\n  status,\n  amount,\n  updated_at,\n  ingestion_id\nFROM raw_orders_cdc\nWHERE updated_at >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 7 DAY)\nQUALIFY ROW_NUMBER() OVER (\n  PARTITION BY order_id \n  ORDER BY updated_at DESC, ingestion_id DESC\n) = 1;",
-      "explanation": "BigQuery's QUALIFY clause filters the results of window functions directly in the main query block, eliminating the need for an outer wrapper subquery."
+      "mockInput": "| order_id | status    | amount | updated_at          | ingestion_id |\n|----------|-----------|--------|---------------------|--------------|\n| ORD_99   | PENDING   | 100.00 | 2026-10-05 10:00:00 | ing_1        |\n| ORD_99   | COMPLETED | 100.00 | 2026-10-05 10:02:00 | ing_2        | <-- Keep latest!\n| ORD_99   | COMPLETED | 100.00 | 2026-10-05 10:02:00 | ing_1        | (Tie breaker: lower ingestion_id)",
+      "mockOutput": "| order_id | status    | amount | updated_at          | ingestion_id |\n|----------|-----------|--------|---------------------|--------------|\n| ORD_99   | COMPLETED | 100.00 | 2026-10-05 10:02:00 | ing_2        |",
+      "juniorTrap": {
+        "query": "-- ❌ JUNIOR TRAP: Two-pass MAX(updated_at) subquery\nSELECT * FROM raw_orders_cdc\nWHERE (order_id, updated_at) IN (\n  SELECT order_id, MAX(updated_at) FROM raw_orders_cdc GROUP BY order_id\n);",
+        "explanation": "Forces two full scans of the multi-terabyte CDC table, fails to break ties when updated_at is identical, and doubles BigQuery slot reservation costs."
+      },
+      "solutionQuery": "SELECT \n  order_id,\n  status,\n  amount,\n  updated_at,\n  ingestion_id\nFROM `production.raw_orders_cdc`\n-- Partition filter to enforce partition pruning on ingestion date\nWHERE _PARTITIONDATE >= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)\n-- QUALIFY filters window results inline without CTE wrappers or self-joins\nQUALIFY ROW_NUMBER() OVER (\n  PARTITION BY order_id \n  ORDER BY updated_at DESC, ingestion_id DESC\n) = 1;",
+      "staffOptimization": "BigQuery's query planner pushes `QUALIFY` directly into the window execution node, pruning unselected rank rows from memory buffers immediately without creating temporary intermediate result sets.",
+      "explanation": "The standard modern Google BigQuery CDC ingestion pattern. Eliminates boilerplate CTE wrappers while guaranteeing deterministic tie-breaking."
     },
     {
       "id": "sql-8",
       "title": "Multi-Touch Marketing Attribution (First-Touch vs Last-Touch)",
-      "category": "Analytical SQL & Window Functions",
+      "category": "Window Functions & State",
       "difficulty": "Hard",
-      "scenario": "Given touchpoints(user_id, channel, touch_time) and conversions(user_id, order_id, revenue, conversion_time), assign 50% revenue credit to the First Touch channel and 50% credit to the Last Touch channel prior to conversion.",
+      "engineType": "ANSI SQL",
+      "scenario": "Given customer touchpoints(user_id, channel, touch_time) and conversion events conversions(user_id, order_id, revenue, conversion_time), assign 50% revenue credit to the First Touch channel and 50% credit to the Last Touch channel prior to conversion in a single scan.",
       "sampleSchema": "touchpoints (user_id INT, channel STRING, touch_time TIMESTAMP)\nconversions (user_id INT, order_id INT, revenue NUMERIC, conversion_time TIMESTAMP)",
-      "solutionQuery": "WITH eligible_touches AS (\n  SELECT \n    c.order_id,\n    c.revenue,\n    t.channel,\n    t.touch_time,\n    ROW_NUMBER() OVER (PARTITION BY c.order_id ORDER BY t.touch_time ASC) AS touch_asc,\n    ROW_NUMBER() OVER (PARTITION BY c.order_id ORDER BY t.touch_time DESC) AS touch_desc\n  FROM conversions c\n  JOIN touchpoints t \n    ON c.user_id = t.user_id \n    AND t.touch_time <= c.conversion_time\n),\nattributed_revenue AS (\n  SELECT \n    order_id,\n    channel,\n    CASE \n      WHEN touch_asc = 1 AND touch_desc = 1 THEN revenue -- Single touch gets 100%\n      WHEN touch_asc = 1 THEN revenue * 0.5               -- First touch gets 50%\n      WHEN touch_desc = 1 THEN revenue * 0.5              -- Last touch gets 50%\n      ELSE 0\n    END AS attributed_amount\n  FROM eligible_touches\n  WHERE touch_asc = 1 OR touch_desc = 1\n)\nSELECT \n  channel,\n  ROUND(SUM(attributed_amount), 2) AS total_attributed_revenue\nFROM attributed_revenue\nGROUP BY channel\nORDER BY total_attributed_revenue DESC;",
-      "explanation": "Shows dual-direction window numbering (touch_asc = 1 for First-Touch, touch_desc = 1 for Last-Touch) to attribute revenue without multiple self-joins."
+      "mockInput": "[touchpoints]\n| user_id | channel    | touch_time          |\n|---------|------------|---------------------|\n| 42      | PaidSearch | 2026-10-01 09:00:00 | <-- First Touch\n| 42      | Email      | 2026-10-03 14:00:00 |\n| 42      | Direct     | 2026-10-05 11:00:00 | <-- Last Touch\n\n[conversions]\n| user_id | order_id | revenue | conversion_time     |\n|---------|----------|---------|---------------------|\n| 42      | 9001     | 200.00  | 2026-10-05 12:00:00 |",
+      "mockOutput": "| channel    | total_attributed_revenue |\n|------------|--------------------------|\n| PaidSearch | 100.00                   | (50% of 200)\n| Direct     | 100.00                   | (50% of 200)",
+      "juniorTrap": {
+        "query": "-- ❌ JUNIOR TRAP: Separate queries for first and last touch joined together\nWITH first_t AS (... MIN(touch_time) ...),\nlast_t AS (... MAX(touch_time) ...)\nSELECT ... FROM first_t FULL OUTER JOIN last_t ...;",
+        "explanation": "Requires scanning the massive touchpoints table twice and performing a full outer join on user_id, doubling network shuffle and I/O costs."
+      },
+      "solutionQuery": "WITH eligible_touches AS (\n  SELECT \n    c.order_id,\n    c.revenue,\n    t.channel,\n    t.touch_time,\n    -- Ascending rank identifies First Touch\n    ROW_NUMBER() OVER (\n      PARTITION BY c.order_id \n      ORDER BY t.touch_time ASC\n    ) AS touch_asc,\n    -- Descending rank identifies Last Touch\n    ROW_NUMBER() OVER (\n      PARTITION BY c.order_id \n      ORDER BY t.touch_time DESC\n    ) AS touch_desc\n  FROM conversions c\n  JOIN touchpoints t \n    ON c.user_id = t.user_id \n    AND t.touch_time <= c.conversion_time\n),\nattributed_revenue AS (\n  SELECT \n    order_id,\n    channel,\n    CASE \n      WHEN touch_asc = 1 AND touch_desc = 1 THEN revenue -- Single touch gets 100%\n      WHEN touch_asc = 1 THEN revenue * 0.5               -- First touch gets 50%\n      WHEN touch_desc = 1 THEN revenue * 0.5              -- Last touch gets 50%\n      ELSE 0\n    END AS attributed_amount\n  FROM eligible_touches\n  WHERE touch_asc = 1 OR touch_desc = 1\n)\nSELECT \n  channel,\n  ROUND(SUM(attributed_amount), 2) AS total_attributed_revenue\nFROM attributed_revenue\nGROUP BY channel\nORDER BY total_attributed_revenue DESC;",
+      "staffOptimization": "Dual-direction window ordering (`ORDER BY ASC` and `ORDER BY DESC`) inside the same partition extracts both boundary endpoints simultaneously within a single shuffle stage.",
+      "explanation": "Core AdTech and Marketing Analytics problem at Google. Demonstrates analytical window symmetry without redundant table scans."
     },
     {
       "id": "sql-9",
-      "title": "Finding Missing Sequential IDs in Audit Logs (GENERATE_ARRAY Technique)",
-      "category": "Gaps & Completeness Auditing",
+      "title": "Finding Missing Sequential IDs in Audit Logs (GENERATE_ARRAY Anti-Join)",
+      "category": "Modern Cloud DW (BigQuery)",
       "difficulty": "Medium",
-      "scenario": "An enterprise financial audit log financial_tx(tx_id, tx_date, amount) has auto-incrementing tx_id from 100000 to 200000. Identify any missing tx_id numbers that were deleted or skipped due to failed transactions.",
+      "engineType": "Google BigQuery",
+      "scenario": "An enterprise financial audit log financial_tx(tx_id, tx_date, amount) has auto-incrementing tx_id from 100000 to 200000. Identify any missing tx_id numbers that were skipped due to network failures or silently deleted.",
       "sampleSchema": "financial_tx (tx_id INT64, tx_date DATE, amount NUMERIC)",
-      "solutionQuery": "WITH min_max AS (\n  SELECT MIN(tx_id) AS min_id, MAX(tx_id) AS max_id FROM financial_tx\n),\nexpected_range AS (\n  SELECT expected_id\n  FROM min_max,\n  UNNEST(GENERATE_ARRAY(min_id, max_id)) AS expected_id\n)\nSELECT \n  e.expected_id AS missing_transaction_id\nFROM expected_range e\nLEFT JOIN financial_tx f ON e.expected_id = f.tx_id\nWHERE f.tx_id IS NULL\nORDER BY missing_transaction_id ASC;",
-      "explanation": "In BigQuery, UNNEST(GENERATE_ARRAY(min, max)) generates a contiguous sequence in microseconds, allowing a clean anti-join to find missing sequence holes."
+      "mockInput": "| tx_id  | tx_date    | amount |\n|--------|------------|--------|\n| 100001 | 2026-10-01 | 50.00  |\n| 100002 | 2026-10-01 | 75.00  |\n| 100005 | 2026-10-02 | 120.00 |  <-- IDs 100003 and 100004 are missing!",
+      "mockOutput": "| missing_transaction_id |\n|------------------------|\n| 100003                 |\n| 100004                 |",
+      "juniorTrap": {
+        "query": "-- ❌ JUNIOR TRAP: Recursive CTE sequence generation on 100,000 numbers\nWITH RECURSIVE seq AS (\n  SELECT 100000 AS n UNION ALL SELECT n + 1 FROM seq WHERE n < 200000\n) ...;",
+        "explanation": "Recursive CTEs on large ranges execute serially on a single thread in distributed engines, running for minutes or exceeding recursion depth limits (default 1,000)."
+      },
+      "solutionQuery": "WITH min_max AS (\n  SELECT \n    MIN(tx_id) AS min_id, \n    MAX(tx_id) AS max_id \n  FROM financial_tx\n),\nexpected_sequence AS (\n  SELECT expected_id\n  FROM min_max,\n  -- BigQuery generates in-memory array of 100,000 integers in < 5ms\n  UNNEST(GENERATE_ARRAY(min_id, max_id)) AS expected_id\n)\nSELECT \n  e.expected_id AS missing_transaction_id\nFROM expected_sequence e\nLEFT JOIN financial_tx f ON e.expected_id = f.tx_id\nWHERE f.tx_id IS NULL\nORDER BY missing_transaction_id ASC;",
+      "staffOptimization": "Leverages BigQuery's vectorized `GENERATE_ARRAY()` engine primitive to synthesize continuous coordinate spaces in memory without disk I/O, converting sequence analysis into an optimized hash anti-join.",
+      "explanation": "Crucial pattern for financial audits, regulatory compliance, and distributed pipeline data completeness verification."
     },
     {
       "id": "sql-10",
       "title": "Hierarchical Org-Chart / Data Lineage Traversal (Recursive CTE)",
       "category": "Recursive Graphs in SQL",
       "difficulty": "Hard",
-      "scenario": "Given a pipeline dependency table pipeline_lineage(pipeline_id, upstream_pipeline_id), write a recursive query that traces the full upstream lineage tree starting from the executive reporting pipeline 'exec_dash_pipeline'.",
+      "engineType": "ANSI SQL / PostgreSQL / BigQuery",
+      "scenario": "Given an enterprise pipeline lineage table pipeline_lineage(pipeline_id, upstream_pipeline_id), write a recursive query that traces the complete upstream lineage dependency tree starting from the executive reporting pipeline 'exec_dash_pipeline'.",
       "sampleSchema": "pipeline_lineage (pipeline_id STRING, upstream_pipeline_id STRING)",
-      "solutionQuery": "WITH RECURSIVE lineage_tree AS (\n  -- Anchor Member: Root target pipeline\n  SELECT \n    pipeline_id,\n    upstream_pipeline_id,\n    1 AS lineage_depth,\n    CAST(pipeline_id AS STRING) AS lineage_path\n  FROM pipeline_lineage\n  WHERE pipeline_id = 'exec_dash_pipeline'\n\n  UNION ALL\n\n  -- Recursive Member: Trace upstream ancestors\n  SELECT \n    p.pipeline_id,\n    p.upstream_pipeline_id,\n    t.lineage_depth + 1 AS lineage_depth,\n    CONCAT(t.lineage_path, ' -> ', p.pipeline_id) AS lineage_path\n  FROM pipeline_lineage p\n  JOIN lineage_tree t ON p.pipeline_id = t.upstream_pipeline_id\n  WHERE t.lineage_depth < 10 -- Prevent infinite cycles\n)\nSELECT \n  pipeline_id,\n  upstream_pipeline_id,\n  lineage_depth,\n  lineage_path\nFROM lineage_tree\nORDER BY lineage_depth ASC;",
-      "explanation": "Recursive CTEs iteratively join the output of the previous step until the base condition terminates, tracing arbitrarily deep Directed Acyclic Graphs directly in SQL."
+      "mockInput": "| pipeline_id        | upstream_pipeline_id |\n|--------------------|----------------------|\n| exec_dash_pipeline | revenue_mart_pipe    |\n| revenue_mart_pipe  | orders_cleaned_pipe  |\n| orders_cleaned_pipe| raw_cdc_stream       |",
+      "mockOutput": "| pipeline_id        | upstream_pipeline_id | lineage_depth | lineage_path                                                      |\n|--------------------|----------------------|---------------|-------------------------------------------------------------------|\n| exec_dash_pipeline | revenue_mart_pipe    | 1             | exec_dash_pipeline                                                |\n| revenue_mart_pipe  | orders_cleaned_pipe  | 2             | exec_dash_pipeline -> revenue_mart_pipe                           |\n| orders_cleaned_pipe| raw_cdc_stream       | 3             | exec_dash_pipeline -> revenue_mart_pipe -> orders_cleaned_pipe     |",
+      "juniorTrap": {
+        "query": "-- ❌ JUNIOR TRAP: Recursive query without cycle or depth termination\nWITH RECURSIVE lineage AS (\n  SELECT pipeline_id, upstream_pipeline_id FROM pipeline_lineage WHERE pipeline_id = 'target'\n  UNION ALL\n  SELECT p.pipeline_id, p.upstream_pipeline_id FROM pipeline_lineage p JOIN lineage l ON p.pipeline_id = l.upstream_pipeline_id\n) ...;",
+        "explanation": "If any upstream table has a circular dependency (e.g. A -> B -> A), this query enters an infinite loop, exhausting server memory and causing timeout terminations."
+      },
+      "solutionQuery": "WITH RECURSIVE lineage_tree AS (\n  -- Anchor Member: Root target pipeline\n  SELECT \n    pipeline_id,\n    upstream_pipeline_id,\n    1 AS lineage_depth,\n    CAST(pipeline_id AS STRING) AS lineage_path\n  FROM pipeline_lineage\n  WHERE pipeline_id = 'exec_dash_pipeline'\n\n  UNION ALL\n\n  -- Recursive Member: Trace upstream ancestors\n  SELECT \n    p.pipeline_id,\n    p.upstream_pipeline_id,\n    t.lineage_depth + 1 AS lineage_depth,\n    CONCAT(t.lineage_path, ' -> ', p.pipeline_id) AS lineage_path\n  FROM pipeline_lineage p\n  JOIN lineage_tree t ON p.pipeline_id = t.upstream_pipeline_id\n  -- Safe boundary guard against cyclic lineage loops\n  WHERE t.lineage_depth < 10\n    AND INSTR(t.lineage_path, p.pipeline_id) = 0\n)\nSELECT \n  pipeline_id,\n  upstream_pipeline_id,\n  lineage_depth,\n  lineage_path\nFROM lineage_tree\nORDER BY lineage_depth ASC;",
+      "staffOptimization": "Implements cycle prevention using string/array path matching (`INSTR(lineage_path, p.pipeline_id) = 0`) and depth thresholds, guaranteeing graceful termination on arbitrary directed graphs.",
+      "explanation": "Standard pattern for Data Governance, metadata cataloging, and impact analysis across complex enterprise DAGs."
+    },
+    {
+      "id": "sql-11",
+      "title": "Three-Valued Logic & The Silent NULL Bug (NOT IN vs NOT EXISTS)",
+      "category": "Production Bug Triage & Traps",
+      "difficulty": "Hard",
+      "engineType": "ANSI SQL / All Engines",
+      "scenario": "A critical fraud detection job in production attempts to find users who have never placed an order using `WHERE user_id NOT IN (SELECT user_id FROM orders)`. The query returns 0 rows, even though thousands of non-purchasing accounts exist. Diagnose the three-valued logic failure and write the bulletproof, performant fix.",
+      "sampleSchema": "users (user_id INT64, email STRING)\norders (order_id INT64, user_id INT64, amount NUMERIC)",
+      "mockInput": "[users]\n| user_id | email           |\n|---------|-----------------|\n| 1       | alice@work.com  |\n| 2       | bob@work.com    | (Has orders)\n| 3       | charlie@work.com| (Never ordered)\n\n[orders]\n| order_id | user_id | amount |\n|----------|---------|--------|\n| 501      | 2       | 99.00  |\n| 502      | NULL    | 15.00  | <-- Anonymous guest checkout with NULL user_id!",
+      "mockOutput": "| user_id | email            |\n|---------|------------------|\n| 1       | alice@work.com   |\n| 3       | charlie@work.com |",
+      "juniorTrap": {
+        "query": "-- ❌ JUNIOR TRAP: NOT IN with nullable subquery column\nSELECT user_id, email \nFROM users \nWHERE user_id NOT IN (SELECT user_id FROM orders); -- Silently returns 0 rows!",
+        "explanation": "SQL uses Three-Valued Logic: TRUE, FALSE, UNKNOWN. The expression `user_id NOT IN (2, NULL)` expands to `user_id <> 2 AND user_id <> NULL`. Because any comparison with NULL yields UNKNOWN, `TRUE AND UNKNOWN` evaluates to UNKNOWN. SQL WHERE clauses only retain rows that evaluate to strictly TRUE. A single NULL in orders wipes out all results!"
+      },
+      "solutionQuery": "-- Solution A: Bulletproof NOT EXISTS Anti-Join (Google Standard)\nSELECT \n  u.user_id,\n  u.email\nFROM users u\nWHERE NOT EXISTS (\n  SELECT 1 \n  FROM orders o \n  WHERE o.user_id = u.user_id\n)\nORDER BY u.user_id ASC;\n\n-- Solution B: Null-Safe Left Anti-Join (Alternative Engine Optimization)\n-- SELECT u.user_id, u.email\n-- FROM users u\n-- LEFT JOIN orders o ON u.user_id = o.user_id\n-- WHERE o.user_id IS NULL;",
+      "staffOptimization": "Modern query optimizers rewrite `NOT EXISTS` into a Hash Anti-Join. As soon as a match is found in the hash table, probe processing terminates early for that key. Unlike `NOT IN`, `NOT EXISTS` handles NULLs naturally without evaluation hazards.",
+      "explanation": "One of the most famous production interview traps at Google and Meta. Tests fundamental understanding of relational database three-valued logic."
+    },
+    {
+      "id": "sql-12",
+      "title": "Distributed Join Skew Mitigation via Key Salting & Worker Balancing",
+      "category": "Distributed Query Optimization",
+      "difficulty": "Hard",
+      "engineType": "Spark SQL / BigQuery / Presto",
+      "scenario": "A daily distributed join between clickstream (10 billion rows) and user_profiles (50 million rows) hangs indefinitely on the final stage at 99% reducer completion. Diagnostics reveal extreme key skew: 40% of clickstream rows have user_id = 'GUEST_ANONYMOUS'. Implement key salting in pure SQL to distribute the skewed traffic across 10 workers evenly.",
+      "sampleSchema": "clickstream (event_id STRING, user_id STRING, event_time TIMESTAMP)\nuser_profiles (user_id STRING, country STRING, signup_date DATE)",
+      "mockInput": "[clickstream]\n| event_id | user_id         | event_time          |\n|----------|-----------------|---------------------|\n| evt_1    | usr_10          | 2026-10-05 08:00:00 |\n| evt_2    | GUEST_ANONYMOUS | 2026-10-05 08:01:00 | <-- 40% of records have this key!\n| evt_3    | GUEST_ANONYMOUS | 2026-10-05 08:02:00 |",
+      "mockOutput": "| event_id | user_id         | country |\n|----------|-----------------|---------|\n| evt_1    | usr_10          | US      |\n| evt_2    | GUEST_ANONYMOUS | Unknown |\n| evt_3    | GUEST_ANONYMOUS | Unknown |",
+      "juniorTrap": {
+        "query": "-- ❌ JUNIOR TRAP: Naive distributed join\nSELECT c.*, p.country\nFROM clickstream c\nLEFT JOIN user_profiles p ON c.user_id = p.user_id;",
+        "explanation": "Distributed hash join partitions rows by HASH(user_id) % num_reducers. All 4 billion 'GUEST_ANONYMOUS' rows hash to the EXACT SAME worker node, causing severe CPU starvation, memory spillage, and out-of-memory executor crashes."
+      },
+      "solutionQuery": "WITH salted_clickstream AS (\n  SELECT \n    event_id,\n    user_id,\n    event_time,\n    -- Salt the skewed key with random integers 0 to 9; keep normal keys unaltered\n    CASE \n      WHEN user_id = 'GUEST_ANONYMOUS' OR user_id IS NULL \n      THEN CONCAT(IFNULL(user_id, 'NULL'), '_', CAST(FLOOR(RAND() * 10) AS INT64))\n      ELSE user_id \n    END AS join_key\n  FROM clickstream\n),\nsalted_profiles AS (\n  -- Regular users pass through with unsalted key\n  SELECT \n    user_id,\n    country,\n    user_id AS join_key\n  FROM user_profiles\n  WHERE user_id <> 'GUEST_ANONYMOUS'\n\n  UNION ALL\n\n  -- Replicate skewed profile key across all 10 salt partitions (0-9) via Cross Join\n  SELECT \n    p.user_id,\n    p.country,\n    CONCAT(p.user_id, '_', CAST(salt AS INT64)) AS join_key\n  FROM user_profiles p\n  CROSS JOIN UNNEST(GENERATE_ARRAY(0, 9)) AS salt\n  WHERE p.user_id = 'GUEST_ANONYMOUS'\n)\nSELECT \n  c.event_id,\n  c.user_id,\n  p.country\nFROM salted_clickstream c\nLEFT JOIN salted_profiles p ON c.join_key = p.join_key;",
+      "staffOptimization": "Key salting splits the 4 billion skewed events across 10 distinct hash buckets, parallelizing processing across 10 independent reducers. Cross-joining 10 rows on the dimension side has negligible cost compared to eliminating the multi-hour shuffle bottleneck.",
+      "explanation": "The quintessential Google L5 Distributed Systems & Query Optimization interview question. Solves straggler tasks and skew bottlenecks in BigQuery, Spark SQL, and Presto."
+    },
+    {
+      "id": "sql-13",
+      "title": "Cartesian Fan-Out & Aggregation Duplication in 1-to-Many Joins",
+      "category": "Production Bug Triage & Traps",
+      "difficulty": "Hard",
+      "engineType": "ANSI SQL / Enterprise DW",
+      "scenario": "A reporting query attempts to compute each user's total transaction revenue and total support tickets logged by joining users to orders and support_tickets simultaneously. Financial auditors notice total revenue is inflated by 3x–10x. Identify the fan-out multiplication bug and write the clean, scalable fix.",
+      "sampleSchema": "users (user_id INT64, name STRING)\norders (order_id INT64, user_id INT64, amount NUMERIC)\nsupport_tickets (ticket_id INT64, user_id INT64, priority STRING)",
+      "mockInput": "[users]\n| user_id | name  |\n|---------|-------|\n| 10      | Sarah |\n\n[orders] (2 orders: $100 + $200 = $300)\n| order_id | user_id | amount |\n|----------|---------|--------|\n| 1        | 10      | 100.00 |\n| 2        | 10      | 200.00 |\n\n[support_tickets] (3 tickets)\n| ticket_id | user_id |\n|-----------|---------|\n| t1        | 10      |\n| t2        | 10      |\n| t3        | 10      |",
+      "mockOutput": "| user_id | name  | total_orders | total_revenue | total_tickets |\n|---------|-------|--------------|---------------|---------------|\n| 10      | Sarah | 2            | 300.00        | 3             |",
+      "juniorTrap": {
+        "query": "-- ❌ JUNIOR TRAP: Joining two 1-to-many child tables in one query\nSELECT \n  u.user_id,\n  u.name,\n  COUNT(DISTINCT o.order_id) AS total_orders,\n  SUM(o.amount) AS total_revenue, -- INFLATED! Multiplied by number of tickets!\n  COUNT(DISTINCT t.ticket_id) AS total_tickets\nFROM users u\nLEFT JOIN orders o ON u.user_id = o.user_id\nLEFT JOIN support_tickets t ON u.user_id = t.user_id\nGROUP BY u.user_id, u.name;",
+        "explanation": "Joining two independent 1-to-many relationships causes a Cartesian product of the child rows: 2 orders x 3 tickets = 6 joined rows. SUM(o.amount) aggregates each order 3 times, reporting $900 instead of $300!"
+      },
+      "solutionQuery": "WITH order_aggregates AS (\n  -- Pre-aggregate orders to user granularity independently\n  SELECT \n    user_id,\n    COUNT(order_id) AS total_orders,\n    SUM(amount) AS total_revenue\n  FROM orders\n  GROUP BY user_id\n),\nticket_aggregates AS (\n  -- Pre-aggregate tickets to user granularity independently\n  SELECT \n    user_id,\n    COUNT(ticket_id) AS total_tickets\n  FROM support_tickets\n  GROUP BY user_id\n)\nSELECT \n  u.user_id,\n  u.name,\n  COALESCE(o.total_orders, 0) AS total_orders,\n  COALESCE(o.total_revenue, 0) AS total_revenue,\n  COALESCE(t.total_tickets, 0) AS total_tickets\nFROM users u\nLEFT JOIN order_aggregates o ON u.user_id = o.user_id\nLEFT JOIN ticket_aggregates t ON u.user_id = t.user_id\nORDER BY u.user_id ASC;",
+      "staffOptimization": "Eliminates the Cartesian explosion by collapsing each branch of the snowflake schema to the root grain (user_id) before the join. Reduces intermediate record volume from O(M x N) down to O(M + N).",
+      "explanation": "One of the most frequent sources of data corruption in enterprise metrics layers (dbt / Looker). Tests architectural discipline in grain alignment."
+    },
+    {
+      "id": "sql-14",
+      "title": "Snowflake Semi-Structured JSON Parsing & LATERAL FLATTEN",
+      "category": "Modern Cloud DW (Snowflake)",
+      "difficulty": "Hard",
+      "engineType": "Snowflake SQL",
+      "scenario": "In Snowflake, an event stream ingest_payloads contains raw JSON stored in a VARIANT column named raw_event. Each event has an array of purchased line items: {'transaction_id': 'tx_99', 'items': [{'sku': 'SKU_1', 'qty': 2, 'unit_price': 49.99}, ...]}. Parse the nested array, cast types safely, and calculate total gross revenue per SKU.",
+      "sampleSchema": "ingest_payloads (event_id STRING, event_time TIMESTAMP, raw_event VARIANT)",
+      "mockInput": "| event_id | event_time          | raw_event (VARIANT)                                                   |\n|----------|---------------------|------------------------------------------------------------------------|\n| e1       | 2026-10-05 09:00:00 | {\"tx_id\": \"T1\", \"items\": [{\"sku\": \"A\", \"qty\": 2, \"unit_price\": 50}]}  |\n| e2       | 2026-10-05 09:05:00 | {\"tx_id\": \"T2\", \"items\": [{\"sku\": \"A\", \"qty\": 1, \"unit_price\": 50},   |\n|          |                     |                           {\"sku\": \"B\", \"qty\": 3, \"unit_price\": 20}]}  |",
+      "mockOutput": "| sku | total_units_sold | total_gross_revenue | total_orders |\n|-----|------------------|---------------------|--------------|\n| A   | 3                | 150.00              | 2            |\n| B   | 3                | 60.00               | 1            |",
+      "juniorTrap": {
+        "query": "-- ❌ JUNIOR TRAP: Casting VARIANT to STRING and applying regular expressions\nSELECT \n  REGEXP_SUBSTR(raw_event::STRING, 'sku\": \"([^\"]+)', 1, 1, 'e', 1) AS sku\nFROM ingest_payloads;",
+        "explanation": "Using string manipulation and regex on JSON bypasses Snowflake's columnar pruning optimizations, breaks on multi-item arrays, and runs 50x slower than native LATERAL FLATTEN."
+      },
+      "solutionQuery": "SELECT \n  -- Extract and cast typed values from flattened variant elements\n  item.value:sku::STRING AS sku,\n  SUM(item.value:qty::INTEGER) AS total_units_sold,\n  ROUND(SUM(item.value:qty::INTEGER * item.value:unit_price::NUMBER(10, 2)), 2) AS total_gross_revenue,\n  COUNT(DISTINCT raw_event:tx_id::STRING) AS total_orders\nFROM ingest_payloads p,\n-- LATERAL FLATTEN explodes the variant items array into relational rows\nLATERAL FLATTEN(input => p.raw_event:items) item\nWHERE p.event_time >= DATEADD(day, -30, CURRENT_TIMESTAMP())\nGROUP BY 1\nORDER BY total_gross_revenue DESC;",
+      "staffOptimization": "Snowflake decomposes `VARIANT` JSON columns into columnar physical micro-partitions under the hood. Querying typed paths (`value:sku::STRING`) allows Snowflake to prune micro-partitions without deserializing the entire JSON document.",
+      "explanation": "Core Snowflake interview benchmark. Validates mastery of semi-structured data extraction and micro-partition scanning efficiency."
+    },
+    {
+      "id": "sql-15",
+      "title": "Fact to SCD Type 2 Dimension Point-in-Time Range Containment Join",
+      "category": "Kimball Modeling",
+      "difficulty": "Hard",
+      "engineType": "Kimball Enterprise DW / BigQuery",
+      "scenario": "Given an e-commerce order table orders(order_id, customer_id, order_date, total_amount) spanning 3 years, and an SCD Type 2 table dim_customer(customer_id, country, loyalty_tier, valid_from, valid_to, is_current), reconstruct exact historical revenue grouped by country and loyalty_tier as it existed at the time of each order.",
+      "sampleSchema": "orders (order_id INT64, customer_id INT64, order_date DATE, total_amount NUMERIC)\ndim_customer (customer_id INT64, country STRING, loyalty_tier STRING, valid_from DATE, valid_to DATE, is_current BOOL)",
+      "mockInput": "[dim_customer]\n| customer_id | country | loyalty_tier | valid_from | valid_to   | is_current |\n|-------------|---------|--------------|------------|------------|------------|\n| 100         | India   | Bronze       | 2024-01-01 | 2025-06-30 | FALSE      |\n| 100         | India   | Gold         | 2025-07-01 | NULL       | TRUE       |\n\n[orders]\n| order_id | customer_id | order_date | total_amount |\n|----------|-------------|------------|--------------|\n| 1        | 100         | 2024-05-10 | 150.00       | <-- Matches Bronze period\n| 2        | 100         | 2026-02-15 | 800.00       | <-- Matches Gold period",
+      "mockOutput": "| country | loyalty_tier | total_orders | total_revenue |\n|---------|--------------|--------------|---------------|\n| India   | Gold         | 1            | 800.00        |\n| India   | Bronze       | 1            | 150.00        |",
+      "juniorTrap": {
+        "query": "-- ❌ JUNIOR TRAP: Joining with BETWEEN on closed intervals\nJOIN dim_customer d \n  ON o.customer_id = d.customer_id \n  AND o.order_date BETWEEN d.valid_from AND d.valid_to;",
+        "explanation": "BETWEEN creates a closed interval [valid_from, valid_to]. If an expiring record has valid_to = '2025-06-30' and the new record has valid_from = '2025-06-30', orders placed on that day match BOTH records, duplicating revenue!"
+      },
+      "solutionQuery": "SELECT \n  d.country,\n  d.loyalty_tier,\n  COUNT(o.order_id) AS total_orders,\n  SUM(o.total_amount) AS total_revenue\nFROM orders o\nJOIN dim_customer d\n  ON o.customer_id = d.customer_id\n  -- Point-in-Time Half-Open Interval: [valid_from, valid_to)\n  AND o.order_date >= d.valid_from\n  AND (\n    o.order_date < d.valid_to \n    OR (d.is_current = TRUE AND d.valid_to IS NULL)\n  )\nGROUP BY d.country, d.loyalty_tier\nORDER BY total_revenue DESC;",
+      "staffOptimization": "Half-open interval matching `[valid_from, valid_to)` eliminates boundary overlap anomalies. Clustering dim_customer on `(customer_id, valid_from)` enables the query optimizer to prune non-matching temporal partitions.",
+      "explanation": "Fundamental Data Architecture standard for historical correctness. Evaluates production Kimball schema mastery."
+    },
+    {
+      "id": "sql-16",
+      "title": "Multi-Touch Time-Decayed Attribution Modeling (7-Day Exponential Half-Life)",
+      "category": "Window Functions & State",
+      "difficulty": "Hard",
+      "engineType": "ANSI SQL / Cloud DW",
+      "scenario": "Given user marketing interactions touchpoints(user_id, channel, touch_time) and conversion events conversions(user_id, order_id, revenue, conversion_time), calculate multi-touch attribution where touchpoints receive credit with an exponential 7-day half-life decay: Weight = 2^(-days_before_conversion / 7). Normalize weights per conversion.",
+      "sampleSchema": "touchpoints (user_id INT64, channel STRING, touch_time TIMESTAMP)\nconversions (user_id INT64, order_id INT64, revenue NUMERIC, conversion_time TIMESTAMP)",
+      "mockInput": "[touchpoints] (User 99 conversions $100 on Oct 8)\n| user_id | channel | touch_time          | Days Before Conv | Raw Decay Weight |\n|---------|---------|---------------------|------------------|------------------|\n| 99      | Blog    | 2026-10-01 12:00:00 | 7.0 days         | 2^(-7/7) = 0.50  |\n| 99      | Ads     | 2026-10-08 12:00:00 | 0.0 days         | 2^(0/7)  = 1.00  |\nTotal Weight = 1.50 -> Blog gets 33.33%, Ads gets 66.67%",
+      "mockOutput": "| channel | total_attributed_revenue |\n|---------|--------------------------|\n| Ads     | 66.67                    |\n| Blog    | 33.33                    |",
+      "juniorTrap": {
+        "query": "-- ❌ JUNIOR TRAP: Processing decay via external Python pandas loops\n# Exporting 50M rows to pandas and iterating over rows to calculate weights",
+        "explanation": "Exporting raw touchpoint logs to Python scripts kills data pipelines, introduces serial memory bottlenecks, and eliminates database engine parallelization."
+      },
+      "solutionQuery": "WITH raw_weights AS (\n  SELECT \n    c.order_id,\n    c.revenue,\n    t.channel,\n    t.touch_time,\n    -- Compute day delta as floating point\n    TIMESTAMP_DIFF(c.conversion_time, t.touch_time, SECOND) / 86400.0 AS days_prior,\n    -- Mathematical exponential decay formula: 2^(-t / 7) = EXP(-LN(2) * t / 7)\n    EXP(-0.693147 * (TIMESTAMP_DIFF(c.conversion_time, t.touch_time, SECOND) / 86400.0) / 7.0) AS raw_weight\n  FROM conversions c\n  JOIN touchpoints t \n    ON c.user_id = t.user_id \n    AND t.touch_time <= c.conversion_time\n    -- Restrict attribution lookback window to 30 days\n    AND t.touch_time >= TIMESTAMP_SUB(c.conversion_time, INTERVAL 30 DAY)\n),\nnormalized_attribution AS (\n  SELECT \n    order_id,\n    channel,\n    revenue,\n    raw_weight,\n    -- Normalize weights across all touches for this specific conversion\n    SUM(raw_weight) OVER (PARTITION BY order_id) AS total_order_weight,\n    revenue * (raw_weight / SUM(raw_weight) OVER (PARTITION BY order_id)) AS attributed_revenue\n  FROM raw_weights\n)\nSELECT \n  channel,\n  ROUND(SUM(attributed_revenue), 2) AS total_attributed_revenue\nFROM normalized_attribution\nGROUP BY channel\nORDER BY total_attributed_revenue DESC;",
+      "staffOptimization": "Executes mathematical exponential decay natively in the SQL compute engine. Windowed partition normalization (`SUM(raw_weight) OVER (PARTITION BY order_id)`) guarantees mathematical conservation of revenue ($100 conversion = exactly $100 attributed).",
+      "explanation": "Advanced Google AdTech & Growth Analytics interview problem. Evaluates mathematical modeling translated into vectorized analytical SQL."
+    },
+    {
+      "id": "sql-17",
+      "title": "BigQuery Scalar Subquery Struct Extraction vs Cartesian UNNEST",
+      "category": "Modern Cloud DW (BigQuery)",
+      "difficulty": "Hard",
+      "engineType": "Google BigQuery",
+      "scenario": "Given a massive GA4 clickstream table `analytics_events` (10 billion rows) where event parameters are stored as ARRAY<STRUCT<key STRING, value STRUCT<string_value STRING, int_value INT64>>>. Extract user_id, event_timestamp, and specific parameters 'page_location' and 'engagement_time_msec' without multiplying rows via cross joins.",
+      "sampleSchema": "analytics_events (user_id STRING, event_name STRING, event_timestamp TIMESTAMP, event_params ARRAY<STRUCT<key STRING, value STRUCT<string_value STRING, int_value INT64>>>)",
+      "mockInput": "| user_id | event_name | event_params                                                                                              |\n|---------|------------|-----------------------------------------------------------------------------------------------------------|\n| u_1     | click      | [{'key': 'page_location', 'value': {'string_value': 'https://google.com', 'int_value': NULL}},           |\n|         |            |  {'key': 'engagement_time_msec', 'value': {'string_value': NULL, 'int_value': 4500}}]                    |",
+      "mockOutput": "| user_id | event_name | page_location       | engagement_time_msec |\n|---------|------------|---------------------|----------------------|\n| u_1     | click      | https://google.com  | 4500                 |",
+      "juniorTrap": {
+        "query": "-- ❌ JUNIOR TRAP: Multiple CROSS JOIN UNNESTs causing exponential fan-out\nSELECT e.user_id, p1.value.string_value, p2.value.int_value\nFROM analytics_events e\nCROSS JOIN UNNEST(event_params) AS p1\nCROSS JOIN UNNEST(event_params) AS p2\nWHERE p1.key = 'page_location' AND p2.key = 'engagement_time_msec';",
+        "explanation": "Cross-joining UNNEST multiple times on a table with 30 parameters per event multiplies rows by 30 x 30 = 900x. On 10B rows, this generates 9 trillion intermediate rows, causing instant query out-of-memory failure."
+      },
+      "solutionQuery": "SELECT \n  user_id,\n  event_name,\n  event_timestamp,\n  -- Extract parameter 1 via inline correlated scalar subquery (Zero row multiplication!)\n  (\n    SELECT p.value.string_value \n    FROM UNNEST(event_params) AS p \n    WHERE p.key = 'page_location'\n  ) AS page_location,\n  -- Extract parameter 2 via inline correlated scalar subquery\n  (\n    SELECT p.value.int_value \n    FROM UNNEST(event_params) AS p \n    WHERE p.key = 'engagement_time_msec'\n  ) AS engagement_time_msec\nFROM `google_analytics.events`\nWHERE event_name = 'user_engagement'\n  AND _TABLE_SUFFIX BETWEEN '20261001' AND '20261005';",
+      "staffOptimization": "Correlated scalar subqueries on arrays are executed entirely in-memory within the worker's CPU registers during single-row projection. Avoids shuffle stages, preserves 1-to-1 cardinality, and reduces execution time by 95%.",
+      "explanation": "The official Google Cloud BigQuery best practice for querying GA4 and Firebase nested telemetry logs."
+    },
+    {
+      "id": "sql-18",
+      "title": "Enterprise Lineage DAG Traversal & Circular Dependency Cycle Detection",
+      "category": "Recursive Graphs in SQL",
+      "difficulty": "Hard",
+      "engineType": "PostgreSQL / ANSI SQL / BigQuery",
+      "scenario": "In an enterprise data platform with 20,000 tables, dependency edges are stored in table_dependencies(downstream_table, upstream_table). Write a recursive SQL query that traces all upstream dependencies for 'mart_executive_finance' while actively detecting any circular reference loops (cycles) and flagging them.",
+      "sampleSchema": "table_dependencies (downstream_table STRING, upstream_table STRING)",
+      "mockInput": "| downstream_table       | upstream_table         |\n|------------------------|------------------------|\n| mart_executive_finance | int_order_metrics      |\n| int_order_metrics      | stg_raw_orders         |\n| stg_raw_orders         | mart_executive_finance | <-- Circular loop detected!",
+      "mockOutput": "| downstream_table       | upstream_table         | depth | path                                                                           | is_cycle |\n|------------------------|------------------------|-------|--------------------------------------------------------------------------------|----------|\n| mart_executive_finance | int_order_metrics      | 1     | mart_executive_finance -> int_order_metrics                                    | FALSE    |\n| int_order_metrics      | stg_raw_orders         | 2     | mart_executive_finance -> int_order_metrics -> stg_raw_orders                  | FALSE    |\n| stg_raw_orders         | mart_executive_finance | 3     | mart_executive_finance -> int_order_metrics -> stg_raw_orders -> mart_exec...  | TRUE     |",
+      "juniorTrap": {
+        "query": "-- ❌ JUNIOR TRAP: Recursive query without cycle detection\nWITH RECURSIVE lineage AS (\n  SELECT downstream_table, upstream_table FROM table_dependencies WHERE downstream_table = 'root'\n  UNION ALL\n  SELECT d.downstream_table, d.upstream_table FROM table_dependencies d JOIN lineage l ON d.downstream_table = l.upstream_table\n) SELECT * FROM lineage;",
+        "explanation": "Without tracking visited nodes, recursive evaluation hits cyclic graphs and enters an infinite loop until aborted by stack overflow or database timeout."
+      },
+      "solutionQuery": "WITH RECURSIVE dependency_graph AS (\n  -- Anchor member: Initial downstream target table\n  SELECT \n    downstream_table,\n    upstream_table,\n    1 AS depth,\n    CONCAT(downstream_table, ' -> ', upstream_table) AS lineage_path,\n    ARRAY[downstream_table, upstream_table] AS visited_nodes,\n    FALSE AS is_cycle\n  FROM table_dependencies\n  WHERE downstream_table = 'mart_executive_finance'\n\n  UNION ALL\n\n  -- Recursive member: Traverse upstream dependencies\n  SELECT \n    d.downstream_table,\n    d.upstream_table,\n    g.depth + 1 AS depth,\n    CONCAT(g.lineage_path, ' -> ', d.upstream_table) AS lineage_path,\n    ARRAY_APPEND(g.visited_nodes, d.upstream_table) AS visited_nodes,\n    -- Check if upstream node was already encountered in this traversal branch\n    ARRAY_CONTAINS(g.visited_nodes, d.upstream_table) AS is_cycle\n  FROM table_dependencies d\n  JOIN dependency_graph g \n    ON d.downstream_table = g.upstream_table\n  -- Terminate traversal immediately if cycle detected or max depth reached\n  WHERE g.is_cycle = FALSE \n    AND g.depth < 15\n)\nSELECT \n  downstream_table,\n  upstream_table,\n  depth,\n  lineage_path,\n  is_cycle\nFROM dependency_graph\nORDER BY depth ASC;",
+      "staffOptimization": "Accumulates visited nodes in an array (`ARRAY_APPEND`) and checks for presence (`ARRAY_CONTAINS`) before expanding recursive branches. Guarantees safety against arbitrary DAG and cyclic graph structures.",
+      "explanation": "Vital query pattern for data mesh governance, dbt lineage resolution, and automated root-cause outage diagnosis."
     }
   ],
   "techDeepDives": [

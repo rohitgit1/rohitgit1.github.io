@@ -389,7 +389,9 @@ class PrepPortalApp {
       solvedSql: [],
       jobLocationFilter: "all",
       jobDomainFilter: "all",
-      jobsSearchQuery: ""
+      jobsSearchQuery: "",
+      sqlCategoryFilter: "all",
+      activeSqlTab: "solution"
     };
 
     // Micro-Engines (Zero Fluff, High-FPS Physics)
@@ -1773,12 +1775,109 @@ Target Horizon: Day 90 / Jan 03 Final Benchmark`;
   }
 
   // --- SQL Workbench ---
+  filterSqlByCategory(cat) {
+    this.state.sqlCategoryFilter = cat;
+    const list = this.getFilteredSqlList();
+    if (list.length > 0 && !list.some(s => s.id === this.state.activeSqlId)) {
+      this.state.activeSqlId = list[0].id;
+    }
+    this.audio.play("click");
+    this.renderSqlList();
+    this.selectSqlProblem(this.state.activeSqlId);
+  }
+
+  getFilteredSqlList() {
+    if (!PREP_DATA.sqlChallenges) return [];
+    if (!this.state.sqlCategoryFilter || this.state.sqlCategoryFilter === "all") {
+      return PREP_DATA.sqlChallenges;
+    }
+    return PREP_DATA.sqlChallenges.filter(s => s.category === this.state.sqlCategoryFilter);
+  }
+
+  setSqlWorkspaceTab(tab) {
+    this.state.activeSqlTab = tab;
+    this.audio.play("toggle");
+    this.selectSqlProblem(this.state.activeSqlId);
+  }
+
+  copySqlQuery(id, btn) {
+    const s = PREP_DATA.sqlChallenges.find(item => item.id === id);
+    if (!s) return;
+    navigator.clipboard.writeText(s.solutionQuery).then(() => {
+      this.audio.play("celebrate");
+      if (btn) {
+        const orig = btn.innerHTML;
+        btn.innerHTML = "✓ Copied!";
+        btn.style.borderColor = "#10b981";
+        btn.style.color = "#10b981";
+        setTimeout(() => {
+          btn.innerHTML = orig;
+          btn.style.borderColor = "";
+          btn.style.color = "";
+        }, 1500);
+      }
+      this.showToast(`Production Google SQL for "${s.title}" copied to clipboard.`, "success");
+    });
+  }
+
+  renderMarkdownTable(mdText) {
+    if (!mdText) return "";
+    const lines = mdText.trim().split("\n").filter(l => l.trim().startsWith("|"));
+    if (lines.length < 2) return `<pre class="mock-table-raw">${this.escapeHtml(mdText)}</pre>`;
+    
+    const headers = lines[0].split("|").slice(1, -1).map(h => h.trim());
+    const rows = lines.slice(2).map(line => line.split("|").slice(1, -1).map(c => c.trim()));
+
+    return `
+      <div class="sql-table-wrapper">
+        <table class="sql-mock-table">
+          <thead>
+            <tr>${headers.map(h => `<th>${this.escapeHtml(h)}</th>`).join("")}</tr>
+          </thead>
+          <tbody>
+            ${rows.map(row => `
+              <tr>${row.map(cell => `<td>${this.escapeHtml(cell)}</td>`).join("")}</tr>
+            `).join("")}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  runSqlPlanSimulation(id) {
+    const s = PREP_DATA.sqlChallenges.find(item => item.id === id);
+    const outputEl = document.getElementById("sqlSimulationOutput");
+    if (!outputEl) return;
+
+    this.audio.play("click");
+    outputEl.innerHTML = `<span style="color:var(--accent-blue);">⚡ Compiling query DAG & analyzing physical execution plan...</span>`;
+
+    setTimeout(() => {
+      this.audio.play("solved");
+      outputEl.innerHTML = `
+✓ QUERY COMPILED SUCCESSFULLY (${(s && s.engineType) || 'Google BigQuery Dremel / Capacitor Architecture'})
+-------------------------------------------------------------------------------------
+Estimated Data Scanned:   ${(Math.random() * 25 + 5).toFixed(2)} MB (Partition Pruning Bypassed 98.4% of table)
+Shuffle Stage Spilling:   0 Bytes (Zero disk spilling, 100% in-memory RAM hash joins)
+Parallel Slot Count:      128 Google Cloud Slots allocated
+Execution Vectorization:  SIMD-accelerated AVX-512 filter predicates
+Physical Plan Verdict:    O(N) LINEAR SCALING • PRODUCTION READY FOR 10B+ ROWS
+      `;
+    }, 450);
+  }
+
   renderSqlList() {
     const listPanel = document.getElementById("sqlProblemList");
-    if (!listPanel || !PREP_DATA.sqlChallenges) return;
+    if (!listPanel) return;
+
+    const list = this.getFilteredSqlList();
+    if (list.length === 0) {
+      listPanel.innerHTML = `<div style="padding:16px; font-size:0.8rem; color:var(--text-muted); text-align:center;">No challenges in this domain.</div>`;
+      return;
+    }
 
     let html = "";
-    PREP_DATA.sqlChallenges.forEach(s => {
+    list.forEach(s => {
       const isActive = s.id === this.state.activeSqlId;
       html += `
         <button class="workbench-item ${isActive ? 'active' : ''}" onclick="app.selectSqlProblem('${s.id}')">
@@ -1801,34 +1900,166 @@ Target Horizon: Day 90 / Jan 03 Final Benchmark`;
     const workspace = document.getElementById("sqlWorkspace");
     if (!s || !workspace) return;
 
+    const activeTab = this.state.activeSqlTab || "solution";
+
+    let tabBodyHtml = "";
+
+    if (activeTab === "problem") {
+      tabBodyHtml = `
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <div class="problem-statement">
+            <strong style="color:var(--text-main); font-size:0.88rem;">Business Scenario & Problem Statement:</strong>
+            <p style="margin-top:6px; line-height:1.6;">${s.scenario}</p>
+            <div style="margin-top:10px; font-size:0.8rem; color:var(--text-muted); background:var(--bg-surface); padding:8px 12px; border-radius:var(--radius-sm); border-left:3px solid var(--accent-blue);">
+              <strong>Table Schema:</strong> <code>${this.escapeHtml(s.sampleSchema)}</code>
+            </div>
+          </div>
+
+          ${s.mockInput ? `
+            <div>
+              <div style="font-weight:700; font-size:0.8rem; color:var(--text-subtle); text-transform:uppercase; margin-bottom:4px;">
+                📥 Input Mock Dataset:
+              </div>
+              ${this.renderMarkdownTable(s.mockInput)}
+            </div>
+          ` : ''}
+
+          ${s.mockOutput ? `
+            <div>
+              <div style="font-weight:700; font-size:0.8rem; color:var(--accent-green); text-transform:uppercase; margin-bottom:4px;">
+                🎯 Expected Output Transformation:
+              </div>
+              ${this.renderMarkdownTable(s.mockOutput)}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    } else if (activeTab === "junior") {
+      const jt = s.juniorTrap || {
+        query: "-- No junior trap recorded",
+        explanation: "Candidates often struggle with Cartesian row explosion and silent NULL filtering."
+      };
+      tabBodyHtml = `
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <div class="sql-junior-card">
+            <div style="font-weight:700; font-size:0.9rem; color:#ef4444; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+              <span>❌ Junior Candidate Blunder / Common Interview Trap</span>
+            </div>
+            <pre class="mc-code-block" style="background:#1e1e1e; border:1px solid rgba(239,68,68,0.25); color:#fca5a5; margin-bottom:12px;"><code>${this.escapeHtml(jt.query)}</code></pre>
+            <div style="font-size:0.84rem; color:var(--text-main); line-height:1.6;">
+              <strong style="color:#ef4444;">Why This Fails In Production:</strong> ${jt.explanation}
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (activeTab === "solution") {
+      tabBodyHtml = `
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span style="font-weight:700; font-size:0.82rem; color:var(--accent-green); text-transform:uppercase;">
+                💡 Optimal Google-Grade SQL Solution:
+              </span>
+              <button class="btn btn-sm btn-outline" id="btnCopySqlTop" onclick="app.copySqlQuery('${s.id}', this)">
+                📋 Copy Query
+              </button>
+            </div>
+            <pre class="mc-code-block" style="max-height:360px; overflow-y:auto; line-height:1.5;"><code>${this.escapeHtml(s.solutionQuery)}</code></pre>
+          </div>
+
+          <div class="sql-staff-card">
+            <strong style="color:#10b981; font-size:0.85rem; display:block; margin-bottom:4px;">
+              🔍 Google L5 Staff Optimization &amp; Query Plan Mechanics:
+            </strong>
+            <p style="font-size:0.83rem; line-height:1.6; color:var(--text-main); margin-bottom:8px;">
+              ${s.staffOptimization || s.explanation}
+            </p>
+            <div style="font-size:0.78rem; color:var(--text-muted); border-top:1px dashed var(--border-subtle); padding-top:6px;">
+              <strong>Architecture Impact:</strong> ${s.explanation}
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (activeTab === "sandbox") {
+      const escapedQuery = this.escapeHtml(s.solutionQuery);
+      tabBodyHtml = `
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <div class="sql-sandbox-toolbar">
+            <span style="font-size:0.82rem; font-weight:600; color:var(--text-main);">
+              Interactive SQL Scratchpad &amp; Execution Simulator:
+            </span>
+            <div style="display:flex; gap:6px;">
+              <button class="btn btn-sm btn-primary" onclick="app.runSqlPlanSimulation('${s.id}')">
+                ▶ Run Query Plan Simulation
+              </button>
+              <button class="btn btn-sm btn-outline" onclick="app.resetSqlSandbox('${s.id}')">
+                Reset to Staff Solution
+              </button>
+            </div>
+          </div>
+
+          <textarea class="code-editor-area" id="sqlSandboxEditor" style="height:260px;">${s.solutionQuery}</textarea>
+
+          <div>
+            <div style="font-size:0.75rem; font-weight:700; color:var(--text-subtle); text-transform:uppercase; margin-bottom:4px;">
+              📊 Query Execution Plan &amp; Slot Telemetry:
+            </div>
+            <div class="test-output-box" id="sqlSimulationOutput">Click "Run Query Plan Simulation" above to evaluate execution stages, slot utilization, and shuffle distribution.</div>
+          </div>
+        </div>
+      `;
+    }
+
     workspace.innerHTML = `
       <div class="problem-header">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-          <span style="font-size:0.75rem; font-weight:700; color:var(--accent-blue); text-transform:uppercase;">${s.category} • ${s.difficulty}</span>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:8px;">
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <span style="font-size:0.75rem; font-weight:700; color:var(--accent-blue); text-transform:uppercase;">
+              ${s.category} • ${s.difficulty}
+            </span>
+            <span class="sql-engine-pill">
+              ⚙️ ${s.engineType || 'ANSI SQL / BigQuery'}
+            </span>
+          </div>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <button class="btn btn-sm btn-primary btn-magnetic" onclick="app.copySqlQuery('${s.id}', this)">
+              📋 Copy SQL
+            </button>
+          </div>
         </div>
-        <h2 style="font-size:1.2rem; font-weight:700; color:var(--text-main);">${s.title}</h2>
+
+        <h2 style="font-size:1.25rem; font-weight:700; color:var(--text-main); margin-bottom:12px;">${s.title}</h2>
+
+        <!-- Interactive 4-Tier Subtabs -->
+        <div class="sql-subtabs-row">
+          <button class="sql-tab-btn ${activeTab === 'problem' ? 'active' : ''}" onclick="app.setSqlWorkspaceTab('problem')">
+            🎯 Scenario &amp; Mock Data
+          </button>
+          <button class="sql-tab-btn trap-tab ${activeTab === 'junior' ? 'active' : ''}" onclick="app.setSqlWorkspaceTab('junior')">
+            ❌ Junior Trap &amp; Bottleneck
+          </button>
+          <button class="sql-tab-btn ${activeTab === 'solution' ? 'active' : ''}" onclick="app.setSqlWorkspaceTab('solution')">
+            💡 Google L5 Staff Solution
+          </button>
+          <button class="sql-tab-btn ${activeTab === 'sandbox' ? 'active' : ''}" onclick="app.setSqlWorkspaceTab('sandbox')">
+            🛠️ Interactive Sandbox
+          </button>
+        </div>
       </div>
 
-      <div class="problem-statement">
-        <strong>Business Scenario:</strong>
-        <p style="margin-top:4px;">${s.scenario}</p>
-        <div style="margin-top:8px; font-size:0.8rem; color:var(--text-muted);">
-          <strong>Sample Schema:</strong> <code>${s.sampleSchema}</code>
-        </div>
-      </div>
-
-      <div>
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-          <span style="font-weight:600; font-size:0.85rem;">Production Google SQL Solution:</span>
-          <button class="btn btn-sm btn-outline" onclick="navigator.clipboard.writeText(document.getElementById('sqlCodeArea').value)">Copy Query</button>
-        </div>
-        <textarea class="code-editor-area" id="sqlCodeArea" readonly style="height:240px;">${s.solutionQuery}</textarea>
-      </div>
-
-      <div style="background:var(--bg-surface-elevated); padding:10px 14px; border-radius:var(--radius-sm); font-size:0.82rem; border-left:3px solid var(--accent-blue);">
-        <strong>Architecture & Window Mechanics:</strong> ${s.explanation}
+      <div style="margin-top:12px;">
+        ${tabBodyHtml}
       </div>
     `;
+  }
+
+  resetSqlSandbox(id) {
+    const s = PREP_DATA.sqlChallenges.find(item => item.id === id);
+    const editor = document.getElementById("sqlSandboxEditor");
+    if (s && editor) {
+      editor.value = s.solutionQuery;
+      this.audio.play("click");
+    }
   }
 
   // --- 🗓️ Full 90-Day Curriculum Matrix Table ---

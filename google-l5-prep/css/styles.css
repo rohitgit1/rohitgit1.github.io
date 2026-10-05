@@ -1106,6 +1106,125 @@ body.theme-light .bday-horizon-flag {
   min-height: 60px;
 }
 
+/* --- Elite SQL Studio & Sub-Tabs --- */
+.sql-subtabs-row {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.sql-tab-btn {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-subtle);
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sql-tab-btn:hover {
+  color: var(--text-main);
+  background: var(--bg-surface-elevated);
+  border-color: var(--border-active);
+}
+
+.sql-tab-btn.active {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+}
+
+.sql-tab-btn.active.trap-tab {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: #ef4444;
+  color: #f87171;
+}
+
+.sql-engine-pill {
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: rgba(14, 165, 233, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(14, 165, 233, 0.3);
+}
+
+.sql-table-wrapper {
+  overflow-x: auto;
+  margin: 10px 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface-elevated);
+}
+
+.sql-mock-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.sql-mock-table th {
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--text-main);
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  font-weight: 700;
+}
+
+.sql-mock-table td {
+  padding: 7px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+}
+
+body.theme-light .sql-mock-table td {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  color: var(--text-main);
+}
+
+.sql-mock-table tr:last-child td {
+  border-bottom: none;
+}
+
+.sql-mock-table tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.sql-junior-card {
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-left: 4px solid #ef4444;
+  border-radius: var(--radius-sm);
+  padding: 14px;
+}
+
+.sql-staff-card {
+  background: rgba(16, 185, 129, 0.05);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-left: 4px solid #10b981;
+  border-radius: var(--radius-sm);
+  padding: 14px;
+}
+
+.sql-sandbox-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
 /* --- 4. RESUME & DEFENSE --- */
 .defense-split {
   display: grid;

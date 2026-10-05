@@ -332,7 +332,7 @@
         <!-- Practice Mode Switcher -->
         <div class="category-pill-bar" style="margin-bottom: 1.25rem;">
           <button class="cat-pill active" id="btnTabDsa" onclick="app.switchPracticeMode('dsa')">Python Algorithms (28 LeetCode Benchmarks)</button>
-          <button class="cat-pill" id="btnTabSql" onclick="app.switchPracticeMode('sql')">Advanced SQL Studio (10 Challenges)</button>
+          <button class="cat-pill" id="btnTabSql" onclick="app.switchPracticeMode('sql')">Elite SQL Studio (18 Production Challenges)</button>
           <button class="cat-pill" id="btnTabCurriculum" onclick="app.switchPracticeMode('curriculum')">🗓️ Full 90-Day Curriculum Map (Days 1–90)</button>
         </div>
 
@@ -365,7 +365,22 @@
 
         <!-- SQL Workbench -->
         <div id="practiceSqlWorkspace" class="workbench-split" style="display:none;">
-          <div class="workbench-list-panel" id="sqlProblemList"></div>
+          <div class="workbench-list-panel">
+            <div style="margin-bottom: 10px;">
+              <select id="sqlCategoryFilter" class="day-select-dropdown" style="width:100%; font-size:0.78rem;" onchange="app.filterSqlByCategory(this.value)">
+                <option value="all">All Domains (18 Elite Challenges)</option>
+                <option value="Window Functions & State">Window Functions & State (5)</option>
+                <option value="Production Bug Triage & Traps">Production Bug Triage & Traps (2)</option>
+                <option value="Modern Cloud DW (BigQuery)">Modern Cloud DW: BigQuery (4)</option>
+                <option value="Modern Cloud DW (Snowflake)">Modern Cloud DW: Snowflake (1)</option>
+                <option value="Kimball Modeling">Kimball Modeling & SCD2 (2)</option>
+                <option value="Distributed Query Optimization">Distributed Optimization & Skew (1)</option>
+                <option value="Analytical SQL & Reporting">Analytical & Cohort Reporting (1)</option>
+                <option value="Recursive Graphs in SQL">Recursive Lineage & Graphs (2)</option>
+              </select>
+            </div>
+            <div id="sqlProblemList"></div>
+          </div>
           <div class="workbench-editor-panel" id="sqlWorkspace">
             <div class="empty-state">Select an SQL challenge on the left.</div>
           </div>
