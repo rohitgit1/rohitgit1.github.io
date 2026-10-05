@@ -1140,8 +1140,11 @@ class PrepPortalApp {
     this.renderMasterclass();
   }
 
-  copyScriptCode(btn, encodedCode) {
-    const rawCode = decodeURIComponent(encodedCode);
+  copyScriptCodeByIndex(moduleId, codeIndex, btn) {
+    if (!PREP_DATA.techDeepDives) return;
+    const mod = PREP_DATA.techDeepDives.find(d => d.id === moduleId);
+    if (!mod || !mod.productionCode || !mod.productionCode[codeIndex]) return;
+    const rawCode = mod.productionCode[codeIndex].code;
     navigator.clipboard.writeText(rawCode).then(() => {
       this.audio.play("celebrate");
       const orig = btn.innerHTML;
@@ -1351,7 +1354,7 @@ class PrepPortalApp {
               <div class="mc-code-box">
                 <div class="mc-code-header">
                   <span class="mc-code-title">${c.title}</span>
-                  <button class="btn btn-sm btn-outline mc-copy-btn" id="btnCopyCode_${module.id}_${i}" onclick="app.copyScriptCode(this, '${encodeURIComponent(c.code)}')">
+                  <button class="btn btn-sm btn-outline mc-copy-btn" id="btnCopyCode_${module.id}_${i}" onclick="app.copyScriptCodeByIndex('${module.id}', ${i}, this)">
                     📋 Copy Script
                   </button>
                 </div>
