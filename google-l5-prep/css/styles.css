@@ -539,10 +539,106 @@ body.theme-light .footer-accountability-card::before {
 .text-link-btn {
   background: none;
   border: none;
-  color: var(--accent-blue);
-  text-decoration: underline;
-  cursor: pointer;
   font-size: 0.8rem;
+}
+
+/* 🎁 90-Day Birthday Milestone Banner */
+.birthday-mission-card {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(59, 130, 246, 0.08));
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  padding: 12px 18px;
+  margin-bottom: 1.1rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 18px rgba(245, 158, 11, 0.09);
+  position: relative;
+  overflow: hidden;
+}
+
+.birthday-mission-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(110deg, transparent 20%, rgba(245, 158, 11, 0.12) 45%, transparent 70%);
+  background-size: 200% 100%;
+  animation: holoShimmerSweep 6s infinite linear;
+  pointer-events: none;
+}
+
+.birthday-mission-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+.birthday-mission-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.birthday-icon {
+  font-size: 1.6rem;
+  filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.5));
+  animation: pulseGlowRing 3s infinite ease-in-out;
+}
+
+.birthday-title {
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: 0.02em;
+}
+
+.birthday-subtitle {
+  font-size: 0.78rem;
+  color: var(--accent-yellow);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.birthday-countdown-pill {
+  background: var(--bg-surface-elevated);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.15);
+}
+
+.bday-days-left {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  color: var(--accent-yellow);
+  font-size: 1rem;
+}
+
+.bday-horizon-flag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+  white-space: nowrap;
+  animation: holoShimmerSweep 4s infinite linear;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.3);
 }
 
 /* --- 1. DAILY TRACKER --- */

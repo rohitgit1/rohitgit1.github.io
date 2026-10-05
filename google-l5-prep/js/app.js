@@ -346,6 +346,11 @@ class BurstEngine {
 
 class PrepPortalApp {
   constructor() {
+    // Reset to Day 1 (Oct 5) if stale test day was saved
+    const savedDay = parseInt(localStorage.getItem("google_l5_selected_day") || "1");
+    const currentDay = (savedDay === 3 && !sessionStorage.getItem("user_manually_chose_day")) ? 1 : savedDay;
+    localStorage.setItem("google_l5_selected_day", currentDay);
+
     this.state = {
       theme: "dark",
       activeTab: "tracker",
@@ -353,7 +358,7 @@ class PrepPortalApp {
       activePracticeMode: "dsa",
       activeDsaId: "dsa-1",
       activeSqlId: "sql-1",
-      selectedDay: parseInt(localStorage.getItem("google_l5_selected_day") || "1"),
+      selectedDay: currentDay,
       dsaCategoryFilter: "all",
       curriculumPhaseFilter: "all",
       curriculumSearchQuery: "",
@@ -612,6 +617,42 @@ class PrepPortalApp {
     reader.readAsText(file);
   }
 
+  // --- 📅 90-Day Calendar & Birthday Timeline Calculator ---
+  getTodayDayNum() {
+    const startDate = new Date(2026, 9, 5); // Oct 5, 2026 (Month 9 = October)
+    const now = new Date();
+    const startMidnight = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+    const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const diffDays = Math.round((todayMidnight - startMidnight) / (1000 * 60 * 60 * 24)) + 1;
+    return Math.max(1, Math.min(90, diffDays));
+  }
+
+  getDateForDayNum(dayNum) {
+    const startDate = new Date(2026, 9, 5); // Oct 5, 2026
+    const targetDate = new Date(startDate);
+    targetDate.setDate(startDate.getDate() + (dayNum - 1));
+    return targetDate;
+  }
+
+  formatDateForDay(dayNum) {
+    const d = this.getDateForDayNum(dayNum);
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const dayName = days[d.getDay()];
+    const monthName = months[d.getMonth()];
+    const dateNum = d.getDate();
+    return `${dayName}, ${monthName} ${dateNum}`;
+  }
+
+  updateBirthdayCountdown() {
+    const todayDayNum = this.getTodayDayNum();
+    const daysRemaining = Math.max(0, 91 - todayDayNum);
+    const el = document.getElementById("bdayCountdownDays");
+    if (el) {
+      el.textContent = daysRemaining;
+    }
+  }
+
   // --- ⏱️ 90-Day Progression & Day Selector ---
   initDaySelector() {
     const select = document.getElementById("daySelectDropdown");
@@ -621,18 +662,22 @@ class PrepPortalApp {
     PREP_DATA.schedule.forEach(s => {
       const opt = document.createElement("option");
       opt.value = s.day;
-      opt.textContent = `Day ${s.day}: ${s.dsaProblem.title}`;
+      const dateStr = this.formatDateForDay(s.day);
+      const isBdayEve = s.day === 90;
+      opt.textContent = `Day ${s.day} (${dateStr})${isBdayEve ? ' 🎂 [Final Day Before Jan 3 Birthday]' : ''}: ${s.dsaProblem.title}`;
       if (s.day === this.state.selectedDay) {
         opt.selected = true;
       }
       select.appendChild(opt);
     });
 
+    this.updateBirthdayCountdown();
     this.renderDailyPillars();
   }
 
   changeSelectedDay(dayNum) {
     this.state.selectedDay = parseInt(dayNum);
+    sessionStorage.setItem("user_manually_chose_day", "true");
     localStorage.setItem("google_l5_selected_day", this.state.selectedDay);
     
     const select = document.getElementById("daySelectDropdown");
@@ -655,7 +700,7 @@ class PrepPortalApp {
   }
 
   jumpToCurrentDay() {
-    this.changeSelectedDay(1);
+    this.changeSelectedDay(this.getTodayDayNum());
   }
 
   loadDayPillarsState(dayNum) {
@@ -690,12 +735,32 @@ class PrepPortalApp {
       defenseTopic: "Siemens: 40k Object Migration AST Parser"
     };
 
+    const dateStr = this.formatDateForDay(day);
+    const todayDay = this.getTodayDayNum();
+    const isToday = day === todayDay;
+
     // Header & Phase Badge
     const headerEl = document.getElementById("dailyPillarsHeader");
-    if (headerEl) headerEl.textContent = `Day ${day} Quota (Target Completion Before 11:59 PM)`;
+    if (headerEl) {
+      if (day === 90) {
+        headerEl.innerHTML = `Day 90 Quota <span style="color:#fbbf24; font-size:0.85rem; font-weight:700;">• ${dateStr} 🎂 Final Milestone Before Jan 3 Birthday!</span>`;
+      } else {
+        headerEl.innerHTML = `Day ${day} Quota <span style="font-size:0.85rem; font-weight:500; color:var(--text-muted);">• ${dateStr} ${isToday ? '<span style="color:#60a5fa; font-weight:700;">(Today)</span>' : ''}</span>`;
+      }
+    }
 
     const phaseBadge = document.getElementById("currentPhaseBadge");
-    if (phaseBadge) phaseBadge.textContent = `${sched.phaseName} (Week ${sched.week})`;
+    if (phaseBadge) {
+      if (day === 90) {
+        phaseBadge.innerHTML = `🎂 Day 90 Finale (Week 13) • Gift to Yourself`;
+        phaseBadge.style.borderColor = "rgba(245, 158, 11, 0.6)";
+        phaseBadge.style.color = "#fbbf24";
+      } else {
+        phaseBadge.textContent = `${sched.phaseName} (Week ${sched.week})`;
+        phaseBadge.style.borderColor = "";
+        phaseBadge.style.color = "";
+      }
+    }
 
     // Pillar 1: DSA
     const cat1 = document.getElementById("pillarCategory1");
@@ -1533,15 +1598,25 @@ class PrepPortalApp {
       const isSolved = solvedDsa.includes(s.dsaProblem.id);
       if (isSolved) solvedDaysCount++;
 
+      const dateStr = this.formatDateForDay(s.day);
+      const isBdayEve = s.day === 90;
+
       html += `
         <div class="horizon-bar-node ${isCurrent ? 'current-selected' : ''} ${isSolved ? 'solved-day' : ''}"
              data-day="${s.day}"
              data-phase="${s.phase}"
-             title="Day ${s.day} (Phase ${s.phase}): ${s.dsaProblem.title}${isSolved ? ' [✓ Solved]' : ''}"
+             title="Day ${s.day} (${dateStr}): ${s.dsaProblem.title}${isSolved ? ' [✓ Solved]' : ''}${isBdayEve ? ' 🎂 [Final Day Before Jan 3 Birthday!]' : ''}"
              onclick="app.changeSelectedDay(${s.day})">
         </div>
       `;
     });
+
+    // Append the Jan 3 Birthday Celebration Flag right next to Day 90
+    html += `
+      <span class="bday-horizon-flag" title="Jan 3: Rohit's Birthday &amp; Unconscious Competence Unlocked!">
+        🎂 Jan 3 Birthday
+      </span>
+    `;
 
     container.innerHTML = html;
 
@@ -1549,6 +1624,7 @@ class PrepPortalApp {
     if (statsEl) {
       statsEl.textContent = `Solved: ${solvedDaysCount}/90 Days`;
     }
+    this.updateBirthdayCountdown();
   }
 
   scrambleText(el) {
