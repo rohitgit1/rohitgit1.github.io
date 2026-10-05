@@ -2349,3 +2349,165 @@ body.theme-light .mc-incident-card {
   line-height: 1.5;
 }
 
+/* --- Executive Floating Toast System --- */
+.app-toast {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  backdrop-filter: blur(12px);
+  color: #f8fafc;
+  padding: 12px 20px;
+  border-radius: 9999px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(59, 130, 246, 0.2);
+  font-size: 0.85rem;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.app-toast.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.app-toast.success {
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(16, 185, 129, 0.2);
+}
+
+.app-toast.error {
+  border-color: rgba(239, 68, 68, 0.5);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(239, 68, 68, 0.2);
+}
+
+body.theme-light .app-toast {
+  background: rgba(255, 255, 255, 0.95);
+  color: #0f172a;
+  border-color: rgba(37, 99, 235, 0.3);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 0 15px rgba(37, 99, 235, 0.1);
+}
+
+/* --- Azure Metadata Pipeline Simulator --- */
+.mc-azure-pipeline-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.mc-azure-node {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+}
+
+body.theme-light .mc-azure-node {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+.mc-azure-node-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent-blue);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.mc-azure-node-val {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.mc-azure-node-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.mc-azure-node-code {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  background: var(--bg-surface);
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: var(--accent-green);
+  margin-bottom: 6px;
+  word-break: break-all;
+}
+
+/* --- Kimball SCD Simulator Table --- */
+.mc-scd-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  margin-bottom: 14px;
+}
+
+.mc-scd-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.mc-scd-table th {
+  background: var(--bg-surface-elevated);
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--text-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+}
+
+.mc-scd-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-main);
+}
+
+.mc-scd-table tr:last-child td {
+  border-bottom: none;
+}
+
+.scd-row-current {
+  background: rgba(16, 185, 129, 0.04);
+}
+
+.scd-row-expired {
+  opacity: 0.65;
+  background: rgba(239, 68, 68, 0.02);
+}
+
+.badge-active {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+}
+
+.badge-expired {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+}
+
+

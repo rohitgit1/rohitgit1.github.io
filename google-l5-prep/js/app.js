@@ -590,6 +590,23 @@ class PrepPortalApp {
     this.showSecurityGate();
   }
 
+  showToast(message, type = "success") {
+    let toast = document.getElementById("appGlobalToast");
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.id = "appGlobalToast";
+      toast.className = "app-toast";
+      document.body.appendChild(toast);
+    }
+    const icon = type === "error" ? "⚠️" : (type === "info" ? "ℹ️" : "✓");
+    toast.innerHTML = `<span class="toast-icon">${icon}</span> <span class="toast-msg">${message}</span>`;
+    toast.className = `app-toast show ${type}`;
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2800);
+  }
+
   changeMasterPin() {
     const current = prompt("Enter current Master PIN (Default: 2026):");
     if (current === this.masterPin) {
@@ -597,12 +614,12 @@ class PrepPortalApp {
       if (newPin && newPin.trim().length >= 4) {
         this.masterPin = newPin.trim();
         localStorage.setItem("google_l5_master_pin", this.masterPin);
-        alert("Master PIN updated successfully!");
+        this.showToast("Master PIN updated successfully.", "success");
       } else {
-        alert("PIN must be at least 4 digits.");
+        this.showToast("PIN must be at least 4 digits.", "error");
       }
     } else if (current !== null) {
-      alert("Incorrect current PIN.");
+      this.showToast("Incorrect current PIN.", "error");
     }
   }
 
@@ -627,6 +644,7 @@ class PrepPortalApp {
     a.download = `google_l5_prep_backup_${this.todayDateStr}.json`;
     a.click();
     URL.revokeObjectURL(url);
+    this.showToast("Backup exported successfully.", "success");
   }
 
   importBackup(event) {
@@ -640,11 +658,11 @@ class PrepPortalApp {
           Object.keys(data.allStorage).forEach(key => {
             localStorage.setItem(key, data.allStorage[key]);
           });
-          alert("Backup successfully restored! Reloading...");
-          window.location.reload();
+          this.showToast("Backup restored successfully. Reloading workspace...", "success");
+          setTimeout(() => window.location.reload(), 1200);
         }
       } catch (err) {
-        alert("Invalid backup file: " + err.message);
+        this.showToast("Invalid backup file: " + err.message, "error");
       }
     };
     reader.readAsText(file);
@@ -801,7 +819,7 @@ class PrepPortalApp {
     const desc1 = document.getElementById("pillarDesc1");
     if (cat1) cat1.textContent = `Pillar 1: Data Structures & Algorithms (${sched.dsaProblem.difficulty})`;
     if (title1) title1.textContent = sched.dsaProblem.title;
-    if (desc1) desc1.textContent = `${sched.dsaProblem.category} • ${sched.dsaProblem.difficulty} | Solve in Dojo with automated Pyodide test harness.`;
+    if (desc1) desc1.textContent = `${sched.dsaProblem.category} • ${sched.dsaProblem.difficulty} | Direct LeetCode problem link with optimal Python 3 solution.`;
 
     // Pillar 2: SQL
     const cat2 = document.getElementById("pillarCategory2");
@@ -823,9 +841,9 @@ class PrepPortalApp {
     const cat4 = document.getElementById("pillarCategory4");
     const title4 = document.getElementById("pillarTitle4");
     const desc4 = document.getElementById("pillarDesc4");
-    if (cat4) cat4.textContent = "Pillar 4: Defense & Story";
+    if (cat4) cat4.textContent = "Pillar 4: Defense & Architecture";
     if (title4) title4.textContent = sched.defenseTopic;
-    if (desc4) desc4.textContent = "Defend this exact architectural decision on your Capgemini resume without stuttering.";
+    if (desc4) desc4.textContent = "Defend this architectural design decision and trade-offs under rigorous senior engineering inquiry.";
 
     // Load Pillar Checkboxes for this day
     const dayPillars = this.loadDayPillarsState(day);
@@ -961,11 +979,11 @@ class PrepPortalApp {
     const msgEl = document.getElementById("countdownUrgencyMessage");
     if (msgEl) {
       if (completedCount === 4) {
-        msgEl.innerHTML = "🏆 <span style='color:var(--accent-green); font-weight:700;'>Daily Quota Crushed (4/4 Completed). Great consistency!</span>";
+        msgEl.innerHTML = "✓ <span style='color:var(--accent-green); font-weight:700;'>Daily Quota Complete (4/4 Pillars Verified). State recorded.</span>";
       } else if (hours < 6) {
-        msgEl.innerHTML = `🚨 <span style='color:var(--accent-red); font-weight:700;'>CRITICAL: Only ${hours}h ${mins}m left before 11:59 PM reset. Finish your targets!</span>`;
+        msgEl.innerHTML = `<span style='color:var(--accent-red); font-weight:700;'>Cutoff Alert: ${hours}h ${mins}m remaining before 11:59 PM reset. (${completedCount}/4 Completed)</span>`;
       } else {
-        msgEl.innerHTML = `Window resets strictly at 11:59:59 PM IST tonight. (${completedCount}/4 Completed)`;
+        msgEl.innerHTML = `Daily Cycle Active: ${hours}h ${mins}m remaining before 11:59 PM cutoff. (${completedCount}/4 Completed)`;
       }
     }
   }
@@ -1057,31 +1075,32 @@ class PrepPortalApp {
     if (streakEl) streakEl.textContent = `Streak: ${Math.max(1, currentStreak)} Days`;
   }
 
-  // --- 📲 WhatsApp Daily Sync ---
+  // --- 📲 Daily Engineering Telemetry Sync ---
   generateDailyReportText() {
     const day = this.state.selectedDay;
     const sched = PREP_DATA.schedule.find(s => s.day === day) || PREP_DATA.schedule[0];
     const dayPillars = this.loadDayPillarsState(day);
     const completedCount = Object.values(dayPillars).filter(Boolean).length;
-    const p1 = dayPillars[1] ? "✅ Done" : "⏳ Pending";
-    const p2 = dayPillars[2] ? "✅ Done" : "⏳ Pending";
-    const p3 = dayPillars[3] ? "✅ Done" : "⏳ Pending";
-    const p4 = dayPillars[4] ? "✅ Done" : "⏳ Pending";
-    const notes = (this.dailyData.notes || "").trim() || "Completed structured engineering study block.";
+    const p1 = dayPillars[1] ? "Complete" : "Pending";
+    const p2 = dayPillars[2] ? "Complete" : "Pending";
+    const p3 = dayPillars[3] ? "Complete" : "Pending";
+    const p4 = dayPillars[4] ? "Complete" : "Pending";
+    const notes = (this.dailyData.notes || "").trim() || "Completed scheduled engineering modules.";
 
-    return `🔥 *Google Data Engineer Daily Accountability Log*
-📅 Date: *${this.todayDateStr}* (Day ${day} of 90)
-🎯 Quota Completed: *${completedCount} / 4*
-• Pillar 1 (${sched.dsaProblem.title}): ${p1}
-• Pillar 2 (${sched.sqlChallenge.title}): ${p2}
-• Pillar 3 (${sched.techTopic}): ${p3}
-• Pillar 4 (${sched.defenseTopic}): ${p4}
+    return `[DAILY ENGINEERING TELEMETRY]
+Date: ${this.todayDateStr} | Day ${day} of 90 Progression
+Execution: ${completedCount}/4 Core Objectives Verified
 
-📝 *Technical Notes:*
+• Algorithms & Data Structures: ${sched.dsaProblem.title} [${p1}]
+• Analytical SQL & Performance: ${sched.sqlChallenge.title} [${p2}]
+• Cloud Warehouse & Systems: ${sched.techTopic} [${p3}]
+• Architecture & Project Defense: ${sched.defenseTopic} [${p4}]
+
+Technical Notes & Learnings:
 "${notes}"
 
-⚡ *Status:* ${completedCount === 4 ? "🏆 Day Target Crushed (100%)" : "In Progress • Active before 11:59 PM"}
-#GoogleIndia #DataEngineering #Accountability`;
+Status: ${completedCount === 4 ? "Daily Quota Complete (100% Target Met)" : "In Progress (Sprint Active)"}
+Target Horizon: Day 90 / Jan 03 Final Benchmark`;
   }
 
   shareDailyProgressWhatsApp() {
@@ -1093,9 +1112,9 @@ class PrepPortalApp {
   copyDailySummary() {
     const text = this.generateDailyReportText();
     navigator.clipboard.writeText(text).then(() => {
-      alert("Daily summary report copied to clipboard!");
+      this.showToast("Daily engineering telemetry copied to clipboard.", "success");
     }).catch(() => {
-      prompt("Copy your daily report below:", text);
+      prompt("Copy telemetry report:", text);
     });
   }
 
@@ -1136,6 +1155,27 @@ class PrepPortalApp {
   toggleSparkSkew(scenarioId) {
     if (!this.state.mcSimulatorState) this.state.mcSimulatorState = {};
     this.state.mcSimulatorState.sparkScenario = scenarioId;
+    this.audio.play("click");
+    this.renderMasterclass();
+  }
+
+  runBqPruningQuery(queryId) {
+    if (!this.state.mcSimulatorState) this.state.mcSimulatorState = {};
+    this.state.mcSimulatorState.bqQuery = queryId;
+    this.audio.play("click");
+    this.renderMasterclass();
+  }
+
+  runAzureJob(jobId) {
+    if (!this.state.mcSimulatorState) this.state.mcSimulatorState = {};
+    this.state.mcSimulatorState.azureJob = jobId;
+    this.audio.play("click");
+    this.renderMasterclass();
+  }
+
+  runKimballScenario(scenarioId) {
+    if (!this.state.mcSimulatorState) this.state.mcSimulatorState = {};
+    this.state.mcSimulatorState.kimballScenario = scenarioId;
     this.audio.play("click");
     this.renderMasterclass();
   }
@@ -1337,6 +1377,158 @@ class PrepPortalApp {
                 </div>
               </div>
             `;
+          } else if (sim.type === "gcp-bigquery") {
+            const activeQId = this.state.mcSimulatorState.bqQuery || "bq-q1";
+            const currentQ = sim.queries.find(q => q.id === activeQId) || sim.queries[0];
+
+            simHtml = `
+              <div class="mc-sim-box">
+                <div class="mc-sim-header">
+                  <span class="mc-sim-title">⚡ Google BigQuery Capacitor Columnar &amp; Partition Pruning Simulator</span>
+                  <span style="font-family:var(--font-mono); font-size:0.75rem; color:#3b82f6;">Table: ${sim.tableName}</span>
+                </div>
+                <div class="mc-sim-controls">
+                  ${sim.queries.map(q => `
+                    <div class="mc-sim-query-btn ${q.id === activeQId ? 'active' : ''}" onclick="app.runBqPruningQuery('${q.id}')">
+                      <div class="mc-sim-query-label">${q.label}</div>
+                      <code class="mc-sim-query-sql">${q.sql}</code>
+                    </div>
+                  `).join("")}
+                </div>
+                <div class="mc-sim-telemetry">
+                  <div class="mc-telemetry-metrics-row">
+                    <div class="mc-t-item">
+                      <span class="mc-t-label">Slots Allocated</span>
+                      <span class="mc-t-val">${currentQ.slotsAllocated} Slots</span>
+                    </div>
+                    <div class="mc-t-item">
+                      <span class="mc-t-label">Bytes Scanned</span>
+                      <span class="mc-t-val ${currentQ.costUsd.includes('15,000') ? 'red' : 'emerald'}">${currentQ.bytesScanned} (Saved: ${currentQ.bytesSaved})</span>
+                    </div>
+                    <div class="mc-t-item">
+                      <span class="mc-t-label">On-Demand Cost</span>
+                      <span class="mc-t-val ${currentQ.costUsd.includes('15,000') ? 'red' : 'emerald'}">${currentQ.costUsd}</span>
+                    </div>
+                    <div class="mc-t-item">
+                      <span class="mc-t-label">Dremel Latency</span>
+                      <span class="mc-t-val">${currentQ.latency}</span>
+                    </div>
+                  </div>
+                  <div class="mc-telemetry-verdict">
+                    <strong>Capacitor &amp; Colossus Engine Execution Trace:</strong> ${currentQ.verdict}
+                  </div>
+                </div>
+              </div>
+            `;
+          } else if (sim.type === "azure-metadata") {
+            const activeJobId = this.state.mcSimulatorState.azureJob || "job-sap";
+            const currentJob = sim.jobs.find(j => j.id === activeJobId) || sim.jobs[0];
+
+            simHtml = `
+              <div class="mc-sim-box">
+                <div class="mc-sim-header">
+                  <span class="mc-sim-title">⚡ Azure Data Factory &amp; ADLS Gen2 Metadata Extraction Pipeline</span>
+                  <span style="font-family:var(--font-mono); font-size:0.75rem; color:#3b82f6;">Engine: ${sim.tableName}</span>
+                </div>
+                <div style="display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
+                  ${sim.jobs.map(j => `
+                    <button class="btn btn-sm ${j.id === activeJobId ? 'btn-primary' : 'btn-outline'}" onclick="app.runAzureJob('${j.id}')">
+                      📁 ${j.table}
+                    </button>
+                  `).join("")}
+                </div>
+                <div class="mc-azure-pipeline-grid">
+                  <div class="mc-azure-node">
+                    <div class="mc-azure-node-title">1. Source Ingestion</div>
+                    <div class="mc-azure-node-val">${currentJob.sourceSystem}</div>
+                    <div class="mc-azure-node-sub">Network Route: ${currentJob.irType}</div>
+                  </div>
+                  <div class="mc-azure-node">
+                    <div class="mc-azure-node-title">2. Watermark Predicate</div>
+                    <code class="mc-azure-node-code">${currentJob.watermark}</code>
+                    <div class="mc-azure-node-sub">Incremental Delta Extract</div>
+                  </div>
+                  <div class="mc-azure-node">
+                    <div class="mc-azure-node-title">3. Target Bronze Lakehouse</div>
+                    <code class="mc-azure-node-code">${currentJob.targetPath}</code>
+                    <div class="mc-azure-node-sub">ADLS Gen2 Hierarchical Namespace</div>
+                  </div>
+                </div>
+                <div class="mc-sim-telemetry">
+                  <div class="mc-telemetry-metrics-row">
+                    <div class="mc-t-item">
+                      <span class="mc-t-label">Status</span>
+                      <span class="mc-t-val emerald">${currentJob.status}</span>
+                    </div>
+                    <div class="mc-t-item">
+                      <span class="mc-t-label">HNS Atomic Rename Latency</span>
+                      <span class="mc-t-val emerald">${currentJob.commitSpeed}</span>
+                    </div>
+                  </div>
+                  <div class="mc-telemetry-verdict">
+                    <strong>Pipeline Control Plane Trace:</strong> Executed via metadata parameterization. Zero hardcoded pipeline tasks. Self-Hosted Integration Runtime established secure outbound TLS 443 tunnel without exposing internal corporate firewall ports.
+                  </div>
+                </div>
+              </div>
+            `;
+          } else if (sim.type === "kimball-scd") {
+            const activeScenId = this.state.mcSimulatorState.kimballScenario || "scd-day1";
+            const currentScen = sim.scenarios.find(s => s.id === activeScenId) || sim.scenarios[0];
+
+            simHtml = `
+              <div class="mc-sim-box">
+                <div class="mc-sim-header">
+                  <span class="mc-sim-title">⚡ Kimball Slowly Changing Dimension (SCD Type 2) Lifecycle Simulator</span>
+                  <span style="font-family:var(--font-mono); font-size:0.75rem; color:#3b82f6;">Dimension: ${sim.tableName}</span>
+                </div>
+                <div style="display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
+                  ${sim.scenarios.map(s => `
+                    <button class="btn btn-sm ${s.id === activeScenId ? 'btn-primary' : 'btn-outline'}" onclick="app.runKimballScenario('${s.id}')">
+                      ${s.name}
+                    </button>
+                  `).join("")}
+                </div>
+                <div class="mc-scd-table-wrapper">
+                  <table class="mc-scd-table">
+                    <thead>
+                      <tr>
+                        <th>Surrogate Key (PK)</th>
+                        <th>Customer ID (NK)</th>
+                        <th>Full Name</th>
+                        <th>City</th>
+                        <th>Loyalty Tier</th>
+                        <th>Valid From</th>
+                        <th>Valid To</th>
+                        <th>State Flag</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${currentScen.rows.map(r => `
+                        <tr class="${r.isCurrent ? 'scd-row-current' : 'scd-row-expired'}">
+                          <td style="font-family:var(--font-mono); font-weight:700; color:var(--accent-blue);">${r.sk}</td>
+                          <td style="font-family:var(--font-mono);">${r.id}</td>
+                          <td><strong>${r.name}</strong></td>
+                          <td>${r.city}</td>
+                          <td><span class="badge" style="background:${r.tier === 'Platinum' ? 'rgba(168,85,247,0.2)' : 'rgba(234,179,8,0.2)'}; color:${r.tier === 'Platinum' ? '#c084fc' : '#facc15'};">${r.tier}</span></td>
+                          <td style="font-family:var(--font-mono); font-size:0.75rem;">${r.validFrom}</td>
+                          <td style="font-family:var(--font-mono); font-size:0.75rem;">${r.validTo}</td>
+                          <td>
+                            <span class="badge ${r.isCurrent ? 'badge-active' : 'badge-expired'}">
+                              ${r.isCurrent ? '✓ CURRENT' : 'EXPIRED'}
+                            </span>
+                          </td>
+                        </tr>
+                      `).join("")}
+                    </tbody>
+                  </table>
+                </div>
+                <div class="mc-sim-telemetry">
+                  <div class="mc-telemetry-verdict">
+                    <strong>Dimensional Modeling Execution Verdict:</strong> ${currentScen.verdict}
+                  </div>
+                </div>
+              </div>
+            `;
           }
         }
 
@@ -1487,7 +1679,7 @@ class PrepPortalApp {
     if (!p) return;
     navigator.clipboard.writeText(p.optimalSolution).then(() => {
       this.audio.play("click");
-      alert("Optimal Python solution copied to clipboard!");
+      this.showToast("Optimal Python solution copied to clipboard.", "success");
     }).catch(() => {
       prompt("Copy Python Solution:", p.optimalSolution);
     });
@@ -1730,24 +1922,28 @@ class PrepPortalApp {
 
   // --- 🛡️ Resume & Project Defense ---
   renderDefense() {
-    const listPanel = document.getElementById("defenseQuestionsList");
+    const listPanel = document.getElementById("projectDefenseContainer") || document.getElementById("defenseQuestionsList");
     if (!listPanel || !PREP_DATA.resumeDefenseSuite) return;
 
     let html = "";
-    PREP_DATA.resumeDefenseSuite.forEach((q, idx) => {
+    PREP_DATA.resumeDefenseSuite.forEach((suite, pIdx) => {
       html += `
-        <div class="card defense-card">
-          <div class="defense-badge">${q.project} • INTERROGATION ${idx + 1}</div>
-          <h3 class="defense-q">${q.interviewerTrap}</h3>
-          
-          <div class="defense-answer-box">
-            <div style="font-weight:700; color:var(--accent-green); margin-bottom:4px;">Senior L5 Defense Script:</div>
-            <p style="font-size:0.85rem; line-height:1.5;">${q.bulletproofDefense}</p>
+        <div class="defense-group">
+          <div class="defense-group-title">
+            <span style="color:var(--accent-blue);">Project ${pIdx + 1}:</span> ${suite.project}
           </div>
-
-          <div class="defense-meta-row">
-            <span><strong>Resume Bullet:</strong> "${q.resumeBulletTarget}"</span>
-            <span class="defense-tag">${q.architectureKeywords.join(", ")}</span>
+          <div style="display:flex; flex-direction:column; gap:10px; margin-top:8px;">
+            ${(suite.questions || []).map((q, qIdx) => `
+              <div class="qa-card">
+                <div class="qa-q">Q${qIdx + 1}: ${q.q}</div>
+                <div class="qa-a">
+                  <div style="color:var(--accent-green); font-weight:700; margin-bottom:4px; font-size:0.75rem; text-transform:uppercase;">
+                    Senior L5 Staff Defense Script:
+                  </div>
+                  ${q.answer}
+                </div>
+              </div>
+            `).join("")}
           </div>
         </div>
       `;
@@ -1759,47 +1955,47 @@ class PrepPortalApp {
     const paper = document.getElementById("atsResumePaper");
     if (!paper) return;
     navigator.clipboard.writeText(paper.innerText).then(() => {
-      alert("Google 1-Page ATS Resume copied to clipboard!");
+      this.showToast("Google 1-Page ATS Resume copied to clipboard.", "success");
     }).catch(() => {
       prompt("Copy resume text:", paper.innerText);
     });
   }
 
-  // --- 🎯 Google India Tracks & Bar ---
+  // --- 🎯 Tier-1 Engineering Tracks & Evaluation Bar ---
   renderRoles() {
-    const container = document.getElementById("rolesListContainer");
+    const container = document.getElementById("rolesCleanGrid") || document.getElementById("rolesListContainer");
     if (!container || !PREP_DATA.targetRoles) return;
 
     let html = "";
     PREP_DATA.targetRoles.forEach(r => {
       html += `
-        <div class="card role-card">
-          <div class="role-header">
-            <div>
-              <span class="role-org">${r.organization}</span>
-              <h2 class="role-title">${r.title}</h2>
+        <div class="role-spec-card">
+          <div>
+            <div class="role-org">${r.organization}</div>
+            <div class="role-title">${r.title}</div>
+            <div style="margin: 6px 0;">
+              <span class="badge" style="background:rgba(59,130,246,0.15); color:var(--accent-blue); font-size:0.75rem; padding:2px 8px; border-radius:4px; font-weight:600;">
+                ${r.profileAlignment}
+              </span>
             </div>
-            <div class="role-comp">${r.compensationRange}</div>
-          </div>
-
-          <div class="role-cheatcode">
-            <strong>Google Hiring Context:</strong> ${r.cheatCode}
-          </div>
-
-          <div class="role-rounds">
-            <h4 style="font-size:0.8rem; text-transform:uppercase; color:var(--text-subtle); margin-bottom:8px;">Interview Loop Structure:</h4>
-            <div class="rounds-list">
+            <div class="role-comp-box">${r.compensationRange}</div>
+            <div style="font-size:0.83rem; color:var(--text-muted); line-height:1.5; margin:10px 0;">
+              <strong style="color:var(--text-main);">Evaluation Focus:</strong> ${r.evaluationFocus}
+            </div>
+            <div class="role-loops-list">
+              <div style="font-size:0.75rem; font-weight:700; color:var(--text-subtle); text-transform:uppercase; margin-bottom:6px;">
+                Interview Loop Structure:
+              </div>
               ${r.interviewRounds.map(rnd => `
-                <div class="round-item">
-                  <strong>${rnd.name}</strong>: ${rnd.desc}
+                <div class="loop-item">
+                  <strong>${rnd.name}:</strong> ${rnd.desc}
                 </div>
               `).join("")}
             </div>
           </div>
-
-          <div style="margin-top:14px;">
-            <a href="${r.googleCareersQuery}" target="_blank" class="btn btn-sm btn-outline">
-              Search Open Positions on Google Careers ↗
+          <div style="margin-top:16px;">
+            <a href="${r.googleCareersQuery}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline btn-magnetic" style="width:100%; text-align:center; display:inline-block;">
+              Search Open Requisitions on Google Careers ↗
             </a>
           </div>
         </div>
