@@ -360,18 +360,27 @@ class BurstEngine {
 // This timeline is permanently anchored. Future code updates or refreshes will NEVER
 // break the 24H countdown timer or miscalculate the 90-day trajectory.
 const MISSION_CONFIG = {
-  START_DATE: "2026-10-05T00:00:00+05:30", // Day 1: Monday, October 5, 2026 12:00 AM IST
-  END_DATE: "2027-01-02T23:59:59+05:30",   // Day 90: Saturday, January 2, 2027 11:59:59 PM IST
-  BIRTHDAY_DATE: "2027-01-03T00:00:00+05:30", // Rohit's Birthday (Jan 3)
+  START_DATE: "2026-10-06T00:00:00+05:30", // Day 1: Tuesday, October 6, 2026 12:00 AM IST
+  END_DATE: "2027-01-03T23:59:59+05:30",   // Day 90: Sunday, January 3, 2027 11:59:59 PM IST (Rohit's Birthday)
+  BIRTHDAY_DATE: "2027-01-03T00:00:00+05:30", // Rohit's Birthday & Final Horizon (Jan 3)
   TOTAL_DAYS: 90
 };
 
 class PrepPortalApp {
   constructor() {
-    // Permanent candidate persistence: Never overwrite candidate progress or day on updates
+    // Sprint cycle restart anchor: Oct 06, 2026 to Jan 03, 2027 (Day 90)
     const realToday = this.getTodayDayNum();
-    const savedDay = parseInt(localStorage.getItem("google_l5_selected_day") || "0");
-    const activeDay = (savedDay >= 1 && savedDay <= 90) ? savedDay : realToday;
+    const sprintRestartKey = "google_l5_sprint_anchor_20261006";
+    let activeDay = realToday;
+    if (!localStorage.getItem(sprintRestartKey)) {
+      localStorage.setItem(sprintRestartKey, "true");
+      localStorage.setItem("google_l5_selected_day", "1");
+      sessionStorage.removeItem("user_manually_chose_day");
+      activeDay = 1;
+    } else {
+      const savedDay = parseInt(localStorage.getItem("google_l5_selected_day") || "0");
+      activeDay = (savedDay >= 1 && savedDay <= 90) ? savedDay : realToday;
+    }
     localStorage.setItem("google_l5_selected_day", activeDay);
 
     this.state = {
@@ -677,7 +686,7 @@ class PrepPortalApp {
 
   // --- 📅 90-Day Calendar & Birthday Timeline Calculator ---
   getTodayDayNum() {
-    const startDate = new Date(2026, 9, 5); // Oct 5, 2026 (Month 9 = October)
+    const startDate = new Date(2026, 9, 6); // Oct 6, 2026 (Month 9 = October)
     const now = new Date();
     const startMidnight = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
     const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -686,7 +695,7 @@ class PrepPortalApp {
   }
 
   getDateForDayNum(dayNum) {
-    const startDate = new Date(2026, 9, 5); // Oct 5, 2026
+    const startDate = new Date(2026, 9, 6); // Oct 6, 2026
     const targetDate = new Date(startDate);
     targetDate.setDate(startDate.getDate() + (dayNum - 1));
     return targetDate;
@@ -704,7 +713,7 @@ class PrepPortalApp {
 
   updateBirthdayCountdown() {
     const todayDayNum = this.getTodayDayNum();
-    const daysRemaining = Math.max(0, 91 - todayDayNum);
+    const daysRemaining = Math.max(0, 90 - todayDayNum + 1);
     const el = document.getElementById("bdayCountdownDays");
     if (el) {
       el.textContent = daysRemaining;
@@ -801,7 +810,7 @@ class PrepPortalApp {
     const headerEl = document.getElementById("dailyPillarsHeader");
     if (headerEl) {
       if (day === 90) {
-        headerEl.innerHTML = `Day 90 Quota <span style="color:#2563eb; font-size:0.85rem; font-weight:700;">• ${dateStr} 🏁 Final Sprint Milestone (Target Assessment: Jan 03)</span>`;
+        headerEl.innerHTML = `Day 90 Quota <span style="color:#2563eb; font-size:0.85rem; font-weight:700;">• ${dateStr} 🏁 Final Sprint Milestone &amp; Birthday Culmination</span>`;
       } else {
         headerEl.innerHTML = `Day ${day} Quota <span style="font-size:0.85rem; font-weight:500; color:var(--text-muted);">• ${dateStr} ${isToday ? '<span style="color:#60a5fa; font-weight:700;">(Today)</span>' : ''}</span>`;
       }
@@ -2525,22 +2534,22 @@ Physical Plan Verdict:    O(N) LINEAR SCALING • PRODUCTION READY FOR 10B+ ROWS
       if (isSolved) solvedDaysCount++;
 
       const dateStr = this.formatDateForDay(s.day);
-      const isBdayEve = s.day === 90;
+      const isFinalDay = s.day === 90;
 
       html += `
         <div class="horizon-bar-node ${isCurrent ? 'current-selected' : ''} ${isSolved ? 'solved-day' : ''}"
              data-day="${s.day}"
              data-phase="${s.phase}"
-             title="Day ${s.day} (${dateStr}): ${s.dsaProblem.title}${isSolved ? ' [✓ Solved]' : ''}${isBdayEve ? ' 🏁 [Day 90 Final Milestone]' : ''}"
+             title="Day ${s.day} (${dateStr}): ${s.dsaProblem.title}${isSolved ? ' [✓ Solved]' : ''}${isFinalDay ? ' 🏁 [Day 90 Final Milestone • Jan 03]' : ''}"
              onclick="app.changeSelectedDay(${s.day})">
         </div>
       `;
     });
 
-    // Append the Jan 03 Benchmark Horizon Flag right next to Day 90
+    // Append the Jan 03 Day 90 Benchmark Horizon Flag
     html += `
-      <span class="bday-horizon-flag" title="Jan 03: Final Target Benchmark Assessment">
-        🎯 Jan 03 Benchmark
+      <span class="bday-horizon-flag" title="Day 90: Sunday, Jan 03, 2027 — Birthday Target Benchmark">
+        🎯 Jan 03 Target Horizon
       </span>
     `;
 
