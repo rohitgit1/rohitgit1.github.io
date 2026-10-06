@@ -7,7 +7,7 @@
   <meta name="description" content="Confidential Data Engineering Workspace & Daily Telemetry.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="theme-dark">
@@ -39,11 +39,11 @@
   <!-- Top Application Bar -->
   <header class="topbar">
     <div class="brand">
-      <div class="brand-badge">CONFIDENTIAL</div>
+      <div class="brand-badge"><span class="brand-pulse-dot"></span>SECURE // L5 PORTAL</div>
       <div class="brand-text">
         <span class="brand-title">ROHIT SINGH</span>
         <span class="brand-sep">/</span>
-        <span class="brand-sub">Staff Data Platform & Systems Architecture</span>
+        <span class="brand-sub">Staff Data Platform Architecture</span>
       </div>
     </div>
 
@@ -137,8 +137,14 @@
         <div class="card countdown-banner-card">
           <div class="countdown-banner-content">
             <div class="countdown-banner-meta">
-              <span class="countdown-eyebrow">DAILY CUTOFF WINDOW</span>
+              <div class="countdown-eyebrow-row">
+                <span class="countdown-eyebrow">DAILY CUTOFF WINDOW</span>
+                <span class="countdown-pulse-tag"><span class="pulse-mini-dot"></span>ACTIVE CYCLE • 11:59:59 PM IST</span>
+              </div>
               <h2 class="countdown-clock-digits" id="dailyCountdownClock">--:--:--</h2>
+              <div class="countdown-progress-track">
+                <div class="countdown-progress-bar" id="dailyCutoffProgressBar"></div>
+              </div>
               <p class="countdown-clock-sub" id="countdownUrgencyMessage">Window resets strictly at 11:59:59 PM IST tonight.</p>
             </div>
             <div class="countdown-banner-actions">
